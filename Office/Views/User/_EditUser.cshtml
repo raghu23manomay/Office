@@ -1,0 +1,360 @@
+﻿
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
+<link href="~/assets/css/plugins/toastr/toastr.css" rel="stylesheet" />
+<script src="~/assets/css/plugins/toastr/toastr.min.js"></script>
+<link href="~/assets/css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@model mvc.Models.UserDetails
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "EditUser";
+}
+
+<!DOCTYPE html>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmCandidate" }))
+{
+    
+
+    <div class="row ibox">
+        <div class="col-md-12">
+            <div class="row">
+                <div style="display: inline-grid;" class="col-md-10">
+                    <h3 id="username" class="pull-left" style="width: 123%;">
+                        Edit User
+                        <a data-itemId="0" href="#" class="deleteItem pull-right"><i class="glyphicon glyphicon-trash userdelete" id="@Model.User_id"></i></a>
+                    </h3>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row ibox">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="name"> User Name</label>
+                @Html.TextBoxFor(a => a.User_id, new { @class = "form-control hidden", title = "User_id", @id = "User_id" })
+
+                @Html.TextBoxFor(a => a.User_Name, new { @class = "form-control", title = "User_Name", @id = "User_Name" })
+                <p id="validation" style="color:red;">Enter user Name</p>
+            </div>
+
+            <div class="form-group">
+                <label for="name">First Name</label>
+                @Html.TextBoxFor(a => a.F_Name, new { @class = "form-control", title = "F_Name", @id = "F_Name" })
+                <p id="Firstname" style="color:red;">Enter First Name</p>
+            </div>
+            <div class="form-group">
+                <label for="name">Middle Name</label>
+                @Html.TextBoxFor(a => a.M_Name, new { @class = "form-control", title = "M_Name", @id = "M_Name" })
+                <p id="middlename" style="color:red;">Enter Middle Name</p>
+            </div>
+            <div class="form-group">
+                <label for="name">Last Name</label>
+                @Html.TextBoxFor(a => a.L_Name, new { @class = "form-control", title = "L_Name", @id = "L_Name" })
+                <p id="lastname" style="color:red;">Enter Last Name</p>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Phone No</label>
+                @Html.TextBoxFor(a => a.phone, new { @class = "form-control", title = "phone", @id = "phone" })
+
+
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="name">Email Id</label>
+                @Html.TextBoxFor(a => a.emailId, new { @class = "form-control", title = "emailId", @id = "emailId" })
+                <p id="eml" style="color:red;">Enter Email ID</p>
+            </div>
+            <div class="form-group">
+                <label for="name">Password</label>
+                @Html.TextBoxFor(a => a.Password, new { @class = "form-control", title = "Password", @id = "Password" })
+                <p id="pass" style="color:red;">Enter Password</p>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Mobile No</label>
+                @Html.TextBoxFor(a => a.Mobile, new { @class = "form-control", title = "Mobile", @id = "Mobile" })
+                <p id="Mobilenum" style="color:red;">Enter Mobile Number</p>
+            </div>
+            <div class="form-group">
+
+                <label>Role Name <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(a => a.RoleName, new { @class = "form-control ", @id = "RoleList" })
+                @Html.HiddenFor(model => model.RoleID, new { id = "RoleID" })
+                @*@Html.DropDownList("model.RoleList", new SelectList((System.Collections.IEnumerable)ViewData["RoleList"], "Value", "Text", Model.RoleID), "Select Client", new { @class = "form-control input-sm", @id = "RoleList", Title = "RoleList" })
+                    @Html.HiddenFor(model => model.RoleID, new { id = "RoleID" })*@
+                <p id="role" style="color:red;"> Enter Roll Name </p>
+
+            </div>
+
+            <div class="form-group">
+                <label for="name">Active</label> @Html.RadioButtonFor(m => m.Isactive, 1, new { @id = "radID", @name = "radID" })
+                <label for="name">Inactive</label> @Html.RadioButtonFor(m => m.Isactive, 0, new { @id = "radID", @name = "radID" })
+                <p id="validationrad" style="color:red;"> select Radio Button </p>
+
+            </div>
+            <div class="form-group pull-right">
+                <button type="button" id="btnEdit" class="btn btn-primary">Update</button>
+                @Html.ActionLink("Cancel", "UserPermissions", "Master", null, new { @class = "btn btn-default" })
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+}
+
+
+
+<script>
+
+    $(document).ready(function () {
+            getRoleList();
+            var action = "RoleName";
+            $("#validation").hide();
+            $("#Firstname").hide();
+            $("#middlename").hide();
+            $("#lastname").hide();
+            $("#Mobilenum").hide();
+            $("#pass").hide();
+            $("#eml").hide();
+            $("#role").hide();
+            $("#validationrad").hide();
+            var temp;
+            temp = $("#User_id").val();
+
+
+            $('#btnEdit').on('click', function () {
+                fnvalidationforUpdate();
+               //alert($("#Mobile").val().length)
+                return false;
+        });
+
+
+        $('.userdelete').on('click', function () {
+            var userid = $(this).attr('id');
+            if (confirm("Press a button!")) {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Master/DeleteUser',
+
+                    data:
+                    {
+                        userid: userid,
+
+                    },
+                    success: function (da) {
+                        toastr.success(da);
+                        // $("#mdlETUser .close").click()
+
+                    },
+
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    }
+                });
+            }
+
+        });
+
+      });
+
+     function getRoleList()
+    {
+             var returnResult = [];
+                          $.ajax({
+                        contentType: "application/json; charset=utf-8",
+                         url: "@Url.Action("GetRoleList", "Master")",
+                        method: 'GET',
+                        async: 'false',
+                        dataType: 'json',
+                        success: function (result) {
+                            var data = $.map(result, function (obj) {
+                                obj.value = obj.Text; // desired field
+                                obj.data = obj.Value; // desired field
+                                returnResult.push(obj);
+                                $("#RoleList").autocomplete({
+                                    lookup: returnResult,
+                                    onSelect: function (suggestion) {
+                                        $("#RoleID").val(suggestion.data);
+
+                                    }
+                                });
+
+                            });
+                        },
+                        error: function () { }
+                  });
+    }
+
+        //================================================================validation function for Update===================================================
+        function fnvalidationforUpdate()
+        {
+            var a;
+            a = $("#User_Name").val();
+            fname = $("#F_Name").val();
+            mname = $("#M_Name").val();
+            lname = $("#L_Name").val();
+            pwd = $("#Password").val();
+            mobilenumber = $("#Mobile").val();
+            email = $("#emailId").val();
+            roll = $("#RoleList").val();
+
+
+            if (a == "") {
+                $("#validation").show();
+                toastr.success("Enter user Name.");
+                $("#Firstname").hide();
+                return false;
+            }
+            else if (fname == "") {
+                $("#middlename").hide();
+                $("#lastname").hide();
+                $("#validation").hide();
+                $("#Mobilenum").hide();
+                $("#pass").hide();
+                $("#eml").hide();
+                $("#Firstname").show();
+                $("#role").hide();
+                $("#validationrad").hide();
+                toastr.success("Enter First Name.");
+                return false;
+            }
+
+            else if (lname == "") {
+                $("#middlename").hide();
+                $("#validation").hide();
+                $("#Firstname").hide();
+                $("#Mobilenum").hide();
+                $("#pass").hide();
+                $("#eml").hide();
+                $("#lastname").show();
+                $("#role").hide();
+                $("#validationrad").hide();
+                toastr.success("Enter Last Name.");
+                return false;
+            }
+            else if ($("#Mobile").val().length != 10) {
+                $("#middlename").hide();
+                $("#validation").hide();
+                $("#Firstname").hide();
+                $("#lastname").hide();
+                $("#pass").hide();
+                $("#eml").hide();
+                $("#role").hide();
+                $("#Mobilenum").show();
+                $("#validationrad").hide();
+                toastr.success("Enter 10 Didgit Mobile Number.");
+                return false;
+            }
+            else if (pwd == "") {
+                $("#middlename").hide();
+                $("#validation").hide();
+                $("#Firstname").hide();
+                $("#lastname").hide();
+                $("#pass").show();
+                $("#Mobilenum").hide();
+                $("#role").hide();
+                $("#eml").hide();
+                $("#validationrad").hide();
+                toastr.success("Enter 10 Didgit Mobile Number.");
+                return false;
+            }
+            else if (email == "") {
+                $("#middlename").hide();
+                $("#validation").hide();
+                $("#Firstname").hide();
+                $("#lastname").hide();
+                $("#pass").hide();
+                $("#Mobilenum").hide();
+                $("#role").hide();
+                $("#eml").show();
+                $("#validationrad").hide();
+                toastr.success("Enter email ID");
+                return false;
+            }
+            else if (roll == "") {
+                $("#middlename").hide();
+                $("#validation").hide();
+                $("#Firstname").hide();
+                $("#lastname").hide();
+                $("#pass").hide();
+                $("#Mobilenum").hide();
+                $("#eml").hide();
+                $("#role").show();
+                $("#validationrad").hide();
+                toastr.success("select Roll");
+                return false;
+            }
+            else if ($("#radID:checked").val() != 0 && $("#radID:checked").val() != 1) {
+                $("#middlename").hide();
+                $("#validation").hide();
+                $("#Firstname").hide();
+                $("#lastname").hide();
+                $("#pass").hide();
+                $("#Mobilenum").hide();
+                $("#eml").hide();
+                $("#role").hide();
+                $("#validationrad").show();
+                toastr.success("select radio button");
+                return false;
+            }
+            else
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Master/UpdateUser',
+
+                    data:
+                        {
+                            User_id: $("#User_id").val(),
+                            User_Name: $("#User_Name").val(),
+                            F_Name: $("#F_Name").val(),
+                            M_Name: $("#M_Name").val(),
+                            L_Name: $("#L_Name").val(),
+                            phone: $("#phone").val(),
+                            Mobile: $("#Mobile").val(),
+                            Password: $("#Password").val(),
+                            emailId: $("#emailId").val(),
+                            RoleID: $("#RoleID").val(),
+                            Isactive: $("#radID:checked").val(),
+                            CreatedBy: $("#CreatedBy").val(),
+
+                        },
+                    success: function (da) {
+                        toastr.success(da);
+                       // $("#mdlETUser .close").click()
+
+                    },
+
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    }
+                });
+            return true;
+
+        }
+
+
+</script>
+
+
+

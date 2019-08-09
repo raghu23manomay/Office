@@ -1,0 +1,142 @@
+﻿ 
+@model office.Models.Customer
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "";
+} 
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmCandidate" }))
+{ 
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Add Customer </h5>
+                    <div class="ibox-tools">
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row  form-group"> 
+                           
+                                <div class="col-md-3">
+                                    <label>Customer Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.HiddenFor(a => a.CustomerID, new { @id = "CustomerID" })
+                                    @Html.TextBoxFor(a => a.CustomerName, new { @class = "form-control", title = "CustomerName", @id = "CustomerName" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Customer</p>
+                                </div>
+                            </div>
+                        
+                     
+                    <div class="row  form-group">
+                       
+                                <div class="col-md-3">
+                                    <label>City</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.CityID), "Select City", new { @class = "form-control input-sm", @id = "CityID", Title = "CityID" })
+ 
+                                    <p id="Namevalidation" style="color:red;display:none">Please Select City</p>
+                                        </div>
+
+                            </div>
+                            <div class="row  form-group">
+
+                                        <div class="col-md-3">
+                                            <label>Mobile</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(a => a.Mobile, new { @class = "form-control", title = "Mobile", @id = "Mobile" })
+                                            <p id="Namevalidation" style="color:red;display:none">Please Enter Customer</p>
+                                        </div>
+
+                            </div>
+                            <div class="row form-group">
+
+                                        <div class="col-md-3">
+                                            <label>Email ID</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(a => a.Email, new { @class = "form-control", title = "Email", @id = "Email" })
+                                            <p id="Namevalidation" style="color:red;display:none">Please Enter Customer</p>
+                                        </div>
+
+                            </div>
+                            <div class="row form-group" style="padding-top: 10px;">
+                                <div class="col-md-3">
+                                    <label> </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="">
+                                        @Html.CheckBoxFor(a => a.IsActive, new { @class = "   ", title = "Active", @id = "IsActive" })
+                                        <label for="checkbox5">
+                                            Active
+                                        </label>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="">
+                                        @Html.ActionLink("Cancel", "CustomerList", "Master", null, new { @class = "btn btn-white" })
+                                        <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="~/js/jquery-2.1.1.js"></script>
+        }
+        <script>
+
+            $(document).ready(function () {
+                $("#Namevalidation").hide();
+                $('#btnsave').on('click', function () {
+                 
+                    var CustomerName;
+                    CustomerName = $("#CustomerName").val();
+                    if (CustomerName == "") {
+                        $("#Namevalidation").show();
+                        return false;
+                    }
+                    else {
+
+                        $.ajax({
+                            type: 'POST',
+                            dataType: 'json',
+                            url: '/Master/SaveCustomer',
+                            data:
+                            {
+                                CustomerID: $("#CustomerID").val() ,
+                                CustomerName: $("#CustomerName").val(),
+                                CityID: $("#CityID").val(),
+                                Mobile: $("#Mobile").val(),
+                                Email: $("#Email").val(),
+                                IsActive: $('input[name=IsActive]').prop('checked')
+                            },
+                            success: function (da) {
+                                location.href = "CustomerList";
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+
+
+
