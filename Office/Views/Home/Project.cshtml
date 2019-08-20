@@ -1,0 +1,834 @@
+﻿<div class="container-fluid" style="min-height: 510px;">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="headline">
+                <h4 class="color-red">
+                    Create New Project <small>Create New Project</small>
+                </h4>
+            </div>
+        </div>
+        <div class="form-horizontal col-md-12">
+            <form action="/Admin/Project/CreateNewProject" method="post" novalidate="novalidate">
+                <div class="form-horizontal col-md-12">
+                    <div class="col-md-6 pull-left">
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Project Title
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control CapsLetter" data-val="true" data-val-required="The Title field is required." id="Title" name="Title" type="text" value="">
+                                <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Project Title ShortName
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control CapsLetter" id="TitleShortName" name="TitleShortName" type="text" value="">
+                                <span class="field-validation-valid" data-valmsg-for="TitleShortName" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Developer Name
+                            </label>
+                            <div class="col-md-7">
+                                <select class="styled" id="Developerss" name="DeveloperId" value="sdf">
+                                    <option value="99"> J. S. Construction                               </option>
+                                    <option value="112">Aadesh Developers                                 </option>
+                                    <option value="193">Aditya Developers                                 </option>
+                                    <option value="138">Agarwal Manoj Gopikishan                          </option>
+                                    <option value="46">Aher Builders &amp; Developers                        </option>
+                                    <option value="28">Archie Nova Associates                            </option>
+                                    <option value="30">Archie Nova Creations                             </option>
+                                    <option value="36">Archie Nova Enterprises                           </option>
+                                    <option value="33">Archie Nova Landmarks                             </option>
+                                    <option value="199">Arth Develpoers                                   </option>
+                                    <option value="124">Aru Mandakini Popat                               </option>
+                                    <option value="16">Ashtavinayak City Pune L.L.P.                     </option>
+                                    <option value="1">Ashtavinayak Promoters &amp; Developers               </option>
+                                    <option value="115">Atharva Construction                              </option>
+                                    <option value="87">Atharva Developers &amp; Builders                     </option>
+                                    <option value="72">Atharva Properties Unit-2 &amp; Unit-3                </option>
+                                    <option value="21">Atharva Siddhi Developers                         </option>
+                                    <option value="22">Balaji Builders &amp; Developers                      </option>
+                                    <option value="239">Bapusaheb Mukinda Kanchan                         </option>
+                                    <option value="233">Baravkar Adv                                      </option>
+                                    <option value="230">Bhadale Amit                                      </option>
+                                    <option value="39">Bhagwat Navnath Nagnath                           </option>
+                                    <option value="152">Bhekrai Construction                              </option>
+                                    <option value="58">Bhoomi Agro Bio Foods                             </option>
+                                    <option value="277">Bhujbal Harish                                    </option>
+                                    <option value="271">Bhujbal Tushar                                    </option>
+                                    <option value="284">Binavat Satish                                    </option>
+                                    <option value="267">Biradar Wadki                                     </option>
+                                    <option value="228">Borawake Pravinkumar                              </option>
+                                    <option value="209">Bothara Vijay Gulabchand                          </option>
+                                    <option value="43">BrightEra Builders                                </option>
+                                    <option value="249">Chaudhari Santosh                                 </option>
+                                    <option value="191">Chavan Dattatray Ramrao                           </option>
+                                    <option value="192">Chavan Himmatsinh Hanumantrao                     </option>
+                                    <option value="196">Dabade Sushma Suresh                              </option>
+                                    <option value="215">Dhamal Ajinkya                                    </option>
+                                    <option value="244">Dhamal Rahul                                      </option>
+                                    <option value="229">Dhavale Jayvant                                   </option>
+                                    <option value="113">Dhavale Jayvant Santaram                          </option>
+                                    <option value="260">Dhole Raghunath                                   </option>
+                                    <option value="200">Dhore Pramila Uttam                               </option>
+                                    <option value="132">Divekar Vijay Bhaskar                             </option>
+                                    <option value="102">Dolas Vijay Shivram                               </option>
+                                    <option value="63">Domale Meena Sunil                                </option>
+                                    <option value="98">Dr. Raut Somnath                                  </option>
+                                    <option value="266">Durga Developers                                  </option>
+                                    <option value="18">Durvankur Vastu Nirmiti Pvt. Ltd.                 </option>
+                                    <option value="281">Gaikwad Tushar                                    </option>
+                                    <option value="64">Gandhari Construction                             </option>
+                                    <option value="208">Gandharva Landmarks                               </option>
+                                    <option value="48">Gandharva Properties                              </option>
+                                    <option value="10">Ganesha Developers                                </option>
+                                    <option value="140">Gavhane Rahul Narhari                             </option>
+                                    <option value="141">Gavhane Shankar Dnyabaji                          </option>
+                                    <option value="222">Ghevade Rohidas                                   </option>
+                                    <option value="195">Ghule Anant Shivaji                               </option>
+                                    <option value="250">Ghule Digambar                                    </option>
+                                    <option value="70">Ghule Nilesh Chandrakant                          </option>
+                                    <option value="243">Ghule Rahul                                       </option>
+                                    <option value="210">Ghule Ratnabai Vitthal                            </option>
+                                    <option value="256">Ghule Sagar                                       </option>
+                                    <option value="156">Gite Sandesh Dattatray                            </option>
+                                    <option value="214">Gogawale Anil                                     </option>
+                                    <option value="19">GSK Developers                                    </option>
+                                    <option value="80">Gurudatta Developers                              </option>
+                                    <option value="235">H A Developers                                    </option>
+                                    <option value="247">H. R. Pawar                                       </option>
+                                    <option value="68">Harpale Babita Ramchandra                         </option>
+                                    <option value="78">Harpale Balasaheb Tukaram                         </option>
+                                    <option value="257">Harpale Sanjay                                    </option>
+                                    <option value="110">Harpale Santosh Ramesh                            </option>
+                                    <option value="164">Harpale Tukaram Babanrao                          </option>
+                                    <option value="282">Harpale Vijay Dr                                  </option>
+                                    <option value="183">Harsh Laxmi Developers                            </option>
+                                    <option value="6">Heera Developers                                  </option>
+                                    <option value="12">Himalaya Landmarks Pvt. Ltd.                      </option>
+                                    <option value="273">Jadhav Gurunath                                   </option>
+                                    <option value="11">Jagdamba Developers                               </option>
+                                    <option value="272">Jagtap Ganesh                                     </option>
+                                    <option value="276">Jay Bhagwan Construction And Developers           </option>
+                                    <option value="258">Kakade Deepak Wadki                               </option>
+                                    <option value="116">Kalbhor Ganesh Jijaba                             </option>
+                                    <option value="201">Kalbhor Nalini Sharad                             </option>
+                                    <option value="38">Kale Balkrishna Manaji                            </option>
+                                    <option value="269">Kale Tatya                                        </option>
+                                    <option value="216">Kamthe Sadhana Somnath                            </option>
+                                    <option value="180">Karwape Ganesh Kisan                              </option>
+                                    <option value="114">Kedari Hemant Ratan                               </option>
+                                    <option value="259">Kekan Raju                                        </option>
+                                    <option value="117">Kesakar Dada Maruti                               </option>
+                                    <option value="178">Khutwad Pradip Vishnu                             </option>
+                                    <option value="127">Khutwad Rajendra Gulabrao                         </option>
+                                    <option value="207">Kishor Thakkar                                    </option>
+                                    <option value="24">Kohinoor Properties                               </option>
+                                    <option value="129">Kolape Jagadish Shivaji                           </option>
+                                    <option value="245">Kolte                                             </option>
+                                    <option value="278">Konde Vikrant                                     </option>
+                                    <option value="50">Kotwal Balasaheb Dattatraya                       </option>
+                                    <option value="226">Kumbhar Kondhwa                                   </option>
+                                    <option value="274">Kunjir Rangnath                                   </option>
+                                    <option value="106">Ladakat Jyoti Sunil                               </option>
+                                    <option value="133">Laxmi Ramna Creation                              </option>
+                                    <option value="285">Liebherr CMCtec                                   </option>
+                                    <option value="227">Loharkar Rajendra                                 </option>
+                                    <option value="248">M/s. Saptarshi Developers                         </option>
+                                    <option value="268">Mandale Sudhir                                    </option>
+                                    <option value="169">Marale Mayuresh Bhagwat                           </option>
+                                    <option value="56">Meena Enterprises                                 </option>
+                                    <option value="37">Mehta Kishor Associates                           </option>
+                                    <option value="121">Mhetre Rahul Sudham                               </option>
+                                    <option value="120">Mhetre Sudam Maruti                               </option>
+                                    <option value="198">MIT                                               </option>
+                                    <option value="137">Mohite Patil School                               </option>
+                                    <option value="57">Moraya Estates                                    </option>
+                                    <option value="237">More Ajit                                         </option>
+                                    <option value="279">Motwani Sachin                                    </option>
+                                    <option value="238">Mr. Shaikh Nazim Rafi                             </option>
+                                    <option value="168">Nalanda Nagari                                    </option>
+                                    <option value="122">Nalawade Bandu Ramchandra                         </option>
+                                    <option value="89">Natraj Associate                                  </option>
+                                    <option value="218">Nevse Rajashri Ajay                               </option>
+                                    <option value="76">Nirman Construction Housing Co.                   </option>
+                                    <option value="13">Nirmiti Constructions                             </option>
+                                    <option value="93">Nishant Constructions                             </option>
+                                    <option value="25">Om Sai Builders                                   </option>
+                                    <option value="103">Om Sai Developers                                 </option>
+                                    <option value="252">Ozone Properties                                  </option>
+                                    <option value="40">P. S. Construction                                </option>
+                                    <option value="202">P. S. Promotors &amp; Developers                      </option>
+                                    <option value="155">Panchratna Construction                           </option>
+                                    <option value="75">Pankaj Developers                                 </option>
+                                    <option value="119">Patel Jignesh Vallabhbhai                         </option>
+                                    <option value="118">Patel Vipul Vallabh                               </option>
+                                    <option value="171">Pathare Bapusaheb Tukaram                         </option>
+                                    <option value="83">Patil Rohini Chandrakant                          </option>
+                                    <option value="135">Potawade Santosh Dinkar                           </option>
+                                    <option value="283">Pote Jayshree                                     </option>
+                                    <option value="220">Prarup Consultant                                 </option>
+                                    <option value="139">Prathamesh Construction                           </option>
+                                    <option value="261">Rahul Gavhane                                     </option>
+                                    <option value="7">Raj Developers                                    </option>
+                                    <option value="130">Raskar Sanjeev Panduranga                         </option>
+                                    <option value="95">Raskonda Shriniwas Laxman                         </option>
+                                    <option value="105">Raut Somnath Vitthal                              </option>
+                                    <option value="97">Ravideep Developers                               </option>
+                                    <option value="41">S. P. Developers                                  </option>
+                                    <option value="79">S. S. Developers                                  </option>
+                                    <option value="184">Sahara Associates                                 </option>
+                                    <option value="88">Sahara Buildcon                                   </option>
+                                    <option value="251">Sahara Developers                                 </option>
+                                    <option value="34">Sahyadri Enterprises                              </option>
+                                    <option value="165">Sai Associates                                    </option>
+                                    <option value="159">Sai Developers                                    </option>
+                                    <option value="35">Sai Shraddha Associates                           </option>
+                                    <option value="29">Sai Shraddha Enterprises                          </option>
+                                    <option value="42">Sakhare Shivaji Bhiva                             </option>
+                                    <option value="153">Salakshmi Developement Co                         </option>
+                                    <option value="17">Samarth Developers                                </option>
+                                    <option value="4">Samrudhee Homes                                   </option>
+                                    <option value="174">Sanskruti Developers                              </option>
+                                    <option value="26">Sanvi Developers                                  </option>
+                                    <option value="3">Saptarshi Developers                              </option>
+                                    <option value="254">Saptarshi Properties                              </option>
+                                    <option value="134">Saptshrungi Construction                          </option>
+                                    <option value="280">Satav Amit                                        </option>
+                                    <option value="91">Satav Sanjay Amrutrao                             </option>
+                                    <option value="104">Satav Sushant Dnyaneshwar                         </option>
+                                    <option value="264">Satish Pillu Binawat                              </option>
+                                    <option value="197">Satyam Properties                                 </option>
+                                    <option value="47">Savale Baliram Chandrahar                         </option>
+                                    <option value="179">Sayyad Sameer Abbas                               </option>
+                                    <option value="53">Scindia Construction                              </option>
+                                    <option value="270">Sermat Resistranic                                </option>
+                                    <option value="262">Shashikant Kanherkar                              </option>
+                                    <option value="161">Shewale Satish Jayvantrao                         </option>
+                                    <option value="90">Shewale Vikram Jagannath                          </option>
+                                    <option value="231">Shewale Vilas                                     </option>
+                                    <option value="52">Shinde Prakash Rajaram                            </option>
+                                    <option value="232">Shinde Shekhar                                    </option>
+                                    <option value="166">Shitole Anil Bhagvan                              </option>
+                                    <option value="27">Shivmudra Builders                                </option>
+                                    <option value="66">Shivsagar Developers                              </option>
+                                    <option value="181">Shivshakti Builders                               </option>
+                                    <option value="5">Shivshakti Promoters &amp; Builders                   </option>
+                                    <option value="77">Shree Bhekrai  Builders                           </option>
+                                    <option value="221">Shree Ganesh Developers                           </option>
+                                    <option value="175">Shree Prayagdham Trust                            </option>
+                                    <option value="154">Shreyash Developers                               </option>
+                                    <option value="187">Shri Raj Developers                               </option>
+                                    <option value="67">Shri Ramchandra Education Society                 </option>
+                                    <option value="61">Shri Shivsagar Properties                         </option>
+                                    <option value="253">Shri Siddhivinayak Builders                       </option>
+                                    <option value="224">Shripad Builders &amp; Developers                     </option>
+                                    <option value="160">Shubh Infra                                       </option>
+                                    <option value="162">Siddhivinayak Associates                          </option>
+                                    <option value="217">Siddhivinayak Builders                            </option>
+                                    <option value="219">Siddhivinayak Developers                          </option>
+                                    <option value="8">Siddhivinayak Developers Wagholi                  </option>
+                                    <option value="92">Siddhivinayak Enterprises                         </option>
+                                    <option value="14">Siddhivinayak Properties                          </option>
+                                    <option value="15">Siddhivinayak Properties Huf                      </option>
+                                    <option value="71">Simplicity Group                                  </option>
+                                    <option value="126">Solanki Arvind Gulabchand                         </option>
+                                    <option value="136">Somwanshi Anand Suhas                             </option>
+                                    <option value="265">Subhash Zagade                                    </option>
+                                    <option value="176">Sudarshan Developers                              </option>
+                                    <option value="44">Sudhir Construction                               </option>
+                                    <option value="45">Sudhir Mandale &amp; Associates                       </option>
+                                    <option value="246">Sunil Vitthal Navale                              </option>
+                                    <option value="85">Sunsai Developers                                 </option>
+                                    <option value="111">Swaymbhu Builders                                 </option>
+                                    <option value="86">Tarangana Developers                              </option>
+                                    <option value="32">Tejprit Enterprises                               </option>
+                                    <option value="236">Thombre Abhimanyu                                 </option>
+                                    <option value="211">Tilekar Vijay                                     </option>
+                                    <option value="81">V. R. Konde &amp; Associates                          </option>
+                                    <option value="240">Vasantlal Sardarmal Pitale                        </option>
+                                    <option value="23">Vastushilp Builders &amp; Developers                  </option>
+                                    <option value="123">Vatre Ramesh Baburao                              </option>
+                                    <option value="263">Vikram Jadhav                                     </option>
+                                    <option value="20">Vinayak Developers                                </option>
+                                    <option value="234">Vineet Kumar                                      </option>
+                                    <option value="163">Vishal Buildcon                                   </option>
+                                    <option value="204">Waghmare Sopan Jijaba                             </option>
+                                    <option value="73">Yadav Vipul Pravin                                </option>
+                                    <option value="31">Yashanka Enterprises                              </option>
+                                    <option value="223">Yashwant Ho Jaywant Ho Devasthan Trust            </option>
+                                    <option value="172">Yenpure Vidyut Vishwas                            </option>
+                                    <option value="242">Yuneet Developers                                 </option>
+                                    <option value="212">Zagade Balasaheb                                  </option>
+                                    <option value="213">Zagade Santosh                                    </option>
+                                    <option value="177">Zagade Subhash Bandu                              </option>
+                                    <option value="131">Zende Pavan Arun                                  </option>
+                                    <option value="275">Zende Rajendra                                    </option>
+                                    <option value="60">Zenith Landmarks                                  </option>
+                                    <option value="2">Zenith Landmarks Pvt. Ltd.                        </option>
+                                </select>                        <span class="field-validation-valid" data-valmsg-for="DeveloperId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="Lists">
+                            <div class="col-md-5">
+                                <select class="form-control" id="ListBox1" multiple="multiple" name="ListBox1" style="height:140px;width:100%;">
+                                    <option value="42"> - Bire   Shakti  Raman  -</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+
+                            <i class="btn btn-primary listbutton" id="btnAdd"><span>&nbsp;&gt;&nbsp;</span></i>
+                            <div class="clear">
+                            </div>
+                            <i class="btn btn-primary listbutton" id="btnAddAll"><span>&gt;&gt;</span></i>
+                            <div class="clear">
+                            </div>
+                            <i class="btn btn-primary listbutton" id="btnRemove"><span>&nbsp;&lt;&nbsp;</span></i>
+                            <div class="clear">
+                            </div>
+                            <i class="btn btn-primary listbutton" id="btnRemoveAll"><span>&lt;&lt;</span></i>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="col-md-5 pull-right">
+                            <select class="form-control" id="ListBox2" multiple="multiple" name="ListBox2" style="height:140px;width:100%;"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                            </label>
+                            <div class="col-md-7">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+
+                                Project Coordinator
+                            </label>
+                            <div class="col-md-7">
+                                <select class="styled valid" data-val="true" data-val-number="The field PMEmployeeId must be a number." data-val-required="The PMEmployeeId field is required." id="ProjectCoordinator" name="PMEmployeeId" value="sdf" aria-required="true" aria-describedby="ProjectCoordinator-error" aria-invalid="false">
+                                    <option value="4"> Raskar Santosh </option>
+                                    <option value="16"> Choudhary  Jalal </option>
+                                    <option value="17"> Mithari Uday </option>
+                                    <option value="18"> Patil  Ganesh </option>
+                                    <option value="19">  Admin</option>
+                                    <option value="38">Pangarkar Rashmi</option>
+                                    <option value="39">Bhosale Prashant</option>
+                                    <option value="40">Chopane Niteen</option>
+                                    <option value="41">Baraskar Ismail</option>
+                                    <option value="42">Ogale Sneha</option>
+                                    <option value="43">Zurange Pankaj</option>
+                                    <option value="44">Shewale Hrishikesh </option>
+                                    <option value="45">Khandelwal Parag</option>
+                                    <option value="46">Suryawanshi Akshada</option>
+                                    <option value="47">Sonawale Simran</option>
+                                </select>
+                                <span class="field-validation-valid" data-valmsg-for="PMEmployeeId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Project Assistant
+                            </label>
+                            <div class="col-md-7">
+                                <select class="styled" data-val="true" data-val-number="The field AssitantId must be a number." id="EmployeeName" name="AssitantId" value="sdf">
+                                    <option value="4"> Raskar Santosh </option>
+                                    <option value="16"> Choudhary  Jalal </option>
+                                    <option value="17"> Mithari Uday </option>
+                                    <option value="18"> Patil  Ganesh </option>
+                                    <option value="19">  Admin</option>
+                                    <option value="38">Pangarkar Rashmi</option>
+                                    <option value="39">Bhosale Prashant</option>
+                                    <option value="40">Chopane Niteen</option>
+                                    <option value="41">Baraskar Ismail</option>
+                                    <option value="42">Ogale Sneha</option>
+                                    <option value="43">Zurange Pankaj</option>
+                                    <option value="44">Shewale Hrishikesh </option>
+                                    <option value="45">Khandelwal Parag</option>
+                                    <option value="46">Suryawanshi Akshada</option>
+                                    <option value="47">Sonawale Simran</option>
+                                </select>
+                                <span class="field-validation-valid" data-valmsg-for="AssitantId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <!--Sachin on 16/6/16 for all employee list in listbox starts here-->
+                        <div class="Lists">
+                            <div class="col-md-5">
+                                <select class="form-control" id="EmployeeListBox1" multiple="multiple" name="EmployeeListBox1" style="height:140px;width:100%;">
+                                    <option value="4"> Raskar Santosh </option>
+                                    <option value="16"> Choudhary  Jalal </option>
+                                    <option value="17"> Mithari Uday </option>
+                                    <option value="18"> Patil  Ganesh </option>
+                                    <option value="19">  Admin</option>
+                                    <option value="38">Pangarkar Rashmi</option>
+                                    <option value="39">Bhosale Prashant</option>
+                                    <option value="40">Chopane Niteen</option>
+                                    <option value="41">Baraskar Ismail</option>
+                                    <option value="42">Ogale Sneha</option>
+                                    <option value="43">Zurange Pankaj</option>
+                                    <option value="44">Shewale Hrishikesh </option>
+                                    <option value="45">Khandelwal Parag</option>
+                                    <option value="46">Suryawanshi Akshada</option>
+                                    <option value="47">Sonawale Simran</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <i class="btn btn-primary listbutton" id="btnAddEmployee"><span>&nbsp;&gt;&nbsp;</span></i>
+                            <div class="clear">
+                            </div>
+                            <i class="btn btn-primary listbutton" id="btnAddAllEmployee"><span>&gt;&gt;</span></i>
+                            <div class="clear">
+                            </div>
+                            <i class="btn btn-primary listbutton" id="btnRemoveEmployee"><span>&nbsp;&lt;&nbsp;</span></i>
+                            <div class="clear">
+                            </div>
+                            <i class="btn btn-primary listbutton" id="btnRemoveAllEmployee"><span>&lt;&lt;</span></i>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="col-md-5 pull-right">
+                            <select class="form-control" id="EmployeeListBox2" multiple="multiple" name="EmployeeListBox2" style="height:140px;width:100%;"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                            </label>
+                            <div class="col-md-7">
+                            </div>
+                        </div>
+                        <!--Sachin on 16/6/16 for all employee list in listbox ends here-->
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Project Status
+                            </label>
+                            <div class="col-md-7">
+                                <select class="styled" data-val="true" data-val-number="The field ProjectStatusId must be a number." data-val-required="The ProjectStatusId field is required." id="ProjectStatus" name="ProjectStatusId" value="sdf">
+                                    <option value="1">Design Stage</option>
+                                    <option value="2">Completed</option>
+                                    <option value="3">Under Construction</option>
+                                    <option value="4">Not Completed</option>
+                                    <option value="5">On Hold</option>
+                                    <option value="7">Sanctioning</option>
+                                </select>
+                                <span class="field-validation-valid" data-valmsg-for="ProjectStatusId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Project Status 2
+                            </label>
+                            <div class="col-md-7">
+                                <select class="styled" data-val="true" data-val-number="The field ProjectStatusRId must be a number." id="ProjectStatusRId" name="ProjectStatusRId">
+                                    <option value="1">Recent</option>
+                                    <option value="2">Completed</option>
+                                </select>
+                                <span class="field-validation-valid" data-valmsg-for="ProjectStatusRId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Project Type
+                            </label>
+                            <div class="col-md-7">
+                                <select class="styled" data-val="true" data-val-number="The field ProjectTypeId must be a number." data-val-required="The ProjectTypeId field is required." id="ProjectTy" name="ProjectTypeId" value="sdf">
+                                    <option value="1">Residential Building</option>
+                                    <option value="2">Sanctioning - Godown</option>
+                                    <option value="3">Plan Estimate</option>
+                                    <option value="4">Commercial Building</option>
+                                    <option value="5">Residential Commercial</option>
+                                    <option value="6">Sanctioning - Industrial</option>
+                                    <option value="7">Sanctioning - Hotel Lodging</option>
+                                    <option value="8">Sanctioning - Plotting Layout</option>
+                                    <option value="9">Private Residence</option>
+                                    <option value="10">Sanctioning - Resort</option>
+                                    <option value="11">Resort</option>
+                                    <option value="12">Religious Building</option>
+                                    <option value="13">Hospitality Building</option>
+                                    <option value="14">Educational Building</option>
+                                    <option value="15">Competition</option>
+                                </select>
+                                <span class="field-validation-valid" data-valmsg-for="ProjectStatusId" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                File No
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="FileNo" name="FileNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="FileNo" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Content Place
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="ContentPlace" name="ContentPlace" type="text" value=""><span class="field-validation-valid" data-valmsg-for="ContentPlace" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Survey No
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="SurveyNo" name="SurveyNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="SurveyNo" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Gat No
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="GatNo" name="GatNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="GatNo" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                C.T.S. No
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="CTSNo" name="CTSNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="CTSNo" data-valmsg-replace="true"></span>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Hissa No
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="HissaNo" name="HissaNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="HissaNo" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6 pull-left">
+
+
+
+
+
+
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Plot No
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="PlotNo" name="PlotNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="PlotNo" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Road
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="Road" name="Road" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Road" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+
+
+                            <label class="col-md-5 control-label">
+                                Path
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="Path" name="Path" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Path" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Plot Area (sq. ft.)
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-number="The field PlotArea must be a number." data-val-regex="PlotArea Must Be Numeric" data-val-regex-pattern="^[0-9]*([.][0-9]{1,20})?$" id="PlotArea" name="PlotArea" type="text" value="">
+
+                                <span class="field-validation-valid" data-valmsg-for="PlotArea" data-valmsg-replace="true"></span>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Plot Area (sq. meter)
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-number="The field PlotAreaM must be a number." id="PlotAreaM" name="PlotAreaM" type="text" value="">
+                                <span class="field-validation-valid" data-valmsg-for="PlotAreaM" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Salable Area (sq.ft.)
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-number="The field SellableAreaFt must be a number." data-val-regex="PlotArea Must Be Numeric" data-val-regex-pattern="^[0-9]*([.][0-9]{1,20})?$" id="SellableAreaFt" name="SellableAreaFt" type="text" value=""><span class="field-validation-valid" data-valmsg-for="SellableAreaFt" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Salable Area (sq.meter)
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-number="The field SellableAreaM must be a number." id="SellableAreaM" name="SellableAreaM" type="text" value=""><span class="field-validation-valid" data-valmsg-for="SellableAreaM" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Number Of Flat
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-number="The field NumberOfFlat must be a number." data-val-regex="NumberOfFlat Must Be Numeric" data-val-regex-pattern="^[0-9]*$" id="NumberOfFlat" name="NumberOfFlat" type="text" value=""><span class="field-validation-valid" data-valmsg-for="NumberOfFlat" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Number Of Shop
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-number="The field NumberOfShop must be a number." data-val-regex="NumberOfShop Must Be Numeric" data-val-regex-pattern="^[0-9]*$" id="NumberOfShop" name="NumberOfShop" type="text" value=""><span class="field-validation-valid" data-valmsg-for="NumberOfShop" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Gaon
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control ui-autocomplete-input" id="Gaon" name="Gaon" type="text" value="" autocomplete="off"><span class="field-validation-valid" data-valmsg-for="Gaon" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Taluka
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control ui-autocomplete-input" id="Taluka" name="Taluka" type="text" value="" autocomplete="off"><span class="field-validation-valid" data-valmsg-for="Taluka" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                District
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control ui-autocomplete-input" id="District" name="District" type="text" value="" autocomplete="off"><span class="field-validation-valid" data-valmsg-for="District" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Year
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-regex="Year must be number" data-val-regex-pattern="([1-9][0-9]*)" id="Year" name="Year" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Year" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Authority
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="Authority" name="Authority" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Authority" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Estimated Duration
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" id="EstimatedDuration" name="EstimatedDuration" type="text" value="">
+                                <span class="field-validation-valid" data-valmsg-for="EstimatedDuration" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Estimated Cost
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control" data-val="true" data-val-number="The field EstimatedCost must be a number." id="EstimatedCost" name="EstimatedCost" type="text" value="">
+                                <span class="field-validation-valid" data-valmsg-for="EstimatedCost" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                                Start Date
+                            </label>
+                            <div class="col-md-7">
+                                <input class="form-control hasDatepicker" id="StartDate" name="StartDate" type="text" value="">
+                                <span class="field-validation-valid" data-valmsg-for="StartDate" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+                        <div id="mydiv">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">
+                                    Consultant Type
+                                </label>
+                                <div class="col-md-7">
+                                    <select class="styled" data-val="true" data-val-number="The field CosultantType must be a number." id="CosultantsType" name="CosultantType">
+                                        <option value="">----Select----</option>
+                                        <option value="13">3d Designer</option>
+                                        <option value="15">Acoustical Consultant</option>
+                                        <option value="12">Brochure Designer</option>
+                                        <option value="3">Electrical Consultant</option>
+                                        <option value="7">Environmental Designer</option>
+                                        <option value="5">Environmental Laisoning Consultant</option>
+                                        <option value="10">Geological Surveyor</option>
+                                        <option value="14">Ground Water Surveyor</option>
+                                        <option value="16">HVAC Consultant</option>
+                                        <option value="11">Interior Designer</option>
+                                        <option value="9">Land Surveyor</option>
+                                        <option value="8">Landscape Designer</option>
+                                        <option value="2">MEP Consultant</option>
+                                        <option value="4">Plumbing Consultant</option>
+                                        <option value="17">Project Management Consultant</option>
+                                        <option value="1">Structural Consultant</option>
+                                        <option value="6">Swimming Pool Consultant</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">
+                                    Consultant
+                                </label>
+                                <div class="col-md-7">
+                                    <select class="styled" id="Cosultant" name="Consultant">
+                                        <option value="">----Select----</option>
+                                        <option value="20">3D Power Visualization Pvt Ltd.</option>
+                                        <option value="50">3D Visualiser</option>
+                                        <option value="19">Sachin Birangane</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <a onclick="generatenew()" id="Document" class="pull-right glyphicon glyphicon-plus-sign">
+                        </a>
+                        <div class="clearfix">
+                        </div>
+                        <div id="clonedItem">
+                        </div>
+
+
+                        <div class="divider"></div>
+                        <div id="mydivcontr">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">
+                                    Contractor Type
+                                </label>
+                                <div class="col-md-7">
+                                    <select class="styled" id="ContractorType" name="ContractorType">
+                                        <option value="">----Select----</option>
+                                        <option value="17">Acoustical Contractor</option>
+                                        <option value="13">Biosanitiser Contractor</option>
+                                        <option value="12">Borewell Contractor</option>
+                                        <option value="2">Brickwork Plaster Contractor</option>
+                                        <option value="3">Electrical Contractor</option>
+                                        <option value="14">Fire Fighting System Contractor</option>
+                                        <option value="7">Garden Contractor</option>
+                                        <option value="16">HVAC Contractor</option>
+                                        <option value="15">Lift Contractor</option>
+                                        <option value="8">Mseb Contractor</option>
+                                        <option value="4">Plumbing Contractor</option>
+                                        <option value="11">Rainwater Harvesting Contractor</option>
+                                        <option value="1">Rcc Contractor</option>
+                                        <option value="9">Security System Contractor</option>
+                                        <option value="10">Solar Water Heating System Contractor</option>
+                                        <option value="6">Stp Contractor</option>
+                                        <option value="5">Tiling Contractor</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">
+                                    Contractor
+                                </label>
+                                <div class="col-md-7">
+                                    <select class="styled" id="Contractor" name="Contractor">
+                                        <option value="">----Select----</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <a onclick="generatenewcontractor()" id="Documents3" class="pull-right glyphicon glyphicon-plus-sign">
+                        </a>
+                        <div class="clearfix">
+                        </div>
+                        <div id="clonedItem1">
+                        </div>
+
+
+
+
+                        <div class="divider"></div>
+                        <div id="mydivproject">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">
+                                    Project Field
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" id="ProjectField" name="ProjectField" type="text" value=""><span class="field-validation-valid" data-valmsg-for="ProjectField" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">
+                                    Project Parameters
+                                </label>
+                                <div class="col-md-7">
+                                    <input class="form-control" id="ProjectParameters" name="ProjectParameters" type="text" value=""><span class="field-validation-valid" data-valmsg-for="ProjectParameters" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <a onclick="generatenewproject()" id="Document1" class="pull-right glyphicon glyphicon-plus-sign">
+                        </a>
+                        <div class="clearfix">
+                        </div>
+                        <div id="clonedItemproject">
+                        </div>
+                        <div class="divider"></div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label">
+                            </label>
+                            <div class="col-md-7">
+                                <input type="submit" value="Create" id="btnCreate" class="btn btn-primary">|<a class="btn btn-success" href="/Admin/Project">Back To List</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

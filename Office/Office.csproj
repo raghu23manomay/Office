@@ -1626,6 +1626,7 @@
     <Content Include="Views\Master\SubscriptionGrid.cshtml" />
     <Content Include="Views\Master\SubscriptionList.cshtml" />
     <Content Include="Views\Master\CustomerList.cshtml" />
+    <Content Include="Views\Home\Project.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1636,7 +1637,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadFile\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
