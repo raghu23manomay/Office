@@ -848,5 +848,18 @@ namespace Calibration.Controllers
 
             return res;
         }
+
+
+        #region MemberMaster
+        public ActionResult AddMember()
+        {
+            
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("AddMember")
+                    : View("AddMember");
+        }
+
+        #endregion
+
     }
 }
