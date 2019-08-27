@@ -1628,6 +1628,10 @@
     <Content Include="Views\Master\CustomerList.cshtml" />
     <Content Include="Views\Home\Project.cshtml" />
     <Content Include="Views\Master\AddMember.cshtml" />
+    <Content Include="Views\Master\_StateWsieCityFilter.cshtml" />
+    <Content Include="Views\Master\PersonList.cshtml" />
+    <Content Include="Views\Master\_PersonGrid.cshtml" />
+    <Content Include="Views\Master\AddPerson.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
