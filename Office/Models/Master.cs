@@ -173,4 +173,132 @@ namespace office.Models
         public int? TotalRows { get; set; }
 
     }
+
+    public class PersonList
+    {
+        [Key]
+       public int? PersonalInfoID   { get; set; }
+       public string FullName { get; set; }      
+       public string BirthDate        { get; set; }
+       public string Address1         { get; set; }
+       public string Address2         { get; set; }
+       public string DesignationName { get; set; }
+       public string Note             { get; set; }
+       public string Email            { get; set; }
+       public string Mobile           { get; set; }
+       public int? TotalRows { get; set; }
+
+    }
+
+    public class Person
+    {
+        [Key]
+        public int? PersonalInfoID { get; set; }
+        public string Prefix { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string DesignationId { get; set; }
+        public string Note { get; set; }
+        public string Email { get; set; }
+        public string Mobile { get; set; }
+        public bool IsActive { get; set; }
+
+    }
+
+    public class SaveMobile
+    {
+        [Key]
+        public string Mobile { get; set; }
+    }
+
+    public class SaveEmail 
+    {
+        [Key]
+        public string Email { get; set; }
+    }
+
+    public class SaveConactPerson
+    {
+        [Key]
+        public int? ContactPersonId { get; set; }
+    }
+
+    public class SavePhone
+    {
+        [Key]
+        public string Phone { get; set; }
+    }
+
+    public class SaveOfficeNo
+    {
+        [Key]
+        public string OfficeNo { get; set; }
+    }
+
+    public class SaveAdditionalFiled
+    {
+        [Key]
+        public string AdditionlField { get; set; }
+    }
+
+    public class SaveParameter
+    {
+        [Key]
+        public string Parameter { get; set; }
+    }
+
+    public class SaveMemberPerson
+    {
+        [Key]
+        public int PersonMemberID { get; set; }
+        public int DesignationId { get; set; }
+    }
+
+
+    public class Member
+    {
+        [Key]
+     
+       public string MemberType        { get; set; }
+       public int TitleID           { get; set; }
+       public string Name              { get; set; }
+       public string ShortName         { get; set; }
+       public string CompanyName       { get; set; }
+       public int DesignationId     { get; set; }
+       public string Website           { get; set; }
+       public string OfficeAddress1    { get; set; }
+       public string OfficeAddress2    { get; set; }
+       public int StateID           { get; set; }
+       public string District        { get; set; }
+       public int CityID            { get; set; }
+       public string ZipCode           { get; set; }
+       public DateTime BirthDate         { get; set; }
+       public string ShippingAddress   { get; set; }
+       public string PowerofAttorny    { get; set; }
+       public int CreatedBy         { get; set; }
+       public string ResidentialAddress1  { get; set; }
+       public string ResidentialAddress2  { get; set; }
+       public int? ResidentialStateID   { get; set; }
+       public string ResidentialDistrict  { get; set; }
+       public int? ResidentialCityID    { get; set; }
+       public string ResidentialZipCode { get; set; }
+
+    }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+

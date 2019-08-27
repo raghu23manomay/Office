@@ -37,6 +37,8 @@ namespace office.Models
 
         public DbSet<Employee> EmployeeLists { get; set; }
         public DbSet<EmployeeList> DFEmployeeLists { get; set; }
+        public DbSet<PersonList> DFPersonList { get; set; }
+        
     }
     
 }
