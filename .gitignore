@@ -3,3 +3,9 @@
 ################################################################################
 
 /.vs
+/Office/obj/Debug
+/Office/obj/Release/Office.csproj.CoreCompileInputs.cache
+/Office/.vs/Office/v15/Server/sqlite3
+/Office/.vs/config
+/Office/.vs/Office/v15
+/Office/Properties/PublishProfiles
