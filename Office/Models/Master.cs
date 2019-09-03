@@ -6,9 +6,9 @@ using System.Web;
 
 namespace office.Models
 {
-    
 
-     
+
+
     public class DesignationList
     {
         [Key]
@@ -22,9 +22,9 @@ namespace office.Models
     public class Designation
     {
         [Key]
-        public int DesignationID { get; set; } 
+        public int DesignationID { get; set; }
         public String DesignationName { get; set; }
-        public Boolean IsActive { get; set; } 
+        public Boolean IsActive { get; set; }
     }
 
     public class RoleList
@@ -102,34 +102,34 @@ namespace office.Models
     public class CustomerList
     {
         [Key]
-         
+
         public int CustomerID { get; set; }
         public string CustomerName { get; set; }
         public int CityID { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
         public String IsActive { get; set; }
-        public String CityName { get; set; } 
+        public String CityName { get; set; }
         IEnumerable<CustomerList> CustomerIDlist { get; set; }
         public int? TotalRows { get; set; }
     }
     public class Customer
     {
-       
-    [Key]
-    public int CustomerID { get; set; }
-    public string CustomerName { get; set; } 
-    public int CityID { get; set; }
-    public string Mobile { get; set; }
-    public string Email { get; set; }
-    public  Boolean IsActive { get; set; }
-     
+
+        [Key]
+        public int CustomerID { get; set; }
+        public string CustomerName { get; set; }
+        public int CityID { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
+        public Boolean IsActive { get; set; }
+
     }
     public class SubscriptionList
     {
         [Key]
         public int SubscriptionID { get; set; }
-        IEnumerable<SubscriptionList> SubscriptionIDlist { get; set; } 
+        IEnumerable<SubscriptionList> SubscriptionIDlist { get; set; }
         public String PlanName { get; set; }
         public int DurationInDays { get; set; }
         public decimal Cost { get; set; }
@@ -153,13 +153,13 @@ namespace office.Models
         public int EmployeeID { get; set; }
         public string EmployeeName { get; set; }
         public int CityID { get; set; }
-        
+
         public string Mobile { get; set; }
         public string Email { get; set; }
         public Boolean IsActive { get; set; }
-        
+
     }
-    public class  EmployeeList
+    public class EmployeeList
     {
         [Key]
         public int EmployeeID { get; set; }
@@ -177,16 +177,16 @@ namespace office.Models
     public class PersonList
     {
         [Key]
-       public int? PersonalInfoID   { get; set; }
-       public string FullName { get; set; }      
-       public string BirthDate        { get; set; }
-       public string Address1         { get; set; }
-       public string Address2         { get; set; }
-       public string DesignationName { get; set; }
-       public string Note             { get; set; }
-       public string Email            { get; set; }
-       public string Mobile           { get; set; }
-       public int? TotalRows { get; set; }
+        public int? PersonalInfoID { get; set; }
+        public string FullName { get; set; }
+        public string BirthDate { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string DesignationName { get; set; }
+        public string Note { get; set; }
+        public string Email { get; set; }
+        public string Mobile { get; set; }
+        public int? TotalRows { get; set; }
 
     }
 
@@ -201,7 +201,7 @@ namespace office.Models
         public DateTime BirthDate { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
-        public string DesignationId { get; set; }
+        public int? DesignationId { get; set; }
         public string Note { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }
@@ -215,7 +215,7 @@ namespace office.Models
         public string Mobile { get; set; }
     }
 
-    public class SaveEmail 
+    public class SaveEmail
     {
         [Key]
         public string Email { get; set; }
@@ -261,35 +261,127 @@ namespace office.Models
 
     public class Member
     {
+        [Key]        
+        public int? MemberID { get; set; }
+        public int MemberType { get; set; }
+        public int? TypeId { get; set; }        
+        public int TitleID { get; set; }
+        public string Name { get; set; }
+        public string ShortName { get; set; }
+        public string CompanyName { get; set; }
+        public int? DesignationId { get; set; }
+        public string Website { get; set; }
+        public string OfficeAddress1 { get; set; }
+        public string OfficeAddress2 { get; set; }
+        public int? StateID { get; set; }
+        public string District { get; set; }
+        public int? CityID { get; set; }
+        public string ZipCode { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string ShippingAddress { get; set; }
+        public string PowerofAttorny { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }        
+        public string ResidentialAddress1 { get; set; }
+        public string ResidentialAddress2 { get; set; }
+        public int? ResidentialStateID { get; set; }
+        public string ResidentialDistrict { get; set; }
+        public int? ResidentialCityID { get; set; }
+        public string ResidentialZipCode { get; set; }
+       
+    }
+
+    public class MemberList
+    {
+       [Key]
+       public int MemberID       { get; set; }
+       public string CompanyName    { get; set; }
+       public string ShortName      { get; set; }
+       public int TitleID        { get; set; }
+       public string Name           { get; set; }
+       public int MemberType     { get; set; }
+       public string MemberTypeName { get; set; }
+       public string PowerofAttorny { get; set; }
+       public int MemberPersonCount { get; set; }
+       public int ContactPersonCount { get; set; }
+       public string CreatedDate { get; set; }
+       public string CreatedBy { get; set; }
+
+        public int? TotalRows { get; set; }
+        
+    }
+
+
+    public class MemberPersonList
+    {
         [Key]
-     
-       public string MemberType        { get; set; }
-       public int TitleID           { get; set; }
-       public string Name              { get; set; }
-       public string ShortName         { get; set; }
-       public string CompanyName       { get; set; }
-       public int DesignationId     { get; set; }
-       public string Website           { get; set; }
-       public string OfficeAddress1    { get; set; }
-       public string OfficeAddress2    { get; set; }
-       public int StateID           { get; set; }
-       public string District        { get; set; }
-       public int CityID            { get; set; }
-       public string ZipCode           { get; set; }
-       public DateTime BirthDate         { get; set; }
-       public string ShippingAddress   { get; set; }
-       public string PowerofAttorny    { get; set; }
-       public int CreatedBy         { get; set; }
-       public string ResidentialAddress1  { get; set; }
-       public string ResidentialAddress2  { get; set; }
-       public int? ResidentialStateID   { get; set; }
-       public string ResidentialDistrict  { get; set; }
-       public int? ResidentialCityID    { get; set; }
-       public string ResidentialZipCode { get; set; }
+        public int MemberPersonDetailId { get; set; }
+        public int MemberID             { get; set; }
+        public string PersonName { get; set; }
+        public int DesignationID   { get; set; }
+        public string DesignationName { get; set; }
 
     }
-    
+
+
+    public class ContactPersonListByMember
+    {
+       [Key]
+       public int MembeConactPersonDetailId { get; set; }
+       public int MemberID                  { get; set; }
+       public int ContactPersonId           { get; set; }
+       public string FullName { get; set; }
+
+    }
+
+    public class MemberContactDetails
+    {
+        [Key]
+        public string Contact { get; set; }
+        public int Id { get; set; }
+        public string ContactType { get; set; }
+    }
+
+    public class PersonMobileList
+    {
+        [Key]
+        public int PMobileDetailId { get; set; }
+        public int PersonalInfoID  { get; set; }
+        public string Mobile { get; set; }
+    }
+
+    public class PersonEmailList
+    {
+        [Key]
+        public int PEmailDetailId { get; set; }
+        public int PersonalInfoID { get; set; }
+        public string Email { get; set; }
+    }
+
+
+    public class DepartmentList
+    {
+        [Key]
+        public int? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }       
+
+    }
+
+    public class Department
+    {
+        [Key]
+        public int? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }        
+
+    }
 }
+
 
 
 

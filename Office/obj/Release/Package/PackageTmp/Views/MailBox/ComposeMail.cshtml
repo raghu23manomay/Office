@@ -1,0 +1,697 @@
+﻿@model  Calibration.Models.mail
+@{
+Layout = "~/Views/Shared/_Layout.cshtml";
+//Layout = null;
+}
+
+
+<link href="~/css/mystyle.css" rel="stylesheet" />
+<link href="~/css/summernote.css" rel="stylesheet" />
+<link href="~/css/summernote-bs3.css" rel="stylesheet" />
+
+<style>
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f2f3f8;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #e9ebf3;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+    .note-editable {
+        padding: 20px;
+        overflow: auto;
+        outline: 0;
+        height: 210px;
+    }
+</style>
+
+<div class="wrapper wrapper-content">
+    <rt-mailbox-threads-page _nghost-c112="" class="ng-star-inserted">
+        @*<div _ngcontent-c112="" class="mailbox__list-column" style="max-height: 570px;overflow-y: scroll;">
+                <div _ngcontent-c112="" class="list-column__top">
+                    <rt-form-field _ngcontent-c112="" variant="underlined search" _nghost-c22="" class="underlined search has-icon">
+                        <div _ngcontent-c22="" class="form-field" padding-y="">
+                            <!----><div _ngcontent-c22="" class="form-field__input-icon ng-star-inserted">
+                                <rt-icon _ngcontent-c112="" name="search" _nghost-c4="" class="icon icon--search">
+                                    <svg _ngcontent-c4="" class="svg-wrapper" width="18px" height="18px">
+                                        <use _ngcontent-c4="" class="svg-use" xlink:href="#search"></use>
+                                    </svg>
+                                </rt-icon>
+                            </div>
+
+
+
+                            <div _ngcontent-c22="" class="form-field__input-wrapper">
+
+
+                                <rt-input _ngcontent-c112="" variant="underlined" _nghost-c23="" class="underlined">
+                                    <input _ngcontent-c23="" text-primary="" type="text" placeholder="Search...">
+
+
+                                </rt-input>
+
+
+                            </div>
+
+                            <div _ngcontent-c22="" class="form-field__input-button">
+
+                            </div>
+
+                            <div _ngcontent-c22="" class="form-field__input-spinner">
+
+                            </div>
+
+                            <!---->
+                        </div>
+                    </rt-form-field>
+
+                    <div _ngcontent-c112="" class="meta">
+                        <div _ngcontent-c112="" class="meta__unreads">
+                            <!----><rt-mailbox-threads-unread-counter _ngcontent-c112="" _nghost-c113="" class="ng-star-inserted">
+                                <!----><div _ngcontent-c113="" class="ng-star-inserted">
+                                    <rt-group _ngcontent-c113="" variant="horizontal" _nghost-c5="" class="horizontal">
+
+                                        <rt-button _ngcontent-c113="" variant="underlined small-x" _nghost-c6="" class="underlined small-x active">
+                                            <div _ngcontent-c6="" class="icon">
+
+                                            </div>
+
+
+                                            <div _ngcontent-c6="" class="text-content">
+
+                                                All ( <span _ngcontent-c113="">0</span>)
+
+                                            </div>
+
+                                        </rt-button>
+                                        <rt-button _ngcontent-c113="" variant="underlined small-x" _nghost-c6="" class="underlined small-x">
+                                            <div _ngcontent-c6="" class="icon">
+
+                                            </div>
+
+
+
+                                            <div _ngcontent-c6="" class="text-content">
+
+                                                Unread ( <span _ngcontent-c113="">0</span>)
+
+                                            </div>
+
+
+                                        </rt-button>
+
+                                    </rt-group>
+                                </div>
+
+                                <!---->
+                            </rt-mailbox-threads-unread-counter>
+                        </div>
+                        <div _ngcontent-c112="" class="meta__actions">
+                            <rt-mailbox-threads-actions _ngcontent-c112="" _nghost-c114="">
+                                <rt-group _ngcontent-c114="" variant="horizontal stacked" _nghost-c5="" class="horizontal stacked">
+
+                                    <rt-button _ngcontent-c114="" variant="small plain keep-radius" _nghost-c6="" class="small plain keep-radius has-icon">
+                                        <div _ngcontent-c6="" class="icon">
+                                            <rt-icon _ngcontent-c114="" name="refresh" _nghost-c4="" class="icon icon--refresh">
+                                                <svg _ngcontent-c4="" class="svg-wrapper" width="18px" height="18px">
+                                                    <use _ngcontent-c4="" class="svg-use" xlink:href="#refresh"></use>
+                                                </svg>
+                                            </rt-icon>
+                                        </div>
+
+                                        <!---->
+
+                                        <div _ngcontent-c6="" class="text-content">
+
+                                        </div>
+
+
+                                    </rt-button>
+                                    <rt-button _ngcontent-c114="" variant="small plain keep-radius" _nghost-c6="" class="small plain keep-radius has-icon">
+                                        <div _ngcontent-c6="" class="icon">
+                                            <rt-icon _ngcontent-c114="" name="more-horiz" rt-overlay-origin="" _nghost-c4="" class="icon icon--more-horiz">
+                                                <svg _ngcontent-c4="" class="svg-wrapper" width="18px" height="18px">
+                                                    <use _ngcontent-c4="" class="svg-use" xlink:href="#more-horiz"></use>
+                                                </svg>
+                                            </rt-icon>
+                                        </div>
+
+                                        <!---->
+
+                                        <div _ngcontent-c6="" class="text-content">
+
+
+
+                                        </div>
+
+                                    </rt-button>
+
+                                </rt-group>
+                                <!---->
+                            </rt-mailbox-threads-actions>
+                        </div>
+                    </div>
+                </div>
+
+                <div _ngcontent-c112="" class="list-column__list">
+                    <!---->
+                    <!---->
+                    <!----><rt-empty-state _ngcontent-c112="" _nghost-c27="" class="default ng-star-inserted">
+                        <!----><div _ngcontent-c27="" class="ng-star-inserted">
+                            <rt-icon _ngcontent-c27="" size="large-x" _nghost-c4="" class="icon icon--inbox">
+                                <svg _ngcontent-c4="" class="svg-wrapper" width="48px" height="48px">
+                                    <use _ngcontent-c4="" class="svg-use" xlink:href="#inbox"></use>
+                                </svg>
+                            </rt-icon>
+                        </div>
+
+
+                        <!----><div _ngcontent-c27="" class="heading ng-star-inserted">
+                            <!---->
+                            No emails yet
+                        </div>
+
+                        <div _ngcontent-c27="" class="content">
+
+                            <rt-button _ngcontent-c112="" href="http://help.recruitee.com/knowledge_base/categories/e-mail-features" hreftarget="_blank" variant="underlined" _nghost-c6="" class="underlined">
+                                <div _ngcontent-c6="" class="icon">
+
+                                </div>
+
+                                <div _ngcontent-c6="" class="text-content">
+                                    Learn more
+                                </div>
+
+                                <a _ngcontent-c6="" href="http://help.recruitee.com/knowledge_base/categories/e-mail-features" target="_blank" class="ng-star-inserted"> </a>
+
+                                <!---->
+                            </rt-button>
+
+                        </div>
+                    </rt-empty-state>
+
+                    <!---->
+                </div>
+            </div>*@
+
+        <div _ngcontent-c112="" class="mailbox__main-column">
+            <router-outlet _ngcontent-c112=""></router-outlet><ng-component _nghost-c116="" class="ng-star-inserted">
+                @*<rt-scrollable _ngcontent-c116="" style="position: relative; will-change: transform;" class="ps-container ps-theme-default ps-active-y" data-ps-id="81495a75-dee9-0b1a-e4bb-ec3752cef476">*@
+                <!---->
+                <!----><rt-mailbox-mail-compose _ngcontent-c116="" _nghost-c117="" class="ng-star-inserted" style="margin-top:28px;">
+                    @*<div _ngcontent-c117="" class="headline">
+                            <rt-heading _ngcontent-c117="" variant="heading large-x" _nghost-c10="" class="heading large-x">
+                                <!---->
+                               <div _ngcontent-c10="" class="text-content">
+
+                                    Compose new email
+
+                                </div>
+                                <!---->
+                                <!---->
+                            </rt-heading>
+                            <rt-button _ngcontent-c117="" variant="plain oval only-icon" _nghost-c6="" class="plain oval only-icon has-icon">
+                                <div _ngcontent-c6="" class="icon">
+                                    <rt-icon _ngcontent-c117="" name="close" size="medium" _nghost-c4="" class="icon icon--close">
+                                        <svg _ngcontent-c4="" class="svg-wrapper" width="24px" height="24px">
+                                            <use _ngcontent-c4="" class="svg-use" xlink:href="#close"></use>
+                                        </svg>
+                                    </rt-icon>
+                                </div>
+                                <!---->
+                                <div _ngcontent-c6="" class="text-content">
+
+                                </div>
+
+                            </rt-button>
+                        </div>*@
+                    <rt-box _ngcontent-c117="" class="compose raised no-padding vertical" variant="raised no-padding vertical" _nghost-c32="" style="margin-top:-27px;">
+                        <rt-mailbox-mail-form _ngcontent-c117="" _nghost-c119="">
+
+                            <form _ngcontent-c119="" novalidate="" class="ng-untouched ng-invalid ng-pristine">
+                                <div _ngcontent-c119="" class="head">
+
+                                    <rt-group _ngcontent-c119="" class="head__group default ng-star-inserted" _nghost-c5="">
+
+                                        <div _ngcontent-c119="" class="head-group__row head-group__row--to">
+                                            <div _ngcontent-c119="" margin-left-small="" u-media-min-md="" class="visually-hidden">
+                                                <rt-button _ngcontent-c119="" rt-overlay-origin="" variant="plain only-icon" _nghost-c6="" class="plain only-icon has-dropdown">
+                                                    <div _ngcontent-c6="" class="icon">
+
+                                                    </div>
+                                                    <!---->
+                                                    <div _ngcontent-c6="" class="text-content">
+                                                    </div>
+
+                                                    <div _ngcontent-c6="" class="icon-dropdown ng-star-inserted">
+
+                                                        <div _ngcontent-c6="" class="arrow-dropdown"></div>
+                                                    </div>
+
+                                                </rt-button>
+
+                                            </div>
+                                            <rt-form-field _ngcontent-c119="" class="head-group__to plain horizontal has-label" variant="plain horizontal" _nghost-c22="">
+                                                <div _ngcontent-c22="" class="form-field" padding-y="">
+                                                    <div _ngcontent-c22="" class="form-field__input-label ng-star-inserted">
+                                                        <rt-label _ngcontent-c119="" _nghost-c44="" class="ng-star-inserted">
+                                                            <label _ngcontent-c44="">
+
+                                                                To
+
+                                                            </label>
+                                                        </rt-label>
+
+                                                    </div>
+                                                    <div _ngcontent-c22="" class="form-field__input-wrapper">
+
+                                                        <rt-tagger _ngcontent-c119="" class="tagger email" variant="email" _nghost-c123="">
+                                                            <div _ngcontent-c123="" class="tagger__tags">
+                                                                <rt-typeahead _ngcontent-c123="">
+                                                                    <!---->
+                                                                    <rt-input _ngcontent-c123="" class="tagger__input plain ng-untouched ng-pristine ng-valid" rttypeaheadinput="" variant="plain" _nghost-c23="">
+                                                                        <input _ngcontent-c23="" text-primary="" type="text" placeholder="" id="emailto" style="width:550px;">
+
+                                                                    </rt-input>
+
+                                                                </rt-typeahead>
+
+                                                            </div>
+
+                                                        </rt-tagger>
+
+                                                    </div>
+                                                    <div _ngcontent-c22="" class="form-field__input-button">
+
+                                                    </div>
+                                                    <div _ngcontent-c22="" class="form-field__input-spinner">
+
+                                                    </div>
+                                                    <!---->
+                                                </div>
+                                            </rt-form-field>
+                                            <div _ngcontent-c119="" class="head-group__row-buttons">
+                                                <!----><rt-label _ngcontent-c119="" class="add-bcc clickable ng-star-inserted" id="labelbcc" _nghost-c44="">
+                                                    <label _ngcontent-c44="">
+                                                        BCC
+                                                    </label>
+                                                </rt-label>
+                                                <!----><rt-label _ngcontent-c119="" class="add-cc clickable ng-star-inserted" id="labelcc" _nghost-c44="">
+                                                    <label _ngcontent-c44="">
+
+                                                        CC
+
+                                                    </label>
+                                                </rt-label>
+                                                <!----><rt-label _ngcontent-c119="" class="add-template clickable ng-star-inserted" id="labeltemplate" _nghost-c44="">
+                                                    <label _ngcontent-c44="">
+                                                        Template
+                                                    </label>
+                                                </rt-label>
+
+                                            </div>
+
+
+                                        </div>
+
+                                    </rt-group>
+
+                                    <div _ngcontent-c119="" class="head__group head__group--title">
+                                        <!----><rt-divider _ngcontent-c119="" _nghost-c25="" class="line ng-star-inserted">
+                                        </rt-divider>
+                                        <rt-form-field _ngcontent-c119="" class="compose__mail-title plain horizontal" variant="plain horizontal" _nghost-c22="">
+                                            <div _ngcontent-c22="" class="form-field" padding-y="">
+
+                                                <div _ngcontent-c22="" class="form-field__input-wrapper">
+
+                                                    <rt-input _ngcontent-c119="" formcontrolname="subject" variant="plain" _nghost-c23="" class="plain ng-untouched ng-pristine ng-invalid">
+                                                        <input _ngcontent-c23="" text-primary="" type="text" placeholder="Title" id="subject">
+
+                                                    </rt-input>
+
+                                                </div>
+                                                <div _ngcontent-c22="" class="form-field__input-button">
+
+                                                </div>
+                                                <div _ngcontent-c22="" class="form-field__input-spinner">
+
+                                                </div>
+                                                <!---->
+                                            </div>
+                                        </rt-form-field>
+                                    </div>
+                                    <div _ngcontent-c119="" class="head__group head__group--title addbcc">
+                                        <!----><rt-divider _ngcontent-c119="" _nghost-c25="" class="line ng-star-inserted">
+                                        </rt-divider>
+                                        <rt-form-field _ngcontent-c119="" class="compose__mail-title plain horizontal" variant="plain horizontal" _nghost-c22="">
+                                            <div _ngcontent-c22="" class="form-field" padding-y="">
+
+                                                <div _ngcontent-c22="" class="form-field__input-wrapper">
+
+                                                    <rt-input _ngcontent-c119="" formcontrolname="subject" variant="plain" _nghost-c23="" class="plain ng-untouched ng-pristine ng-invalid">
+                                                        <input _ngcontent-c23="" text-primary="" type="text" placeholder="BCC" id="bcc">
+                                                        <a href="#" style="margin: auto;" id="closebcc">  <i class="fa fa-times pull-right" aria-hidden="true" style=" font-size: 18px;color: darkgray;"></i></a>
+                                                    </rt-input>
+
+                                                </div>
+                                                <div _ngcontent-c22="" class="form-field__input-button">
+
+                                                </div>
+                                                <div _ngcontent-c22="" class="form-field__input-spinner">
+
+                                                </div>
+                                                <!---->
+                                            </div>
+                                        </rt-form-field>
+                                    </div>
+                                    <div _ngcontent-c119="" class="head__group head__group--title addcc">
+                                        <!----><rt-divider _ngcontent-c119="" _nghost-c25="" class="line ng-star-inserted">
+                                        </rt-divider>
+                                        <rt-form-field _ngcontent-c119="" class="compose__mail-title plain horizontal" variant="plain horizontal" _nghost-c22="">
+                                            <div _ngcontent-c22="" class="form-field" padding-y="">
+
+                                                <div _ngcontent-c22="" class="form-field__input-wrapper">
+
+                                                    <rt-input _ngcontent-c119="" formcontrolname="subject" variant="plain" _nghost-c23="" class="plain ng-untouched ng-pristine ng-invalid">
+                                                        <input _ngcontent-c23="" text-primary="" type="text" placeholder="CC" id="cc">
+                                                        <a href="#" style="margin: auto;" id="closecc">  <i class="fa fa-times pull-right" aria-hidden="true" style="font-size: 18px;color: darkgray;"></i></a>
+                                                    </rt-input>
+
+                                                </div>
+
+                                                <div _ngcontent-c22="" class="form-field__input-button">
+
+                                                </div>
+                                                <div _ngcontent-c22="" class="form-field__input-spinner">
+
+                                                </div>
+                                                <!---->
+                                            </div>
+
+                                        </rt-form-field>
+
+                                    </div>
+                                    <div _ngcontent-c119="" class="head__group head__group--title template">
+                                        <!----><rt-divider _ngcontent-c119="" _nghost-c25="" class="line ng-star-inserted">
+                                        </rt-divider>
+                                        <rt-form-field _ngcontent-c119="" class="compose__mail-title plain horizontal" variant="plain horizontal" _nghost-c22="">
+                                            <div _ngcontent-c22="" class="form-field" padding-y="">
+
+                                                <div _ngcontent-c22="" class="form-field__input-wrapper">
+
+                                                    <rt-input _ngcontent-c119="" formcontrolname="subject" variant="plain" _nghost-c23="" class="plain ng-untouched ng-pristine ng-invalid">
+                                                        @Html.DropDownList("TempId", new SelectList((System.Collections.IEnumerable)ViewData["EmailTemplateList"], "Value", "Text"), "Select Template", new { @class = "form-control input-sm", @id = "TempId", Title = "TempId", @style = "align-self: center;" })
+                                                        <a href="#" style="margin: auto;" id="closetemplate">  <i class="fa fa-times pull-right" aria-hidden="true" style="font-size: 18px;color: darkgray;"></i></a>
+                                                    </rt-input>
+
+                                                </div>
+
+                                            </div>
+
+                                        </rt-form-field>
+
+                                    </div>
+
+
+                                </div>
+                                <rt-divider _ngcontent-c119="" _nghost-c25="" class="line">
+                                </rt-divider>
+
+                                <div _ngcontent-c119="" class="body">
+                                    <div class="mail-text h-200" id="MailEditor" style="margin-bottom: 40px;">
+                                        @*@Html.Partial("_MailEditor")*@
+                                        <div class="summernote" id="description">
+
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                    </div>
+                                </div>
+                                <!---->
+                                <!----><!---->
+                                <rt-divider _ngcontent-c119="" _nghost-c25="" class="line ng-star-inserted">
+                                </rt-divider>
+                                <div _ngcontent-c119="" class="attachments ng-star-inserted">
+                                    <!---->
+                                </div>
+                                <div _ngcontent-c119="" class="footernew ng-star-inserted">
+                                    <!----><rt-group _ngcontent-c119="" class="footer__actions-secondary horizontal default ng-star-inserted" _nghost-c5="">
+
+                                        <rt-mailbox-thread-assignments _ngcontent-c119="" layout-horizontal="">
+
+                                        </rt-mailbox-thread-assignments>
+                                        <rt-button _ngcontent-c119="" variant="plain small" _nghost-c6="" class="plain small has-icon">
+
+                                            <div _ngcontent-c6="" class="text-content">
+                                                <span class="fa fa-paperclip " id="fileuploadpin" _ngcontent-c119="" u-media-min-md="">
+                                                    Attach file
+                                                </span>
+
+                                            </div>
+
+
+                                            <input _ngcontent-c119="" class="visually-hidden" tabindex="-1" type="file">
+
+                                    </rt-group>
+                                    <rt-group _ngcontent-c119="" class="footer__actions-primary horizontal default" _nghost-c5="">
+
+                                        <rt-button _ngcontent-c119="" variant="plain" _nghost-c6="" class="plain">
+                                            <div _ngcontent-c6="" class="icon">
+
+                                            </div>
+                                            <!---->
+                                            <div _ngcontent-c6="" class="text-content">
+
+                                                Cancel
+
+                                            </div>
+
+
+                                            <!---->
+                                            <!---->
+                                            <!---->
+                                        </rt-button>
+                                        <rt-button _ngcontent-c119="" variant="primary icon-right" _nghost-c6="" class="primary icon-right has-icon" id="send">
+                                            <div _ngcontent-c6="" class="icon">
+                                                <rt-icon _ngcontent-c119="" name="send" _nghost-c4="" class="icon icon--send">
+                                                    <svg _ngcontent-c4="" class="svg-wrapper" width="18px" height="18px">
+                                                        <use _ngcontent-c4="" class="svg-use" xlink:href="#send"></use>
+                                                    </svg>
+                                                </rt-icon>
+                                            </div>
+                                            <!---->
+                                            <div _ngcontent-c6="" class="text-content">
+
+                                                Send
+
+                                            </div>
+
+                                        </rt-button>
+
+                                    </rt-group>
+                                </div>
+                                <!----><rt-divider _ngcontent-c119="" _nghost-c25="" class="line ng-star-inserted">
+                                </rt-divider>
+
+                            </form>
+
+                        </rt-mailbox-mail-form>
+                    </rt-box>
+                </rt-mailbox-mail-compose>
+               
+            </ng-component>
+        </div>
+    </rt-mailbox-threads-page>
+</div>
+<input type="file" id="FileUpload" class="hidden" name="file" required data-val="true" data-val-required="please select a file" />
+
+
+<div class="loader"></div>
+@*rendering on changes event when selecting mail template*@
+<p id="rendermailbody" class="hidden">
+
+</p>
+
+<script src="~/css/icheck/bootstrap.min.js"></script>
+<script src="~/scripts/summernote/summernote.min.js"></script>
+
+<script>
+
+    $('.loader').hide();
+    $('.addcc').hide();
+    $('.addbcc').hide();
+    $('.template').hide();
+
+    $('#closecc').on('click', function () { $('.addcc').hide(); $('#labelcc').show(); });
+    $('#closebcc').on('click', function () { $('.addbcc').hide(); $('#labelbcc').show();});
+    $('#closetemplate').on('click', function () { $('.template').hide(); $('#labeltemplate').show();});
+
+    $(document).ready(function () {
+        $('#EmailTab').addClass('current');  
+        $('#OverviewTab').removeClass('current'); 
+        $('#InstrumentsTab').removeClass('current');
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    alert(e.target.result);
+                    //$('#profile-img-tag').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#FileUpload").change(function () {
+            readURL(this);
+        });
+
+        //$('input[type=file]').change(function () {
+        //    if (window.FormData !== undefined) {
+
+        //        var fileUpload = $("#FileUpload").get(0);
+        //        var files = fileUpload.files;
+        //        var ext = $('#FileUpload').val().split('.').pop().toLowerCase();
+
+        //        // Create FormData object
+        //        var fileData = new FormData();
+
+        //        // Looping over all files and add it to FormData object
+        //        for (var i = 0; i < files.length; i++) {
+        //            fileData.append(files[i].name, files[i]);
+        //        }
+
+        //        // Adding one more key to FormData object
+
+        //        //var RecID = $("#RecID").val();
+        //        //fileData.append('RecID', RecID);
+        //        $.ajax({
+        //            url: '/MailBox/UploadFiles',
+        //            type: "POST",
+        //            contentType: false, // Not to set any content header
+        //            processData: false, // Not to process data
+        //            data: fileData,
+        //            success: function (result) {
+        //                alert('file Uploaded sucesssfully');
+        //                manualtraker();
+        //            },
+        //            error: function (err) {
+        //                alert(err.statusText);
+        //            }
+        //        });
+        //    }
+        //    else {
+        //        alert("FormData is not supported.");
+        //    }
+        //});
+
+        $('#fileuploadpin').on('click', function () {
+            $('#FileUpload').click();
+        });
+
+
+     $('.summernote').summernote();
+    });
+
+    var edit = function () {
+        $('.click2edit').summernote({ focus: true });
+    };
+    var save = function () {
+        var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+        $('.click2edit').destroy();
+    };
+
+    $('.note-fontname').hide();    
+    $('.note-height').hide();
+    $('.note-table').hide();
+    
+
+    $('.add-cc').on('click', function () {
+        $('.addcc').show();
+        $('#labelcc').hide();
+    });
+    $('.add-bcc').on('click', function () {
+        $('.addbcc').show();
+        $('#labelbcc').hide();
+    });
+    $('.add-template').on('click', function () {
+        $('.template').show();
+        $('#labeltemplate').hide();
+    });
+
+
+    $('#send').on('click', function () {
+        $('.loader').show();
+        $.ajax({
+                    url: "@Url.Action("Sendmail", "MailBox")",
+                    contentType: "application/json",
+                      data: JSON.stringify({
+                          emailFrom : "rmudgal23@gmail.com",
+                          emailto: $('#emailto').val(),
+                          Description: $('.note-editable').html(),
+                          subject: $('#subject').val(),
+                          cc: $('#cc').val(),
+                          bcc: $('#bcc').val(),
+                      }),
+                    dataType: "json",
+                    type: "POST",
+                    async: true,
+                    success: function (data) {
+                        alert(data);
+                        $('.loader').hide();
+                    },
+                    error: function (data) {
+                        alert(data);
+                        $('.loader').hide();
+                     },
+                    complete: function () {
+
+                    }
+                });
+    });
+
+
+
+     $('#TempId').on('change', function () {
+         var a;
+            $.ajax({
+            url: "@Url.Action("GetTemplateData", "MailBox")",
+            contentType: "application/json",
+            data: JSON.stringify( {
+                TempId: $('#TempId').val(),
+
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) {
+                    $("#rendermailbody").html(data);
+                    $('.note-editable').html($("#rendermailbody").text());
+                    $("#subject").val($("#Emailsubject").val());
+            },
+            error: function (data) {
+                alert(data);
+
+            },
+            complete: function () {
+
+            }
+
+            });
+    });
+
+</script>

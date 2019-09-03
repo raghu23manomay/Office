@@ -10,11 +10,11 @@
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Member form</h5>
-                <div class="ibox-tools">
+                @*<div class="ibox-tools">
                     <a class="close-link">
                         <i class="fa fa-times"></i>
                     </a>
-                </div>
+                </div>*@
             </div>
             <div class="ibox-content">
                 <form class="form-horizontal">
@@ -26,8 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Type</label>
-
+                        <label class="col-lg-2 control-label">Member Type</label>
                         <div class="col-lg-10">
                             <select id="memberid" class="form-control">
                                 <option value="1">Developer</option>
@@ -35,6 +34,21 @@
                                 <option value="3">Contractor</option>
                                 <option value="4">Person</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group Consultant">
+                        <label class="col-lg-2 control-label">Consultant Type</label>
+
+                        <div class="col-lg-10">
+                            @Html.DropDownList("ConsultantTypeID", new SelectList((System.Collections.IEnumerable)ViewData["ConsultantTypeList"], "Value", "Text"), "Select Consultant", new { @class = "form-control", @id = "ConsultantTypeID", Title = "ConsultantTypeID" })
+                        </div>
+                    </div>
+
+                    <div class="form-group Contractor">
+                        <label class="col-lg-2 control-label">Contractor Type</label>
+
+                        <div class="col-lg-10">
+                            @Html.DropDownList("ContractorTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ContractorTypeList"], "Value", "Text"), "Select Contractor", new { @class = "form-control", @id = "ContractorTypeId", Title = "ContractorTypeId" })
                         </div>
                     </div>
 
@@ -65,7 +79,7 @@
                         <div class="entityField">
                             <label class="col-lg-1 control-label">Name</label>
                             <div class="col-lg-7" style="display:inline-flex;">
-                                @Html.DropDownList("MemberId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "MemberId", Title = "MemberId" })
+                                @Html.DropDownList("MemberPersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "MemberPersonId", Title = "MemberPersonId" })
                                 <i class="fa fa-plus" id="addMember" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                             </div>
                         </div>
@@ -297,12 +311,11 @@
                         </div>
                         <div class="col-md-8 pull-right">
                             <div class="pull-right">
-                                @Html.ActionLink("Cancel", "ContactPersonList", "Master", null, new { @class = "btn btn-white" })
+                                @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
                                 <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -417,13 +430,13 @@
                         <span id="showRaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
+                        <span id="showRstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
                         <span id="showRcity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
                         <span id="showRdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showRstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
                         <span id="showRzip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
@@ -445,14 +458,15 @@
                         <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
+                        <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
                         <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
                         <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
-                    <div class="form-group">
-                        <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
+
                     <div class="form-group">
                         <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
@@ -468,6 +482,8 @@
 <script>
     $(document).ready(function () {
         $('.person').hide();
+        $('.Consultant').hide();
+        $('.Contractor').hide();
         $('#memberid').change(function () {
             if ($("#memberid option:selected").val() == 4) {
                 $('.person').show();
@@ -478,7 +494,21 @@
                 $('.person').hide();
                 $('.entityField').show();
             }
-            
+
+            if ($("#memberid option:selected").val() == 2) {
+                $('.Consultant').show();
+            }
+            else
+            {
+                $('.Consultant').hide();
+            }
+            if ($("#memberid option:selected").val() == 3) {
+                $('.Contractor').show();
+            }
+            else
+            {
+                $('.Contractor').hide();
+            }
         });
 
         $('#Website').keyup(function () {
@@ -586,8 +616,8 @@
 
             $('#noPersons').hide();
             $('#personrow').hide();
-            var Membertext = $("#MemberId option:selected").text();
-            var MemberId = $("#MemberId option:selected").val();
+            var Membertext = $("#MemberPersonId option:selected").text();
+            var MemberId = $("#MemberPersonId option:selected").val();
             var DesignationID = $("#DesignationID option:selected").val();
             var Degtext = $("#DesignationID option:selected").text();
             var bindrow = '<tr><td class="hidden multimember" id="' + DesignationID + '">' + MemberId + '</td><td>' + Membertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + Degtext +'</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
@@ -681,7 +711,33 @@
                 });
 
 
+        $('#StateID2').change(function ()
+         {
+            $.ajax({
+            url: "@Url.Action("FliterStateWiseCity", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                StateID: $('#StateID2').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#CityID2').html(data);
 
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
 
 
         $('#StateID').change(function ()
@@ -841,14 +897,26 @@
                 item["DesignationId"] = arrElement[1];
                 SaveMemberPerson.push(item);
             }
+
+            var TypeId = 0; 
+
+            if ($("#memberid option:selected").val() == 2) {
+                TypeId = $("#ConsultantTypeID option:selected").val();
+            }
+            else if ($("#memberid option:selected").val() == 3) {
+                TypeId = $("#ContractorTypeId option:selected").val();
+            }
+
                        
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
                 url: '/Master/SaveMember',
                 data:
-                {                   
+                {  
+                    MemberID : 0,
                     MemberType: $("#memberid option:selected").val(),
+                    TypeId: TypeId,
                     TitleID: $("#TitleId option:selected").val(),
                     Name: $('#Name').val(),
                     ShortName: $('#shortname').val(),

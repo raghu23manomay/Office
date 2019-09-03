@@ -1,0 +1,6 @@
+﻿@model  Calibration.Models.mailTemplate
+
+<p id="mydata">
+    @Model.EmailBody
+</p>
+@Html.HiddenFor(a => a.Emailsubject, new { @class = "form-control", placeholder = "Mail subject", title = "Emailsubject", @id = "Emailsubject" })

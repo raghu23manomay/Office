@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "MemberList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <script src="~/js/jquery-2.1.1.js"></script>
+
+
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Member</h5>
+
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-9 m-b-xs" style="display:inline-flex;">
+
+                        @Html.ActionLink("Add New", "AddMember", "Master", null, new { @class = "btn btn-sm btn-primary pull-left" })
+                        <select id="memberid" class="form-control input-sm" style="margin-left: 15px; width: 207px;font-size: smaller">
+                            <option value="0">All</option>
+                            <option value="1">Developer</option>
+                            <option value="2">Consultant</option>
+                            <option value="3">Contractor</option>
+                            <option value="4">Person</option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            
+                            <input type="text" placeholder="Search By Company " class="input-sm form-control" id="MemberFilter"> <span class="input-group-btn">
+                                <button type="button" class="btn btn-sm btn-primary"> Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bindGrid">
+                    <div id="mgrid">
+                        @Html.Partial("_MemberGrid")
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+       
+        $('#memberid').on('change',function () {
+              $.ajax({
+                url: "@Url.Action("LoadMemberGrid", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    MemberTypeId: $("#memberid option:selected").val(),
+                    Name: $("#MemberFilter").val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+        })
+
+        $('#MemberFilter').keyup(function () {
+              $.ajax({
+                url: "@Url.Action("LoadMemberGrid", "Master")",
+                contentType: "application/json",
+                  data: JSON.stringify({
+                    MemberTypeId: $("#memberid option:selected").val(),
+                    Name: $("#MemberFilter").val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+        })
+       
+    });
+</script>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -854,6 +855,162 @@ namespace Calibration.Controllers
 
 
         #region MemberMaster
+
+
+        public ActionResult MemberList(int? page, String Name = null,int MemberTypeId = 0)
+        {
+            StaticPagedList<MemberList> itemsAsIPagedList;
+            itemsAsIPagedList = MemberGrid(page, Name, MemberTypeId);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("MemberList", itemsAsIPagedList)
+                    : View("MemberList", itemsAsIPagedList);
+        }
+        public StaticPagedList<MemberList> MemberGrid(int? page, String Name = "",int MemberTypeId = 0)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            MemberList clist = new MemberList();
+
+            IEnumerable<MemberList> result = _db.DFMemberList.SqlQuery(@"exec GetMember
+                   @pPageIndex, @pPageSize,@CompanyName,@Membertype",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@CompanyName", Name == null ? (object)DBNull.Value : Name),
+               new SqlParameter("@Membertype", MemberTypeId)
+               ).ToList<MemberList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<MemberList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+
+        }
+
+        public ActionResult LoadMemberGrid(int? page, String Name = null,int MemberTypeId = 0)
+        {
+            StaticPagedList<MemberList> itemsAsIPagedList;
+            itemsAsIPagedList = MemberGrid(page, Name, MemberTypeId);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("_MemberGrid", itemsAsIPagedList)
+                    : View("_MemberGrid", itemsAsIPagedList);
+        }
+
+
+
+        public ActionResult GetPersonListByMemberType(int? MemberId)
+        {
+            OfficeDbContext _db = new OfficeDbContext();            
+
+            IEnumerable<MemberPersonList> result = _db.DFMemberPersonList.SqlQuery(@"exec GetMemberPersons
+               @MemberId",
+               new SqlParameter("@MemberId", MemberId)              
+               ).ToList<MemberPersonList>();
+
+            return View("_GetMemberPersonList", result);
+
+        }
+
+
+        public ActionResult GetPersonListForUpdate(int? MemberId)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<MemberPersonList> result = _db.DFMemberPersonList.SqlQuery(@"exec GetMemberPersons
+               @MemberId",
+               new SqlParameter("@MemberId", MemberId)
+               ).ToList<MemberPersonList>();
+
+            return View("_MemberListForUpdate", result);
+
+        }
+
+        public ActionResult GetConactPersonByMemberType(int? MemberId)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<ContactPersonListByMember> result = _db.DFContactPersonListByMember.SqlQuery(@"exec GetContactPersonsByMember
+               @MemberId",
+               new SqlParameter("@MemberId", MemberId)
+               ).ToList<ContactPersonListByMember>();
+
+            return View("_GetMemberContactPerson", result);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteContactFromMember(int? Id, string ContactType = "")
+        {
+            try
+            {
+
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactFromMember 
+                 @Id,@ContactType ",
+                new SqlParameter("@Id", Id),
+                new SqlParameter("@ContactType", ContactType));
+
+                return Json("Contact Deleted");
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteContactPersonFromMember(int? Id)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactPersonFromMember 
+                 @Id",
+                new SqlParameter("@Id", Id));               
+
+                return Json("Contact Person Deleted");
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMemberPersonFromMember(int? Id)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteMemberPersonFromMember 
+                 @Id",
+                new SqlParameter("@Id", Id));
+
+                return Json("Member Person Deleted");
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
         public ActionResult AddMember()
         {
             ViewData["DesignationList"] = binddropdown("DesignationList", 0);
@@ -861,6 +1018,8 @@ namespace Calibration.Controllers
             ViewData["StateList"] = binddropdown("StateList", 0);
             ViewData["ConactPersonList"] = binddropdown("ConactPersonList", 0);
             ViewData["PersonList"] = binddropdown("PersonList", 0);
+            ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
+            ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
             return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("AddMember")
                     : View("AddMember");
@@ -1045,8 +1204,10 @@ namespace Calibration.Controllers
 
 
                 OfficeDbContext _db = new OfficeDbContext();
-                var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveMember 
-                 @MemberType
+                var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveMember
+                 @MemberId
+                ,@MemberType
+                ,@TypeId
                 ,@TitleID
                 ,@Name
                 ,@ShortName
@@ -1077,25 +1238,27 @@ namespace Calibration.Controllers
                 ,@MemberAdditionalFeildParam
                 ,@MemberParameterParam
                 ,@MemberPersonParam",
+                new SqlParameter("@MemberId", Mem.MemberID),
                 new SqlParameter("@MemberType",Mem.MemberType),
+                new SqlParameter("@TypeId", Mem.TypeId == null ? (object)DBNull.Value : Mem.TypeId),
                 new SqlParameter("@TitleID",Mem.TitleID),
                 new SqlParameter("@Name",Mem.Name == null ? (object)DBNull.Value : Mem.Name),
                 new SqlParameter("@ShortName",Mem.ShortName),
                 new SqlParameter("@CompanyName",Mem.CompanyName),
-                new SqlParameter("@DesignationId",Mem.DesignationId),
+                new SqlParameter("@DesignationId",Mem.DesignationId == null ? (object)DBNull.Value : Mem.DesignationId),
                 new SqlParameter("@Website",Mem.Website),
-                 new SqlParameter("@ResidentialAddress1",Mem.ResidentialAddress1 == null ? (object)DBNull.Value : Mem.ResidentialAddress1),
-                 new SqlParameter("@ResidentialAddress2",Mem.ResidentialAddress2 == null ? (object)DBNull.Value : Mem.ResidentialAddress2),
-                 new SqlParameter("@ResidentialStateID",Mem.ResidentialStateID),
-                 new SqlParameter("@ResidentialDistrict",Mem.ResidentialDistrict == null ? (object)DBNull.Value : Mem.ResidentialDistrict),
-                 new SqlParameter("@ResidentialCityID", Mem.ResidentialCityID),
-                 new SqlParameter("@ResidentialZipCode",  Mem.ResidentialZipCode == null ? (object)DBNull.Value : Mem.ResidentialZipCode),
-                new SqlParameter("@OfficeAddress1",Mem.OfficeAddress1),
-                new SqlParameter("@OfficeAddress2",Mem.OfficeAddress2),
-                new SqlParameter("@StateID",Mem.StateID),
-                new SqlParameter("@District",Mem.DesignationId),
-                new SqlParameter("@CityID",Mem.CityID),
-                new SqlParameter("@ZipCode",Mem.ZipCode),
+                new SqlParameter("@ResidentialAddress1",Mem.ResidentialAddress1 == null ? (object)DBNull.Value : Mem.ResidentialAddress1),
+                new SqlParameter("@ResidentialAddress2",Mem.ResidentialAddress2 == null ? (object)DBNull.Value : Mem.ResidentialAddress2),
+                new SqlParameter("@ResidentialStateID",Mem.ResidentialStateID == null ? (object)DBNull.Value : Mem.ResidentialStateID),
+                new SqlParameter("@ResidentialDistrict",Mem.ResidentialDistrict == null ? (object)DBNull.Value : Mem.ResidentialDistrict),
+                new SqlParameter("@ResidentialCityID", Mem.ResidentialCityID == null ? (object)DBNull.Value : Mem.ResidentialCityID),
+                new SqlParameter("@ResidentialZipCode",  Mem.ResidentialZipCode == null ? (object)DBNull.Value : Mem.ResidentialZipCode),
+                new SqlParameter("@OfficeAddress1",Mem.OfficeAddress1 == null ? (object)DBNull.Value : Mem.OfficeAddress1),
+                new SqlParameter("@OfficeAddress2",Mem.OfficeAddress2 == null ? (object)DBNull.Value : Mem.OfficeAddress2),
+                new SqlParameter("@StateID",Mem.StateID == null ? (object)DBNull.Value : Mem.StateID),
+                new SqlParameter("@District",Mem.District == null ? (object)DBNull.Value : Mem.District),
+                new SqlParameter("@CityID",Mem.CityID == null ? (object)DBNull.Value : Mem.CityID),
+                new SqlParameter("@ZipCode",Mem.ZipCode == null ? (object)DBNull.Value : Mem.ZipCode),
                 new SqlParameter("@BirthDate",Mem.BirthDate),
                 new SqlParameter("@ShippingAddress",Mem.ShippingAddress),
                 new SqlParameter("@PowerofAttorny",Mem.PowerofAttorny),
@@ -1130,6 +1293,49 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("_StateWsieCityFilter")
                     : View("_StateWsieCityFilter");
         }
+
+
+        // Getting Member Details For Update
+        public ActionResult GetMemberDetailsForUpdate(int? MemberId)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            var result = _db.DFMember.SqlQuery(@"exec GetMemberDetailsForUpdate
+               @MemberId",
+               new SqlParameter("@MemberId", MemberId)
+               ).ToList<Member>();
+            Member data = new Member();
+            data = result.FirstOrDefault();
+            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+            ViewData["CityList"] = binddropdown("CityList", 0);
+            ViewData["StateList"] = binddropdown("StateList", 0);
+            ViewData["ConactPersonList"] = binddropdown("ConactPersonList", 0);
+            ViewData["PersonList"] = binddropdown("PersonList", 0);
+            ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
+            ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
+            string Dob = data.BirthDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            string Createddate = data.CreatedDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            ViewBag.Dob = Dob;
+            ViewBag.Createddate = Createddate;
+            return View("EditMember", data);
+
+        }
+
+
+        // Getting Member conact Details For Update
+        public ActionResult GetMemberConactDetails(int? MemberId)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<MemberContactDetails> result = _db.DFMemberContactDetails.SqlQuery(@"exec GetMemberWiseContactDetailsForUpdate
+               @MemberId",
+               new SqlParameter("@MemberId", MemberId)
+               ).ToList<MemberContactDetails>();          
+            return View("_MemberWiseContactDetailsList", result);
+
+        }
+
+        
 
         #endregion
 
@@ -1185,7 +1391,94 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("AddPerson")
                     : View("AddPerson");
         }
-                 
+
+        // Getting Person Details For Update
+        public ActionResult EditPerson(int? Id)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            var result = _db.DFPerson.SqlQuery(@"exec GetPersonDetailsForupdate
+               @Id",
+               new SqlParameter("@Id", Id)
+               ).ToList<Person>();
+
+            Person data = new Person();
+            data = result.FirstOrDefault();            
+            string Dob = data.BirthDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);            
+            ViewBag.Dob = Dob;
+            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+            return View("EditPerson", data);
+
+        }
+
+        public ActionResult GetPersonMobileList(int? Id)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<PersonMobileList> result = _db.DFPersonMobileList.SqlQuery(@"exec GetContactPersonMobileList
+               @Id",
+               new SqlParameter("@Id", Id)
+               ).ToList<PersonMobileList>();
+
+            return View("_GetContactPersonMobileList", result);
+
+        }
+
+        public ActionResult GetPersonEmailList(int? Id)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<PersonEmailList> result = _db.DFPersonEmailList.SqlQuery(@"exec GetContactPersonEmailList
+               @Id",
+               new SqlParameter("@Id", Id)
+               ).ToList<PersonEmailList>();
+
+            return View("_GetContactPersonEmailList", result);
+
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteContactPersonMobile(int? Id)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactPersonMobile 
+                 @Id",
+                new SqlParameter("@Id", Id));
+
+                return Json("Mobile Deleted");
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteContactPersonEmail(int? Id)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactPersonEmail 
+                 @Id",
+                new SqlParameter("@Id", Id));
+
+                return Json("Email Deleted");
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
 
         [HttpPost]
         public ActionResult SavePerson(Person Cp, List<SaveMobile> SaveMobile,List<SaveEmail> SaveEmail)
@@ -1235,7 +1528,6 @@ namespace Calibration.Controllers
                 tvpParam1.TypeName = "UT_PersonEmail";
 
 
-
                 OfficeDbContext _db = new OfficeDbContext();
                 Boolean Active = true;
                 if (Cp.IsActive.ToString() == "false")
@@ -1243,7 +1535,8 @@ namespace Calibration.Controllers
                     Active = false;
                 }
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_SavePerson 
-                @Prefix    
+                @PersonalInfoID
+               ,@Prefix    
                ,@FirstName 
                ,@MiddleName
                ,@LastName  
@@ -1256,6 +1549,7 @@ namespace Calibration.Controllers
                ,@IsActive
                ,@MobileParameters
                ,@EmailParameters",
+                new SqlParameter("@PersonalInfoID", Cp.PersonalInfoID),
                 new SqlParameter("@Prefix",Cp.Prefix),
                 new SqlParameter("@FirstName", Cp.FirstName),
                 new SqlParameter("@MiddleName", Cp.MiddleName == null ? (object)DBNull.Value : Cp.MiddleName),
@@ -1270,6 +1564,135 @@ namespace Calibration.Controllers
                 tvpParam == null ? (object)DBNull.Value : tvpParam,
                 tvpParam1 == null ? (object)DBNull.Value : tvpParam1
                 );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
+        #endregion
+
+
+        #region DeleteMaster
+
+        [HttpPost]
+        public ActionResult DeleteMaster(int? Id,string MasterName = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteMaster 
+                 @MasterName,@Id",
+                new SqlParameter("@MasterName", MasterName),
+                new SqlParameter("@Id", Id));
+                string messegetext = MasterName + " Deleted";
+                return Json(messegetext);
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
+        #endregion
+
+        #region
+        public ActionResult LoadDepartmentGrid(int? page, String Name = null)
+        {
+            StaticPagedList<DepartmentList> itemsAsIPagedList;
+            itemsAsIPagedList = DepartmentGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("_DepartmentGrid", itemsAsIPagedList)
+                    : View("_DepartmentGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult DepartmentList(int? page, String Name = null)
+        {
+            StaticPagedList<DepartmentList> itemsAsIPagedList;
+            itemsAsIPagedList = DepartmentGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("DepartmentList", itemsAsIPagedList)
+                    : View("DepartmentList", itemsAsIPagedList);
+        }
+        public StaticPagedList<DepartmentList> DepartmentGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            DepartmentList clist = new DepartmentList();
+
+            IEnumerable<DepartmentList> result = _db.DFDepartmentList.SqlQuery(@"exec GetDepartmentList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<DepartmentList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<DepartmentList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+
+        }
+
+        public ActionResult AddDepartment(int? id)
+        {
+            Department data = new Department();
+            OfficeDbContext _db = new OfficeDbContext();
+            if (id > 0)
+            {
+
+                var result = _db.DepartmentLists.SqlQuery(@"exec GetDepartmentDetails 
+                @DepartmentId",
+                 new SqlParameter("@DepartmentId", id)).ToList<Department>();
+
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.DepartmentId = 0;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddDepartment", data)
+                  : View("AddDepartment", data);
+        }
+
+        [HttpPost]
+        public ActionResult SaveDepartment(int DepartmentId = 0, String DepartmentName = "", String IsActive = "")
+        {
+            try
+            {
+
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveDepartment 
+               @DepartmentId, @DepartmentName,@IsActive,@CreatedBy",
+                new SqlParameter("@DepartmentId", DepartmentId),
+                new SqlParameter("@DepartmentName", DepartmentName),
+                new SqlParameter("@IsActive", Active),
+                new SqlParameter("@CreatedBy", 1)
+            );
 
                 return Json("Success");
 

@@ -23,20 +23,15 @@
                         <td>@item.DesignationName</td>
                         <td>@item.IsActive</td>
                         <td>
-                            <div class="ibox-tools" style="text-align:left!important">
-                                 
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-                                    <i class="">...</i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user" style="text-align:left!important">
-                                    <li>
-                                        <a href="addDesignation?id=@item.DesignationID">Edit</a>
-                                    </li>
-                                   
-                                </ul>
-                               
-                            </div>
-                             
+
+                            <a class="edit" href="addDesignation?id=@item.DesignationID"  id="EditMember">
+                                <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                            </a>
+                            <a class="Delete" name="@item.DesignationID" id="DeleteMember">
+                                <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                            </a>
+                         
+
                         </td>
                     </tr>
                 }
@@ -66,7 +61,6 @@
             $('.loader').show();
             var temp = $(this).attr('href');
 
-           
             var pageid = temp.replace('/?page=', '');
 
             $.ajax({
@@ -89,6 +83,25 @@
                 }
             });
 
+        });
+
+          $('.Delete').click(function () {
+            if (confirm("Are you sure want to deleted!"))
+            {
+            var Id = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("DeleteMaster", "Master")",
+                data: { Id: Id, MasterName: 'Designation' },
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    var mgs = data.replace(/"/g, "");
+                    alert(mgs);
+                   }
+            });
+            }
+                                 
         });
     });
 

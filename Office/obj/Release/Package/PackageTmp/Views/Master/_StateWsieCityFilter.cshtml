@@ -1,0 +1,8 @@
+﻿
+@{
+
+    Layout = null;
+}
+
+@Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID", Title = "CityID" })
+

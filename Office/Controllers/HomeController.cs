@@ -9,6 +9,10 @@ namespace Calibration.Controllers
     public class HomeController : Controller
     {
         // GET: Home
+        public ActionResult ProjectDemo()
+        {
+            return View();
+        }
         public ActionResult Project()
         {
             return View();

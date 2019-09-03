@@ -1626,12 +1626,27 @@
     <Content Include="Views\Master\SubscriptionGrid.cshtml" />
     <Content Include="Views\Master\SubscriptionList.cshtml" />
     <Content Include="Views\Master\CustomerList.cshtml" />
-    <Content Include="Views\Home\Project.cshtml" />
+    <Content Include="Views\Home\ProjectDemo.cshtml" />
     <Content Include="Views\Master\AddMember.cshtml" />
     <Content Include="Views\Master\_StateWsieCityFilter.cshtml" />
     <Content Include="Views\Master\PersonList.cshtml" />
     <Content Include="Views\Master\_PersonGrid.cshtml" />
     <Content Include="Views\Master\AddPerson.cshtml" />
+    <Content Include="Views\Master\MemberList.cshtml" />
+    <Content Include="Views\Master\_MemberGrid.cshtml" />
+    <Content Include="Views\Master\_GetMemberPersonList.cshtml" />
+    <Content Include="Views\Master\_GetMemberContactPerson.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\Master\EditMember.cshtml" />
+    <Content Include="Views\Master\_MemberWiseContactDetailsList.cshtml" />
+    <Content Include="Views\Master\_MemberListForUpdate.cshtml" />
+    <Content Include="Views\Master\EditPerson.cshtml" />
+    <Content Include="Views\Master\_GetContactPersonMobileList.cshtml" />
+    <Content Include="Views\Master\_GetContactPersonEmailList.cshtml" />
+    <Content Include="Views\Master\DepartmentList.cshtml" />
+    <Content Include="Views\Master\_DepartmentGrid.cshtml" />
+    <Content Include="Views\Master\AddDepartment.cshtml" />
+    <Content Include="Views\Home\Project.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

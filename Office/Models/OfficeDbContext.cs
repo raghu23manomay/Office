@@ -38,7 +38,17 @@ namespace office.Models
         public DbSet<Employee> EmployeeLists { get; set; }
         public DbSet<EmployeeList> DFEmployeeLists { get; set; }
         public DbSet<PersonList> DFPersonList { get; set; }
-        
+        public DbSet<MemberList> DFMemberList { get; set; }
+        public DbSet<MemberPersonList> DFMemberPersonList { get; set; }
+        public DbSet<ContactPersonListByMember> DFContactPersonListByMember { get; set; }
+        public DbSet<Member> DFMember { get; set; }
+        public DbSet<MemberContactDetails> DFMemberContactDetails { get; set; }
+        public DbSet<Person> DFPerson { get; set; }
+        public DbSet<PersonMobileList> DFPersonMobileList { get; set; }
+        public DbSet<PersonEmailList> DFPersonEmailList { get; set; }
+        public DbSet<DepartmentList> DFDepartmentList { get; set; }
+        public DbSet<Department> DepartmentLists { get; set; }
+     
     }
     
 }

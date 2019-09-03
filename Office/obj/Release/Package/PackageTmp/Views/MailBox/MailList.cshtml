@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/summernote.css" rel="stylesheet" />
+<link href="~/css/summernote-bs3.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+<link href="~/css/iCheck/custom.css" rel="stylesheet" />
+<div class="paddingRight15 marginLeft100">
+    <div class="row">
+
+        <div class="col-xs-2 col-md-2">
+            <div id="enqFilter">
+                <div>
+                    <ul class="list-unstyledEnqFiter components marginTop20 paddingLeft15">
+                        <li><a href="#" class="test"><i class="fa fa-envelope"></i>   New Enquiry </a></li>
+                        <li><a href="#" class="test"><i class="fa fa-behance" aria-hidden="true"></i>   Feasibility </a></li>
+                        <li><a href="#" class="test"><i class="fa fa-quote-left" aria-hidden="true"></i>   Quotation </a></li>
+                        <li><a href="#" class="test"><i class="fa fa-shopping-bag" aria-hidden="true"></i>   Purchase Orders </a></li>
+
+                        <li><a href="@Url.Action("Index", "Master",new { page = 1})" class="Master"><i class="fa fa-user" aria-hidden="true"></i> Customer Master </a></li>
+                        <li><a href="#" class="Master"><i class="fa fa-gavel  " aria-hidden="true"></i> Instrument Master</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-10 col-md-10" id="mailgrid">
+        
+        </div>
+    </div>
+    <input type="text" class="hidden" id="multipalemails" value="@ViewBag.emails" />
+</div>
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script>
+    $(document).ready(function () {
+
+            $.ajax({
+            url: "@Url.Action("ComposeMail", "MailBox")",
+            contentType: "application/json",
+            data: JSON.stringify( {
+
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#mailgrid').html(data);
+                $('#emailto').val($('#multipalemails').val());
+            },
+            error: function (data) {
+            },
+            complete: function () {
+
+            }
+
+        });
+        var emailid = $('#multipalemails').val(); 
+        $('#emailto').val(emailid);
+        
+          });
+</script>

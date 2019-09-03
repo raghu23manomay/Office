@@ -1,0 +1,189 @@
+﻿
+
+@model IEnumerable<office.Models.MemberList>
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+<script src="~/js/jquery-2.1.1.js"></script>
+<style>
+    .popover-content
+    {
+    margin-bottom:-18px;
+    }
+</style>
+<div class="container">
+          
+    @*<div id="popover-content" class="hide" style="overflow:auto;max-height:400px">
+
+    </div>*@
+</div>
+<div class="row">
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+
+                    <th>Company Name</th>
+                    <th>Short Name</th>
+                    <th>Member Type</th>
+                    <th>Name</th>
+                    @*<th>PowerofAttorny</th>*@
+                    <th>Information</th>
+                    <th>Created Date</th>
+                    <th>Added By</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.CompanyName</td>
+                    <td>@item.ShortName</td>
+                    <td>@item.MemberTypeName</td>
+                    <td>@item.Name</td>
+                    @*<td>@item.PowerofAttorny</td>*@
+                    <td>
+                        <a class="showMembers" name="@item.MemberID" data-placement="bottom" data-toggle="popover" data-title="Person List" data-container="body" data-html="true" id="login">
+                            <i class="fa fa-user" style="color: darkgrey;" aria-hidden="true"> @item.MemberPersonCount</i>
+                        </a>
+
+                        @*<a class="showConactPerson" name="@item.MemberID" data-placement="bottom" data-toggle="popover" data-title="Person List" data-container="body" data-html="true" id="login">
+                <i class="fa fa-phone" style="color: darkgrey;" aria-hidden="true"> @item.ContactPersonCount</i>
+               </a>*@
+                    </td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.CreatedBy</td>
+                    <td>
+
+                        <a class="edit" href="GetMemberDetailsForUpdate?MemberId=@item.MemberID"  id="EditMember">
+                            <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                        </a>
+                        <a class="Delete" name="@item.MemberID" id="DeleteMember">
+                            <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                        </a>
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+
+    <div class="pnl-pagination m-b-md1">
+        <div class="pull-right">
+
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+            @if (Model.Count() == 0)
+            {
+                <ul class="pagination pull-right"></ul>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/js/bootstrap.min.js"></script>
+<script>
+          
+    $(document).ready(function () {
+
+         $('[data-toggle="popover"]').popover();     
+
+        $('.showMembers').click(function () {
+            var Memid = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("GetPersonListByMemberType", "Master")",
+                data: { MemberId: Memid },
+                dataType: "text",
+                //  type: "POST",
+                async: false,
+                success: function (data) {
+                   $('.popover-content').html(data);
+                   }
+            });
+                     
+        });
+
+        $('body').on('click', function (e) {
+            $('[data-toggle="popover"]').each(function () {
+
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                    $(this).popover('hide');
+                }
+            });
+        });
+
+        // Future use (dynamic pop over for getting contact person)
+        @*$('.showConactPerson').click(function () {
+
+            var Memid = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("GetConactPersonByMemberType", "Master")",
+                data: { MemberId: Memid },
+                dataType: "text",
+                //  type: "POST",
+                async: false,
+                success: function (data) {
+                   $('.popover-content').html(data);
+                   }
+            });
+                     
+        });*@
+       
+
+        $('#mgrid .pagination li a').on('click', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('.loader').show();
+            var temp = $(this).attr('href');
+
+            var pageid = temp.replace('/?page=', '');
+
+            $.ajax({
+                url: "@Url.Action("LoadMemberGrid", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    MemberTypeId: $("#memberid option:selected").val(),
+                    Name: $("#MemberFilter").val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+
+        });
+
+
+        $('.Delete').click(function () {
+            if (confirm("Are you sure want to deleted!"))
+            {
+            var Id = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("DeleteMaster", "Master")",
+                data: { Id: Id, MasterName: 'Member' },
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    var mgs = data.replace(/"/g, "");
+                    alert(mgs);
+                   }
+            });
+            }
+                                 
+        });
+    });
+
+</script>

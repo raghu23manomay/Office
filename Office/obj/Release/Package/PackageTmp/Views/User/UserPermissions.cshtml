@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "UserPermission";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model  IEnumerable<office.Models.UserPermission>
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+<script src="~/assets/css/plugins/toastr/toastr.min.js"></script>
+@{
+
+    System.Data.DataTable dt = new System.Data.DataTable();
+    dt = Session["UserPermission"] as System.Data.DataTable;
+}
+<style>
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f2f3f8;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #e9ebf3;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+</style>
+<div class="container">
+
+</div>
+
+<link href="~/Contents/DashboardStyleSheet.css" rel="stylesheet" />
+
+<body>
+
+    <div class="wrapper1 wrapper-content1">
+
+        <div class="gray-bg">
+
+            <div class="">
+
+                <div class="row">
+                    <div class="container">
+
+                        <div class="col-md-3">
+
+                            <div class="timeline-row post-even" style="overflow-y: scroll;height: 755px;">
+
+                                <div class="ibox" style="height: 755px;">
+                                    <div class="ibox-title" style="border-bottom: 1px solid #ccc;padding: 4px;font-size: 15px;font-weight: 600;">
+
+                                        <h2 class="text-success no-margin headingsize18"> User List</h2>
+                                        <input type="text" id="usersearch" class="form-control" placeholder="User Search" style="margin-top:10px;margin-bottom:10px;" />
+                                    </div>
+                                    <div class="flot-chart-content" id="flot-dashboard-chart">
+                                        <div class="table-responsive" id="usergrid">
+
+                                            @Html.Partial("_UserPermissionList")
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-9">
+                            <div class="timeline-row post-even" id="userpermissiongrid">
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="loader"></div>
+    <input type="text" id="saveuserid" value="" class="hidden" />
+    <input type="text" id="saveusername" value="" class="hidden" />
+    <input type="text" id="saverolename" value="" class="hidden" />
+    <hr />
+
+</body>
+
+<script>
+
+    $(document).ready(function () {
+        $('.loader').hide();
+
+        $('#usersearch').on('keyup', function () {
+            $.ajax({
+                url: "@Url.Action("LoadUserPermissions", "Master")",
+                data:
+                {
+                    username: $('#usersearch').val(),
+                },
+                dataType: "text",
+                //  type: "POST",
+                async: false,
+                success: function (data) {
+
+                    $('#usergrid').html(data);
+                }
+        });
+     });
+
+
+    });
+
+
+
+</script>

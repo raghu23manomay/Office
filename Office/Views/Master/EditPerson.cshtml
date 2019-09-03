@@ -1,0 +1,342 @@
+﻿
+@model office.Models.Person
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmCandidate" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Add Contact Person </h5>
+                    <div class="ibox-tools">
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Prefix</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.HiddenFor(a => a.PersonalInfoID, new { @class = "form-control", title = "PersonalInfoID", @id = "PersonalInfoID" })
+                                    @Html.TextBoxFor(a => a.Prefix, new { @class = "form-control", title = "Prefix", @id = "Prefix" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>First Name</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.HiddenFor(a => a.PersonalInfoID, new { @id = "PersonalInfoID" })
+                                    @Html.TextBoxFor(a => a.FirstName, new { @class = "form-control", title = "FirstName", @id = "FirstName" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Middle Name</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(a => a.MiddleName, new { @class = "form-control", title = "MiddleName", @id = "MiddleName" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Last Name</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(a => a.LastName, new { @class = "form-control", title = "LastName", @id = "LastName" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Birth Date</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <input type="date" id="BirthDate" class="form-control" value="@ViewBag.Dob" />
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Address 1</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(a => a.Address1, new { @class = "form-control", title = "Address1", @id = "Address1" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Address 2</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(a => a.Address2, new { @class = "form-control", title = "Address2", @id = "Address2" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Designation</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("DesignationId", new SelectList((System.Collections.IEnumerable)ViewData["DesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationID", Title = "DesignationID" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Note</label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(a => a.Note, new { @class = "form-control", title = "Note", @id = "Note" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Employee</p>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label></label>
+                                </div>
+                                <div class="col-md-10">
+                                    @Html.CheckBoxFor(a => a.IsActive, new { @class = "   ", title = "Active", @id = "IsActive" })
+                                    <label for="checkbox5">
+                                        Active
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="hr-line-dashed"></div>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-8 pull-right">
+                                    <div class="pull-right">
+                                        @Html.ActionLink("Cancel", "PersonList", "Master", null, new { @class = "btn btn-white" })
+                                        <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Mobile</label>
+                                </div>
+                                <div class="col-md-10" style="display:inline-flex;">
+                                    @Html.TextBoxFor(a => a.Mobile, new { @class = "form-control", title = "Mobile", @id = "Mobile" })
+                                    <i class="fa fa-plus" id="addmobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-lg-offset-2 col-md-10" id="BindMobileList">
+                                    @*<span class="showmobile">No Mobile Number Added ..!</span>*@
+                                   
+                                </div>
+
+                            </div>
+
+                            <div class="row  form-group">
+                                <div class="col-md-2">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-10" style="display:inline-flex;">
+                                    @Html.TextBoxFor(a => a.Email, new { @class = "form-control", title = "Email", @id = "Email" })
+                                    <i class="fa fa-plus" id="addemail" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
+                            <div class="row  form-group">
+                                <div class="col-lg-offset-2 col-md-10" id="BindEmailList">
+                                    @*<span class="showemail">No Email Added ..!</span>*@
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/js/jquery-2.1.1.js"></script>
+}
+<script>
+
+    $(document).ready(function () {
+
+          //Ajax call for binding mobile list 
+         $.ajax({
+            url: "@Url.Action("GetPersonMobileList", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    Id: $('#PersonalInfoID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#BindMobileList').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+
+          //Ajax call for binding mobile list 
+         $.ajax({
+            url: "@Url.Action("GetPersonEmailList", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    Id: $('#PersonalInfoID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#BindEmailList').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        $('#addmobile').on("click", function () {
+            var Mobiletext = $('#Mobile').val();
+            if (Mobiletext.trim() != '') {
+                $('.showmobile').hide();
+                var bindrow = '<tr><td class="multimobile">' + Mobiletext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#mobilelist tbody').append(bindrow);
+                $('#Mobile').val('');
+            }
+
+        });
+
+        $('#addemail').on("click", function () {
+            var emailtext = $('#Email').val();
+            if (emailtext.trim() != '') {
+                $('.showemail').hide();
+                var bindrow = '<tr><td class="multiemail">' + emailtext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#emaillist tbody').append(bindrow);
+                $('#Email').val('');
+            }
+
+        });
+
+        $(document).on('click', 'i.deleterow', function (e) {
+            e.preventDefault();
+            $(this).parents('tr').remove();
+        });
+
+        $("#Namevalidation").hide();
+        $('#btnsave').on('click', function () {
+
+            //Adding mobile number into array
+            var idArr = [];
+            $('#mobilelist tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim()
+                idArr.push(tdVals);
+            });
+
+            var SaveMobile = [];
+            for (var i = 0; i < idArr.length; i++) {
+                var arrElement = idArr[i].split("~");
+                item = {}
+                item["Mobile"] = arrElement[0];
+                SaveMobile.push(item);
+
+            }
+
+
+            //Adding Email into array
+            var idArr = [];
+            $('#emaillist tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim()
+                idArr.push(tdVals);
+            });
+
+            var SaveEmail = [];
+            for (var i = 0; i < idArr.length; i++) {
+                var arrElement = idArr[i].split("~");
+                item = {}
+                item["Email"] = arrElement[0];
+                SaveEmail.push(item);
+            }
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Master/SavePerson',
+                data:
+                {
+                    PersonalInfoID: $('#PersonalInfoID').val(),
+                    Prefix: $('#Prefix').val(),
+                    FirstName: $('#FirstName').val(),
+                    MiddleName: $('#MiddleName').val(),
+                    LastName: $('#LastName').val(),
+                    BirthDate: $('#BirthDate').val(),
+                    Address1: $('#Address1').val(),
+                    Address2: $('#Address2').val(),
+                    DesignationId: $('#DesignationID').val(),
+                    Note: $('#Note').val(),
+                    IsActive: $('input[name=IsActive]').prop('checked'),
+                    SaveMobile: SaveMobile,
+                    SaveEmail: SaveEmail,
+
+                },
+                success: function (da) {
+                    alert(da);
+                    //  location.href = "EmployeeList";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@
             <thead>
                 <tr>
 
-                     <th>FullName </th>
+                    <th>FullName </th>
                     <th> Designation</th>
                     <th>BirthDate</th>
                     <th>Mobile </th>
@@ -19,8 +19,9 @@
                     <th>Address 1</th>
                     <th>Address 2</th>
                     <th>Note</th>
+                    <th>Action</th>
 
-               </tr>
+                </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
@@ -35,19 +36,13 @@
                     <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address2</td>
                     <td style="max-width: 110px;overflow-wrap: break-word;">@item.Note</td>
                     <td>
-                        <div class="ibox-tools" style="text-align:left!important">
-
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-                                <i class="">...</i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a href="AddContactPerson?id=@item.PersonalInfoID">Edit</a>
-                                </li>
-                            </ul>
-
-                        </div>
-
+                        <a class="edit" href="EditPerson?Id=@item.PersonalInfoID"  id="EditContactPerson">
+                            <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                        </a>
+                        <a class="Delete" name="@item.PersonalInfoID" id="DeleteContactPerson">
+                            <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                        </a>
+                                               
                     </td>
                 </tr>
                 }
@@ -99,6 +94,25 @@
                 }
             });
 
+        });
+
+        $('.Delete').click(function () {
+            if (confirm("Are you sure want to deleted!"))
+            {
+            var Id = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("DeleteMaster", "Master")",
+                data: { Id: Id, MasterName: 'PersonalInfo' },
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    var mgs = data.replace(/"/g, "");
+                    alert(mgs);
+                   }
+            });
+            }
+                                 
         });
     });
 

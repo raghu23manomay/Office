@@ -1,0 +1,46 @@
+﻿@model IEnumerable<office.Models.MemberPersonList>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="MemberDatails">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="hidden multimember" id="@item.DesignationID">@item.MemberPersonDetailId</td>
+                <td>@item.PersonName</td>
+                <td><span style="color: darkgray;font-size: smaller;">@item.DesignationName</span></td>
+                <td><i class="fa fa-times deleteMemberPerson pull-right" id="@item.MemberPersonDetailId" aria-hidden="true"></i></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).on('click', 'i.deleteMemberPerson', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Master/DeleteMemberPersonFromMember',
+            data:
+            {
+                Id: id,
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

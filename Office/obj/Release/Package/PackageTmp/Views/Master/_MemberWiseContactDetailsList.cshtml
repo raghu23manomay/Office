@@ -1,0 +1,103 @@
+﻿@model IEnumerable<office.Models.MemberContactDetails>
+    @{ 
+        Layout = null;
+    }
+<script src="~/js/jquery-2.1.1.js"></script>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Details</h5>
+                @*<hr id="Conactrow" style="margin-top: 0px; margin-bottom: 5px;" />*@
+            </div>
+        </div>
+        @*<div class="form-group" id="nocontacts">
+            <span id="shownocontacts" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts ..! </span>
+        </div>*@
+        <div class="col-sm-12">
+            <table class="table" id="Datails">
+                <thead>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        if (item.ContactType == "Mobile")
+                        {
+                            <tr>
+                                <td class="multimobile">@item.Contact</td>
+                                <td style="color: darkgray;font-size: smaller;">@item.ContactType</td>
+                                <td><i class="fa fa-times deleteContact pull-right" id="@item.Id" ContactType="@item.ContactType" aria-hidden="true"></i></td>
+                            </tr>
+                        }
+                        else if (item.ContactType == "Office")
+                        {
+                            <tr>
+                                <td class="multioffice">@item.Contact</td>
+                                <td style="color: darkgray;font-size: smaller;">@item.ContactType</td>
+                                <td><i class="fa fa-times deleteContact pull-right" id="@item.Id" ContactType="@item.ContactType" aria-hidden="true"></i></td>
+                            </tr>
+                        }
+                        else if (item.ContactType == "Email")
+                        {
+                            <tr>
+                                <td class="multiemail">@item.Contact</td>
+                                <td style="color: darkgray;font-size: smaller;">@item.ContactType</td>
+                                <td><i class="fa fa-times deleteContact pull-right" id="@item.Id" ContactType="@item.ContactType" aria-hidden="true"></i></td>
+                            </tr>
+                        }
+                        else if (item.ContactType == "Phone")
+                        {
+                            <tr>
+                                <td class="multiphone">@item.Contact</td>
+                                <td style="color: darkgray;font-size: smaller;">@item.ContactType</td>
+                                <td><i class="fa fa-times deleteContact pull-right" id="@item.Id" ContactType="@item.ContactType" aria-hidden="true"></i></td>
+                            </tr>
+                        }
+                        else if (item.ContactType == "AdditionField")
+                        {
+                            <tr>
+                                <td class="multiadditionalfield">@item.Contact</td>
+                                <td style="color: darkgray;font-size: smaller;">@item.ContactType</td>
+                                <td><i class="fa fa-times deleteContact  pull-right" id="@item.Id" ContactType="@item.ContactType" aria-hidden="true"></i></td>
+                            </tr>
+                        }
+                        else if (item.ContactType == "Parameter")
+                        {
+                            <tr>
+                                <td class="multiparameter">@item.Contact</td>
+                                <td style="color: darkgray;font-size: smaller;">@item.ContactType</td>
+                                <td><i class="fa fa-times deleteContact pull-right" id="@item.Id" ContactType="@item.ContactType" aria-hidden="true"></i></td>
+                            </tr>
+                        }
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<script>
+    $(document).on('click', 'i.deleteContact', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+        var type = $(this).attr("ContactType");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Master/DeleteContactFromMember',
+            data:
+            {
+                Id: id,
+                ContactType: type,
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

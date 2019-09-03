@@ -1,0 +1,90 @@
+﻿
+
+@model  IEnumerable<mvc.Models.UserMasterGridList>
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/css/plugins/toastr/toastr.css" rel="stylesheet" />
+<script src="~/assets/css/plugins/toastr/toastr.min.js"></script>
+<link href="~/assets/css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+@{
+
+    System.Data.DataTable dt = new System.Data.DataTable();
+    dt = Session["UserPermission"] as System.Data.DataTable;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            @*<div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search User" id="txtName" name="txtName" autocomplete="off">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search" name="btnnameSearch" id="btnnameSearch"></i>
+                    </span>
+                </div>*@
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-offset-7">
+            @{
+                System.Data.DataRow[] HeadingFields = dt.Select("submenuname = 'UserMaster' and FeatureName = 'Create'");
+                if (HeadingFields[0].ItemArray[6].ToString() == "1")
+                {
+                    @Html.ActionLink("Add New", "CreateUser", "Master",null,
+                    new Dictionary<string, object>
+                    {
+                        { "class", "btn btn-danger pull-right m-r-sm" },
+                        { "data-toggle" , "modal"},
+                        { "data-target", "#mdlAddUser"},
+                        { "title", "New User"}
+
+                    })
+                }
+            }
+
+        </div>
+
+        <div id="mdlAddUser" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+        </div>
+    </div>
+</div>
+<div class="container m-t-md">
+    <div class="row">
+        <div id="grid1" class="col-sm-12">
+            @Html.Partial("UserMaster")
+        </div>
+
+        <div class="col-sm-10">
+            <div class="container m-t-md">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@*@Scripts.Render("~/bundles/Script-custom-editor")
+    @Scripts.Render("~/bundles/jqueryval")*@
+
+
+
+
+
+
+
+
+
+
+
+

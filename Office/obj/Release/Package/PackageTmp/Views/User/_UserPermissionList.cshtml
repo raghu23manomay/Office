@@ -1,0 +1,51 @@
+﻿@{ 
+    Layout = null;
+}
+<table class="table scroll-x">
+
+    <tbody>
+        @foreach (var item in Model)
+
+        {
+            <tr>
+                <td class="user" id="@item.user_id" name="@item.RoleName" value="@item.fullname">
+                    @item.fullname<br>
+                    <span style=" font-size: 11px;color: #bbb6b6;">@item.RoleName</span>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+          $('.user').on('click', function () {
+
+            var userid = $(this).attr('id');
+            var username = $(this).attr('value');
+            var rolename = $(this).attr('name');
+            $('#saveuserid').val(userid);
+            $('#saveusername').val(username);
+            $('#saverolename').val(rolename);
+
+
+            $.ajax({
+                url: "@Url.Action("_UserPermissionGrid", "Master")",
+                data: {
+                    userid: userid
+                },
+                dataType: "text",
+                //  type: "POST",
+                async: false,
+                success: function (data) {
+
+                    //data3 = data;
+
+                    $('#userpermissiongrid').html(data);
+
+                }
+
+            });
+
+
+        });
+</script>

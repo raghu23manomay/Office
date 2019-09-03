@@ -1,0 +1,100 @@
+﻿
+
+@model IEnumerable<office.Models.PersonList>
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+<script src="~/js/jquery-2.1.1.js"></script>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+
+                    <th>FullName </th>
+                    <th> Designation</th>
+                    <th>BirthDate</th>
+                    <th>Mobile </th>
+                    <th>Email </th>
+                    <th>Address 1</th>
+                    <th>Address 2</th>
+                    <th>Note</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.DesignationName</td>
+                    <td>@item.BirthDate</td>
+                    <td style="overflow-wrap: break-word;max-width: 78px;">@item.Mobile</td>
+                    <td style="max-width: 137px;overflow-wrap: break-word;">@item.Email</td>
+                    <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address1</td>
+                    <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address2</td>
+                    <td style="max-width: 110px;overflow-wrap: break-word;">@item.Note</td>
+                    <td>
+                        <a class="edit" href="EditPerson?Id=@item.PersonalInfoID"  id="EditContactPerson">
+                            <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                        </a>
+                        <a class="Delete" name="@item.PersonalInfoID" id="DeleteContactPerson">
+                            <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                        </a>
+                                               
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+
+    <div class="pnl-pagination m-b-md1">
+        <div class="pull-right">
+
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+            @if (Model.Count() == 0)
+            {
+                <ul class="pagination pull-right"></ul>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#mgrid .pagination li a').on('click', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('.loader').show();
+            var temp = $(this).attr('href');
+
+            var pageid = temp.replace('/?page=', '');
+
+            $.ajax({
+                url: "@Url.Action("LoadPersonGrid", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    Name: $('#PersonFilter').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+
+        });
+    });
+
+</script>

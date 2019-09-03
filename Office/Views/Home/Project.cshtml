@@ -1,834 +1,828 @@
-﻿<div class="container-fluid" style="min-height: 510px;">
-    <div class="row">
+﻿
+@{
+    ViewBag.Title = "Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-        <div class="col-md-12">
-            <div class="headline">
-                <h4 class="color-red">
-                    Create New Project <small>Create New Project</small>
-                </h4>
+<script src="~/js/jquery-2.1.1.js"></script>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Project form</h5>
+                
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h3 class="help-block m-b-none">Project Information</h3>
+                            <hr style="margin-top: 10px; margin-bottom: 10px;" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Enquiry Date</label>
+                        <div class="col-lg-10">
+                            <input type="date" id="EnquiryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="EnquiryDate" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Name</label>
+                        <div class="col-lg-10"><input type="text" id="ProjectName" placeholder="ProjectName" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Short Name</label>
+                        <div class="col-lg-10"><input type="text" id="ProjectName" placeholder="Short Name" class="form-control"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Developers</label>
+
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Mr.Balaji Surwase</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-2 control-label">Relation</label>
+
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Developer</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                            <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Conact Person</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Mr.Raghu mudgal</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                            <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Coordinator</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Mr.Manju patil</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                            <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Assistant</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Mr.Tushar harade</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                            <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Address 1</label>
+
+                        <div class="col-lg-10">
+                            <input id="OfcAddress1" type="text" placeholder="Address 1" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Address 2</label>
+
+                        <div class="col-lg-10">
+                            <input id="OfcAddress2" type="text" placeholder="Address 2" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">District</label>
+
+                        <div class="col-lg-10">
+                            <input id="OfcDistrict" type="text" placeholder="District" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Zip Code</label>
+
+                        <div class="col-lg-10">
+                            <input id="OfcZip" type="text" placeholder="Zip Code" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <label class="control-label">Shipping Address</label>
+                            <input type="checkbox" placeholder="Shipping" style="margin-left:11px">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h3 class="help-block m-b-none">Other</h3>
+                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Website</label>
+
+                        <div class="col-lg-10">
+                            <input id="Website" type="text" placeholder="Website" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Note</label>
+
+                        <div class="col-lg-10">
+                            <textarea id="Note" type="text" value="" placeholder="Note" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-8 pull-right">
+                            <div class="pull-right">
+                                @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
+                                <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="form-horizontal col-md-12">
-            <form action="/Admin/Project/CreateNewProject" method="post" novalidate="novalidate">
-                <div class="form-horizontal col-md-12">
-                    <div class="col-md-6 pull-left">
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Project Title
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control CapsLetter" data-val="true" data-val-required="The Title field is required." id="Title" name="Title" type="text" value="">
-                                <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title" style="display:grid;">
+                <h4 class="entityField" style="margin-bottom: 2px;"><span id="showcompanynameOnHeader">No Name..!</span></h4>
+                <h4 class="person" style="margin-bottom: 2px;"><span id="showtitle">Mr.</span>&nbsp;<span id="showname">No Name ..!</span></h4>
+                <span class="person" id="showdesignation" style="color: darkgray;font-size: smaller;">No Designation ..!</span>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
 
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Project Title ShortName
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control CapsLetter" id="TitleShortName" name="TitleShortName" type="text" value="">
-                                <span class="field-validation-valid" data-valmsg-for="TitleShortName" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Developer Name
-                            </label>
-                            <div class="col-md-7">
-                                <select class="styled" id="Developerss" name="DeveloperId" value="sdf">
-                                    <option value="99"> J. S. Construction                               </option>
-                                    <option value="112">Aadesh Developers                                 </option>
-                                    <option value="193">Aditya Developers                                 </option>
-                                    <option value="138">Agarwal Manoj Gopikishan                          </option>
-                                    <option value="46">Aher Builders &amp; Developers                        </option>
-                                    <option value="28">Archie Nova Associates                            </option>
-                                    <option value="30">Archie Nova Creations                             </option>
-                                    <option value="36">Archie Nova Enterprises                           </option>
-                                    <option value="33">Archie Nova Landmarks                             </option>
-                                    <option value="199">Arth Develpoers                                   </option>
-                                    <option value="124">Aru Mandakini Popat                               </option>
-                                    <option value="16">Ashtavinayak City Pune L.L.P.                     </option>
-                                    <option value="1">Ashtavinayak Promoters &amp; Developers               </option>
-                                    <option value="115">Atharva Construction                              </option>
-                                    <option value="87">Atharva Developers &amp; Builders                     </option>
-                                    <option value="72">Atharva Properties Unit-2 &amp; Unit-3                </option>
-                                    <option value="21">Atharva Siddhi Developers                         </option>
-                                    <option value="22">Balaji Builders &amp; Developers                      </option>
-                                    <option value="239">Bapusaheb Mukinda Kanchan                         </option>
-                                    <option value="233">Baravkar Adv                                      </option>
-                                    <option value="230">Bhadale Amit                                      </option>
-                                    <option value="39">Bhagwat Navnath Nagnath                           </option>
-                                    <option value="152">Bhekrai Construction                              </option>
-                                    <option value="58">Bhoomi Agro Bio Foods                             </option>
-                                    <option value="277">Bhujbal Harish                                    </option>
-                                    <option value="271">Bhujbal Tushar                                    </option>
-                                    <option value="284">Binavat Satish                                    </option>
-                                    <option value="267">Biradar Wadki                                     </option>
-                                    <option value="228">Borawake Pravinkumar                              </option>
-                                    <option value="209">Bothara Vijay Gulabchand                          </option>
-                                    <option value="43">BrightEra Builders                                </option>
-                                    <option value="249">Chaudhari Santosh                                 </option>
-                                    <option value="191">Chavan Dattatray Ramrao                           </option>
-                                    <option value="192">Chavan Himmatsinh Hanumantrao                     </option>
-                                    <option value="196">Dabade Sushma Suresh                              </option>
-                                    <option value="215">Dhamal Ajinkya                                    </option>
-                                    <option value="244">Dhamal Rahul                                      </option>
-                                    <option value="229">Dhavale Jayvant                                   </option>
-                                    <option value="113">Dhavale Jayvant Santaram                          </option>
-                                    <option value="260">Dhole Raghunath                                   </option>
-                                    <option value="200">Dhore Pramila Uttam                               </option>
-                                    <option value="132">Divekar Vijay Bhaskar                             </option>
-                                    <option value="102">Dolas Vijay Shivram                               </option>
-                                    <option value="63">Domale Meena Sunil                                </option>
-                                    <option value="98">Dr. Raut Somnath                                  </option>
-                                    <option value="266">Durga Developers                                  </option>
-                                    <option value="18">Durvankur Vastu Nirmiti Pvt. Ltd.                 </option>
-                                    <option value="281">Gaikwad Tushar                                    </option>
-                                    <option value="64">Gandhari Construction                             </option>
-                                    <option value="208">Gandharva Landmarks                               </option>
-                                    <option value="48">Gandharva Properties                              </option>
-                                    <option value="10">Ganesha Developers                                </option>
-                                    <option value="140">Gavhane Rahul Narhari                             </option>
-                                    <option value="141">Gavhane Shankar Dnyabaji                          </option>
-                                    <option value="222">Ghevade Rohidas                                   </option>
-                                    <option value="195">Ghule Anant Shivaji                               </option>
-                                    <option value="250">Ghule Digambar                                    </option>
-                                    <option value="70">Ghule Nilesh Chandrakant                          </option>
-                                    <option value="243">Ghule Rahul                                       </option>
-                                    <option value="210">Ghule Ratnabai Vitthal                            </option>
-                                    <option value="256">Ghule Sagar                                       </option>
-                                    <option value="156">Gite Sandesh Dattatray                            </option>
-                                    <option value="214">Gogawale Anil                                     </option>
-                                    <option value="19">GSK Developers                                    </option>
-                                    <option value="80">Gurudatta Developers                              </option>
-                                    <option value="235">H A Developers                                    </option>
-                                    <option value="247">H. R. Pawar                                       </option>
-                                    <option value="68">Harpale Babita Ramchandra                         </option>
-                                    <option value="78">Harpale Balasaheb Tukaram                         </option>
-                                    <option value="257">Harpale Sanjay                                    </option>
-                                    <option value="110">Harpale Santosh Ramesh                            </option>
-                                    <option value="164">Harpale Tukaram Babanrao                          </option>
-                                    <option value="282">Harpale Vijay Dr                                  </option>
-                                    <option value="183">Harsh Laxmi Developers                            </option>
-                                    <option value="6">Heera Developers                                  </option>
-                                    <option value="12">Himalaya Landmarks Pvt. Ltd.                      </option>
-                                    <option value="273">Jadhav Gurunath                                   </option>
-                                    <option value="11">Jagdamba Developers                               </option>
-                                    <option value="272">Jagtap Ganesh                                     </option>
-                                    <option value="276">Jay Bhagwan Construction And Developers           </option>
-                                    <option value="258">Kakade Deepak Wadki                               </option>
-                                    <option value="116">Kalbhor Ganesh Jijaba                             </option>
-                                    <option value="201">Kalbhor Nalini Sharad                             </option>
-                                    <option value="38">Kale Balkrishna Manaji                            </option>
-                                    <option value="269">Kale Tatya                                        </option>
-                                    <option value="216">Kamthe Sadhana Somnath                            </option>
-                                    <option value="180">Karwape Ganesh Kisan                              </option>
-                                    <option value="114">Kedari Hemant Ratan                               </option>
-                                    <option value="259">Kekan Raju                                        </option>
-                                    <option value="117">Kesakar Dada Maruti                               </option>
-                                    <option value="178">Khutwad Pradip Vishnu                             </option>
-                                    <option value="127">Khutwad Rajendra Gulabrao                         </option>
-                                    <option value="207">Kishor Thakkar                                    </option>
-                                    <option value="24">Kohinoor Properties                               </option>
-                                    <option value="129">Kolape Jagadish Shivaji                           </option>
-                                    <option value="245">Kolte                                             </option>
-                                    <option value="278">Konde Vikrant                                     </option>
-                                    <option value="50">Kotwal Balasaheb Dattatraya                       </option>
-                                    <option value="226">Kumbhar Kondhwa                                   </option>
-                                    <option value="274">Kunjir Rangnath                                   </option>
-                                    <option value="106">Ladakat Jyoti Sunil                               </option>
-                                    <option value="133">Laxmi Ramna Creation                              </option>
-                                    <option value="285">Liebherr CMCtec                                   </option>
-                                    <option value="227">Loharkar Rajendra                                 </option>
-                                    <option value="248">M/s. Saptarshi Developers                         </option>
-                                    <option value="268">Mandale Sudhir                                    </option>
-                                    <option value="169">Marale Mayuresh Bhagwat                           </option>
-                                    <option value="56">Meena Enterprises                                 </option>
-                                    <option value="37">Mehta Kishor Associates                           </option>
-                                    <option value="121">Mhetre Rahul Sudham                               </option>
-                                    <option value="120">Mhetre Sudam Maruti                               </option>
-                                    <option value="198">MIT                                               </option>
-                                    <option value="137">Mohite Patil School                               </option>
-                                    <option value="57">Moraya Estates                                    </option>
-                                    <option value="237">More Ajit                                         </option>
-                                    <option value="279">Motwani Sachin                                    </option>
-                                    <option value="238">Mr. Shaikh Nazim Rafi                             </option>
-                                    <option value="168">Nalanda Nagari                                    </option>
-                                    <option value="122">Nalawade Bandu Ramchandra                         </option>
-                                    <option value="89">Natraj Associate                                  </option>
-                                    <option value="218">Nevse Rajashri Ajay                               </option>
-                                    <option value="76">Nirman Construction Housing Co.                   </option>
-                                    <option value="13">Nirmiti Constructions                             </option>
-                                    <option value="93">Nishant Constructions                             </option>
-                                    <option value="25">Om Sai Builders                                   </option>
-                                    <option value="103">Om Sai Developers                                 </option>
-                                    <option value="252">Ozone Properties                                  </option>
-                                    <option value="40">P. S. Construction                                </option>
-                                    <option value="202">P. S. Promotors &amp; Developers                      </option>
-                                    <option value="155">Panchratna Construction                           </option>
-                                    <option value="75">Pankaj Developers                                 </option>
-                                    <option value="119">Patel Jignesh Vallabhbhai                         </option>
-                                    <option value="118">Patel Vipul Vallabh                               </option>
-                                    <option value="171">Pathare Bapusaheb Tukaram                         </option>
-                                    <option value="83">Patil Rohini Chandrakant                          </option>
-                                    <option value="135">Potawade Santosh Dinkar                           </option>
-                                    <option value="283">Pote Jayshree                                     </option>
-                                    <option value="220">Prarup Consultant                                 </option>
-                                    <option value="139">Prathamesh Construction                           </option>
-                                    <option value="261">Rahul Gavhane                                     </option>
-                                    <option value="7">Raj Developers                                    </option>
-                                    <option value="130">Raskar Sanjeev Panduranga                         </option>
-                                    <option value="95">Raskonda Shriniwas Laxman                         </option>
-                                    <option value="105">Raut Somnath Vitthal                              </option>
-                                    <option value="97">Ravideep Developers                               </option>
-                                    <option value="41">S. P. Developers                                  </option>
-                                    <option value="79">S. S. Developers                                  </option>
-                                    <option value="184">Sahara Associates                                 </option>
-                                    <option value="88">Sahara Buildcon                                   </option>
-                                    <option value="251">Sahara Developers                                 </option>
-                                    <option value="34">Sahyadri Enterprises                              </option>
-                                    <option value="165">Sai Associates                                    </option>
-                                    <option value="159">Sai Developers                                    </option>
-                                    <option value="35">Sai Shraddha Associates                           </option>
-                                    <option value="29">Sai Shraddha Enterprises                          </option>
-                                    <option value="42">Sakhare Shivaji Bhiva                             </option>
-                                    <option value="153">Salakshmi Developement Co                         </option>
-                                    <option value="17">Samarth Developers                                </option>
-                                    <option value="4">Samrudhee Homes                                   </option>
-                                    <option value="174">Sanskruti Developers                              </option>
-                                    <option value="26">Sanvi Developers                                  </option>
-                                    <option value="3">Saptarshi Developers                              </option>
-                                    <option value="254">Saptarshi Properties                              </option>
-                                    <option value="134">Saptshrungi Construction                          </option>
-                                    <option value="280">Satav Amit                                        </option>
-                                    <option value="91">Satav Sanjay Amrutrao                             </option>
-                                    <option value="104">Satav Sushant Dnyaneshwar                         </option>
-                                    <option value="264">Satish Pillu Binawat                              </option>
-                                    <option value="197">Satyam Properties                                 </option>
-                                    <option value="47">Savale Baliram Chandrahar                         </option>
-                                    <option value="179">Sayyad Sameer Abbas                               </option>
-                                    <option value="53">Scindia Construction                              </option>
-                                    <option value="270">Sermat Resistranic                                </option>
-                                    <option value="262">Shashikant Kanherkar                              </option>
-                                    <option value="161">Shewale Satish Jayvantrao                         </option>
-                                    <option value="90">Shewale Vikram Jagannath                          </option>
-                                    <option value="231">Shewale Vilas                                     </option>
-                                    <option value="52">Shinde Prakash Rajaram                            </option>
-                                    <option value="232">Shinde Shekhar                                    </option>
-                                    <option value="166">Shitole Anil Bhagvan                              </option>
-                                    <option value="27">Shivmudra Builders                                </option>
-                                    <option value="66">Shivsagar Developers                              </option>
-                                    <option value="181">Shivshakti Builders                               </option>
-                                    <option value="5">Shivshakti Promoters &amp; Builders                   </option>
-                                    <option value="77">Shree Bhekrai  Builders                           </option>
-                                    <option value="221">Shree Ganesh Developers                           </option>
-                                    <option value="175">Shree Prayagdham Trust                            </option>
-                                    <option value="154">Shreyash Developers                               </option>
-                                    <option value="187">Shri Raj Developers                               </option>
-                                    <option value="67">Shri Ramchandra Education Society                 </option>
-                                    <option value="61">Shri Shivsagar Properties                         </option>
-                                    <option value="253">Shri Siddhivinayak Builders                       </option>
-                                    <option value="224">Shripad Builders &amp; Developers                     </option>
-                                    <option value="160">Shubh Infra                                       </option>
-                                    <option value="162">Siddhivinayak Associates                          </option>
-                                    <option value="217">Siddhivinayak Builders                            </option>
-                                    <option value="219">Siddhivinayak Developers                          </option>
-                                    <option value="8">Siddhivinayak Developers Wagholi                  </option>
-                                    <option value="92">Siddhivinayak Enterprises                         </option>
-                                    <option value="14">Siddhivinayak Properties                          </option>
-                                    <option value="15">Siddhivinayak Properties Huf                      </option>
-                                    <option value="71">Simplicity Group                                  </option>
-                                    <option value="126">Solanki Arvind Gulabchand                         </option>
-                                    <option value="136">Somwanshi Anand Suhas                             </option>
-                                    <option value="265">Subhash Zagade                                    </option>
-                                    <option value="176">Sudarshan Developers                              </option>
-                                    <option value="44">Sudhir Construction                               </option>
-                                    <option value="45">Sudhir Mandale &amp; Associates                       </option>
-                                    <option value="246">Sunil Vitthal Navale                              </option>
-                                    <option value="85">Sunsai Developers                                 </option>
-                                    <option value="111">Swaymbhu Builders                                 </option>
-                                    <option value="86">Tarangana Developers                              </option>
-                                    <option value="32">Tejprit Enterprises                               </option>
-                                    <option value="236">Thombre Abhimanyu                                 </option>
-                                    <option value="211">Tilekar Vijay                                     </option>
-                                    <option value="81">V. R. Konde &amp; Associates                          </option>
-                                    <option value="240">Vasantlal Sardarmal Pitale                        </option>
-                                    <option value="23">Vastushilp Builders &amp; Developers                  </option>
-                                    <option value="123">Vatre Ramesh Baburao                              </option>
-                                    <option value="263">Vikram Jadhav                                     </option>
-                                    <option value="20">Vinayak Developers                                </option>
-                                    <option value="234">Vineet Kumar                                      </option>
-                                    <option value="163">Vishal Buildcon                                   </option>
-                                    <option value="204">Waghmare Sopan Jijaba                             </option>
-                                    <option value="73">Yadav Vipul Pravin                                </option>
-                                    <option value="31">Yashanka Enterprises                              </option>
-                                    <option value="223">Yashwant Ho Jaywant Ho Devasthan Trust            </option>
-                                    <option value="172">Yenpure Vidyut Vishwas                            </option>
-                                    <option value="242">Yuneet Developers                                 </option>
-                                    <option value="212">Zagade Balasaheb                                  </option>
-                                    <option value="213">Zagade Santosh                                    </option>
-                                    <option value="177">Zagade Subhash Bandu                              </option>
-                                    <option value="131">Zende Pavan Arun                                  </option>
-                                    <option value="275">Zende Rajendra                                    </option>
-                                    <option value="60">Zenith Landmarks                                  </option>
-                                    <option value="2">Zenith Landmarks Pvt. Ltd.                        </option>
-                                </select>                        <span class="field-validation-valid" data-valmsg-for="DeveloperId" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="Lists">
-                            <div class="col-md-5">
-                                <select class="form-control" id="ListBox1" multiple="multiple" name="ListBox1" style="height:140px;width:100%;">
-                                    <option value="42"> - Bire   Shakti  Raman  -</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-
-                            <i class="btn btn-primary listbutton" id="btnAdd"><span>&nbsp;&gt;&nbsp;</span></i>
-                            <div class="clear">
-                            </div>
-                            <i class="btn btn-primary listbutton" id="btnAddAll"><span>&gt;&gt;</span></i>
-                            <div class="clear">
-                            </div>
-                            <i class="btn btn-primary listbutton" id="btnRemove"><span>&nbsp;&lt;&nbsp;</span></i>
-                            <div class="clear">
-                            </div>
-                            <i class="btn btn-primary listbutton" id="btnRemoveAll"><span>&lt;&lt;</span></i>
-                            <div class="clear">
-                            </div>
-                        </div>
-                        <div class="col-md-5 pull-right">
-                            <select class="form-control" id="ListBox2" multiple="multiple" name="ListBox2" style="height:140px;width:100%;"></select>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                            </label>
-                            <div class="col-md-7">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-
-                                Project Coordinator
-                            </label>
-                            <div class="col-md-7">
-                                <select class="styled valid" data-val="true" data-val-number="The field PMEmployeeId must be a number." data-val-required="The PMEmployeeId field is required." id="ProjectCoordinator" name="PMEmployeeId" value="sdf" aria-required="true" aria-describedby="ProjectCoordinator-error" aria-invalid="false">
-                                    <option value="4"> Raskar Santosh </option>
-                                    <option value="16"> Choudhary  Jalal </option>
-                                    <option value="17"> Mithari Uday </option>
-                                    <option value="18"> Patil  Ganesh </option>
-                                    <option value="19">  Admin</option>
-                                    <option value="38">Pangarkar Rashmi</option>
-                                    <option value="39">Bhosale Prashant</option>
-                                    <option value="40">Chopane Niteen</option>
-                                    <option value="41">Baraskar Ismail</option>
-                                    <option value="42">Ogale Sneha</option>
-                                    <option value="43">Zurange Pankaj</option>
-                                    <option value="44">Shewale Hrishikesh </option>
-                                    <option value="45">Khandelwal Parag</option>
-                                    <option value="46">Suryawanshi Akshada</option>
-                                    <option value="47">Sonawale Simran</option>
-                                </select>
-                                <span class="field-validation-valid" data-valmsg-for="PMEmployeeId" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Project Assistant
-                            </label>
-                            <div class="col-md-7">
-                                <select class="styled" data-val="true" data-val-number="The field AssitantId must be a number." id="EmployeeName" name="AssitantId" value="sdf">
-                                    <option value="4"> Raskar Santosh </option>
-                                    <option value="16"> Choudhary  Jalal </option>
-                                    <option value="17"> Mithari Uday </option>
-                                    <option value="18"> Patil  Ganesh </option>
-                                    <option value="19">  Admin</option>
-                                    <option value="38">Pangarkar Rashmi</option>
-                                    <option value="39">Bhosale Prashant</option>
-                                    <option value="40">Chopane Niteen</option>
-                                    <option value="41">Baraskar Ismail</option>
-                                    <option value="42">Ogale Sneha</option>
-                                    <option value="43">Zurange Pankaj</option>
-                                    <option value="44">Shewale Hrishikesh </option>
-                                    <option value="45">Khandelwal Parag</option>
-                                    <option value="46">Suryawanshi Akshada</option>
-                                    <option value="47">Sonawale Simran</option>
-                                </select>
-                                <span class="field-validation-valid" data-valmsg-for="AssitantId" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <!--Sachin on 16/6/16 for all employee list in listbox starts here-->
-                        <div class="Lists">
-                            <div class="col-md-5">
-                                <select class="form-control" id="EmployeeListBox1" multiple="multiple" name="EmployeeListBox1" style="height:140px;width:100%;">
-                                    <option value="4"> Raskar Santosh </option>
-                                    <option value="16"> Choudhary  Jalal </option>
-                                    <option value="17"> Mithari Uday </option>
-                                    <option value="18"> Patil  Ganesh </option>
-                                    <option value="19">  Admin</option>
-                                    <option value="38">Pangarkar Rashmi</option>
-                                    <option value="39">Bhosale Prashant</option>
-                                    <option value="40">Chopane Niteen</option>
-                                    <option value="41">Baraskar Ismail</option>
-                                    <option value="42">Ogale Sneha</option>
-                                    <option value="43">Zurange Pankaj</option>
-                                    <option value="44">Shewale Hrishikesh </option>
-                                    <option value="45">Khandelwal Parag</option>
-                                    <option value="46">Suryawanshi Akshada</option>
-                                    <option value="47">Sonawale Simran</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <i class="btn btn-primary listbutton" id="btnAddEmployee"><span>&nbsp;&gt;&nbsp;</span></i>
-                            <div class="clear">
-                            </div>
-                            <i class="btn btn-primary listbutton" id="btnAddAllEmployee"><span>&gt;&gt;</span></i>
-                            <div class="clear">
-                            </div>
-                            <i class="btn btn-primary listbutton" id="btnRemoveEmployee"><span>&nbsp;&lt;&nbsp;</span></i>
-                            <div class="clear">
-                            </div>
-                            <i class="btn btn-primary listbutton" id="btnRemoveAllEmployee"><span>&lt;&lt;</span></i>
-                            <div class="clear">
-                            </div>
-                        </div>
-                        <div class="col-md-5 pull-right">
-                            <select class="form-control" id="EmployeeListBox2" multiple="multiple" name="EmployeeListBox2" style="height:140px;width:100%;"></select>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                            </label>
-                            <div class="col-md-7">
-                            </div>
-                        </div>
-                        <!--Sachin on 16/6/16 for all employee list in listbox ends here-->
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Project Status
-                            </label>
-                            <div class="col-md-7">
-                                <select class="styled" data-val="true" data-val-number="The field ProjectStatusId must be a number." data-val-required="The ProjectStatusId field is required." id="ProjectStatus" name="ProjectStatusId" value="sdf">
-                                    <option value="1">Design Stage</option>
-                                    <option value="2">Completed</option>
-                                    <option value="3">Under Construction</option>
-                                    <option value="4">Not Completed</option>
-                                    <option value="5">On Hold</option>
-                                    <option value="7">Sanctioning</option>
-                                </select>
-                                <span class="field-validation-valid" data-valmsg-for="ProjectStatusId" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Project Status 2
-                            </label>
-                            <div class="col-md-7">
-                                <select class="styled" data-val="true" data-val-number="The field ProjectStatusRId must be a number." id="ProjectStatusRId" name="ProjectStatusRId">
-                                    <option value="1">Recent</option>
-                                    <option value="2">Completed</option>
-                                </select>
-                                <span class="field-validation-valid" data-valmsg-for="ProjectStatusRId" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Project Type
-                            </label>
-                            <div class="col-md-7">
-                                <select class="styled" data-val="true" data-val-number="The field ProjectTypeId must be a number." data-val-required="The ProjectTypeId field is required." id="ProjectTy" name="ProjectTypeId" value="sdf">
-                                    <option value="1">Residential Building</option>
-                                    <option value="2">Sanctioning - Godown</option>
-                                    <option value="3">Plan Estimate</option>
-                                    <option value="4">Commercial Building</option>
-                                    <option value="5">Residential Commercial</option>
-                                    <option value="6">Sanctioning - Industrial</option>
-                                    <option value="7">Sanctioning - Hotel Lodging</option>
-                                    <option value="8">Sanctioning - Plotting Layout</option>
-                                    <option value="9">Private Residence</option>
-                                    <option value="10">Sanctioning - Resort</option>
-                                    <option value="11">Resort</option>
-                                    <option value="12">Religious Building</option>
-                                    <option value="13">Hospitality Building</option>
-                                    <option value="14">Educational Building</option>
-                                    <option value="15">Competition</option>
-                                </select>
-                                <span class="field-validation-valid" data-valmsg-for="ProjectStatusId" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                File No
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="FileNo" name="FileNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="FileNo" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Content Place
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="ContentPlace" name="ContentPlace" type="text" value=""><span class="field-validation-valid" data-valmsg-for="ContentPlace" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Survey No
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="SurveyNo" name="SurveyNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="SurveyNo" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Gat No
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="GatNo" name="GatNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="GatNo" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                C.T.S. No
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="CTSNo" name="CTSNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="CTSNo" data-valmsg-replace="true"></span>
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Hissa No
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="HissaNo" name="HissaNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="HissaNo" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-md-6 pull-left">
-
-
-
-
-
-
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Plot No
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="PlotNo" name="PlotNo" type="text" value=""><span class="field-validation-valid" data-valmsg-for="PlotNo" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Road
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="Road" name="Road" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Road" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="form-group">
-
-
-                            <label class="col-md-5 control-label">
-                                Path
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="Path" name="Path" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Path" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Plot Area (sq. ft.)
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-number="The field PlotArea must be a number." data-val-regex="PlotArea Must Be Numeric" data-val-regex-pattern="^[0-9]*([.][0-9]{1,20})?$" id="PlotArea" name="PlotArea" type="text" value="">
-
-                                <span class="field-validation-valid" data-valmsg-for="PlotArea" data-valmsg-replace="true"></span>
-                            </div>
-
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Plot Area (sq. meter)
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-number="The field PlotAreaM must be a number." id="PlotAreaM" name="PlotAreaM" type="text" value="">
-                                <span class="field-validation-valid" data-valmsg-for="PlotAreaM" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Salable Area (sq.ft.)
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-number="The field SellableAreaFt must be a number." data-val-regex="PlotArea Must Be Numeric" data-val-regex-pattern="^[0-9]*([.][0-9]{1,20})?$" id="SellableAreaFt" name="SellableAreaFt" type="text" value=""><span class="field-validation-valid" data-valmsg-for="SellableAreaFt" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Salable Area (sq.meter)
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-number="The field SellableAreaM must be a number." id="SellableAreaM" name="SellableAreaM" type="text" value=""><span class="field-validation-valid" data-valmsg-for="SellableAreaM" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Number Of Flat
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-number="The field NumberOfFlat must be a number." data-val-regex="NumberOfFlat Must Be Numeric" data-val-regex-pattern="^[0-9]*$" id="NumberOfFlat" name="NumberOfFlat" type="text" value=""><span class="field-validation-valid" data-valmsg-for="NumberOfFlat" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Number Of Shop
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-number="The field NumberOfShop must be a number." data-val-regex="NumberOfShop Must Be Numeric" data-val-regex-pattern="^[0-9]*$" id="NumberOfShop" name="NumberOfShop" type="text" value=""><span class="field-validation-valid" data-valmsg-for="NumberOfShop" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Gaon
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control ui-autocomplete-input" id="Gaon" name="Gaon" type="text" value="" autocomplete="off"><span class="field-validation-valid" data-valmsg-for="Gaon" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Taluka
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control ui-autocomplete-input" id="Taluka" name="Taluka" type="text" value="" autocomplete="off"><span class="field-validation-valid" data-valmsg-for="Taluka" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                District
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control ui-autocomplete-input" id="District" name="District" type="text" value="" autocomplete="off"><span class="field-validation-valid" data-valmsg-for="District" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Year
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-regex="Year must be number" data-val-regex-pattern="([1-9][0-9]*)" id="Year" name="Year" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Year" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Authority
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="Authority" name="Authority" type="text" value=""><span class="field-validation-valid" data-valmsg-for="Authority" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Estimated Duration
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" id="EstimatedDuration" name="EstimatedDuration" type="text" value="">
-                                <span class="field-validation-valid" data-valmsg-for="EstimatedDuration" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Estimated Cost
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control" data-val="true" data-val-number="The field EstimatedCost must be a number." id="EstimatedCost" name="EstimatedCost" type="text" value="">
-                                <span class="field-validation-valid" data-valmsg-for="EstimatedCost" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                                Start Date
-                            </label>
-                            <div class="col-md-7">
-                                <input class="form-control hasDatepicker" id="StartDate" name="StartDate" type="text" value="">
-                                <span class="field-validation-valid" data-valmsg-for="StartDate" data-valmsg-replace="true"></span>
-                            </div>
-                        </div>
-
-                        <div class="divider"></div>
-                        <div id="mydiv">
-                            <div class="form-group">
-                                <label class="col-md-5 control-label">
-                                    Consultant Type
-                                </label>
-                                <div class="col-md-7">
-                                    <select class="styled" data-val="true" data-val-number="The field CosultantType must be a number." id="CosultantsType" name="CosultantType">
-                                        <option value="">----Select----</option>
-                                        <option value="13">3d Designer</option>
-                                        <option value="15">Acoustical Consultant</option>
-                                        <option value="12">Brochure Designer</option>
-                                        <option value="3">Electrical Consultant</option>
-                                        <option value="7">Environmental Designer</option>
-                                        <option value="5">Environmental Laisoning Consultant</option>
-                                        <option value="10">Geological Surveyor</option>
-                                        <option value="14">Ground Water Surveyor</option>
-                                        <option value="16">HVAC Consultant</option>
-                                        <option value="11">Interior Designer</option>
-                                        <option value="9">Land Surveyor</option>
-                                        <option value="8">Landscape Designer</option>
-                                        <option value="2">MEP Consultant</option>
-                                        <option value="4">Plumbing Consultant</option>
-                                        <option value="17">Project Management Consultant</option>
-                                        <option value="1">Structural Consultant</option>
-                                        <option value="6">Swimming Pool Consultant</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-5 control-label">
-                                    Consultant
-                                </label>
-                                <div class="col-md-7">
-                                    <select class="styled" id="Cosultant" name="Consultant">
-                                        <option value="">----Select----</option>
-                                        <option value="20">3D Power Visualization Pvt Ltd.</option>
-                                        <option value="50">3D Visualiser</option>
-                                        <option value="19">Sachin Birangane</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <a onclick="generatenew()" id="Document" class="pull-right glyphicon glyphicon-plus-sign">
-                        </a>
-                        <div class="clearfix">
-                        </div>
-                        <div id="clonedItem">
-                        </div>
-
-
-                        <div class="divider"></div>
-                        <div id="mydivcontr">
-                            <div class="form-group">
-                                <label class="col-md-5 control-label">
-                                    Contractor Type
-                                </label>
-                                <div class="col-md-7">
-                                    <select class="styled" id="ContractorType" name="ContractorType">
-                                        <option value="">----Select----</option>
-                                        <option value="17">Acoustical Contractor</option>
-                                        <option value="13">Biosanitiser Contractor</option>
-                                        <option value="12">Borewell Contractor</option>
-                                        <option value="2">Brickwork Plaster Contractor</option>
-                                        <option value="3">Electrical Contractor</option>
-                                        <option value="14">Fire Fighting System Contractor</option>
-                                        <option value="7">Garden Contractor</option>
-                                        <option value="16">HVAC Contractor</option>
-                                        <option value="15">Lift Contractor</option>
-                                        <option value="8">Mseb Contractor</option>
-                                        <option value="4">Plumbing Contractor</option>
-                                        <option value="11">Rainwater Harvesting Contractor</option>
-                                        <option value="1">Rcc Contractor</option>
-                                        <option value="9">Security System Contractor</option>
-                                        <option value="10">Solar Water Heating System Contractor</option>
-                                        <option value="6">Stp Contractor</option>
-                                        <option value="5">Tiling Contractor</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-5 control-label">
-                                    Contractor
-                                </label>
-                                <div class="col-md-7">
-                                    <select class="styled" id="Contractor" name="Contractor">
-                                        <option value="">----Select----</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <a onclick="generatenewcontractor()" id="Documents3" class="pull-right glyphicon glyphicon-plus-sign">
-                        </a>
-                        <div class="clearfix">
-                        </div>
-                        <div id="clonedItem1">
-                        </div>
-
-
-
-
-                        <div class="divider"></div>
-                        <div id="mydivproject">
-                            <div class="form-group">
-                                <label class="col-md-5 control-label">
-                                    Project Field
-                                </label>
-                                <div class="col-md-7">
-                                    <input class="form-control" id="ProjectField" name="ProjectField" type="text" value=""><span class="field-validation-valid" data-valmsg-for="ProjectField" data-valmsg-replace="true"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-5 control-label">
-                                    Project Parameters
-                                </label>
-                                <div class="col-md-7">
-                                    <input class="form-control" id="ProjectParameters" name="ProjectParameters" type="text" value=""><span class="field-validation-valid" data-valmsg-for="ProjectParameters" data-valmsg-replace="true"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <a onclick="generatenewproject()" id="Document1" class="pull-right glyphicon glyphicon-plus-sign">
-                        </a>
-                        <div class="clearfix">
-                        </div>
-                        <div id="clonedItemproject">
-                        </div>
-                        <div class="divider"></div>
-                        <div class="form-group">
-                            <label class="col-md-5 control-label">
-                            </label>
-                            <div class="col-md-7">
-                                <input type="submit" value="Create" id="btnCreate" class="btn btn-primary">|<a class="btn btn-success" href="/Admin/Project">Back To List</a>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Basic Information</h5>
+                            <hr style="margin-top: 11px; margin-bottom: 5px;" />
                         </div>
                     </div>
-                    <div class="clearfix">
+                    <div class="form-group person">
+                        <span id="showcompanyname" class="col-lg-12">No Information ..! </span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showshortname" class="col-lg-12">No Information ..!</span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showDOB" class="col-lg-12"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showWebsite" class="col-lg-12"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showNote" class="col-lg-12"></span>
+                    </div>
+
+                </div>
+                <p></p>
+
+                <div class="row entityField">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Person Details</h5>
+                            <hr id="personrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="noPersons">
+                        <span id="noperson" class="col-lg-12" style="overflow-wrap:break-word;">No Persons..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="MemberDatails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
-            </form>
-        </div>
 
+                <div class="row entityField">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Person Details</h5>
+                            <hr id="Conactpersonrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontactsPersons">
+                        <span id="nocontactsperson" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts Persons..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="PersonDatails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Details</h5>
+                            <hr id="Conactrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span id="shownocontacts" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts ..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="Datails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row person">
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Residential Address</h5>
+                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span id="showRaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showRaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showRstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showRcity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showRdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showRzip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+
+                </div>
+                <p class="person"></p>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Office Address</h5>
+                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
     </div>
+
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.person').hide();
+        $('.Consultant').hide();
+        $('.Contractor').hide();
+        $('#memberid').change(function () {
+            if ($("#memberid option:selected").val() == 4) {
+                $('.person').show();
+                $('.entityField').hide();
+            }
+            else
+            {
+                $('.person').hide();
+                $('.entityField').show();
+            }
+
+            if ($("#memberid option:selected").val() == 2) {
+                $('.Consultant').show();
+            }
+            else
+            {
+                $('.Consultant').hide();
+            }
+            if ($("#memberid option:selected").val() == 3) {
+                $('.Contractor').show();
+            }
+            else
+            {
+                $('.Contractor').hide();
+            }
+        });
+
+        $('#Website').keyup(function () {
+            $('#showWebsite').html($('#Website').val());
+        });
+
+        $('#Note').keyup(function () {
+            $('#showNote').html($('#Note').val());
+        });
+
+        $('#CompanyName').keyup(function () {
+            $('#showcompanyname').html($('#CompanyName').val());
+        });
+
+        $('#CompanyName').keyup(function () {
+            $('#showcompanynameOnHeader').html($('#CompanyName').val());
+        });
+
+         // Residential address auto fill info
+
+        $('#RAddress1').keyup(function () {
+            $('#showRaddress1').html($('#RAddress1').val());
+        });
+
+        $('#RAddress2').keyup(function () {
+            $('#showRaddress2').html($('#RAddress2').val());
+        });
+
+        $('#CityID').change(function () {
+            $('#showRcity').html($("#CityID option:selected").text());
+        });
+
+        $('#StateID').change(function () {
+            $('#showRstate').html($("#StateID option:selected").text());
+        });
+
+        $('#RZip').keyup(function () {
+            $('#showRzip').html($('#RZip').val());
+        });
+
+        $('#RDistrict').keyup(function () {
+            $('#showRdistrict').html($('#RDistrict').val());
+        });
+
+        // Office address auto fill info
+
+        $('#OfcAddress1').keyup(function () {
+            $('#showOfcaddress1').html($('#OfcAddress1').val());
+        });
+
+        $('#OfcAddress2').keyup(function () {
+            $('#showOfcaddress2').html($('#OfcAddress2').val());
+        });
+
+        $('#CityID2').change(function () {
+            $('#showOfccity').html($("#CityID2 option:selected").text());
+        });
+
+        $('#StateID2').change(function () {
+            $('#showOfcstate').html($("#StateID2 option:selected").text());
+        });
+
+        $('#OfcZip').keyup(function () {
+            $('#showOfczip').html($('#OfcZip').val());
+        });
+
+        $('#OfcDistrict').keyup(function () {
+            $('#showOfcdistrict').html($('#OfcDistrict').val());
+        });
+            // Filling details on events
+
+            $('#Name').keyup(function () {
+                $('#showname').html($('#Name').val());
+            });
+
+        $('#TitleId').change(function () {
+            $('#showtitle').html($("#TitleId option:selected").text());
+                });
+                $('#DesignationID').change(function () {
+                    $('#showdesignation').html($("#DesignationID option:selected").text());
+                });
+
+                $('#shortname').keyup(function () {
+                    $('#showshortname').html($('#shortname').val());
+                });
+
+                $('#Dob').change(function () {
+                    $('#showDOB').html($("#Dob").val());
+
+        });
+
+
+        $('#addPerson').on("click", function (e) {
+
+                $('#nocontactsPersons').hide();
+                $('#Conactpersonrow').hide();
+                var contactperosntext = $("#PersonId option:selected").text();
+                var ContactPersonId = $("#PersonId option:selected").val();
+            var bindrow = '<tr><td class="hidden multiperson">' + ContactPersonId + '</td><td>' + contactperosntext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#PersonDatails tbody').append(bindrow);
+
+        });
+
+        $('#addMember').on("click", function (e) {
+
+            $('#noPersons').hide();
+            $('#personrow').hide();
+            var Membertext = $("#MemberPersonId option:selected").text();
+            var MemberId = $("#MemberPersonId option:selected").val();
+            var DesignationID = $("#DesignationID option:selected").val();
+            var Degtext = $("#DesignationID option:selected").text();
+            var bindrow = '<tr><td class="hidden multimember" id="' + DesignationID + '">' + MemberId + '</td><td>' + Membertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + Degtext +'</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#MemberDatails tbody').append(bindrow);
+
+        });
+
+                $('#Mobile').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#Mobile').val().trim() != "") {
+                            $('#nocontacts').hide();
+                            $('#Conactrow').hide();
+                            var mobiletext = $('#Mobile').val();
+                            var bindrow = '<tr><td class="multimobile">' + mobiletext + '</td><td style="color: darkgray;font-size: smaller;">Mobile</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            $('#Datails tbody').append(bindrow);
+                            $('#Mobile').val('');
+                        }
+                    }
+                });
+
+                $('#Phone').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#Phone').val().trim() != "")
+                        {
+
+                        $('#nocontacts').hide();
+                        $('#Conactrow').hide();
+                        var Phonetext = $('#Phone').val();
+                        var bindrow = '<tr><td class="multiphone">' + Phonetext + '</td><td style="color: darkgray;font-size: smaller;">Phone</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                        $('#Datails tbody').append(bindrow);
+                        $('#Phone').val('');
+                        }
+                    }
+                });
+
+                $('#Office').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#Office').val().trim() != "") {
+                            $('#nocontacts').hide();
+                            $('#Conactrow').hide();
+                            var Officetext = $('#Office').val();
+                            var bindrow = '<tr><td class="multioffice">' + Officetext + '</td><td style="color: darkgray;font-size: smaller;">Office</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            $('#Datails tbody').append(bindrow);
+                            $('#Office').val('');
+                        }
+                    }
+                });
+
+                $('#Email').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#Email').val().trim() != "") {
+                            $('#nocontacts').hide();
+                            $('#Conactrow').hide();
+                            var emailtext = $('#Email').val();
+                            var bindrow = '<tr><td class="multiemail">' + emailtext + '</td><td style="color: darkgray;font-size: smaller;">email</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            $('#Datails tbody').append(bindrow);
+                            $('#Email').val('');
+                        }
+                    }
+                });
+
+                $('#AdditionalField').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#AdditionalField').val().trim() != "") {
+                            $('#nocontacts').hide();
+                            $('#Conactrow').hide();
+                            var AdditionalFieldtext = $('#AdditionalField').val();
+                            var bindrow = '<tr><td class="multiadditionalfield">' + AdditionalFieldtext + '</td><td style="color: darkgray;font-size: smaller;">Additional field</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            $('#Datails tbody').append(bindrow);
+                            $('#AdditionalField').val('');
+                        }
+                    }
+                });
+
+                $('#Parameter').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#Parameter').val().trim() != "") {
+                            $('#nocontacts').hide();
+                            $('#Conactrow').hide();
+                            var Parametertext = $('#Parameter').val();
+                            var bindrow = '<tr><td class="multiparameter">' + Parametertext + '</td><td style="color: darkgray;font-size: smaller;">Parameter</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            $('#Datails tbody').append(bindrow);
+                            $('#Parameter').val('');
+                        }
+                    }
+                });
+
+                $(document).on('click', 'i.deleterow', function (e) {
+                    e.preventDefault();
+                    $(this).parents('tr').remove();
+                });
+
+
+        $('#StateID2').change(function ()
+         {
+            $.ajax({
+            url: "@Url.Action("FliterStateWiseCity", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                StateID: $('#StateID2').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#CityID2').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+
+
+        $('#StateID').change(function ()
+         {
+            $.ajax({
+            url: "@Url.Action("FliterStateWiseCity", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                StateID: $('#StateID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#CityID').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+
+
+        $('#btnsave').on('click', function () {
+
+
+
+           // Adding multipal Contact No into array
+            var idArrContactPerson = [];
+            $('.multiperson').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrContactPerson.push(tdVals);
+            });
+
+            var SaveConactPerson = [];
+            for (var i = 0; i < idArrContactPerson.length; i++) {
+                var arrElement = idArrContactPerson[i].split("~");
+                item = {}
+                item["ContactPersonId"] = arrElement[0];
+                SaveConactPerson.push(item);
+            }
+
+
+            //Adding multipal Mobile No into array
+            var idArrMobile = [];
+            $('.multimobile').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrMobile.push(tdVals);
+            });
+
+            var SaveMobile = [];
+            for (var i = 0; i < idArrMobile.length; i++) {
+                var arrElement = idArrMobile[i].split("~");
+                item = {}
+                item["Mobile"] = arrElement[0];
+                SaveMobile.push(item);
+            }
+
+
+            //Adding multipal phone into array
+            var idArrPhone = [];
+            $('.multiphone').each(function (k, v) {
+                 var tdVals = $(this).text();
+                idArrPhone.push(tdVals);
+            });
+
+            var SavePhone = [];
+            for (var i = 0; i < idArrPhone.length; i++) {
+                var arrElement = idArrPhone[i].split("~");
+                item = {}
+                item["Phone"] = arrElement[0];
+                SavePhone.push(item);
+            }
+
+            //Adding OfficeNo into array
+            var idArrOffice = [];
+            $('.multioffice').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrOffice.push(tdVals);
+            });
+
+            var SaveOfficeNo = [];
+            for (var i = 0; i < idArrOffice.length; i++) {
+                var arrElement = idArrOffice[i].split("~");
+                item = {}
+                item["OfficeNo"] = arrElement[0];
+                SaveOfficeNo.push(item);
+            }
+
+
+            //Adding Email into array
+            var idArrEmail = [];
+            $('.multiemail').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrEmail.push(tdVals);
+            });
+
+            var SaveEmail = [];
+            for (var i = 0; i < idArrEmail.length; i++) {
+                var arrElement = idArrEmail[i].split("~");
+                item = {}
+                item["Email"] = arrElement[0];
+                SaveEmail.push(item);
+            }
+
+            //Adding AdditionFileds into array
+            var idArrAdditionField = [];
+            $('.multiadditionalfield').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrAdditionField.push(tdVals);
+            });
+
+            var SaveAdditionalFiled= [];
+            for (var i = 0; i < idArrAdditionField.length; i++) {
+                var arrElement = idArrAdditionField[i].split("~");
+                item = {}
+                item["AdditionlField"] = arrElement[0];
+                SaveAdditionalFiled.push(item);
+            }
+
+
+            //Adding Parameter into array
+            var idArrParameter = [];
+            $('.multiparameter').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrParameter.push(tdVals);
+            });
+
+            var SaveParameter = [];
+            for (var i = 0; i < idArrParameter.length; i++) {
+                var arrElement = idArrParameter[i].split("~");
+                item = {}
+                item["Parameter"] = arrElement[0];
+                SaveParameter.push(item);
+            }
+
+            //Adding Member into array
+            var idArrMember = [];
+            $('.multimember').each(function (k, v) {
+                var tdVals = $(this).text() + "~" + $(this).attr("id");
+                idArrMember.push(tdVals);
+            });
+
+            var SaveMemberPerson = [];
+            for (var i = 0; i < idArrMember.length; i++) {
+                var arrElement = idArrMember[i].split("~");
+                item = {}
+                item["PersonMemberID"] = arrElement[0];
+                item["DesignationId"] = arrElement[1];
+                SaveMemberPerson.push(item);
+            }
+
+            var TypeId = 0;
+
+            if ($("#memberid option:selected").val() == 2) {
+                TypeId = $("#ConsultantTypeID option:selected").val();
+            }
+            else if ($("#memberid option:selected").val() == 3) {
+                TypeId = $("#ContractorTypeId option:selected").val();
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Master/SaveMember',
+                data:
+                {
+                    MemberID : 0,
+                    MemberType: $("#memberid option:selected").val(),
+                    TypeId: TypeId,
+                    TitleID: $("#TitleId option:selected").val(),
+                    Name: $('#Name').val(),
+                    ShortName: $('#shortname').val(),
+                    CompanyName: $('#CompanyName').val(),
+                    DesignationId: $("#DesignationID option:selected").val(),
+                    Website: $('#Website').val(),
+                    OfficeAddress1: $('#OfcAddress1').val(),
+                    OfficeAddress2: $('#OfcAddress2').val(),
+                    StateID: $("#StateID2 option:selected").val(),
+                    District: $('#OfcDistrict').val(),
+                    CityID: $("#CityID2 option:selected").val(),
+                    ZipCode: $('#OfcZip').val(),
+                    BirthDate: $('#Dob').val(),
+                    ShippingAddress:"test address",
+                    PowerofAttorny: "NA",
+                    ResidentialAddress1  :$('#RAddress1').val(),
+                    ResidentialAddress2  :$('#RAddress2').val(),
+                    ResidentialStateID: $('#StateID').val(),
+                    ResidentialDistrict: $('#RDistrict').val(),
+                    ResidentialCityID: $('#CityID ').val(),
+                    ResidentialZipCode: $('#RZip').val(),
+                    SaveConactPerson: SaveConactPerson,
+                    SaveMobile: SaveMobile,
+                    SavePhone: SavePhone,
+                    SaveOfficeNo, SaveOfficeNo,
+                    SaveEmail: SaveEmail,
+                    SaveAdditionalFiled: SaveAdditionalFiled,
+                    SaveParameter: SaveParameter,
+                    SaveMemberPerson: SaveMemberPerson,
+
+
+                },
+                success: function (da) {
+                    alert(da);
+                 },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+
+    });
+
+
+</script>
