@@ -1,0 +1,21 @@
+﻿@model IEnumerable<office.Models.PerformaUser>
+@{ 
+
+                ViewBag.Title = "Placeholder";
+                Layout = null;
+}
+@foreach (var item in Model)
+{
+    
+    <div class="div1" >@item.EmployeeName</div>
+
+
+}
+
+
+
+<style>
+    .div1 {
+        width: 350px;
+    }
+</style>

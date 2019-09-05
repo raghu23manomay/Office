@@ -1100,6 +1100,8 @@
     <Content Include="js\demo\rickshaw-demo.js" />
     <Content Include="js\demo\sparkline-demo.js" />
     <Content Include="js\inspinia.js" />
+    <Content Include="js\jquery-1.12.4.js" />
+    <Content Include="js\jquery-1.12.4.min.js" />
     <Content Include="js\jquery-2.1.1.js" />
     <Content Include="js\jquery-ui-1.10.4.min.js" />
     <Content Include="js\jquery-ui.custom.min.js" />
@@ -1519,6 +1521,8 @@
     <Content Include="js\plugins\validate\jquery.validate.min.js" />
     <Content Include="js\plugins\video\responsible-video.js" />
     <Content Include="js\plugins\wow\wow.min.js" />
+    <Content Include="js\script-custom-editor.js" />
+    <Content Include="js\summernote.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1529,6 +1533,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MailBoxController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1536,6 +1541,7 @@
     <Compile Include="Models\OfficeDbContext.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Master.cs" />
+    <Compile Include="Models\temlatesInfo.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1647,6 +1653,11 @@
     <Content Include="Views\Master\_DepartmentGrid.cshtml" />
     <Content Include="Views\Master\AddDepartment.cshtml" />
     <Content Include="Views\Home\Project.cshtml" />
+    <Content Include="Views\Template\Compose.cshtml" />
+    <Content Include="Views\Template\Index.cshtml" />
+    <Content Include="Views\Template\Placeholder.cshtml" />
+    <Content Include="Views\Template\ComposeHtml.cshtml" />
+    <Content Include="Views\Template\DocTemplateList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

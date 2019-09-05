@@ -19,7 +19,8 @@ namespace office.Models
         } 
         public DbSet<UserPermission> UserPermission { get; set; }
 
-      
+        public DbSet<DocTemplateList> DocTemplateLists { get; set; }
+        public DbSet<PerformaUser> PerformaUserList { get; set; }
         public DbSet<DesignationList> DFList { get; set; }
         public DbSet<Designation> DesigList { get; set; }
         public DbSet<Role> RoleLists { get; set; }
@@ -48,7 +49,8 @@ namespace office.Models
         public DbSet<PersonEmailList> DFPersonEmailList { get; set; }
         public DbSet<DepartmentList> DFDepartmentList { get; set; }
         public DbSet<Department> DepartmentLists { get; set; }
-     
+
+        public DbSet<temlatesInfo> temlatesList { get; set; }
     }
     
 }
