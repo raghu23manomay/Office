@@ -20,7 +20,7 @@ namespace office.Models
         public DbSet<UserPermission> UserPermission { get; set; }
 
         public DbSet<DocTemplateList> DocTemplateLists { get; set; }
-        public DbSet<PerformaUser> PerformaUserList { get; set; }
+        public DbSet<PerformaPlaceholders> PerformaPlaceholders { get; set; }
         public DbSet<DesignationList> DFList { get; set; }
         public DbSet<Designation> DesigList { get; set; }
         public DbSet<Role> RoleLists { get; set; }

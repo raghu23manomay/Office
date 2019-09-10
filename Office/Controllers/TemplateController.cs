@@ -43,7 +43,7 @@ namespace office.Controllers
         public ActionResult GetPlaceholder()
         {
             OfficeDbContext _db = new OfficeDbContext();
-            IEnumerable<PerformaUser> result = _db.PerformaUserList.SqlQuery(@"exec getUser").ToList<PerformaUser>();
+            IEnumerable<PerformaPlaceholders> result = _db.PerformaPlaceholders.SqlQuery(@"exec getAdminPlaceholder").ToList<PerformaPlaceholders>();
             return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("Placeholder", result)
                     : View("Placeholder", result);
@@ -110,5 +110,44 @@ namespace office.Controllers
 
     }
    #endregion
-}
+
+        public ActionResult GenerateDocument(int? page, String Name = "")
+        {
+            DocTemplateList data = new DocTemplateList();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            
+
+            OfficeDbContext _db = new OfficeDbContext();
+            IEnumerable<DocTemplateList> result = _db.DocTemplateLists.SqlQuery(@"exec getDocumentTemplate
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<DocTemplateList>();
+            return Request.IsAjaxRequest()
+              ? (ActionResult)PartialView("GenerateDocument", result)
+              : View("GenerateDocument", result);
+        }
+        public ActionResult DocCreation(int? page, String Name = "")
+        {
+            DocCreationFilters data = new DocCreationFilters();
+            DocTemplateList result = new DocTemplateList();
+            data.
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+
+
+            OfficeDbContext _db = new OfficeDbContext();
+            IEnumerable<DocTemplateList> result = _db.DocTemplateLists.SqlQuery(@"exec getDocumentTemplate
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<DocTemplateList>();
+            return Request.IsAjaxRequest()
+              ? (ActionResult)PartialView("DocCreation", result)
+              : View("DocCreation", result);
+        }
+    }
 }

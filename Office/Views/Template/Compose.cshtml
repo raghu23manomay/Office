@@ -9,32 +9,12 @@
         <div class="ibox float-e-margins">
             <div class="ibox-content mailbox-content">
                 <div class="file-manager">
-                    <a class="btn btn-block btn-primary compose-mail" href="mail_compose.html">Compose Mail</a>
+                    
                     <div class="space-25"></div>
-                    <h5>Users</h5>
+                    <h5>PlaceHolders</h5>
                    
                     <ul class="folder-list m-b-md" style="padding: 0" id="UserPlaceHolder"></ul>
-                    <h5>Categories</h5>
-                    <ul class="category-list" style="padding: 0">
-                        <li><a href="#"> <i class="fa fa-circle text-navy"></i> Work </a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-danger"></i> Documents</a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-primary"></i> Social</a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-info"></i> Advertising</a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-warning"></i> Clients</a></li>
-                    </ul>
-
-                    <h5 class="tag-title">Labels</h5>
-                    <ul class="tag-list" style="padding: 0">
-                        <li><a href=""><i class="fa fa-tag"></i> Family</a></li>
-                        <li><a href=""><i class="fa fa-tag"></i> Work</a></li>
-                        <li><a href=""><i class="fa fa-tag"></i> Home</a></li>
-                        <li><a href=""><i class="fa fa-tag"></i> Children</a></li>
-                        <li><a href=""><i class="fa fa-tag"></i> Holidays</a></li>
-                        <li><a href=""><i class="fa fa-tag"></i> Music</a></li>
-                        <li><a href=""><i class="fa fa-tag"></i> Photography</a></li>
-                        <li><a href=""><i class="fa fa-tag"></i> Film</a></li>
-                    </ul>
-                    <div class="clearfix"></div>
+                    
                 </div>
             </div>
         </div>
@@ -42,10 +22,7 @@
 
     <div class="col-lg-9 animated fadeInRight">
         <div class="mail-box-header">
-            @*<div class="pull-right tooltip-demo">
-                <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to draft folder"><i class="fa fa-pencil"></i> Draft</a>
-                <a href="mailbox.html" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email"><i class="fa fa-times"></i> Discard</a>
-            </div>*@
+           
             <h2>
                 Compose Template
             </h2>
@@ -57,17 +34,16 @@
         <div class="mail-box">
             
                 <div id="summernote"   ondrop="drop(event)" ondragover="allowDrop(event)">
-                 @try{ 
-                    if (Model != null)
-                    {
+                 @try{
+                     if (Model != null)
+                     {
                     @(new HtmlString(@Model.Description))
-                        }
+                         }
                      }catch{}
                 </div>
             <div class="mail-body text-right tooltip-demo">
                 <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send" id="btnsave"><i class="fa fa-reply"></i> Save</a>
-                @*<a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email"><i class="fa fa-times"></i> Discard</a>
-                <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to draft folder"><i class="fa fa-pencil"></i> Draft</a>*@
+               
             </div>
             <div class="clearfix"></div> 
         </div>
