@@ -1,0 +1,20 @@
+﻿@model IEnumerable<office.Models.CoordinatorDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="coordinatorlist">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td class="hidden multicoordinator">@item.CoordinatorId</td><td>@item.FullName</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>
+        }
+
+    </tbody>
+</table>
+

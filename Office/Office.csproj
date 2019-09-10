@@ -1533,6 +1533,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminFlow.cs" />
     <Compile Include="Models\OfficeDbContext.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Master.cs" />
@@ -1626,7 +1627,6 @@
     <Content Include="Views\Master\SubscriptionGrid.cshtml" />
     <Content Include="Views\Master\SubscriptionList.cshtml" />
     <Content Include="Views\Master\CustomerList.cshtml" />
-    <Content Include="Views\Home\ProjectDemo.cshtml" />
     <Content Include="Views\Master\AddMember.cshtml" />
     <Content Include="Views\Master\_StateWsieCityFilter.cshtml" />
     <Content Include="Views\Master\PersonList.cshtml" />
@@ -1646,7 +1646,24 @@
     <Content Include="Views\Master\DepartmentList.cshtml" />
     <Content Include="Views\Master\_DepartmentGrid.cshtml" />
     <Content Include="Views\Master\AddDepartment.cshtml" />
-    <Content Include="Views\Home\Project.cshtml" />
+    <Content Include="Views\Home\AddProject.cshtml" />
+    <Content Include="Views\Home\EditProject.cshtml" />
+    <Content Include="Views\Home\_DeveloperDetailsForProject.cshtml" />
+    <Content Include="Views\Home\ProjectList.cshtml" />
+    <Content Include="Views\Home\ProjectGrid.cshtml" />
+    <Content Include="Views\Home\_DeveloperContactDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_CoordinatorDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_AssistantDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_OfficeContactDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_SurvayDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_GatDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_CTSDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_PlotDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_FinalPlotDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_ConsultantDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_ContractorDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_FieldDetailsForProject.cshtml" />
+    <Content Include="Views\Home\_ParameterDetailsForProject.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

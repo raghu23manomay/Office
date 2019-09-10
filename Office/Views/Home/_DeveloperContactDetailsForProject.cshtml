@@ -1,0 +1,42 @@
+﻿@model IEnumerable<office.Models.DeveloperContactDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="developercontactlist">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr><td class="hidden multidevelopercontactperson">@item.DeveloperContactPersonId</td><td>@item.FullName</td><td><i class="fa fa-times deleteDevContact pull-right" id="@item.DeveloperContactDetailId" aria-hidden="true"></i></td></tr>
+        }
+
+    </tbody>
+</table>
+<script>
+    $(document).on('click', 'i.deleteDevContact', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/DeleteProjectInformation',
+            data:
+            {
+                Id: id,
+                Label: 'ProjectDeveloperContactDetails',
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

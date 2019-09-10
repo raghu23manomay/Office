@@ -1,0 +1,19 @@
+﻿@model IEnumerable<office.Models.DeveloperDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="developerlist">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td class="hidden multideveloper" id="@item.OwnershipId">@item.DeveloperId</td><td>@item.Name</td><td><span style="color: darkgray;font-size: smaller;">@item.OwnershipType</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>
+        }
+
+    </tbody>
+</table>

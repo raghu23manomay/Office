@@ -1,0 +1,1325 @@
+﻿
+@model office.Models.UpdateProject
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Project";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/js/jquery-2.1.1.js"></script>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Project form</h5>
+
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h3 class="help-block m-b-none">Project Information</h3>
+                            <hr style="margin-top: 10px; margin-bottom: 10px;" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.HiddenFor(a => a.ProjectID, new { @id = "ProjectID" })
+                        <label class="col-lg-2 control-label">Enquiry Date</label>
+                        <div class="col-lg-10">
+                            <input type="date" id="EnquiryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="EnquiryDate" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Name</label>
+                        <div class="col-lg-10"><input type="text" id="ProjectName" placeholder="ProjectName" value="@Model.Name" class="form-control"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Short Name</label>
+                        <div class="col-lg-10"><input type="text" id="ShortName" placeholder="Short Name"  value="@Model.ShortName" class="form-control"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Developers</label>
+
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("DeveloperId", new SelectList((System.Collections.IEnumerable)ViewData["DeveloperList"], "Value", "Text"), "Select Developer", new { @class = "form-control", @id = "DeveloperId", Title = "DeveloperId" })
+                        </div>
+                        <label class="col-lg-2 control-label">Relation</label>
+
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("OwnershipId", new SelectList((System.Collections.IEnumerable)ViewData["OwnershipTypeList"], "Value", "Text"), "Select Relation", new { @class = "form-control", @id = "OwnershipId", Title = "OwnershipId" })
+                            <i class="fa fa-plus" id="addDeveloper" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Conact Person</label>
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            @Html.DropDownList("ConactDeveloperPersonId", new SelectList((System.Collections.IEnumerable)ViewData["ConactPersonList"], "Value", "Text"), "Select Contact Person", new { @class = "form-control", @id = "ConactDeveloperPersonId", Title = "ConactDeveloperPersonId" })
+                            <i class="fa fa-plus" id="addDeveloperContactPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                        <span style="margin-left: 17px;color: darkgray;font-size: smaller;">Developer Side</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Coordinator</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            @Html.DropDownList("CoordinatorId", new SelectList((System.Collections.IEnumerable)ViewData["ConactPersonList"], "Value", "Text"), "Select Coordinator", new { @class = "form-control", @id = "CoordinatorId", Title = "CoordinatorId" })
+                            <i class="fa fa-plus" id="addCoordinator" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Assistant</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            @Html.DropDownList("AssistantId", new SelectList((System.Collections.IEnumerable)ViewData["ConactPersonList"], "Value", "Text"), "Select Assistant", new { @class = "form-control", @id = "AssistantId", Title = "AssistantId" })
+                            <i class="fa fa-plus" id="addAssistant" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Contact Person</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            @Html.DropDownList("ContactOfficePersonId", new SelectList((System.Collections.IEnumerable)ViewData["ConactPersonList"], "Value", "Text"), "Select Contact Person", new { @class = "form-control", @id = "ContactOfficePersonId", Title = "ContactOfficePersonId" })
+                            <i class="fa fa-plus" id="addOfficePerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                        <span style="margin-left: 17px;color: darkgray;font-size: smaller;">Office Side</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Status</label>
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            @Html.DropDownList("ProjectStatusId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectStatusList"], "Value", "Text",Model.StatusId), "Select Status", new { @class = "form-control", @id = "ProjectStatusId", Title = "ProjectStatusId" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Project Type</label>
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            @Html.DropDownList("ProjectTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectTypeList"], "Value", "Text",Model.ProjectTypeId), "Select Type", new { @class = "form-control", @id = "ProjectTypeId", Title = "ProjectTypeId" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Customer File No</label>
+                        <div class="col-lg-10">
+                            <input id="CustomerFileNo" type="text" placeholder="Customer File No"  value="@Model.CustomerFileNo" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Physical Path</label>
+                        <div class="col-lg-10">
+                            <input id="PhysicalPath" type="text" placeholder="Physical Path"  value="@Model.PhysicalPath" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Survay</label>
+                        <div class="col-lg-10">
+                            <input id="survayno" type="text" placeholder="Survay No"  class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-offset-2 col-lg-1 control-label">Hissa</label>
+                        <div class="col-lg-3">
+                            <input id="survayHissa" type="text" placeholder="Hissa No" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Area</label>
+                        <div class="col-lg-2">
+                            <input id="survayArea" type="text" placeholder="Area" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Unit</label>
+                        <div class="col-lg-2" style="display:inline-flex;">
+                            @Html.DropDownList("SurvayUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "SurvayUnitId", Title = "SurvayUnitId" })
+                            <i class="fa fa-plus" id="addSurvay" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Gat No</label>
+                        <div class="col-lg-10">
+                            <input id="gatno" type="text" placeholder="Gat No" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-offset-2 col-lg-1 control-label">Hissa</label>
+                        <div class="col-lg-3">
+                            <input id="gatHissa" type="text" placeholder="Hissa No" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Area</label>
+                        <div class="col-lg-2">
+                            <input id="gatArea" type="text" placeholder="Area" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Unit</label>
+                        <div class="col-lg-2" style="display:inline-flex;">
+                            @Html.DropDownList("GatUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "GatUnitId", Title = "GatUnitId" })
+                            <i class="fa fa-plus" id="addGat" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">C.T.S. No</label>
+                        <div class="col-lg-10">
+                            <input id="CTSno" type="text" placeholder="CTS No" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-offset-2 col-lg-1 control-label">Hissa</label>
+                        <div class="col-lg-3">
+                            <input id="CTSHissa" type="text" placeholder="Hissa No" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Area</label>
+                        <div class="col-lg-2">
+                            <input id="CTSArea" type="text" placeholder="Area" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Unit</label>
+                        <div class="col-lg-2" style="display:inline-flex;">
+                            @Html.DropDownList("CTSUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "CTSUnitId", Title = "CTSUnitId" })
+                            <i class="fa fa-plus" id="addCTS" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Plot No</label>
+                        <div class="col-lg-10">
+                            <input id="Plotno" type="text" placeholder="Plot No" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-offset-2 col-lg-1 control-label">Area</label>
+                        <div class="col-lg-4">
+                            <input id="PlotArea" type="text" placeholder="Area" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Unit</label>
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("PlotUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "PlotUnitId", Title = "PlotUnitId" })
+                            <i class="fa fa-plus" id="addPlot" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Final Plot No</label>
+                        <div class="col-lg-10">
+                            <input id="FinalPlotno" type="text" placeholder="Final Plot No" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-offset-2 col-lg-1 control-label">Area</label>
+                        <div class="col-lg-4">
+                            <input id="FinalPlotArea" type="text" placeholder="Area" class="form-control">
+                        </div>
+                        <label class="col-lg-1 control-label">Unit</label>
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("FinalPlotUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "FinalPlotUnitId", Title = "FinalPlotUnitId" })
+                            <i class="fa fa-plus" id="addFinalPlot" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Road</label>
+
+                        <div class="col-lg-10">
+                            <input id="Road" type="text" placeholder="Road"  value="@Model.Road" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Goan</label>
+
+                        <div class="col-lg-10">
+                            <input id="Goan" type="text" placeholder="Goan"  value="@Model.Goan" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Taluka</label>
+
+                        <div class="col-lg-10">
+                            <input id="Taluka" type="text" placeholder="Taluka"  value="@Model.Taluka" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">District</label>
+
+                        <div class="col-lg-10">
+                            <input id="District" type="text" placeholder="District" value="@Model.District" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Duration</label>
+
+                        <div class="col-lg-10">
+                            <input id="Duration" type="text" placeholder="Duration"  value="@Model.Duration" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Cost</label>
+
+                        <div class="col-lg-10">
+                            <input id="Cost" type="text" placeholder="Cost"  value="@Model.Cost" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Start Date</label>
+
+                        <div class="col-lg-4">
+                            <input id="StartDate" type="date" placeholder="StartDate" value="@ViewBag.StartDate" class="form-control">
+                        </div>
+                        <label class="col-lg-2 control-label">End Date</label>
+
+                        <div class="col-lg-4">
+                            <input id="Enddate" type="date" placeholder="EndDate" value="@ViewBag.EndDate" class="form-control">
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Consultant Type</label>
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("ConsultantTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ConsultantTypeList"], "Value", "Text"), "Select ConsultantType", new { @class = "form-control", @id = "ConsultantTypeId", Title = "ConsultantTypeId" })
+                        </div>
+                        <label class="col-lg-2 control-label">Consultant</label>
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("ConsultantId", new SelectList((System.Collections.IEnumerable)ViewData["ConsultantList"], "Value", "Text"), "Select Consultant", new { @class = "form-control", @id = "ConsultantId", Title = "ConsultantId" })
+                            <i class="fa fa-plus" id="addConsultant" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-lg-2 control-label">Contractor Type</label>
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("ContractorTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ContractorTypeList"], "Value", "Text"), "Select ContractorType", new { @class = "form-control", @id = "ContractorTypeId", Title = "ContractorTypeId" })
+                        </div>
+                        <label class="col-lg-2 control-label">Contractor</label>
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            @Html.DropDownList("ContracterId", new SelectList((System.Collections.IEnumerable)ViewData["ContracterList"], "Value", "Text"), "Select Contracter", new { @class = "form-control", @id = "ContracterId", Title = "ContracterId" })
+                            <i class="fa fa-plus" id="addContractor" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Field</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            <input id="Field" type="text" placeholder="Field" class="form-control">
+                            <i class="fa fa-plus" id="addField" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Parameters</label>
+
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            <input id="Parameter" type="text" value="" placeholder="Parameter" class="form-control" />
+                            <i class="fa fa-plus" id="addParameter" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+                    <div class="row form-group" style="padding-top: 10px;">
+                        <div class="col-md-3">
+                            <label> </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="">
+                                @Html.CheckBoxFor(a => a.IsActive, new { @class = "", title = "Active", @id = "IsActive" })
+                                <label for="checkbox5">
+                                    Active
+                                </label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-8 pull-right">
+                            <div class="pull-right">
+                                @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
+                                <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title" style="display:grid;">
+                <h4 style="margin-bottom: 2px;"><span id="showprojectname">@Model.Name</span></h4>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Basic Information</h5>
+                            <hr style="margin-top: 11px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group person">
+                        <span id="showshortname" class="col-lg-12">@Model.ShortName</span>
+                    </div>
+
+                </div>
+                <p></p>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Developer List</h5>
+                            <hr class="nodeveloer" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group nodeveloer">
+                        <span class="col-lg-12 nodeveloer" style="overflow-wrap:break-word;">No Developers..! </span>
+                    </div>
+                    <div class="col-sm-12" id="bindDeveloper">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Developer Contact List</h5>
+                            <hr class="nocontactdev" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontactsPersons">
+                        <span class="col-lg-12 nocontactdev" style="overflow-wrap:break-word;">No Contacts Persons..! </span>
+                    </div>
+                    <div class="col-sm-12" id="DevContactList">
+                       
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Co-ordinator List</h5>
+                            <hr class="nocoordinator" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span class="col-lg-12 nocoordinator" style="overflow-wrap:break-word;">No Co-ordinator ..! </span>
+                    </div>
+                    <div class="col-sm-12" id="coordinatorDetails">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Assistant List</h5>
+                            <hr class="noassistant" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span class="col-lg-12 noassistant" style="overflow-wrap:break-word;">No Assistant ..! </span>
+                    </div>
+                    <div class="col-sm-12" id="assistantdetails">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Office Contact List</h5>
+                            <hr class="nooffice" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span class="col-lg-12 nooffice" style="overflow-wrap:break-word;">No Contact Person ..! </span>
+                    </div>
+                    <div class="col-sm-12" id="officecontactdetails">
+                       
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Survay</h5>
+                            <hr class="nosurvay" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        @*<span class="col-lg-12 nosurvay" style="overflow-wrap:break-word;">No Survay Information ..! </span>*@
+                    </div>
+                    <div class="col-sm-12" id="survaydetails">
+                       
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Gat</h5>
+                            <hr class="nogat" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" id="gatdetails">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">C.T.S.</h5>
+                            <hr class="noCTE" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" id="CTEdetails">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Plot List</h5>
+                            <hr class="noPlot" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" id="plotdetail">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Final Plot List</h5>
+                            <hr class="noFinalPlot" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12" id="finalplotdetail">
+                       
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Consultant List</h5>
+                            <hr class="noConsultant" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span class="col-lg-12 noConsultant" style="overflow-wrap:break-word;">No Consultant ..! </span>
+                    </div>
+                    <div class="col-sm-12" id="consultantdetail">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contractor List</h5>
+                            <hr class="noContractor" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span class="col-lg-12 noContractor" style="overflow-wrap:break-word;">No Contractor ..! </span>
+                    </div>
+                    <div class="col-sm-12" id="contractordetail">
+                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Field List</h5>
+                            <hr class="noField" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span class="col-lg-12 noField" style="overflow-wrap:break-word;">No Field ..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="fieldlist">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Parameter List</h5>
+                            <hr class="noParameter" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span class="col-lg-12 noParameter" style="overflow-wrap:break-word;">No Parameter ..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="parameterlist">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        //Ajax call for binding Developer Details for update
+         $.ajax({
+            url: "@Url.Action("GetDeveloperDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#bindDeveloper').html(data);
+                $('.nodeveloer').hide();
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        //Ajax call for binding Developer Contact Details for update
+         $.ajax({
+            url: "@Url.Action("GetDeveloperContactDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#DevContactList').html(data);
+                $('.nocontactdev').hide();                
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+         //Ajax call for binding Coordinator Details for update
+         $.ajax({
+            url: "@Url.Action("GetCoordinatorDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#coordinatorDetails').html(data);
+                $('.nocoordinator').hide();                
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+        
+         //Ajax call for binding Assistant Details for update
+         $.ajax({
+            url: "@Url.Action("GetAssistantDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#assistantdetails').html(data);
+                $('.noassistant').hide();                
+            },
+            error: function (data) {
+
+            },
+             complete: function () {
+
+            }
+
+        });              
+        
+         //Ajax call for binding Office Contact Details for update
+         $.ajax({
+            url: "@Url.Action("GetOfficeContactDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#officecontactdetails').html(data);
+                $('.nooffice').hide();                
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        //Ajax call for binding Survay Details for update
+         $.ajax({
+            url: "@Url.Action("GetSurvayDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#survaydetails').html(data);
+                $('.nosurvay').hide();                
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        //Ajax call for binding Gat Details for update
+         $.ajax({
+            url: "@Url.Action("GetGatDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#gatdetails').html(data);
+                $('.nogat').hide();                
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        //Ajax call for binding CTE Details for update
+         $.ajax({
+            url: "@Url.Action("GetCTSDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#CTEdetails').html(data);
+                $('.noCTE').hide();                
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        //Ajax call for binding Plot Details for update
+         $.ajax({
+            url: "@Url.Action("GetPlotDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#plotdetail').html(data);
+                $('.noPlot').hide();                
+            },
+            error: function (data) {
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        //Ajax call for binding Final Plot Details for update
+         $.ajax({
+            url: "@Url.Action("GetFinalPlotDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#finalplotdetail').html(data);
+                $('.noFinalPlot').hide();                
+            },
+            error: function (data) {
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        //Ajax call for binding Consultant Details for update
+         $.ajax({
+            url: "@Url.Action("GetConsultantDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#consultantdetail').html(data);
+                $('.noConsultant').hide();                
+            },
+            error: function (data) {
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+
+        //Ajax call for binding Contractor Details for update
+         $.ajax({
+            url: "@Url.Action("GetContractorDetailsForProject", "Home")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                ProjectID: $('#ProjectID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {                
+                $('#contractordetail').html(data);
+                $('.noContractor').hide();                
+            },
+            error: function (data) {
+
+            },
+            complete: function () {
+
+            }
+
+        });
+
+        
+
+        $('#ProjectName').keyup(function () {
+            $('#showprojectname').html($('#ProjectName').val());
+        });
+
+        $('#ShortName').keyup(function () {
+            $('#showshortname').html($('#ShortName').val());
+        });
+
+        $('#addDeveloper').on("click", function (e) {
+            $('.nodeveloer').hide();
+            var Developertext = $("#DeveloperId option:selected").text();
+            var DeveloperId = $("#DeveloperId option:selected").val();
+            var Ownershipid = $("#OwnershipId option:selected").val();
+            var ownershiptext = $("#OwnershipId option:selected").text();
+            var bindrow = '<tr><td class="hidden multideveloper" id="' + Ownershipid + '">' + DeveloperId + '</td><td>' + Developertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + ownershiptext + '</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#developerlist tbody').append(bindrow);
+
+        });
+
+
+        $('#addDeveloperContactPerson').on("click", function (e) {
+            $('.nocontactdev').hide();
+            var DeveloperContacttext = $("#ConactDeveloperPersonId option:selected").text();
+            var ConactDeveloperPersonId = $("#ConactDeveloperPersonId option:selected").val();
+            var bindrow = '<tr><td class="hidden multidevelopercontactperson">' + ConactDeveloperPersonId + '</td><td>' + DeveloperContacttext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#developercontactlist tbody').append(bindrow);
+        });
+
+        $('#addCoordinator').on("click", function (e) {
+            $('.nocoordinator').hide();
+            var Coordinatortext = $("#CoordinatorId option:selected").text();
+            var CoordinatorId = $("#CoordinatorId option:selected").val();
+            var bindrow = '<tr><td class="hidden multicoordinator">' + CoordinatorId + '</td><td>' + Coordinatortext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#coordinatorlist tbody').append(bindrow);
+        });
+      
+        $('#addAssistant').on("click", function (e) {
+            $('.noassistant').hide();
+            var Assistanttext = $("#AssistantId option:selected").text();
+            var AssistantId = $("#AssistantId option:selected").val();
+            var bindrow = '<tr><td class="hidden multiassistant">' + AssistantId + '</td><td>' + Assistanttext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#assistantlist tbody').append(bindrow);
+        });
+        $('#addOfficePerson').on("click", function (e) {
+            $('.nooffice').hide();
+            var contactofficepersontext = $("#ContactOfficePersonId option:selected").text();
+            var ContactOfficePersonId = $("#ContactOfficePersonId option:selected").val();
+            var bindrow = '<tr><td class="hidden multiofficecontact">' + ContactOfficePersonId + '</td><td>' + contactofficepersontext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#officecontactlist tbody').append(bindrow);
+        });
+
+        $('#addSurvay').on("click", function (e) {
+            $('.nosurvay').hide();
+            var SurvayUnittext = $("#SurvayUnitId option:selected").text();
+            var SurvayUnitId = $("#SurvayUnitId option:selected").val();
+            var bindrow = '<tr><td>' + $('#survayno').val() + '</td><td>' + $('#survayHissa').val() + '</td><td>' + $('#survayArea').val() + '</td><td class="hidden">' + SurvayUnitId + '</td><td>' + SurvayUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#survaylist tbody').append(bindrow);
+        });
+
+        $('#addGat').on("click", function (e) {
+            $('.nogat').hide();
+            var GatUnittext = $("#GatUnitId option:selected").text();
+            var GatUnitId = $("#GatUnitId option:selected").val();
+            var bindrow = '<tr><td>' + $('#gatno').val() + '</td><td>' + $('#gatHissa').val() + '</td><td>' + $('#gatArea').val() + '</td><td class="hidden">' + GatUnitId + '</td><td>' + GatUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#gatlist tbody').append(bindrow);
+        });
+
+        $('#addCTS').on("click", function (e) {
+            $('.noCTS').hide();
+            var CTSUnittext = $("#CTSUnitId option:selected").text();
+            var CTSUnitId = $("#CTSUnitId option:selected").val();
+            var bindrow = '<tr><td>' + $('#CTSno').val() + '</td><td>' + $('#CTSHissa').val() + '</td><td>' + $('#CTSArea').val() + '</td><td class="hidden">' + CTSUnitId + '</td><td>' + CTSUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#CTSlist tbody').append(bindrow);
+        });
+
+        $('#addPlot').on("click", function (e) {
+            $('.noPlot').hide();
+            var PlotUnittext = $("#PlotUnitId option:selected").text();
+            var PlotUnitId = $("#PlotUnitId option:selected").val();
+            var bindrow = '<tr><td>' + $('#Plotno').val() + '</td><td>' + $('#PlotArea').val() + '</td><td class="hidden">' + PlotUnitId + '</td><td>' + PlotUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#Plotlist tbody').append(bindrow);
+        });
+
+        $('#addFinalPlot').on("click", function (e) {
+            $('.noFinalPlot').hide();
+            var FinalPlotUnittext = $("#FinalPlotUnitId option:selected").text();
+            var FinalPlotUnitId = $("#FinalPlotUnitId option:selected").val();
+            var bindrow = '<tr><td>' + $('#FinalPlotno').val() + '</td><td>' + $('#FinalPlotArea').val() + '</td><td class="hidden">' + FinalPlotUnitId + '</td><td>' + FinalPlotUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#FinalPlotlist tbody').append(bindrow);
+        });
+
+        $('#addConsultant').on("click", function (e) {
+            $('.noConsultant').hide();
+            var ConsultantTypetext = $("#ConsultantTypeId option:selected").text();
+            var ConsultantTypeId = $("#ConsultantTypeId option:selected").val();
+            var ConsultantId = $("#ConsultantId option:selected").val();
+            var Consultanttext = $("#ConsultantId option:selected").text();
+            var bindrow = '<tr><td class="hidden multiconsultant" id="' + ConsultantTypeId + '">' + ConsultantId + '</td><td>' + Consultanttext + '</td><td><span style="color: darkgray;font-size: smaller;">' + ConsultantTypetext + '</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#consultantlist tbody').append(bindrow);
+            
+        });
+   
+        $('#addContractor').on("click", function (e) {
+            $('.noContractor').hide();
+            var ContractorTypetext = $("#ContractorTypeId option:selected").text();
+            var ContractorTypeId = $("#ContractorTypeId option:selected").val();
+            var ContracterId = $("#ContracterId option:selected").val();
+            var Contractertext = $("#ContracterId option:selected").text();
+            var bindrow = '<tr><td class="hidden multicontractor" id="' + ContractorTypeId + '">' + ContracterId + '</td><td>' + Contractertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + ContractorTypetext + '</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#contractorlist tbody').append(bindrow);
+
+        });
+
+        $('#addField').on("click", function (e) {
+            $('.noField').hide();
+            var bindrow = '<tr><td class="multiField">' + $("#Field").val() + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#fieldlist tbody').append(bindrow);
+        });
+
+        $('#addParameter').on("click", function (e) {
+            $('.noParameter').hide();
+            var bindrow = '<tr><td class="multiparameter">' + $("#Parameter").val() + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#parameterlist tbody').append(bindrow);
+        });
+        
+        $(document).on('click', 'i.deleterow', function (e) {
+            e.preventDefault();
+            $(this).parents('tr').remove();
+        });
+
+        $('#btnsave').on('click', function () {
+
+            //Adding Developers into array
+            var idArrDeveloper = [];
+            $('.multideveloper').each(function (k, v) {
+                var tdVals = $(this).text() + "~" + $(this).attr("id");
+                idArrDeveloper.push(tdVals);
+            });
+            var SaveDeveloper = [];
+            for (var i = 0; i < idArrDeveloper.length; i++) {
+                var arrElement = idArrDeveloper[i].split("~");
+                item = {}
+                item["DeveloperId"] = arrElement[0];
+                item["OwnershipId"] = arrElement[1];
+                SaveDeveloper.push(item);
+            }
+
+
+           //Adding Developers Contact Person into array
+            var idArrDeveloperContact = [];
+            $('.multidevelopercontactperson').each(function (k, v) {
+                var tdVals = $(this).html();
+                idArrDeveloperContact.push(tdVals);
+            });
+            var SaveDeveloperContact = [];
+            for (var i = 0; i < idArrDeveloperContact.length; i++) {
+                var arrElement = idArrDeveloperContact[i].split("~");
+                item = {}
+                item["DeveloperContactPersonId"] = arrElement[0];                
+                SaveDeveloperContact.push(item);
+            }
+
+          
+            //Adding Coordinator into array
+            var idArrCoordinator = [];
+            $('.multicoordinator').each(function (k, v) {
+                var tdVals = $(this).html();
+                idArrCoordinator.push(tdVals);
+            });
+            var SaveCoordinator = [];
+            for (var i = 0; i < idArrCoordinator.length; i++) {
+                var arrElement = idArrCoordinator[i].split("~");
+                item = {}
+                item["CoordinatorId"] = arrElement[0];
+                SaveCoordinator.push(item);
+            }
+            
+            
+            //Adding Assistant into array
+            var idArrAssistant = [];
+            $('.multiassistant').each(function (k, v) {
+                var tdVals = $(this).html();
+                idArrAssistant.push(tdVals);
+            });
+            var SaveAssistant = [];
+            for (var i = 0; i < idArrAssistant.length; i++) {
+                var arrElement = idArrAssistant[i].split("~");
+                item = {}
+                item["AssistantId"] = arrElement[0];
+                SaveAssistant.push(item);
+            }
+           
+
+            //Adding Office Contact Person into array
+            var idArrOfficeContact = [];
+            $('.multiofficecontact').each(function (k, v) {
+                var tdVals = $(this).html();
+                idArrOfficeContact.push(tdVals);
+            });
+            var SaveOfficeContact = [];
+            for (var i = 0; i < idArrOfficeContact.length; i++) {
+                var arrElement = idArrOfficeContact[i].split("~");
+                item = {}
+                item["OfficeContactPersonId"] = arrElement[0];
+                SaveOfficeContact.push(item);
+            }
+          
+            //Adding Survay Details into array
+            var idArrsurvay = [];
+            $('#survaylist tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                             trElement.find('td:eq(1)').text().trim() + "~" +
+                             trElement.find('td:eq(2)').text().trim() + "~" +
+                             trElement.find('td:eq(3)').text().trim() 
+                idArrsurvay.push(tdVals);
+            });
+
+            var SaveSurvayDetails = [];
+            for (var i = 0; i < idArrsurvay.length; i++) {
+                var arrElement = idArrsurvay[i].split("~");
+                item = {}
+                item["SurvayNo"] = arrElement[0];
+                item["HissaNo"] = arrElement[1];
+                item["Area"] = arrElement[2];
+                item["UnitID"] = arrElement[3];
+                SaveSurvayDetails.push(item);              
+            }
+                      
+            //Adding Gat Details into array
+            var idArrgat = [];
+            $('#gatlist tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                    trElement.find('td:eq(1)').text().trim() + "~" +
+                    trElement.find('td:eq(2)').text().trim() + "~" +
+                    trElement.find('td:eq(3)').text().trim()
+                idArrgat.push(tdVals);
+            });
+
+            var SaveGatDetails = [];
+            for (var i = 0; i < idArrgat.length; i++) {
+                var arrElement = idArrgat[i].split("~");
+                item = {}
+                item["GatNo"] = arrElement[0];
+                item["HissaNo"] = arrElement[1];
+                item["Area"] = arrElement[2];
+                item["UnitID"] = arrElement[3];
+                SaveGatDetails.push(item);
+            }
+           
+            //Adding CTS Details into array
+            var idArrCTS = [];
+            $('#CTSlist tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                    trElement.find('td:eq(1)').text().trim() + "~" +
+                    trElement.find('td:eq(2)').text().trim() + "~" +
+                    trElement.find('td:eq(3)').text().trim()
+                idArrCTS.push(tdVals);
+            });
+
+            var SaveCTSDetails = [];
+            for (var i = 0; i < idArrCTS.length; i++) {
+                var arrElement = idArrCTS[i].split("~");
+                item = {}
+                item["CTSNo"] = arrElement[0];
+                item["HissaNo"] = arrElement[1];
+                item["Area"] = arrElement[2];
+                item["UnitID"] = arrElement[3];
+                SaveCTSDetails.push(item);
+            }
+            
+
+            //Adding Plot Details into array
+            var idArrPlot = [];
+            $('#Plotlist tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                    trElement.find('td:eq(1)').text().trim() + "~" +
+                    trElement.find('td:eq(2)').text().trim()                     
+                idArrPlot.push(tdVals);
+            });
+
+            var SavePlotDetails = [];
+            for (var i = 0; i < idArrPlot.length; i++) {
+                var arrElement = idArrPlot[i].split("~");
+                item = {}
+                item["PlotNo"] = arrElement[0];                
+                item["Area"] = arrElement[1];
+                item["UnitID"] = arrElement[2];
+                SavePlotDetails.push(item);
+            }       
+            
+
+            //Adding FinalPlot Details into array
+            var idArrFinalPlot = [];
+            $('#FinalPlotlist tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                    trElement.find('td:eq(1)').text().trim() + "~" +
+                    trElement.find('td:eq(2)').text().trim()
+                idArrFinalPlot.push(tdVals);
+            });
+
+            var SaveFinalPlotDetails = [];
+            for (var i = 0; i < idArrFinalPlot.length; i++) {
+                var arrElement = idArrFinalPlot[i].split("~");
+                item = {}
+                item["FinalPlotNo"] = arrElement[0];
+                item["Area"] = arrElement[1];
+                item["UnitID"] = arrElement[2];
+                SaveFinalPlotDetails.push(item);
+            }    
+
+            
+            //Adding Consultant into array
+            var idArrConsultant = [];
+            $('.multiconsultant').each(function (k, v) {
+                var tdVals = $(this).text() + "~" + $(this).attr("id");
+                idArrConsultant.push(tdVals);
+            });
+            var SaveConsultant = [];
+            for (var i = 0; i < idArrConsultant.length; i++) {
+                var arrElement = idArrConsultant[i].split("~");
+                item = {}
+                item["ConsultantId"] = arrElement[0];
+                item["ConsultantTypeId"] = arrElement[1];
+                SaveConsultant.push(item);               
+            }
+                                  
+            //Adding Contractor into array
+            var idArrContractor = [];
+            $('.multicontractor').each(function (k, v) {
+                var tdVals = $(this).text() + "~" + $(this).attr("id");
+                idArrContractor.push(tdVals);
+            });
+            var SaveContractor = [];
+            for (var i = 0; i < idArrContractor.length; i++) {
+                var arrElement = idArrContractor[i].split("~");
+                item = {}
+                item["ConstractorId"] = arrElement[0];
+                item["ContractorTypeId"] = arrElement[1];
+                SaveContractor.push(item);
+            }
+           
+            //Adding Field into array
+            var idArrField = [];
+            $('.multiField').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrField.push(tdVals);
+            });
+            var SaveField = [];
+            for (var i = 0; i < idArrField.length; i++) {
+                var arrElement = idArrField[i].split("~");
+                item = {}
+                item["Field"] = arrElement[0];                
+                SaveField.push(item);
+            }
+
+            //Adding Parameter into array
+            var idArrParameter = [];
+            $('.multiparameter').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrParameter.push(tdVals);
+            });
+            var SaveProjectParameter = [];
+            for (var i = 0; i < idArrParameter.length; i++) {
+                var arrElement = idArrParameter[i].split("~");
+                item = {}
+                item["Parameter"] = arrElement[0];                
+                SaveProjectParameter.push(item);
+            }
+
+                     
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Home/SaveProject',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(),
+                    Name: $(' #ProjectName').val(),
+                    EnquiryDate: $('#EnquiryDate').val(),
+                    ShortName: $(' #ShortName').val(),
+                    StatusId: $('#ProjectStatusId option:selected').val(),
+                    ProjectTypeId: $('#ProjectTypeId option:selected').val(),
+                    CustomerFileNo: $('#CustomerFileNo').val(),
+                    PhysicalPath: $('#PhysicalPath').val(),
+                    Road: $('#Road').val(),
+                    Goan: $(' #Goan').val(),
+                    Taluka: $('#Taluka').val(),
+                    District: $('#District').val(),
+                    Duration: $('#Duration').val(),
+                    Cost: $('#Cost').val(),
+                    StartDate: $('#StartDate').val(),
+                    EndDate: $(' #Enddate').val(),
+                    IsActive: $('#IsActive').val(),
+                    SaveDeveloper: SaveDeveloper,
+                    SaveDeveloperContact: SaveDeveloperContact,
+                    SaveCoordinator: SaveCoordinator,
+                    SaveAssistant: SaveAssistant,
+                    SaveOfficeContact: SaveOfficeContact,
+                    SaveSurvayDetails: SaveSurvayDetails,
+                    SaveGatDetails: SaveGatDetails,
+                    SaveCTSDetails: SaveCTSDetails,
+                    SavePlotDetails: SavePlotDetails,
+                    SaveFinalPlotDetails: SaveFinalPlotDetails,
+                    SaveConsultant: SaveConsultant,
+                    SaveContractor: SaveContractor,
+                    SaveField: SaveField,
+                    SaveProjectParameter: SaveProjectParameter,
+
+                },
+                success: function (da) {
+                    alert(da);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+
+    });
+
+
+</script>

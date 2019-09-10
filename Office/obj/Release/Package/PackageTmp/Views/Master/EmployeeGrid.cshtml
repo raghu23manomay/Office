@@ -33,7 +33,7 @@
                         <a class="edit" href="addEmployee?id=@item.EmployeeID" id="EditMember">
                             <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
                         </a>
-                        <a class="Delete" id="DeleteMember">
+                        <a class="Delete" name="@item.EmployeeID" id="DeleteMember">
                             <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
                         </a>
                         @*<div class="ibox-tools" style="text-align:left!important">
@@ -102,6 +102,25 @@
                 }
             });
 
+        });
+
+        $('.Delete').click(function () {
+            if (confirm("Are you sure want to deleted!"))
+            {
+            var Id = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("DeleteMaster", "Master")",
+                data: { Id: Id, MasterName: 'Employee' },
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    var mgs = data.replace(/"/g, "");
+                    alert(mgs);
+                   }
+            });
+            }
+                                 
         });
     });
 

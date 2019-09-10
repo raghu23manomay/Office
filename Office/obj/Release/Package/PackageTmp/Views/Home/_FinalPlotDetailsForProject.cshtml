@@ -1,0 +1,25 @@
+﻿@model IEnumerable<office.Models.FinalPlotDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+
+<table class="table" id="FinalPlotlist">
+    <thead>
+        <tr>
+            <th>Final No</th>
+            <th>Area</th>
+            <th>Unit</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td>@item.FinalPlotNo</td><td>@item.Area</td><td class="hidden">@item.UnitID</td><td>@item.Unit</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>
+        }
+    </tbody>
+
+</table>

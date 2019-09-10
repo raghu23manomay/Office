@@ -1,0 +1,104 @@
+﻿@model office.Models.Department
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmDepartment" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5> Dapartment </h5>
+                    <div class="ibox-tools">
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Module Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.HiddenFor(a => a.DepartmentId, new { @id = "DepartmentId" })
+                                    @Html.TextBoxFor(a => a.DepartmentName, new { @class = "form-control", title = "DepartmentName", @id = "DepartmentName" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Department</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 10px;">
+                        <div class="col-md-3">
+                            <label> </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="" style="margin-left: 0!important">
+                                @Html.CheckBoxFor(a => a.IsActive, new { @class = "   ", title = "IsActive", @id = "IsActive" })
+                                <label for="checkbox5">
+                                    Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="">
+                                @Html.ActionLink("Cancel", "DepartmentList", "Master", null, new { @class = "btn btn-white" })
+                                <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/jquery-2.1.1.js"></script>
+}
+<script>
+
+    $(document).ready(function () {
+        $("#Namevalidation").hide();
+        $('#btnsave').on('click', function () {
+
+            var ModuleName;
+            DepartmentName = $("#DepartmentName").val();
+            if (DepartmentName == "") {
+                $("#Namevalidation").show();
+                return false;
+            }
+            else {
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Master/SaveDepartment',
+                    data:
+                    {
+                        DepartmentId: $("#DepartmentId").val() ,
+                        DepartmentName: $("#DepartmentName").val(),
+                        IsActive: $('input[name=IsActive]').prop('checked')
+                    },
+                    success: function (da) {
+                        location.href = "DepartmentList";
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
+
