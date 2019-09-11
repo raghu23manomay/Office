@@ -1,0 +1,13 @@
+﻿
+@model office.Models.temlatesInfo
+
+@{
+
+    Layout = null;
+}
+<div class="form-group" id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+
+    @Html.TextAreaFor(m=>m.Description, new { rows = "20", style = "resize:none;width:400px;", placeholder = Html.DisplayNameFor(m => m.Description), @class = "form-control input-lg textarea-editor", @id = "Description" })
+
+</div>
