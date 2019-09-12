@@ -49,6 +49,23 @@ namespace office.Models
         public DbSet<PersonEmailList> DFPersonEmailList { get; set; }
         public DbSet<DepartmentList> DFDepartmentList { get; set; }
         public DbSet<Department> DepartmentLists { get; set; }
+        public DbSet<DeveloperDetails> DFDeveloperDetails { get; set; }
+        public DbSet<SaveProject> DFSaveProject { get; set; }
+        public DbSet<UpdateProject> DFUpdateProject { get; set; }
+        public DbSet<DeveloperContactDetails> DFDeveloperContactDetails { get; set; }
+        public DbSet<CoordinatorDetails> DFCoordinatorDetails { get; set; }
+        public DbSet<AssistantDetails> DFAssistantDetails { get; set; }
+        public DbSet<OfficePersonDetails> DFOfficePersonDetails { get; set; }
+        public DbSet<SurvayDetails> DFSurvayDetails { get; set; }
+        public DbSet<GatDetails> DFGatDetails { get; set; }
+        public DbSet<CTSDetails> DFCTSDetails { get; set; }
+        public DbSet<PlotDetails> DFPlotDetails { get; set; }
+        public DbSet<FinalPlotDetails> DFFinalPlotDetails { get; set; }
+        public DbSet<ConsultantDetails> DFConsultantDetails { get; set; }
+        public DbSet<ContractorDetails> DFContractorDetails { get; set; }
+        public DbSet<FieldDetails> DFFieldDetails { get; set; }
+        public DbSet<ParameterDetails> DFParameterDetails { get; set; }
+      
 
         public DbSet<temlatesInfo> temlatesList { get; set; }
     }

@@ -11,8 +11,29 @@ namespace office.Controllers
 {
     public class TemplateController : Controller
     {
+
+        public List<SelectListItem> binddropdown(string action, int val = 0, int StateID = 0)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+
+            var res = _db.Database.SqlQuery<SelectListItem>("exec BindDropDown @action , @val, @StateID",
+                    new SqlParameter("@action", action),
+                    new SqlParameter("@val", val),
+                    new SqlParameter("@StateID", StateID))
+                   .ToList()
+                   .AsEnumerable()
+                   .Select(r => new SelectListItem
+                   {
+                       Text = r.Text.ToString(),
+                       Value = r.Value.ToString(),
+                       Selected = r.Value.Equals(Convert.ToString(val))
+                   }).ToList();
+
+            return res;
+        }
+
         // GET: Template
-        public ActionResult Compose(int id =1)
+        public ActionResult Compose(int id = 0)
         {
             OfficeDbContext _db = new OfficeDbContext();
             temlatesInfo data = new temlatesInfo();
@@ -20,9 +41,11 @@ namespace office.Controllers
                 @TemplateID",
                new SqlParameter("@TemplateID", id)).ToList<temlatesInfo>();
 
-            data = result.FirstOrDefault(); 
-            
-          
+            data = result.FirstOrDefault();
+
+            ViewData["CityList"] = binddropdown("CityList", 0);
+            ViewData["AuthorityList"] = binddropdown("AuthorityList", 0);
+            ViewData["DepartmentList"] = binddropdown("DepartmentList", 0);
             return Request.IsAjaxRequest()
                      ? (ActionResult)PartialView("Compose", data)
                      : View("Compose", data);
@@ -132,8 +155,8 @@ namespace office.Controllers
         public ActionResult DocCreation(int? page, String Name = "")
         {
             DocCreationFilters data = new DocCreationFilters();
-            DocTemplateList result = new DocTemplateList();
-            data.
+            DocTemplateList result1 = new DocTemplateList();
+            
             var pageIndex = (page ?? 1);
             const int pageSize = 10;
 

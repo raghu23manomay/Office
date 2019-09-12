@@ -22,30 +22,44 @@
 
     <div class="col-lg-9 animated fadeInRight">
         <div class="mail-box-header">
-           
             <h2>
                 Compose Template
             </h2>
         </div>
+        <div class="row">
+            <div class="col-lg-4">
+                @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control",@style="width:112%;", @id = "CityID", Title = "CityID" })
+            </div>
+
+            <div class="col-lg-4">
+                @Html.DropDownList("AuthorityID", new SelectList((System.Collections.IEnumerable)ViewData["AuthorityList"], "Value", "Text"), "Select Authority", new { @class = "form-control", @style = "width:112%;", @id = "AuthorityID", Title = "AuthorityID" })
+            </div>
+
+            <div class="col-lg-4">
+                @Html.DropDownList("DepartmentId", new SelectList((System.Collections.IEnumerable)ViewData["DepartmentList"], "Value", "Text"), "Select Department", new { @class = "form-control", @id = "DepartmentId", Title = "DepartmentId" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.HiddenFor(a => a.TemplateID, new { @id = "TemplateID" })
-            @Html.TextBoxFor(a => a.TemplateName, new { @class = "form-control", title = "CityName", @id = "TemplateName" })
+            @Html.TextBoxFor(a => a.TemplateName, new { @class = "form-control", title = "CityName", @placeholder = "Template Name", @id = "TemplateName" })
         </div>
         <div class="mail-box">
-            
-                <div id="summernote"   ondrop="drop(event)" ondragover="allowDrop(event)">
-                 @try{
-                     if (Model != null)
-                     {
-                    @(new HtmlString(@Model.Description))
-                         }
-                     }catch{}
-                </div>
+
+            <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+                @try
+                {
+                    if (Model != null)
+                    {
+                        @(new HtmlString(@Model.Description))
+                    }
+                }
+                catch { }
+            </div>
             <div class="mail-body text-right tooltip-demo">
                 <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send" id="btnsave"><i class="fa fa-reply"></i> Save</a>
-               
+
             </div>
-            <div class="clearfix"></div> 
+            <div class="clearfix"></div>
         </div>
     </div>
     <div class="col-md-9">
@@ -60,7 +74,7 @@
 
 <script>
     $('#summernote').summernote({
-                placeholder: 'Write Something here',
+        placeholder: 'Write Something here',
         tabsize: 2,
         height: 400
     });

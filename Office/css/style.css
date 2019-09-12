@@ -8343,3 +8343,6 @@ body.md-skin {
     padding-left: 0px;
     position: relative;
 } 
+.control-label { 
+    text-align: left!important;
+}
