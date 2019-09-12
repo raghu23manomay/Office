@@ -35,6 +35,7 @@ namespace office.Controllers
         // GET: Template
         public ActionResult Compose(int id = 0)
         {
+
             OfficeDbContext _db = new OfficeDbContext();
             temlatesInfo data = new temlatesInfo();
             var result = _db.temlatesList.SqlQuery(@"exec GetTemplate 
@@ -45,7 +46,8 @@ namespace office.Controllers
 
             ViewData["CityList"] = binddropdown("CityList", 0);
             ViewData["AuthorityList"] = binddropdown("AuthorityList", 0);
-            ViewData["DepartmentList"] = binddropdown("DepartmentList", 0);
+            ViewData["DepartmentList"] = binddropdown("DepartmentList", 0); 
+            ViewData["TemplateTypeList"] = binddropdown("TemplateTypeList", 0);
             return Request.IsAjaxRequest()
                      ? (ActionResult)PartialView("Compose", data)
                      : View("Compose", data);
@@ -77,10 +79,13 @@ namespace office.Controllers
             OfficeDbContext _db = new OfficeDbContext();   
             
             var result = _db.Database.ExecuteSqlCommand(@"exec SaveTemplate 
-               @TemplateID, @TemplateName,@Description",
+               @TemplateID, @TemplateName,@Description,@CityID,@AuthorityID,@DepartmentID",
             new SqlParameter("@TemplateID", t.TemplateID),
             new SqlParameter("@TemplateName", t.TemplateName),
-            new SqlParameter("@Description", t.Description)
+            new SqlParameter("@Description", t.Description),
+           new SqlParameter("@CityID", t.CityID),
+           new SqlParameter("@AuthorityID", t.AuthorityID),
+            new SqlParameter("@DepartmentID", t.DepartmentID)
 
         );
 
@@ -139,7 +144,7 @@ namespace office.Controllers
             DocTemplateList data = new DocTemplateList();
             var pageIndex = (page ?? 1);
             const int pageSize = 10;
-            
+             
 
             OfficeDbContext _db = new OfficeDbContext();
             IEnumerable<DocTemplateList> result = _db.DocTemplateLists.SqlQuery(@"exec getDocumentTemplate

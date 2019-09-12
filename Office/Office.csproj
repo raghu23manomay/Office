@@ -1678,6 +1678,7 @@
     <Content Include="Views\Template\DocTemplateList.cshtml" />
     <Content Include="Views\Template\DocCreation.cshtml" />
     <Content Include="Views\Template\GenerateDocument.cshtml" />
+    <Content Include="Views\Home\ProjectDemo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

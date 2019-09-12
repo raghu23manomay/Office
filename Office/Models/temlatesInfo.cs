@@ -12,12 +12,14 @@ namespace office.Models
     public class temlatesInfo
     {
         [Key]
-        public int TemplateID { get; set; } 
-        public string TemplateName { get; set; } 
+        public int TemplateID { get; set; }   
+        public int CityID { get; set; }
+        public int AuthorityID { get; set; }
+        public int DepartmentID { get; set; }
+        public int TemplateTypeID { get; set; }
+        public string TemplateName { get; set; }
         [AllowHtml]
-        [Display(Name = "Message")]
         public string Description { get; set; }
-        public int TemplateTypeid { get; set; }
         public bool IsActive { get; set; }
     }
     public class PerformaUser 

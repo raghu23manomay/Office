@@ -1,0 +1,43 @@
+﻿@model IEnumerable<office.Models.ContractorDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="contractorlist">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr><td class="hidden multicontractor" id="@item.ContractorTypeId">@item.ConstractorId</td><td>@item.Name</td><td><span style="color: darkgray;font-size: smaller;">@item.ContractorType</span></td><td><i class="fa fa-times deleteContractor pull-right" id="@item.ContractorDetailId" aria-hidden="true"></i></td></tr>
+        }
+
+    </tbody>
+</table>
+
+<script>
+    $(document).on('click', 'i.deleteContractor', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/DeleteProjectInformation',
+            data:
+            {
+                Id: id,
+                Label: 'ProjectContractorDetail',
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<office.Models.CoordinatorDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="coordinatorlist">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td class="hidden multicoordinator">@item.CoordinatorId</td><td>@item.FullName</td><td><i class="fa fa-times deleteCoordinator pull-right" id="@item.CoordinatorDetailId" aria-hidden="true"></i></td></tr>
+        }
+
+    </tbody>
+</table>
+
+<script>
+    $(document).on('click', 'i.deleteCoordinator', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/DeleteProjectInformation',
+            data:
+            {
+                Id: id,
+                Label: 'ProjectCoordinatorDetails',
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

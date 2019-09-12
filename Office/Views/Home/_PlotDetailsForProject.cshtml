@@ -1,0 +1,48 @@
+﻿@model IEnumerable<office.Models.PlotDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+
+<table class="table" id="Plotlist">
+    <thead>
+        <tr>
+            <th>Plot No</th>
+            <th>Area</th>
+            <th>Unit</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr><td>@item.PlotNo</td><td>@item.Area</td><td class="hidden">@item.UnitID</td><td>@item.Unit</td><td><i class="fa fa-times deletePlot pull-right" id="@item.PlotDetailId" aria-hidden="true"></i></td></tr>
+        }
+    </tbody>
+
+</table>
+<script>
+    $(document).on('click', 'i.deletePlot', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/DeleteProjectInformation',
+            data:
+            {
+                Id: id,
+                Label: 'ProjectPlotDetails',
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

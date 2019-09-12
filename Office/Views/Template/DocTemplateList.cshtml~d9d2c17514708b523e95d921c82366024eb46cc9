@@ -14,8 +14,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-
-
                     <th>Name </th>
 
                     @*<th>Body </th>*@
@@ -28,18 +26,15 @@
                 {
                     <tr>
                         <td>@item.TemplateName</td>
-                        @*<td> @item.Description</td>*@
+                        @*<td>@item.Description</td>*@
 
                         <td>
-
                             <a class="edit" href="Compose?id=@item.TemplateID" id="EditMember">
                                 <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
                             </a>
                             <a class="Delete" name="@item.TemplateID" id="DeleteMember">
                                 <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
                             </a>
-
-
                         </td>
                     </tr>
                 }

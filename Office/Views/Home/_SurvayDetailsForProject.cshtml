@@ -1,0 +1,51 @@
+﻿@model IEnumerable<office.Models.SurvayDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+
+<table class="table" id="survaylist">
+    <thead>
+        <tr>
+            <th>Survay No</th>
+            <th>Hissa</th>
+            <th>Area</th>
+            <th>Unit</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td>@item.SurvayNo</td><td>@item.HissaNo</td><td>@item.Area</td><td class="hidden">@item.UnitID</td><td>@item.Unit</td><td><i class="fa fa-times deleteSurvay pull-right" id="@item.SurvayDetailId" aria-hidden="true"></i></td></tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).on('click', 'i.deleteSurvay', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/DeleteProjectInformation',
+            data:
+            {
+                Id: id,
+                Label: 'ProjectSurvayDetails',
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>
+
+
+
