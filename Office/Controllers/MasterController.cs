@@ -10,7 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace office.Controllers
+namespace Calibration.Controllers
 {
     public class MasterController : Controller
     {

@@ -9,7 +9,12 @@
     <div class="col-lg-8">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Member form</h5>               
+                <h5>Member form</h5>
+                @*<div class="ibox-tools">
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>*@
             </div>
             <div class="ibox-content">
                 <form class="form-horizontal">
@@ -21,7 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Member Type</label>
+                        <label class="col-lg-2 control-label">Type</label>
                         <div class="col-lg-10">
                             <select id="memberid" class="form-control">
                                 <option value="1">Developer</option>
@@ -29,21 +34,6 @@
                                 <option value="3">Contractor</option>
                                 <option value="4">Person</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-group Consultant">
-                        <label class="col-lg-2 control-label">Consultant Type</label>
-
-                        <div class="col-lg-10">
-                            @Html.DropDownList("ConsultantTypeID", new SelectList((System.Collections.IEnumerable)ViewData["ConsultantTypeList"], "Value", "Text"), "Select Consultant", new { @class = "form-control", @id = "ConsultantTypeID", Title = "ConsultantTypeID" })
-                        </div>
-                    </div>
-
-                    <div class="form-group Contractor">
-                        <label class="col-lg-2 control-label">Contractor Type</label>
-
-                        <div class="col-lg-10">
-                            @Html.DropDownList("ContractorTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ContractorTypeList"], "Value", "Text"), "Select Contractor", new { @class = "form-control", @id = "ContractorTypeId", Title = "ContractorTypeId" })
                         </div>
                     </div>
 
@@ -477,8 +467,6 @@
 <script>
     $(document).ready(function () {
         $('.person').hide();
-        $('.Consultant').hide();
-        $('.Contractor').hide();
         $('#memberid').change(function () {
             if ($("#memberid option:selected").val() == 4) {
                 $('.person').show();
@@ -489,21 +477,7 @@
                 $('.person').hide();
                 $('.entityField').show();
             }
-
-            if ($("#memberid option:selected").val() == 2) {
-                $('.Consultant').show();
-            }
-            else
-            {
-                $('.Consultant').hide();
-            }
-            if ($("#memberid option:selected").val() == 3) {
-                $('.Contractor').show();
-            }
-            else
-            {
-                $('.Contractor').hide();
-            }
+            
         });
 
         $('#Website').keyup(function () {
@@ -892,16 +866,6 @@
                 item["DesignationId"] = arrElement[1];
                 SaveMemberPerson.push(item);
             }
-
-            var TypeId = 0; 
-
-            if ($("#memberid option:selected").val() == 2) {
-                TypeId = $("#ConsultantTypeID option:selected").val();
-            }
-            else if ($("#memberid option:selected").val() == 3) {
-                TypeId = $("#ContractorTypeId option:selected").val();
-            }
-
                        
             $.ajax({
                 type: 'POST',
@@ -911,7 +875,6 @@
                 {  
                     MemberID : 0,
                     MemberType: $("#memberid option:selected").val(),
-                    TypeId: TypeId,
                     TitleID: $("#TitleId option:selected").val(),
                     Name: $('#Name').val(),
                     ShortName: $('#shortname').val(),

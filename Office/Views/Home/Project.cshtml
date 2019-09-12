@@ -1,6 +1,6 @@
-﻿@model office.Models.Member
+﻿
 @{
-    ViewBag.Title = "EditMember";
+    ViewBag.Title = "Project";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,216 +9,107 @@
     <div class="col-lg-8">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Member form</h5>
-                @*<div class="ibox-tools">
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>*@
+                <h5>Project form</h5>
+                
             </div>
             <div class="ibox-content">
                 <form class="form-horizontal">
                     <div class="form-group">
                         <div class="col-lg-12">
-                            <h3 class="help-block m-b-none">Information</h3>
+                            <h3 class="help-block m-b-none">Project Information</h3>
                             <hr style="margin-top: 10px; margin-bottom: 10px;" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Type</label>
+                        <label class="col-lg-2 control-label">Enquiry Date</label>
                         <div class="col-lg-10">
-                            <select id="memberid" class="form-control">
-                                <option value="1">Developer</option>
-                                <option value="2">Consultant</option>
-                                <option value="3">Contractor</option>
-                                <option value="4">Person</option>
-                            </select>
+                            <input type="date" id="EnquiryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="EnquiryDate" class="form-control">
                         </div>
                     </div>
-                    <input type="hidden" id="MemberId" value="@Model.MemberID"/>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Company</label>
-                        <div class="col-lg-10"><input type="text" id="CompanyName" value="@Model.CompanyName" placeholder="Company Name" class="form-control"></div>
+                        <label class="col-lg-2 control-label">Name</label>
+                        <div class="col-lg-10"><input type="text" id="ProjectName" placeholder="ProjectName" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Short Name</label>
+                        <div class="col-lg-10"><input type="text" id="ProjectName" placeholder="Short Name" class="form-control"></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Designation</label>
+                        <label class="col-lg-2 control-label">Developers</label>
 
-                        <div class="col-lg-10">
-                            @Html.DropDownList("DesignationId", new SelectList((System.Collections.IEnumerable)ViewData["DesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationID", Title = "DesignationID" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Title</label>
-
-                        <div class="col-lg-2">
+                        <div class="col-lg-4" style="display:inline-flex;">
                             <select class="form-control" id="TitleId">
-                                <option value="1">Mr.</option>
+                                <option value="1">Mr.Balaji Surwase</option>
                                 <option value="2">Miss.</option>
                                 <option value="3">Dr.</option>
                                 <option value="4">Ms.</option>
                             </select>
                         </div>
-                        <div class="entityField">
-                            <label class="col-lg-1 control-label">Name</label>
-                            <div class="col-lg-7" style="display:inline-flex;">
-                                @Html.DropDownList("MemberPersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "MemberPersonId", Title = "MemberPersonId" })
-                                <i class="fa fa-plus" id="addMember" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                            </div>
-                        </div>
-                        <div class="person">
-                            <label class="col-lg-1 control-label">Name</label>
-                            <div class="col-lg-7 ">
-                                <input type="text" id="Name" value="@Model.Name" placeholder="Name" class="form-control entity">
-                            </div>
+                        <label class="col-lg-2 control-label">Relation</label>
+
+                        <div class="col-lg-4" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Developer</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                            <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                         </div>
                     </div>
 
-                    <div class="form-group entityField">
-                        <label class="col-lg-2 control-label">Contact Person</label>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Conact Person</label>
 
                         <div class="col-lg-10" style="display:inline-flex;">
-                            @Html.DropDownList("PersonId", new SelectList((System.Collections.IEnumerable)ViewData["ConactPersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "PersonId", Title = "PersonId" })
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Mr.Raghu mudgal</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
                             <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Short Name</label>
+                        <label class="col-lg-2 control-label">Coordinator</label>
 
-                        <div class="col-lg-10">
-                            <input id="shortname" type="text" value="@Model.ShortName" placeholder="Short Form" class="form-control">
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Mr.Manju patil</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                            <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Date Of Birth</label>
-                        <div class="col-lg-4">
-                            <input type="date" id="Dob" value="@ViewBag.Dob" placeholder="Dob" class="form-control">
+                        <label class="col-lg-2 control-label">Assistant</label>
 
-                        </div>
-
-                        <label class="col-lg-2 control-label">Request Date</label>
-
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="date" placeholder="Request date" value="@ViewBag.Createddate" class="form-control">
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Mobile No</label>
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="Mobile" placeholder="Mobile Number" class="form-control">
-
-                        </div>
-
-                        <label class="col-lg-2 control-label">Phone No</label>
-
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input id="Phone" type="text" placeholder="Phone Number" class="form-control">
-
+                        <div class="col-lg-10" style="display:inline-flex;">
+                            <select class="form-control" id="TitleId">
+                                <option value="1">Mr.Tushar harade</option>
+                                <option value="2">Miss.</option>
+                                <option value="3">Dr.</option>
+                                <option value="4">Ms.</option>
+                            </select>
+                            <i class="fa fa-plus" id="addPerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Office No</label>
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="Office" placeholder="Office Number" class="form-control">
 
-                        </div>
 
-                        <label class="col-lg-2 control-label">Email</label>
-
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input id="Email" type="text" placeholder="Email" class="form-control">
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Additional</label>
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="AdditionalField" placeholder="Additional Field" class="form-control">
-
-                        </div>
-
-                        <label class="col-lg-2 control-label">Parameter</label>
-
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="Parameter" placeholder="Parameter" class="form-control">
-
-                        </div>
-
-                    </div>
-
-                    <div id="residential address" class="person">
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <h3 class="help-block m-b-none">Residential Address</h3>
-                                <hr style="margin-top: 11px; margin-bottom: 10px;" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Address 1</label>
-
-                            <div class="col-lg-10">
-                                <input type="text" id="RAddress1" value="@Model.ResidentialAddress1" placeholder="Address 1" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Address 2</label>
-
-                            <div class="col-lg-10">
-                                <input type="text" id="RAddress2" value="@Model.ResidentialAddress2" placeholder="Address 2" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">State</label>
-
-                            <div class="col-lg-10">
-                                @Html.DropDownList("StateID", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID", Title = "StateID" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">District</label>
-
-                            <div class="col-lg-10">
-                                <input type="text" id="RDistrict" value="@Model.ResidentialDistrict" placeholder="District" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">City</label>
-
-                            <div class="col-lg-10">
-                                @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID", Title = "CityID" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Zip Code</label>
-
-                            <div class="col-lg-10">
-                                <input type="text" id="RZip" value="@Model.ResidentialZipCode" placeholder="Zip Code" class="form-control">
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            <h3 class="help-block m-b-none">Office Address</h3>
-                            <hr style="margin-top: 10px; margin-bottom: 10px;" />
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Address 1</label>
 
                         <div class="col-lg-10">
-                            <input id="OfcAddress1" type="text" value="@Model.OfficeAddress1" placeholder="Address 1" class="form-control">
+                            <input id="OfcAddress1" type="text" placeholder="Address 1" class="form-control">
                         </div>
 
                     </div>
@@ -227,35 +118,23 @@
                         <label class="col-lg-2 control-label">Address 2</label>
 
                         <div class="col-lg-10">
-                            <input id="OfcAddress2" type="text" value="@Model.OfficeAddress2" placeholder="Address 2" class="form-control">
+                            <input id="OfcAddress2" type="text" placeholder="Address 2" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">State</label>
 
-                        <div class="col-lg-10">
-                            @Html.DropDownList("StateID2", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID2", Title = "StateID2" })
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">District</label>
 
                         <div class="col-lg-10">
-                            <input id="OfcDistrict" type="text" value="@Model.District" placeholder="District" class="form-control">
+                            <input id="OfcDistrict" type="text" placeholder="District" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">City</label>
 
-                        <div class="col-lg-10">
-                            @Html.DropDownList("CityID2", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID2", Title = "CityID2" })
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Zip Code</label>
 
                         <div class="col-lg-10">
-                            <input id="OfcZip" type="text" value="@Model.ZipCode" placeholder="Zip Code" class="form-control">
+                            <input id="OfcZip" type="text" placeholder="Zip Code" class="form-control">
                         </div>
                     </div>
 
@@ -278,7 +157,7 @@
                         <label class="col-lg-2 control-label">Website</label>
 
                         <div class="col-lg-10">
-                            <input id="Website" type="text" value="@Model.Website" placeholder="Website" class="form-control">
+                            <input id="Website" type="text" placeholder="Website" class="form-control">
                         </div>
                     </div>
 
@@ -308,8 +187,8 @@
     <div class="col-lg-4">
         <div class="ibox float-e-margins">
             <div class="ibox-title" style="display:grid;">
-                <h4 class="entityField" style="margin-bottom: 2px;"><span id="showcompanynameOnHeader">@Model.CompanyName</span></h4>
-                <h4 class="person" style="margin-bottom: 2px;"><span id="showtitle">Mr.</span>&nbsp;<span id="showname">@Model.Name</span></h4>
+                <h4 class="entityField" style="margin-bottom: 2px;"><span id="showcompanynameOnHeader">No Name..!</span></h4>
+                <h4 class="person" style="margin-bottom: 2px;"><span id="showtitle">Mr.</span>&nbsp;<span id="showname">No Name ..!</span></h4>
                 <span class="person" id="showdesignation" style="color: darkgray;font-size: smaller;">No Designation ..!</span>
             </div>
             <div class="ibox-content">
@@ -322,16 +201,16 @@
                         </div>
                     </div>
                     <div class="form-group person">
-                        <span id="showcompanyname" class="col-lg-12">@Model.CompanyName</span>
+                        <span id="showcompanyname" class="col-lg-12">No Information ..! </span>
                     </div>
                     <div class="form-group">
-                        <span id="showshortname" class="col-lg-12">@Model.ShortName</span>
+                        <span id="showshortname" class="col-lg-12">No Information ..!</span>
                     </div>
                     <div class="form-group">
-                        <span id="showDOB" class="col-lg-12">@ViewBag.Dob</span>
+                        <span id="showDOB" class="col-lg-12"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showWebsite" class="col-lg-12">@Model.Website</span>
+                        <span id="showWebsite" class="col-lg-12"></span>
                     </div>
                     <div class="form-group">
                         <span id="showNote" class="col-lg-12"></span>
@@ -344,14 +223,19 @@
                     <div class="form-group">
                         <div class="col-lg-12">
                             <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Person Details</h5>
-                            @*<hr id="personrow" style="margin-top: 0px; margin-bottom: 5px;" />*@
+                            <hr id="personrow" style="margin-top: 0px; margin-bottom: 5px;" />
                         </div>
                     </div>
-                    @*<div class="form-group" id="noPersons">
+                    <div class="form-group" id="noPersons">
                         <span id="noperson" class="col-lg-12" style="overflow-wrap:break-word;">No Persons..! </span>
-                    </div>*@
-                    <div class="col-sm-12" id="MemberList">
-                        
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="MemberDatails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -359,20 +243,41 @@
                     <div class="form-group">
                         <div class="col-lg-12">
                             <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Person Details</h5>
-                            @*<hr id="Conactpersonrow" style="margin-top: 0px; margin-bottom: 5px;" />*@
+                            <hr id="Conactpersonrow" style="margin-top: 0px; margin-bottom: 5px;" />
                         </div>
                     </div>
-                    @*<div class="form-group" id="nocontactsPersons">
+                    <div class="form-group" id="nocontactsPersons">
                         <span id="nocontactsperson" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts Persons..! </span>
-                    </div>*@
-                    <div class="col-sm-12" id="ContactPersonDetails">
-                        
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="PersonDatails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
-                <div id="ContactDetailsList">
 
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Details</h5>
+                            <hr id="Conactrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span id="shownocontacts" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts ..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="Datails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
-                
 
                 <div class="row person">
 
@@ -383,22 +288,22 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <span id="showRaddress1" class="col-lg-12" style="overflow-wrap:break-word;">@Model.ResidentialAddress1 </span>
+                        <span id="showRaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
                     </div>
                     <div class="form-group">
-                        <span id="showRaddress2" class="col-lg-12" style="overflow-wrap:break-word;">@Model.ResidentialAddress2</span>
+                        <span id="showRaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showRstate" class="col-lg-12" style="overflow-wrap:break-word;">@Model.ResidentialStateID</span>
+                        <span id="showRstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showRcity" class="col-lg-12" style="overflow-wrap:break-word;">@Model.ResidentialCityID</span>
+                        <span id="showRcity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showRdistrict" class="col-lg-12" style="overflow-wrap:break-word;">@Model.ResidentialDistrict</span>
+                        <span id="showRdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showRzip" class="col-lg-12" style="overflow-wrap:break-word;">@Model.ResidentialZipCode</span>
+                        <span id="showRzip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
 
                 </div>
@@ -411,23 +316,23 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">@Model.OfficeAddress1</span>
+                        <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
                     </div>
                     <div class="form-group">
-                        <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;">@Model.OfficeAddress2</span>
+                        <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;">@Model.StateID</span>
+                        <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;">@Model.CityID</span>
+                        <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
                     <div class="form-group">
-                        <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;">@Model.District</span>
+                        <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
 
                     <div class="form-group">
-                        <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;">@Model.ZipCode</span>
+                        <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                     </div>
 
                 </div>
@@ -440,106 +345,9 @@
 
 <script>
     $(document).ready(function () {
-
-        //Binding model varibales to drop downs and fields
-        $("#DesignationID option[value = '" + @Model.DesignationId + "']").attr("selected", "selected");
-        $("#memberid option[value = '" + @Model.MemberType + "']").attr("selected", "selected");
-        $("#CityID option[value = '" + @Model.ResidentialCityID + "']").attr("selected", "selected");
-        $("#StateID option[value = '" + @Model.ResidentialStateID + "']").attr("selected", "selected");
-
-         $("#CityID2 option[value = '" + @Model.CityID + "']").attr("selected", "selected");
-        $("#StateID2 option[value = '" + @Model.StateID + "']").attr("selected", "selected");
-
-        $('#showdesignation').html($("#DesignationID option:selected").text());
-        $('#showRcity').html($("#CityID option:selected").text());
-        $('#showRstate').html($("#StateID option:selected").text());
-        $('#showOfccity').html($("#CityID2 option:selected").text());
-        $('#showOfcstate').html($("#StateID2 option:selected").text());
-
-        if ($("#memberid option:selected").val() == 4) {
-            $('.person').show();
-            $('.entityField').hide();
-        }
-        else {
-            $('.person').hide();
-            $('.entityField').show();
-        }
-
-        //Ajax call for binding conact list for update
-         $.ajax({
-            url: "@Url.Action("GetMemberConactDetails", "Master")",
-            contentType: "application/json",
-                data: JSON.stringify({
-                    MemberId: $('#MemberId').val(),
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
-            success: function (data) {
-                $('#ContactDetailsList').html(data);
-
-            },
-            error: function (data) {
-
-
-            },
-            complete: function () {
-
-            }
-
-        });
-
-
-         //Ajax call for binding conact person list for update
-         $.ajax({
-            url: "@Url.Action("GetConactPersonByMemberType", "Master")",
-            contentType: "application/json",
-                data: JSON.stringify({
-                    MemberId: $('#MemberId').val(),
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
-            success: function (data) {
-                $('#ContactPersonDetails').html(data);
-
-            },
-            error: function (data) {
-
-
-            },
-            complete: function () {
-
-            }
-
-        });
-
-
-         //Ajax call for binding Member list for update
-         $.ajax({
-            url: "@Url.Action("GetPersonListForUpdate", "Master")",
-            contentType: "application/json",
-                data: JSON.stringify({
-                    MemberId: $('#MemberId').val(),
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
-            success: function (data) {
-                $('#MemberList').html(data);
-
-            },
-             error: function (data) {
-
-            },
-             complete: function () {
-
-            }
-
-        });
-        
-        
-
+        $('.person').hide();
+        $('.Consultant').hide();
+        $('.Contractor').hide();
         $('#memberid').change(function () {
             if ($("#memberid option:selected").val() == 4) {
                 $('.person').show();
@@ -551,6 +359,20 @@
                 $('.entityField').show();
             }
 
+            if ($("#memberid option:selected").val() == 2) {
+                $('.Consultant').show();
+            }
+            else
+            {
+                $('.Consultant').hide();
+            }
+            if ($("#memberid option:selected").val() == 3) {
+                $('.Contractor').show();
+            }
+            else
+            {
+                $('.Contractor').hide();
+            }
         });
 
         $('#Website').keyup(function () {
@@ -649,7 +471,7 @@
                 $('#Conactpersonrow').hide();
                 var contactperosntext = $("#PersonId option:selected").text();
                 var ContactPersonId = $("#PersonId option:selected").val();
-            var bindrow = '<tr><td class="hidden newmultiperson">' + ContactPersonId + '</td><td>' + contactperosntext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            var bindrow = '<tr><td class="hidden multiperson">' + ContactPersonId + '</td><td>' + contactperosntext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
                 $('#PersonDatails tbody').append(bindrow);
 
         });
@@ -662,7 +484,7 @@
             var MemberId = $("#MemberPersonId option:selected").val();
             var DesignationID = $("#DesignationID option:selected").val();
             var Degtext = $("#DesignationID option:selected").text();
-            var bindrow = '<tr><td class="hidden newmultimember" id="' + DesignationID + '">' + MemberId + '</td><td>' + Membertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + Degtext +'</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            var bindrow = '<tr><td class="hidden multimember" id="' + DesignationID + '">' + MemberId + '</td><td>' + Membertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + Degtext +'</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
             $('#MemberDatails tbody').append(bindrow);
 
         });
@@ -673,7 +495,7 @@
                             $('#nocontacts').hide();
                             $('#Conactrow').hide();
                             var mobiletext = $('#Mobile').val();
-                            var bindrow = '<tr><td class="newmultimobile">' + mobiletext + '</td><td style="color: darkgray;font-size: smaller;">Mobile</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            var bindrow = '<tr><td class="multimobile">' + mobiletext + '</td><td style="color: darkgray;font-size: smaller;">Mobile</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
                             $('#Datails tbody').append(bindrow);
                             $('#Mobile').val('');
                         }
@@ -688,7 +510,7 @@
                         $('#nocontacts').hide();
                         $('#Conactrow').hide();
                         var Phonetext = $('#Phone').val();
-                        var bindrow = '<tr><td class="newmultiphone">' + Phonetext + '</td><td style="color: darkgray;font-size: smaller;">Phone</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                        var bindrow = '<tr><td class="multiphone">' + Phonetext + '</td><td style="color: darkgray;font-size: smaller;">Phone</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
                         $('#Datails tbody').append(bindrow);
                         $('#Phone').val('');
                         }
@@ -701,7 +523,7 @@
                             $('#nocontacts').hide();
                             $('#Conactrow').hide();
                             var Officetext = $('#Office').val();
-                            var bindrow = '<tr><td class="newmultioffice">' + Officetext + '</td><td style="color: darkgray;font-size: smaller;">Office</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            var bindrow = '<tr><td class="multioffice">' + Officetext + '</td><td style="color: darkgray;font-size: smaller;">Office</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
                             $('#Datails tbody').append(bindrow);
                             $('#Office').val('');
                         }
@@ -714,7 +536,7 @@
                             $('#nocontacts').hide();
                             $('#Conactrow').hide();
                             var emailtext = $('#Email').val();
-                            var bindrow = '<tr><td class="newmultiemail">' + emailtext + '</td><td style="color: darkgray;font-size: smaller;">email</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            var bindrow = '<tr><td class="multiemail">' + emailtext + '</td><td style="color: darkgray;font-size: smaller;">email</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
                             $('#Datails tbody').append(bindrow);
                             $('#Email').val('');
                         }
@@ -727,7 +549,7 @@
                             $('#nocontacts').hide();
                             $('#Conactrow').hide();
                             var AdditionalFieldtext = $('#AdditionalField').val();
-                            var bindrow = '<tr><td class="newmultiadditionalfield">' + AdditionalFieldtext + '</td><td style="color: darkgray;font-size: smaller;">Additional field</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            var bindrow = '<tr><td class="multiadditionalfield">' + AdditionalFieldtext + '</td><td style="color: darkgray;font-size: smaller;">Additional field</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
                             $('#Datails tbody').append(bindrow);
                             $('#AdditionalField').val('');
                         }
@@ -740,7 +562,7 @@
                             $('#nocontacts').hide();
                             $('#Conactrow').hide();
                             var Parametertext = $('#Parameter').val();
-                            var bindrow = '<tr><td class="newmultiparameter">' + Parametertext + '</td><td style="color: darkgray;font-size: smaller;">Parameter</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            var bindrow = '<tr><td class="multiparameter">' + Parametertext + '</td><td style="color: darkgray;font-size: smaller;">Parameter</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
                             $('#Datails tbody').append(bindrow);
                             $('#Parameter').val('');
                         }
@@ -751,7 +573,6 @@
                     e.preventDefault();
                     $(this).parents('tr').remove();
                 });
-
 
 
         $('#StateID2').change(function ()
@@ -814,9 +635,11 @@
 
         $('#btnsave').on('click', function () {
 
+
+
            // Adding multipal Contact No into array
             var idArrContactPerson = [];
-            $('.newmultiperson').each(function (k, v) {
+            $('.multiperson').each(function (k, v) {
                 var tdVals = $(this).text();
                 idArrContactPerson.push(tdVals);
             });
@@ -832,7 +655,7 @@
 
             //Adding multipal Mobile No into array
             var idArrMobile = [];
-            $('.newmultimobile').each(function (k, v) {
+            $('.multimobile').each(function (k, v) {
                 var tdVals = $(this).text();
                 idArrMobile.push(tdVals);
             });
@@ -848,7 +671,7 @@
 
             //Adding multipal phone into array
             var idArrPhone = [];
-            $('.newmultiphone').each(function (k, v) {
+            $('.multiphone').each(function (k, v) {
                  var tdVals = $(this).text();
                 idArrPhone.push(tdVals);
             });
@@ -863,7 +686,7 @@
 
             //Adding OfficeNo into array
             var idArrOffice = [];
-            $('.newmultioffice').each(function (k, v) {
+            $('.multioffice').each(function (k, v) {
                 var tdVals = $(this).text();
                 idArrOffice.push(tdVals);
             });
@@ -879,7 +702,7 @@
 
             //Adding Email into array
             var idArrEmail = [];
-            $('.newmultiemail').each(function (k, v) {
+            $('.multiemail').each(function (k, v) {
                 var tdVals = $(this).text();
                 idArrEmail.push(tdVals);
             });
@@ -894,7 +717,7 @@
 
             //Adding AdditionFileds into array
             var idArrAdditionField = [];
-            $('.newmultiadditionalfield').each(function (k, v) {
+            $('.multiadditionalfield').each(function (k, v) {
                 var tdVals = $(this).text();
                 idArrAdditionField.push(tdVals);
             });
@@ -910,7 +733,7 @@
 
             //Adding Parameter into array
             var idArrParameter = [];
-            $('.newmultiparameter').each(function (k, v) {
+            $('.multiparameter').each(function (k, v) {
                 var tdVals = $(this).text();
                 idArrParameter.push(tdVals);
             });
@@ -925,7 +748,7 @@
 
             //Adding Member into array
             var idArrMember = [];
-            $('.newmultimember').each(function (k, v) {
+            $('.multimember').each(function (k, v) {
                 var tdVals = $(this).text() + "~" + $(this).attr("id");
                 idArrMember.push(tdVals);
             });
@@ -939,14 +762,25 @@
                 SaveMemberPerson.push(item);
             }
 
+            var TypeId = 0;
+
+            if ($("#memberid option:selected").val() == 2) {
+                TypeId = $("#ConsultantTypeID option:selected").val();
+            }
+            else if ($("#memberid option:selected").val() == 3) {
+                TypeId = $("#ContractorTypeId option:selected").val();
+            }
+
+
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
                 url: '/Master/SaveMember',
                 data:
                 {
-                    MemberId: $('#MemberId').val(),
+                    MemberID : 0,
                     MemberType: $("#memberid option:selected").val(),
+                    TypeId: TypeId,
                     TitleID: $("#TitleId option:selected").val(),
                     Name: $('#Name').val(),
                     ShortName: $('#shortname').val(),
