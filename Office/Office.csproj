@@ -1542,6 +1542,7 @@
     <Compile Include="Models\OfficeDbContext.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Master.cs" />
+    <Compile Include="Models\ProdectDataTemplate.cs" />
     <Compile Include="Models\temlatesInfo.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1679,6 +1680,8 @@
     <Content Include="Views\Template\DocCreation.cshtml" />
     <Content Include="Views\Template\GenerateDocument.cshtml" />
     <Content Include="Views\Home\ProjectDemo.cshtml" />
+    <Content Include="Views\Template\ProjectData.cshtml" />
+    <Content Include="Views\Template\ReplacePlaceholderByDataTemplate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

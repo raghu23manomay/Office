@@ -68,6 +68,12 @@ namespace office.Models
       
 
         public DbSet<temlatesInfo> temlatesList { get; set; }
+        public DbSet<ProjectsData> ProjectsData { get; set; }
+        public DbSet<ProjectsDataWithValue> ProjectsDataWithValue { get; set; }
+        public DbSet<DeveloperData> DeveloperData { get; set; }
+        public DbSet<CoordinatorDetailsData> CoordinatorDetailsData { get; set; }
+        public DbSet<AssistantDetailsData> AssistantDetailsData { get; set; }
+
     }
     
 }

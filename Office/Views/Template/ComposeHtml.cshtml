@@ -1,13 +1,20 @@
-﻿
-@model office.Models.temlatesInfo
-
+﻿@model office.Models.temlatesInfo
 @{
-
-    Layout = null;
+  Layout = null;
 }
-<div class="form-group" id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-
-    @Html.TextAreaFor(m=>m.Description, new { rows = "20", style = "resize:none;width:400px;", placeholder = Html.DisplayNameFor(m => m.Description), @class = "form-control input-lg textarea-editor", @id = "Description" })
-
+<div class="mail-box">
+        <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+        @try
+        {
+            if (Model != null)
+            {
+                @(new HtmlString(@Model.Description))
+            }
+        }
+        catch { }
+    </div>
+    <div class="mail-body text-right tooltip-demo">
+        <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send" id="btnsave"><i class="fa fa-reply"></i> Save</a>
+       </div>
+    <div class="clearfix"></div>
 </div>

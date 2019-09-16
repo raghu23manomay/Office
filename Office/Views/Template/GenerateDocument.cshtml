@@ -10,27 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  
 <link href="~/css/style.css" rel="stylesheet" />
-<style>
-    /* width */
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #f2f3f8;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #e9ebf3;
-    }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-</style>
+ 
 <div class="container">
 
 </div>
@@ -67,9 +47,9 @@
 
                                                     {
                                                         <tr>
-                                                            <td class="user" id="@item.TemplateID" name="@item.TemplateName" value="@item.TemplateName">
-                                                                @item.TemplateName<br>
-                                                                <span style=" font-size: 11px;color: #bbb6b6;">@item.TemplateID</span>
+                                                            <td class="TemplateID" id="@item.TemplateID" name="@item.TemplateName" value="@item.TemplateName">
+                                                                @item.TemplateName 
+                                                                
                                                             </td>
 
                                                         </tr>
@@ -87,20 +67,21 @@
 
                         </div>
                         <div class="col-md-9">
-                            <div class="timeline-row post-even" id="userpermissiongrid">
+                            <div class="timeline-row post-even" >
                                 <div class="ibox" style="height: 755px;">
                                     <div class="ibox-title">
 
-                                        <h2 class="text-success no-margin headingsize18"> Users  </h2>
+                                        <h2 class="text-success no-margin headingsize18"> Placeholder Data  </h2>
                                         
                                     </div>
-                                    <div class="ibox-content">
-                                        <div class="table-responsive" id="usergrid">                                          
-
+                                    <div class="ibox-content"  id="ProjectGrid">
+                                        <div class="table-responsive">
+                                             
 
                                         </div>
 
                                     </div>
+
                                 </div>
 
                             </div>
@@ -121,32 +102,34 @@
     <hr />
 
 </body>
+<script src="~/js/jquery-2.1.1.js"></script>
 
-@*<script>
+<script>
 
     $(document).ready(function () {
-        $('.loader').hide();
+      
 
-         $('#usersearch').on('keyup', function () {
+        $('.TemplateID').on("click", function (e) { 
+
              $.ajax({
-                 url: "@Url.Action("LoadUserPermissions", "Master")",
-                 data:
-                 {
-                     username: $('#usersearch').val(),
-                 },
-                 dataType: "text",
-                 //  type: "POST",
-                 async: false,
-                 success: function (data) {
+                url: "@Url.Action("GetProjectData", "Template")",
+                data:
+                {
+                    id: 10,
+                },
+                dataType: "text",
+              
+                success: function (data) {
+                    
+                    $('#ProjectGrid').html(data);
+                },
+                error: function (error) {
+                    
+                    eval(error);
+                }
+            }); 
+        });
+   
+    }); 
 
-                     $('#usergrid').html(data);
-                 }
-             });
-     });
-
-
-    });
-
-
-
-</script>*@
+</script>

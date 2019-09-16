@@ -1,0 +1,1024 @@
+﻿
+
+
+@model office.Models.ProjectsData
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Project";
+    Layout = null;
+}
+
+<script src="~/js/jquery-2.1.1.js"></script>
+@Html.HiddenFor(a => a.ProjectID, new { @id = "ProjectID" })
+@Html.HiddenFor(a => a.Name, new { @id = "ProjectName" })
+@Html.HiddenFor(a => a.ShortName, new { @id = "ShortName" })
+@Html.HiddenFor(a => a.StartDate, new { @id = "StartDate" })
+@Html.HiddenFor(a => a.EndDate, new { @id = "EndDate" })
+@Html.HiddenFor(a => a.PhysicalPath, new { @id = "PhysicalPath" })
+@Html.HiddenFor(a => a.ProjectTypeId, new { @id = "ProjectTypeId" })
+@Html.HiddenFor(a => a.Goan, new { @id = "Goan" })
+@Html.HiddenFor(a => a.Road, new { @id = "Road" })
+@Html.HiddenFor(a => a.Taluka, new { @id = "Taluka" })
+@Html.HiddenFor(a => a.District, new { @id = "District" })
+@Html.HiddenFor(a => a.Duration, new { @id = "Duration" })
+@Html.HiddenFor(a => a.CustomerFileNo, new { @id = "CustomerFileNo" })
+<div class="row">
+    <div class="col-lg-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title" style="display:grid;">
+                <label> Project</label>
+
+            </div>
+            <div class="ibox-content">
+                <div class="col-md-12">
+
+
+
+                    @*<div class="feed-activity-list">
+
+                <div class="feed-element">*@
+
+                    <div class="media-body ">
+                        <small class="pull-right">5m ago</small>
+                        <strong>@Model.Name</strong> @Model.ShortName <br>
+                        <small class="text-muted">  @Model.Road @Model.Goan  @Model.Taluka    @Model.District </small>
+
+                    </div>
+
+
+
+                    @*</div>
+
+                </div>*@
+
+
+
+                </div>
+
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="ibox-title" style="display:grid;">
+                        <label> Developers</label>
+
+                    </div>
+                    <div class="col-sm-8">
+                        <table class="table" id="developerlist">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.DeveloperDatalist)
+                                {
+                                    <tr>
+                                        <td class="hidden multideveloper" id="@item.OwnershipId">@item.DeveloperId</td>
+                                        <td>@item.Name</td>
+                                        <td>
+                                            <span style="color: darkgray;font-size: smaller;">@item.OwnershipType</span>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="ibox-title" style="display:grid;">
+                        <label> Coordinator</label>
+
+                    </div>
+                    <div class="col-sm-8">
+                        <table class="table" id="Coordinatorlist">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.CoordinatorDetailsData)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+
+                                                <label> <input type="checkbox" class="i-checks">  </label>
+
+                                            </div>
+                                            @*@Html.CheckBoxFor(item.isCoordinatorApplied, new { @class="i-checks", title = "Active", @id = "IsActive" })**@
+
+
+                                        </td>
+
+                                        <td class="hidden multidevelopercontactperson">@item.CoordinatorDetailId</td>
+                                        <td>@item.FullName</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="ibox-title" style="display:grid;">
+                        <label> Assistant List</label>
+
+                    </div>
+                    <div class="col-sm-8">
+                        <table class="table" id="assistantlist">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.AssistantDetailsData)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            @*@Html.CheckBoxFor(item.isAssistantApplied, new { @class = "", title = "Active", @id = "IsActive" })*@
+                                            <div>
+
+                                                <label> <input type="checkbox" class="i-checks">  </label>
+
+                                            </div>
+
+                                        </td>
+                                        <td class="hidden multiassistant">@item.AssistantId</td>
+                                        <td>@item.FullName</td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ibox float-e-margins">
+
+
+                <div class="row form-group">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-8 pull-right">
+                        <div class="pull-right">
+                            <button class="btn btn-primary" id="btnGenerateDataTemplate" type="button">Create Data Templare</button>
+                            <button class="btn btn-primary" id="btnGenerateDocument" type="button">Generate Document</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#btnGenerateDocument').on("click", function (e) {
+            $.ajax({
+                url: "@Url.Action("ReplacePlaceholderByDataTemplate", "Template")",
+                data:
+                {
+                    TemplateID: 1,
+                    DtTemplateID: 5,
+                },
+                dataType: "text",
+
+                success: function (data) {
+
+                    $('#ProjectGrid').html(data);
+                },
+                error: function (error) {
+
+
+                }
+            });
+        });
+
+        $('#btnGenerateDataTemplate').on("click", function (e) {
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Template/GenerateDataTemplate',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(),
+                    Name: $('#ProjectName').val(),
+                    EnquiryDate: $('#EnquiryDate').val(),
+                    ShortName: $(' #ShortName').val(),
+                    StatusId: 1,
+                    ProjectTypeId: $('#ProjectTypeId').val(),
+                    CustomerFileNo: $('#CustomerFileNo').val(),
+                    PhysicalPath: $('#PhysicalPath').val(),
+                    Road: $('#Road').val(),
+                    Goan: $(' #Goan').val(),
+                    Taluka: $('#Taluka').val(),
+                    District: $('#District').val(),
+                    Duration: $('#Duration').val(),
+                    Cost: $('#Cost').val(),
+                    StartDate: $('#StartDate').val(),
+                    EndDate: $(' #Enddate').val(),
+                    //IsActive: $('#IsActive').val(),
+                    //SaveDeveloper: SaveDeveloper,
+                    //SaveDeveloperContact: SaveDeveloperContact,
+                    //SaveCoordinator: SaveCoordinator,
+                    //SaveAssistant: SaveAssistant,
+                    //SaveOfficeContact: SaveOfficeContact,
+                    //SaveSurvayDetails: SaveSurvayDetails,
+                    //SaveGatDetails: SaveGatDetails,
+                    //SaveCTSDetails: SaveCTSDetails,
+                    //SavePlotDetails: SavePlotDetails,
+                    //SaveFinalPlotDetails: SaveFinalPlotDetails,
+                    //SaveConsultant: SaveConsultant,
+                    //SaveContractor: SaveContractor,
+                    //SaveField: SaveField,
+                    //SaveProjectParameter: SaveProjectParameter,
+
+                },
+                success: function (da) {
+                    alert(da);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+
+    });
+
+</script>
+
+
+
+
+@*<script>
+        $(document).ready(function () {
+
+            //Ajax call for binding Developer Details for update
+             $.ajax({
+                url: "@Url.Action("GetDeveloperDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                        ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#bindDeveloper').html(data);
+                    $('.nodeveloer').hide();
+
+                },
+                error: function (data) {
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+            //Ajax call for binding Developer Contact Details for update
+             $.ajax({
+                url: "@Url.Action("GetDeveloperContactDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                        ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#DevContactList').html(data);
+                    $('.nocontactdev').hide();
+                },
+                error: function (data) {
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+             //Ajax call for binding Coordinator Details for update
+             $.ajax({
+                url: "@Url.Action("GetCoordinatorDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                        ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#coordinatorDetails').html(data);
+                    $('.nocoordinator').hide();
+                },
+                error: function (data) {
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+             //Ajax call for binding Assistant Details for update
+             $.ajax({
+                url: "@Url.Action("GetAssistantDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                        ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#assistantdetails').html(data);
+                    $('.noassistant').hide();
+                },
+                error: function (data) {
+
+                },
+                 complete: function () {
+
+                }
+
+            });
+
+             //Ajax call for binding Office Contact Details for update
+             $.ajax({
+                url: "@Url.Action("GetOfficeContactDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                        ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#officecontactdetails').html(data);
+                    $('.nooffice').hide();
+                },
+                error: function (data) {
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+            //Ajax call for binding Survay Details for update
+             $.ajax({
+                url: "@Url.Action("GetSurvayDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                        ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#survaydetails').html(data);
+                    $('.nosurvay').hide();
+                },
+                error: function (data) {
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+            //Ajax call for binding Gat Details for update
+             $.ajax({
+                url: "@Url.Action("GetGatDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                        ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#gatdetails').html(data);
+                    $('.nogat').hide();
+                },
+                error: function (data) {
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+            //Ajax call for binding CTE Details for update
+             $.ajax({
+                url: "@Url.Action("GetCTSDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#CTEdetails').html(data);
+                    $('.noCTE').hide();
+                },
+                error: function (data) {
+
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+            //Ajax call for binding Plot Details for update
+             $.ajax({
+                url: "@Url.Action("GetPlotDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#plotdetail').html(data);
+                    $('.noPlot').hide();
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+            //Ajax call for binding Final Plot Details for update
+             $.ajax({
+                url: "@Url.Action("GetFinalPlotDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#finalplotdetail').html(data);
+                    $('.noFinalPlot').hide();
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+            //Ajax call for binding Consultant Details for update
+             $.ajax({
+                url: "@Url.Action("GetConsultantDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#consultantdetail').html(data);
+                    $('.noConsultant').hide();
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+
+            //Ajax call for binding Contractor Details for update
+             $.ajax({
+                url: "@Url.Action("GetContractorDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#contractordetail').html(data);
+                    $('.noContractor').hide();
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+             //Ajax call for binding Contractor Details for update
+             $.ajax({
+                url: "@Url.Action("GetFieldDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#fielddetail').html(data);
+                    $('.noField').hide();
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+
+             //Ajax call for binding Contractor Details for update
+             $.ajax({
+                url: "@Url.Action("GetParameterDetailsForProject", "Home")",
+                contentType: "application/json",
+                    data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#parameterdetail').html(data);
+                    $('.noParameter').hide();
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+
+                }
+
+            });
+
+
+
+            $('#ProjectName').keyup(function () {
+                $('#showprojectname').html($('#ProjectName').val());
+            });
+
+            $('#ShortName').keyup(function () {
+                $('#showshortname').html($('#ShortName').val());
+            });
+
+            $('#addDeveloper').on("click", function (e) {
+                $('.nodeveloer').hide();
+                var Developertext = $("#DeveloperId option:selected").text();
+                var DeveloperId = $("#DeveloperId option:selected").val();
+                var Ownershipid = $("#OwnershipId option:selected").val();
+                var ownershiptext = $("#OwnershipId option:selected").text();
+                var bindrow = '<tr><td class="hidden multideveloper" id="' + Ownershipid + '">' + DeveloperId + '</td><td>' + Developertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + ownershiptext + '</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#developerlist tbody').append(bindrow);
+
+            });
+
+
+            $('#addDeveloperContactPerson').on("click", function (e) {
+                $('.nocontactdev').hide();
+                var DeveloperContacttext = $("#ConactDeveloperPersonId option:selected").text();
+                var ConactDeveloperPersonId = $("#ConactDeveloperPersonId option:selected").val();
+                var bindrow = '<tr><td class="hidden multidevelopercontactperson">' + ConactDeveloperPersonId + '</td><td>' + DeveloperContacttext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#developercontactlist tbody').append(bindrow);
+            });
+
+            $('#addCoordinator').on("click", function (e) {
+                $('.nocoordinator').hide();
+                var Coordinatortext = $("#CoordinatorId option:selected").text();
+                var CoordinatorId = $("#CoordinatorId option:selected").val();
+                var bindrow = '<tr><td class="hidden multicoordinator">' + CoordinatorId + '</td><td>' + Coordinatortext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#coordinatorlist tbody').append(bindrow);
+            });
+
+            $('#addAssistant').on("click", function (e) {
+                $('.noassistant').hide();
+                var Assistanttext = $("#AssistantId option:selected").text();
+                var AssistantId = $("#AssistantId option:selected").val();
+                var bindrow = '<tr><td class="hidden multiassistant">' + AssistantId + '</td><td>' + Assistanttext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#assistantlist tbody').append(bindrow);
+            });
+            $('#addOfficePerson').on("click", function (e) {
+                $('.nooffice').hide();
+                var contactofficepersontext = $("#ContactOfficePersonId option:selected").text();
+                var ContactOfficePersonId = $("#ContactOfficePersonId option:selected").val();
+                var bindrow = '<tr><td class="hidden multiofficecontact">' + ContactOfficePersonId + '</td><td>' + contactofficepersontext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#officecontactlist tbody').append(bindrow);
+            });
+
+            $('#addSurvay').on("click", function (e) {
+                $('.nosurvay').hide();
+                var SurvayUnittext = $("#SurvayUnitId option:selected").text();
+                var SurvayUnitId = $("#SurvayUnitId option:selected").val();
+                var bindrow = '<tr><td>' + $('#survayno').val() + '</td><td>' + $('#survayHissa').val() + '</td><td>' + $('#survayArea').val() + '</td><td class="hidden">' + SurvayUnitId + '</td><td>' + SurvayUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#survaylist tbody').append(bindrow);
+            });
+
+            $('#addGat').on("click", function (e) {
+                $('.nogat').hide();
+                var GatUnittext = $("#GatUnitId option:selected").text();
+                var GatUnitId = $("#GatUnitId option:selected").val();
+                var bindrow = '<tr><td>' + $('#gatno').val() + '</td><td>' + $('#gatHissa').val() + '</td><td>' + $('#gatArea').val() + '</td><td class="hidden">' + GatUnitId + '</td><td>' + GatUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#gatlist tbody').append(bindrow);
+            });
+
+            $('#addCTS').on("click", function (e) {
+                $('.noCTS').hide();
+                var CTSUnittext = $("#CTSUnitId option:selected").text();
+                var CTSUnitId = $("#CTSUnitId option:selected").val();
+                var bindrow = '<tr><td>' + $('#CTSno').val() + '</td><td>' + $('#CTSHissa').val() + '</td><td>' + $('#CTSArea').val() + '</td><td class="hidden">' + CTSUnitId + '</td><td>' + CTSUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#CTSlist tbody').append(bindrow);
+            });
+
+            $('#addPlot').on("click", function (e) {
+                $('.noPlot').hide();
+                var PlotUnittext = $("#PlotUnitId option:selected").text();
+                var PlotUnitId = $("#PlotUnitId option:selected").val();
+                var bindrow = '<tr><td>' + $('#Plotno').val() + '</td><td>' + $('#PlotArea').val() + '</td><td class="hidden">' + PlotUnitId + '</td><td>' + PlotUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#Plotlist tbody').append(bindrow);
+            });
+
+            $('#addFinalPlot').on("click", function (e) {
+                $('.noFinalPlot').hide();
+                var FinalPlotUnittext = $("#FinalPlotUnitId option:selected").text();
+                var FinalPlotUnitId = $("#FinalPlotUnitId option:selected").val();
+                var bindrow = '<tr><td>' + $('#FinalPlotno').val() + '</td><td>' + $('#FinalPlotArea').val() + '</td><td class="hidden">' + FinalPlotUnitId + '</td><td>' + FinalPlotUnittext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#FinalPlotlist tbody').append(bindrow);
+            });
+
+            $('#addConsultant').on("click", function (e) {
+                $('.noConsultant').hide();
+                var ConsultantTypetext = $("#ConsultantTypeId option:selected").text();
+                var ConsultantTypeId = $("#ConsultantTypeId option:selected").val();
+                var ConsultantId = $("#ConsultantId option:selected").val();
+                var Consultanttext = $("#ConsultantId option:selected").text();
+                var bindrow = '<tr><td class="hidden multiconsultant" id="' + ConsultantTypeId + '">' + ConsultantId + '</td><td>' + Consultanttext + '</td><td><span style="color: darkgray;font-size: smaller;">' + ConsultantTypetext + '</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#consultantlist tbody').append(bindrow);
+
+            });
+
+            $('#addContractor').on("click", function (e) {
+                $('.noContractor').hide();
+                var ContractorTypetext = $("#ContractorTypeId option:selected").text();
+                var ContractorTypeId = $("#ContractorTypeId option:selected").val();
+                var ContracterId = $("#ContracterId option:selected").val();
+                var Contractertext = $("#ContracterId option:selected").text();
+                var bindrow = '<tr><td class="hidden multicontractor" id="' + ContractorTypeId + '">' + ContracterId + '</td><td>' + Contractertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + ContractorTypetext + '</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#contractorlist tbody').append(bindrow);
+
+            });
+
+            $('#addField').on("click", function (e) {
+                $('.noField').hide();
+                var bindrow = '<tr><td class="multiField">' + $("#Field").val() + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#fieldlist tbody').append(bindrow);
+            });
+
+            $('#addParameter').on("click", function (e) {
+                $('.noParameter').hide();
+                var bindrow = '<tr><td class="multiparameter">' + $("#Parameter").val() + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#parameterlist tbody').append(bindrow);
+            });
+
+            $(document).on('click', 'i.deleterow', function (e) {
+                e.preventDefault();
+                $(this).parents('tr').remove();
+            });
+
+            $('#btnsave').on('click', function () {
+
+                //Adding Developers into array
+                var idArrDeveloper = [];
+                $('.multideveloper').each(function (k, v) {
+                    var tdVals = $(this).text() + "~" + $(this).attr("id");
+                    idArrDeveloper.push(tdVals);
+                });
+                var SaveDeveloper = [];
+                for (var i = 0; i < idArrDeveloper.length; i++) {
+                    var arrElement = idArrDeveloper[i].split("~");
+                    item = {}
+                    item["DeveloperId"] = arrElement[0];
+                    item["OwnershipId"] = arrElement[1];
+                    SaveDeveloper.push(item);
+                }
+
+
+               //Adding Developers Contact Person into array
+                var idArrDeveloperContact = [];
+                $('.multidevelopercontactperson').each(function (k, v) {
+                    var tdVals = $(this).html();
+                    idArrDeveloperContact.push(tdVals);
+                });
+                var SaveDeveloperContact = [];
+                for (var i = 0; i < idArrDeveloperContact.length; i++) {
+                    var arrElement = idArrDeveloperContact[i].split("~");
+                    item = {}
+                    item["DeveloperContactPersonId"] = arrElement[0];
+                    SaveDeveloperContact.push(item);
+                }
+
+
+                //Adding Coordinator into array
+                var idArrCoordinator = [];
+                $('.multicoordinator').each(function (k, v) {
+                    var tdVals = $(this).html();
+                    idArrCoordinator.push(tdVals);
+                });
+                var SaveCoordinator = [];
+                for (var i = 0; i < idArrCoordinator.length; i++) {
+                    var arrElement = idArrCoordinator[i].split("~");
+                    item = {}
+                    item["CoordinatorId"] = arrElement[0];
+                    SaveCoordinator.push(item);
+                }
+
+
+                //Adding Assistant into array
+                var idArrAssistant = [];
+                $('.multiassistant').each(function (k, v) {
+                    var tdVals = $(this).html();
+                    idArrAssistant.push(tdVals);
+                });
+                var SaveAssistant = [];
+                for (var i = 0; i < idArrAssistant.length; i++) {
+                    var arrElement = idArrAssistant[i].split("~");
+                    item = {}
+                    item["AssistantId"] = arrElement[0];
+                    SaveAssistant.push(item);
+                }
+
+
+                //Adding Office Contact Person into array
+                var idArrOfficeContact = [];
+                $('.multiofficecontact').each(function (k, v) {
+                    var tdVals = $(this).html();
+                    idArrOfficeContact.push(tdVals);
+                });
+                var SaveOfficeContact = [];
+                for (var i = 0; i < idArrOfficeContact.length; i++) {
+                    var arrElement = idArrOfficeContact[i].split("~");
+                    item = {}
+                    item["OfficeContactPersonId"] = arrElement[0];
+                    SaveOfficeContact.push(item);
+                }
+
+                //Adding Survay Details into array
+                var idArrsurvay = [];
+                $('#survaylist tbody tr').each(function (k, v) {
+                    var trElement = $(this);
+                    var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                                 trElement.find('td:eq(1)').text().trim() + "~" +
+                                 trElement.find('td:eq(2)').text().trim() + "~" +
+                                 trElement.find('td:eq(3)').text().trim()
+                    idArrsurvay.push(tdVals);
+                });
+
+                var SaveSurvayDetails = [];
+                for (var i = 0; i < idArrsurvay.length; i++) {
+                    var arrElement = idArrsurvay[i].split("~");
+                    item = {}
+                    item["SurvayNo"] = arrElement[0];
+                    item["HissaNo"] = arrElement[1];
+                    item["Area"] = arrElement[2];
+                    item["UnitID"] = arrElement[3];
+                    SaveSurvayDetails.push(item);
+                }
+
+                //Adding Gat Details into array
+                var idArrgat = [];
+                $('#gatlist tbody tr').each(function (k, v) {
+                    var trElement = $(this);
+                    var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                        trElement.find('td:eq(1)').text().trim() + "~" +
+                        trElement.find('td:eq(2)').text().trim() + "~" +
+                        trElement.find('td:eq(3)').text().trim()
+                    idArrgat.push(tdVals);
+                });
+
+                var SaveGatDetails = [];
+                for (var i = 0; i < idArrgat.length; i++) {
+                    var arrElement = idArrgat[i].split("~");
+                    item = {}
+                    item["GatNo"] = arrElement[0];
+                    item["HissaNo"] = arrElement[1];
+                    item["Area"] = arrElement[2];
+                    item["UnitID"] = arrElement[3];
+                    SaveGatDetails.push(item);
+                }
+
+                //Adding CTS Details into array
+                var idArrCTS = [];
+                $('#CTSlist tbody tr').each(function (k, v) {
+                    var trElement = $(this);
+                    var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                        trElement.find('td:eq(1)').text().trim() + "~" +
+                        trElement.find('td:eq(2)').text().trim() + "~" +
+                        trElement.find('td:eq(3)').text().trim()
+                    idArrCTS.push(tdVals);
+                });
+
+                var SaveCTSDetails = [];
+                for (var i = 0; i < idArrCTS.length; i++) {
+                    var arrElement = idArrCTS[i].split("~");
+                    item = {}
+                    item["CTSNo"] = arrElement[0];
+                    item["HissaNo"] = arrElement[1];
+                    item["Area"] = arrElement[2];
+                    item["UnitID"] = arrElement[3];
+                    SaveCTSDetails.push(item);
+                }
+
+
+                //Adding Plot Details into array
+                var idArrPlot = [];
+                $('#Plotlist tbody tr').each(function (k, v) {
+                    var trElement = $(this);
+                    var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                        trElement.find('td:eq(1)').text().trim() + "~" +
+                        trElement.find('td:eq(2)').text().trim()
+                    idArrPlot.push(tdVals);
+                });
+
+                var SavePlotDetails = [];
+                for (var i = 0; i < idArrPlot.length; i++) {
+                    var arrElement = idArrPlot[i].split("~");
+                    item = {}
+                    item["PlotNo"] = arrElement[0];
+                    item["Area"] = arrElement[1];
+                    item["UnitID"] = arrElement[2];
+                    SavePlotDetails.push(item);
+                }
+
+
+                //Adding FinalPlot Details into array
+                var idArrFinalPlot = [];
+                $('#FinalPlotlist tbody tr').each(function (k, v) {
+                    var trElement = $(this);
+                    var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                        trElement.find('td:eq(1)').text().trim() + "~" +
+                        trElement.find('td:eq(2)').text().trim()
+                    idArrFinalPlot.push(tdVals);
+                });
+
+                var SaveFinalPlotDetails = [];
+                for (var i = 0; i < idArrFinalPlot.length; i++) {
+                    var arrElement = idArrFinalPlot[i].split("~");
+                    item = {}
+                    item["FinalPlotNo"] = arrElement[0];
+                    item["Area"] = arrElement[1];
+                    item["UnitID"] = arrElement[2];
+                    SaveFinalPlotDetails.push(item);
+                }
+
+
+                //Adding Consultant into array
+                var idArrConsultant = [];
+                $('.multiconsultant').each(function (k, v) {
+                    var tdVals = $(this).text() + "~" + $(this).attr("id");
+                    idArrConsultant.push(tdVals);
+                });
+                var SaveConsultant = [];
+                for (var i = 0; i < idArrConsultant.length; i++) {
+                    var arrElement = idArrConsultant[i].split("~");
+                    item = {}
+                    item["ConsultantId"] = arrElement[0];
+                    item["ConsultantTypeId"] = arrElement[1];
+                    SaveConsultant.push(item);
+                }
+
+                //Adding Contractor into array
+                var idArrContractor = [];
+                $('.multicontractor').each(function (k, v) {
+                    var tdVals = $(this).text() + "~" + $(this).attr("id");
+                    idArrContractor.push(tdVals);
+                });
+                var SaveContractor = [];
+                for (var i = 0; i < idArrContractor.length; i++) {
+                    var arrElement = idArrContractor[i].split("~");
+                    item = {}
+                    item["ConstractorId"] = arrElement[0];
+                    item["ContractorTypeId"] = arrElement[1];
+                    SaveContractor.push(item);
+                }
+
+                //Adding Field into array
+                var idArrField = [];
+                $('.multiField').each(function (k, v) {
+                    var tdVals = $(this).text();
+                    idArrField.push(tdVals);
+                });
+                var SaveField = [];
+                for (var i = 0; i < idArrField.length; i++) {
+                    var arrElement = idArrField[i].split("~");
+                    item = {}
+                    item["Field"] = arrElement[0];
+                    SaveField.push(item);
+                }
+
+                //Adding Parameter into array
+                var idArrParameter = [];
+                $('.multiparameter').each(function (k, v) {
+                    var tdVals = $(this).text();
+                    idArrParameter.push(tdVals);
+                });
+                var SaveProjectParameter = [];
+                for (var i = 0; i < idArrParameter.length; i++) {
+                    var arrElement = idArrParameter[i].split("~");
+                    item = {}
+                    item["Parameter"] = arrElement[0];
+                    SaveProjectParameter.push(item);
+                }
+
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Home/SaveProject',
+                    data:
+                    {
+                        ProjectID: $('#ProjectID').val(),
+                        Name: $(' #ProjectName').val(),
+                        EnquiryDate: $('#EnquiryDate').val(),
+                        ShortName: $(' #ShortName').val(),
+                        StatusId: $('#ProjectStatusId option:selected').val(),
+                        ProjectTypeId: $('#ProjectTypeId option:selected').val(),
+                        CustomerFileNo: $('#CustomerFileNo').val(),
+                        PhysicalPath: $('#PhysicalPath').val(),
+                        Road: $('#Road').val(),
+                        Goan: $(' #Goan').val(),
+                        Taluka: $('#Taluka').val(),
+                        District: $('#District').val(),
+                        Duration: $('#Duration').val(),
+                        Cost: $('#Cost').val(),
+                        StartDate: $('#StartDate').val(),
+                        EndDate: $(' #Enddate').val(),
+                        IsActive: $('#IsActive').val(),
+                        SaveDeveloper: SaveDeveloper,
+                        SaveDeveloperContact: SaveDeveloperContact,
+                        SaveCoordinator: SaveCoordinator,
+                        SaveAssistant: SaveAssistant,
+                        SaveOfficeContact: SaveOfficeContact,
+                        SaveSurvayDetails: SaveSurvayDetails,
+                        SaveGatDetails: SaveGatDetails,
+                        SaveCTSDetails: SaveCTSDetails,
+                        SavePlotDetails: SavePlotDetails,
+                        SaveFinalPlotDetails: SaveFinalPlotDetails,
+                        SaveConsultant: SaveConsultant,
+                        SaveContractor: SaveContractor,
+                        SaveField: SaveField,
+                        SaveProjectParameter: SaveProjectParameter,
+
+                    },
+                    success: function (da) {
+                        alert(da);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+
+            });
+
+        });
+
+
+    </script>*@
