@@ -310,6 +310,16 @@ namespace office.Controllers
                      : View("ComposeHtml", data);
         }
 
+        public ActionResult DepartmentType(int id = 1)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            DepartmentType data = new DepartmentType();
+            IEnumerable<DepartmentType> result = _db.DepartmentTypes.SqlQuery(@"exec getDepartment").ToList<DepartmentType>();
+           
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("DepartmentType", result)
+                    : View("DepartmentType", result);
+        }
 
         #region test
         public ActionResult Test( )

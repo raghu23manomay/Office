@@ -35,6 +35,14 @@ namespace office.Models
         public String PlaceHolderName { get; set; }
         
     }
+    
+        public class DepartmentType
+    {
+        [Key]
+        public int DepartmentId { get; set; }
+        public String DepartmentName { get; set; }
+
+    }
     public class DocTemplateList
     {
         [Key]

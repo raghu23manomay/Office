@@ -74,6 +74,8 @@ namespace office.Models
         public DbSet<CoordinatorDetailsData> CoordinatorDetailsData { get; set; }
         public DbSet<AssistantDetailsData> AssistantDetailsData { get; set; }
         public DbSet<DataTemplateList> DataTemplateLists { get; set; }
+        public DbSet<DepartmentType> DepartmentTypes { get; set; }
+        
     }
     
 }

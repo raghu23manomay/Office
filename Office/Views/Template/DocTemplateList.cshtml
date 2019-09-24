@@ -15,14 +15,11 @@
                     <div class="space-25"></div>
                    
                     <h5>Categories</h5>
-                    <ul class="category-list" style="padding: 0">
-                        <li><a href="#"> <i class="fa fa-circle text-navy"></i> Work </a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-danger"></i> Documents</a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-primary"></i> Social</a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-info"></i> Advertising</a></li>
-                        <li><a href="#"> <i class="fa fa-circle text-warning"></i> Clients</a></li>
-                    </ul>
+                    <div id="departments">
 
+
+                        
+                    </div>
                     
                     <div class="clearfix"></div>
                 </div>
@@ -95,6 +92,22 @@
 
 <script>
     $(document).ready(function () {
+
+        $.ajax({
+            url: "@Url.Action("DepartmentType", "Template")",
+            data:
+            {
+                TemplateID: 1        
+            },
+            dataType: "text",
+
+            success: function (data) {
+                $('#departments').html(data);
+            },
+            error: function (error) {
+            }
+        });
+
         $('#mgrid .pagination li a').on('click', function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();
@@ -126,24 +139,7 @@
 
         });
 
-        @*$('.Delete').click(function () {
-            if (confirm("Are you sure want to deleted!"))
-            {
-            var Id = $(this).attr('name');
-            $.ajax({
-                url: "@Url.Action("DeleteMaster", "Master")",
-                data: { Id: Id, MasterName: 'Employee' },
-                dataType: "text",
-                type: "POST",
-                async: false,
-                success: function (data) {
-                    var mgs = data.replace(/"/g, "");
-                    alert(mgs);
-                   }
-            });
-            }
-
-        });*@
+      
     });
 
 </script>

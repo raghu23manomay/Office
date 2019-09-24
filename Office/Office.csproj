@@ -1940,6 +1940,7 @@
     <Content Include="Views\Template\ReplacePlaceholderByDataTemplate.cshtml" />
     <Content Include="Views\Template\Test.cshtml" />
     <Content Include="Views\Template\DataTemplateList.cshtml" />
+    <Content Include="Views\Template\DepartmentType.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

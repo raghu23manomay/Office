@@ -1,0 +1,35 @@
+﻿@model IEnumerable<office.Models.DepartmentType>
+
+@{
+    ViewBag.Title = "Project";
+    Layout = null;
+}
+
+<ul class="category-list" style="padding: 0">
+    @foreach (var item in Model)
+    {
+        if (item.DepartmentId % 2 == 0)
+        {
+            <li><a href="#" id="@item.DepartmentId"> <i class="fa fa-circle text-navy"></i> @item.DepartmentName </a></li>
+        }
+        else if (item.DepartmentId % 3 == 0)
+        {
+            <li><a href="#"> <i class="fa fa-circle text-danger"></i>  @item.DepartmentName</a></li>
+        }
+        else if (item.DepartmentId % 4 == 0)
+        {
+            <li><a href="#"> <i class="fa fa-circle text-primary"></i>  @item.DepartmentName</a></li>
+        }
+        else if (item.DepartmentId % 5 == 0)
+        {
+            <li><a href="#"> <i class="fa fa-circle text-primary"></i>  @item.DepartmentName</a></li>
+        }
+        else
+        {
+            <li><a href="#"> <i class="fa fa-circle text-warning"></i>  @item.DepartmentName</a></li>
+        }
+        @*<li><a href="#"> <i class="fa fa-circle text-primary"></i> Social</a></li>
+            <li><a href="#"> <i class="fa fa-circle text-info"></i> Advertising</a></li>
+            <li><a href="#"> <i class="fa fa-circle text-warning"></i> Clients</a></li>*@
+    }
+</ul>
