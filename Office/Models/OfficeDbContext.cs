@@ -73,7 +73,7 @@ namespace office.Models
         public DbSet<DeveloperData> DeveloperData { get; set; }
         public DbSet<CoordinatorDetailsData> CoordinatorDetailsData { get; set; }
         public DbSet<AssistantDetailsData> AssistantDetailsData { get; set; }
-
+        public DbSet<DataTemplateList> DataTemplateLists { get; set; }
     }
     
 }

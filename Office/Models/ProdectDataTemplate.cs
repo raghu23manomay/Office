@@ -14,22 +14,15 @@ namespace office.Models
         [Key]
         public int? ProjectID { get; set; }
         public string Name { get; set; }
-        public DateTime? EnquiryDate { get; set; }
-        public string ShortName { get; set; }
-        public int? StatusId { get; set; }
-        public int? ProjectTypeId { get; set; }
-        public string CustomerFileNo { get; set; }
-        public string PhysicalPath { get; set; }
+        public int?  DTTemplateID   { get; set; }
+        public string DataTemplateName { get; set; }
+        public string ShortName { get; set; } 
         public string Road { get; set; }
         public string Goan { get; set; }
         public string Taluka { get; set; }
         public string District { get; set; }
         public string Duration { get; set; }
-        public decimal Cost { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public bool IsActive { get; set; }
-        public int? CreatedBy { get; set; }
+       
         public  IEnumerable<DeveloperData> DeveloperDatalist { get; set; } 
         public IEnumerable<CoordinatorDetailsData> CoordinatorDetailsData { get; set; }
         public IEnumerable<AssistantDetailsData> AssistantDetailsData { get; set; }
@@ -75,6 +68,7 @@ namespace office.Models
      public string ShippingAddress          { get; set; }
      public string PowerofAttorny         { get; set; }
       public bool isDeveloperApplied { get; set; }
+       
     }
     public class CoordinatorDetailsData
     {
@@ -94,5 +88,16 @@ namespace office.Models
         public int AssistantId { get; set; }
         public string FullName { get; set; } 
         public bool isAssistantApplied { get; set; }
+    }
+    public class ProjectsTemplateData
+    {
+        [Key]
+       
+        public int? ProjectID { get; set; }
+        public int? DeveloperID { get; set; } 
+        public int? DeveloperDetailId { get; set; }
+        public int? CoordinatorID { get; set; }
+        public int? DTTemplateID { get; set; }
+        public String DataTemplateName { get; set; }
     }
 }

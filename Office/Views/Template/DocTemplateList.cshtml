@@ -4,49 +4,81 @@
 @using PagedList.Mvc;
 @using GridMvc.Html
 <script src="~/js/jquery-2.1.1.js"></script>
+
+
 <div class="row">
-    <div class="row">
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content mailbox-content">
+                <div class="file-manager">
+                    <a class="btn btn-block btn-primary compose-mail" href="/Template/Compose">Create Template</a>
+                    <div class="space-25"></div>
+                   
+                    <h5>Categories</h5>
+                    <ul class="category-list" style="padding: 0">
+                        <li><a href="#"> <i class="fa fa-circle text-navy"></i> Work </a></li>
+                        <li><a href="#"> <i class="fa fa-circle text-danger"></i> Documents</a></li>
+                        <li><a href="#"> <i class="fa fa-circle text-primary"></i> Social</a></li>
+                        <li><a href="#"> <i class="fa fa-circle text-info"></i> Advertising</a></li>
+                        <li><a href="#"> <i class="fa fa-circle text-warning"></i> Clients</a></li>
+                    </ul>
 
-        <a class="btn btn-sm btn-primary pull-left" href="/Template/Compose">Add New</a>
+                    
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
     </div>
-   
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
+    <div class="col-lg-9 animated fadeInRight">
+        <div class="mail-box-header">
+            
+            <h2>
+                Template
+            </h2>
+             
+        </div>
+        <div class="mail-box">
 
 
-                    <th>Name </th>
+            
+            <div class="mail-attachment">
+                 
+                <div class="attachment">
+                    @foreach (var item in Model)
+                    {
+                        <div class="file-box">
+                            <div class="file">
+                                <a href="#">
+                                    <span class="corner"></span>
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                        <div class="icon">
+                                            <i class="fa fa-file">
+                                            </i>
+                                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                                <li><a href="Compose?id=@item.TemplateID">Edit Template</a></li>
+                                                <li><a href="contacts.html">View Template</a></li>
+                                                <li><a href="ComposeHtml?id=@item.TemplateID">Generate Document</a></li>
 
-                    @*<th>Body </th>*@
+                                            </ul>
+                                        </div>  
+                                    </a> 
+                                    <div class="file-name">
+                                        @item.TemplateName 
+                                    </div>
+                                </a>
+                            </div> 
+                        </div>
+                    } 
+                        <div class="clearfix"></div>
+                    </div>
+            </div>
+            
+            <div class="clearfix"></div> 
 
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.TemplateName</td>
-                        @*<td> @item.Description</td>*@
-
-                        <td>
-
-                            <a class="edit" href="Compose?id=@item.TemplateID" id="EditMember">
-                                <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
-                            </a>
-                            <a class="Delete" name="@item.TemplateID" id="DeleteMember">
-                                <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
-                            </a>
-
-
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        </div>
     </div>
 </div>
+ 
 <div class="row">
 
     <div class="pnl-pagination m-b-md1">

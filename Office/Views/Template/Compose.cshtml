@@ -6,17 +6,9 @@
 
 <div class="row">
     <div class="col-lg-3">
-        <div class="ibox float-e-margins">
-            <div class="ibox-content mailbox-content">
-                <div class="file-manager">
-                    
-                    <div class="space-25"></div>
-                    <h5>PlaceHolders</h5>
-                   
-                    <ul class="folder-list m-b-md" style="padding: 0" id="UserPlaceHolder"></ul>
-                    
-                </div>
-            </div>
+
+        <div class="file-manager" id="UserPlaceHolder">
+              
         </div>
     </div>
 
@@ -49,35 +41,35 @@
                 @Html.TextBoxFor(a => a.TemplateName, new { @class = "form-control", title = "CityName", @placeholder = "Template Name", @id = "TemplateName" })
             </div>
         </div>
-            <div class="mail-box">
+        <div class="mail-box">
 
-                <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    @try
+            <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+                @try
+                {
+                    if (Model != null)
                     {
-                        if (Model != null)
-                        {
-                            @(new HtmlString(@Model.Description))
-                        }
+                        @(new HtmlString(@Model.Description))
                     }
-                    catch { }
-                </div>
-                <div class="mail-body text-right tooltip-demo">
-                    <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send" id="btnsave"><i class="fa fa-reply"></i> Save</a>
-
-                </div>
-                <div class="clearfix"></div>
+                }
+                catch { }
             </div>
-        </div>
-        <div class="col-md-9">
-
+            <div class="mail-body text-right tooltip-demo">
+                <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send" id="btnsave"><i class="fa fa-reply"></i> Save</a>
+                <a class="btn btn-sm btn-primary " href="/Template/DocTemplateList">Cancel</a>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
+   
+</div>
+
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
 <link href="~/css/style.css" rel="stylesheet" />
-
+<script src="~/js/plugins/nestable/jquery.nestable.js"></script>
 <script>
     $('#summernote').summernote({
         placeholder: 'Write Something here',
@@ -94,9 +86,9 @@
 
                 $('#UserPlaceHolder').html(data);
             }
-        }); 
+        });
 
-        $('#btnsave').on('click', function () { 
+        $('#btnsave').on('click', function () {
             var CityName;
             CityName = $("#TemplateName").val();
             if (TemplateName == "") {
@@ -104,11 +96,11 @@
                 return false;
             }
             else {
-                debugger;
+
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
-                    url: '/Template/SaveTemplate', 
+                    url: '/Template/SaveTemplate',
                     data: {
                         CityID: $("#CityID").val(),
                         AuthorityID: $("#AuthorityID").val(),
@@ -118,14 +110,18 @@
                         Description: $(".note-editable").html(),
                     },
                     success: function (da) {
-                        location.href = "DocTemplateList";  
+                        location.href = "DocTemplateList";
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                     }
                 });
             }
         });
+
+
     });
+
+
 </script>
 <script>
     function allowDrop(ev) {

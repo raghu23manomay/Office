@@ -31,10 +31,9 @@ namespace office.Models
     public class PerformaPlaceholders
     {
         [Key]
-        public int PlaceHolderID { get; set; }
+        
         public String PlaceHolderName { get; set; }
-        public String TableName { get; set; }
-        public String TableField { get; set; } 
+        
     }
     public class DocTemplateList
     {
@@ -66,6 +65,25 @@ namespace office.Models
         public int TemplateTypeID { get; set; }
         List<DocCreationTemplate> result = new List<DocCreationTemplate>();
     }
+    public class DataTemplateList
+    {
+        [Key]
+        public int DTTemplateID { get; set; }
+        public int ProjectID { get; set; }
+        public int DeveloperId { get; set; }
+        public int ConsultantId { get; set; }
+        public int CoordinatorID { get; set; }
+        public String DataTemplateName { get; set; }
+    }
+
+    public class PlaceholderHtml
+    {
+        [Key]
+        public int PlaceholdeID { get; set; }
+        public string FieldName { get; set; } 
+         
+    }
+
 }
 
 

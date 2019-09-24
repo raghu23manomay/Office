@@ -1,135 +1,92 @@
 ﻿
-
 @{
-    ViewBag.Title = "UserPermission";
-   
-}
-@model  IEnumerable<office.Models.DocTemplateList>
- 
- 
+    ViewBag.Title = "UserPermission"; 
+} 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  
-<link href="~/css/style.css" rel="stylesheet" />
- 
-<div class="container">
-
-</div>
- 
-
-<body>
-
-    <div class="wrapper1 wrapper-content1">
-
-        <div class="gray-bg">
-
-            <div class="">
-
+<link href="~/css/style.css" rel="stylesheet" /> 
+<div class="container"> 
+</div> 
+<body> 
+    <div class="wrapper1 wrapper-content1"> 
+        <div class="gray-bg"> 
+            <div class=""> 
                 <div class="row">
-                    <div class="container">
-
-                        <div class="col-md-3">
-
-                            <div class="timeline-row post-even" style="overflow-y: scroll;height: 755px;">
-
+                    <div class="container"> 
+                        <div class="col-md-3"> 
+                            <div class="timeline-row post-even" style="height: 555px;"> 
                                 <div class="ibox" style="height: 755px;">
-                                    <div class="ibox-title">
-
-                                        <h2 class="text-success no-margin headingsize18"> Template List</h2>
-                                        <input type="text" id="usersearch" class="form-control" placeholder="Search" style="margin-top:10px;margin-bottom:10px;" />
+                                    <div class="ibox-title"> 
+                                        <h2 class="text-success no-margin headingsize18"> Data Template  </h2>
+                                        <hidden id="hdnTemplateID" value="0"></hidden> 
                                     </div>
-                                    <div class="ibox-content" >
-                                        <div class="table-responsive" id="usergrid">
-
-                                            <table class="table scroll-x">
-
-                                                <tbody>
-                                                    @foreach (var item in Model)
-
-                                                    {
-                                                        <tr>
-                                                            <td class="TemplateID" id="@item.TemplateID" name="@item.TemplateName" value="@item.TemplateName">
-                                                                @item.TemplateName 
-                                                                
-                                                            </td>
-
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                             
-                                            
-                                        </div>
-
+                                    <div class="ibox-content" id="DataTemplateList"> 
+                                    </div>
+                                   </div>
+                                </div> 
+                         </div>
+                                <div class="col-md-9">
+                                    <div class="timeline-row post-even">
+                                        <div class="ibox" style="height: 755px;">
+                                            <div class="ibox-title"> 
+                                                <h2 class="text-success no-margin headingsize18"> Placeholder Data  </h2> 
+                                            </div>
+                                            <div class="ibox-content" id="ProjectGrid">
+                                                <div class="table-responsive">
+                                                </div>
+                                            </div> 
+                                        </div> 
                                     </div>
                                 </div>
-
                             </div>
-
-                        </div>
-                        <div class="col-md-9">
-                            <div class="timeline-row post-even" >
-                                <div class="ibox" style="height: 755px;">
-                                    <div class="ibox-title">
-
-                                        <h2 class="text-success no-margin headingsize18"> Placeholder Data  </h2>
-                                        
-                                    </div>
-                                    <div class="ibox-content"  id="ProjectGrid">
-                                        <div class="table-responsive">
-                                             
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
+                </div> 
+            </div> 
+        </div> 
     </div>
     <div class="loader"></div>
     <input type="text" id="saveuserid" value="" class="hidden" />
     <input type="text" id="saveusername" value="" class="hidden" />
     <input type="text" id="saverolename" value="" class="hidden" />
-    <hr />
-
+    <hr /> 
 </body>
-<script src="~/js/jquery-2.1.1.js"></script>
-
-<script>
-
-    $(document).ready(function () {
-      
-
-        $('.TemplateID').on("click", function (e) { 
-
+<script src="~/js/jquery-2.1.1.js"></script> 
+<script>  
+    $(document).ready(function () {   
+       
+            var TemplateID=10
              $.ajax({
                 url: "@Url.Action("GetProjectData", "Template")",
                 data:
                 {
-                    id: 10,
+                    id: TemplateID,
+                },
+                dataType: "text",
+              
+                success: function (data) {
+                    $('#ProjectGrid').html(data);
+                    $('#hdnTemplateID').val(TemplateID);
+                },
+                error: function (error) { 
+                    eval(error);
+                }
+            }); 
+
+             $.ajax({
+                url: "@Url.Action("GetDataTemplateList", "Template")",
+                data:
+                {
+                    ProjectID: 8,
                 },
                 dataType: "text",
               
                 success: function (data) {
                     
-                    $('#ProjectGrid').html(data);
+                    $('#DataTemplateList').html(data);
                 },
-                error: function (error) {
-                    
+                error: function (error) { 
                     eval(error);
                 }
             }); 
-        });
-   
-    }); 
-
+        
+    });  
 </script>
