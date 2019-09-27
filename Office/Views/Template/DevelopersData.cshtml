@@ -1,0 +1,29 @@
+﻿@model IEnumerable<office.Models.DeveloperContactPerson>
+@{
+    Layout = null;
+}
+
+<div class="col-sm-12">
+    <table class="table" id="assistantlist">
+        <thead>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div>
+                            <label> <input type="checkbox" class="i-checks chkAss" checked="@item.DeveloperContactPersonId">  </label>
+                        </div>
+
+                    </td>
+                    <td class="hidden multiassistant">@item.DeveloperContactPersonId</td>
+                    <td>@item.DeveloperContactPersonName </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

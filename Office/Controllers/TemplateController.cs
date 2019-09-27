@@ -83,26 +83,26 @@ namespace office.Controllers
    
 
     #region TemplateMaster
-    public ActionResult LoadDocTemplateyGrid(int? page, String Name = null)
+    public ActionResult LoadDocTemplateGrid(int? page, int DepartmentID = 0)
     {
         StaticPagedList<DocTemplateList> itemsAsIPagedList;
-        itemsAsIPagedList = TemplateGridList(page, Name);
+        itemsAsIPagedList = TemplateGridList(page, DepartmentID);
 
         return Request.IsAjaxRequest()
-                ? (ActionResult)PartialView("DocTemplateList", itemsAsIPagedList)
-                : View("DocTemplateList", itemsAsIPagedList);
+                ? (ActionResult)PartialView("TemplateGrid", itemsAsIPagedList)
+                : View("TemplateGrid", itemsAsIPagedList);
     }
 
-    public ActionResult DocTemplateList(int? page, String Name = null)
+    public ActionResult DocTemplateList(int? page, int DepartmentID = 0)
     {
-        StaticPagedList<DocTemplateList> itemsAsIPagedList;
-        itemsAsIPagedList = TemplateGridList(page, Name);
+        //StaticPagedList<DocTemplateList> itemsAsIPagedList;
+        //itemsAsIPagedList = TemplateGridList(page, DepartmentID);
 
         return Request.IsAjaxRequest()
-                ? (ActionResult)PartialView("DocTemplateList", itemsAsIPagedList)
-                : View("DocTemplateList", itemsAsIPagedList);
+                ? (ActionResult)PartialView("DocTemplateList")
+                : View("DocTemplateList");
     }
-    public StaticPagedList<DocTemplateList> TemplateGridList(int? page, String Name = "")
+    public StaticPagedList<DocTemplateList> TemplateGridList(int? page, int DepartmentID = 0)
     {
         OfficeDbContext _db = new OfficeDbContext();
         var pageIndex = (page ?? 1);
@@ -111,10 +111,10 @@ namespace office.Controllers
             DocTemplateList clist = new  DocTemplateList();
 
         IEnumerable<DocTemplateList> result = _db.DocTemplateLists.SqlQuery(@"exec getDocumentTemplate
-                   @pPageIndex, @pPageSize,@Name",
+                   @pPageIndex, @pPageSize,@DepartmentID",
            new SqlParameter("@pPageIndex", pageIndex),
            new SqlParameter("@pPageSize", pageSize),
-           new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+           new SqlParameter("@DepartmentID",  DepartmentID)
            ).ToList<DocTemplateList>();
 
         totalCount = 0;
@@ -256,9 +256,27 @@ namespace office.Controllers
                    ).ToList<ProjectsDataWithValue>();
                 
                 data = result.FirstOrDefault();
+
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment;filename=Grid.doc");
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.ms-word";
+                Response.Output.Write(data.TemplateDescription);
+                //Response.TransmitFile(Server.MapPath("~/images/Grid.doc"));
+                Response.Flush();
+                Response.End();
+
+                //Response.ContentType = "image/jpeg";
+                //Response.AppendHeader("Content-Disposition", "attachment; filename=SailBig.jpg");
+                //Response.TransmitFile(Server.MapPath("~/images/sailbig.jpg"));
+                //Response.End();
             }
             catch (Exception e) { }
-            return View("ReplacePlaceholderByDataTemplate", data);
+            return Request.IsAjaxRequest()
+                     ? (ActionResult)PartialView("ReplacePlaceholderByDataTemplate", data)
+                     : View("ReplacePlaceholderByDataTemplate", data);
+          //  return View("ReplacePlaceholderByDataTemplate", data);
         }
         
         [HttpPost]
@@ -320,9 +338,38 @@ namespace office.Controllers
                     ? (ActionResult)PartialView("DepartmentType", result)
                     : View("DepartmentType", result);
         }
+        public ActionResult GetDevelopersData(int? id, int val = 0)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            DepartmentType data = new DepartmentType();
+            IEnumerable<DeveloperContactPerson> result = _db.DeveloperContactPersons.SqlQuery(@"exec GetProjectAllDetails
+              @ProjectId,@val",
+               new SqlParameter("@ProjectId", id),
+               new SqlParameter("@val", val)
+               ).ToList<DeveloperContactPerson>();
 
-        #region test
-        public ActionResult Test( )
+            return Request.IsAjaxRequest()
+                   ? (ActionResult)PartialView("DevelopersData", result)
+                   : View("DevelopersData", result);
+        } 
+        [ValidateInput(false)]
+        public ActionResult Export(HtmlTemplate HtmlText)
+        {
+             
+            Response.Clear();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment;filename=Grid.doc");
+            Response.Charset = "";
+            Response.ContentType = "application/vnd.ms-word";
+            Response.Output.Write(HtmlText.Description);
+            Response.Flush();
+            Response.End();
+            return Request.IsAjaxRequest()
+                 ? (ActionResult)PartialView()
+                 : View();
+        }
+            #region test
+            public ActionResult Test( )
         {
            
             return Request.IsAjaxRequest()

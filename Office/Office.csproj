@@ -1070,6 +1070,7 @@
     <Content Include="img\landing\perspective.png" />
     <Content Include="img\landing\shattered.png" />
     <Content Include="img\landing\word_map.png" />
+    <Content Include="img\loader\loader.gif" />
     <Content Include="img\meteor_logo.png" />
     <Content Include="img\mvc_logo.png" />
     <Content Include="img\off_canvas.jpg" />
@@ -1941,6 +1942,8 @@
     <Content Include="Views\Template\Test.cshtml" />
     <Content Include="Views\Template\DataTemplateList.cshtml" />
     <Content Include="Views\Template\DepartmentType.cshtml" />
+    <Content Include="Views\Template\TemplateGrid.cshtml" />
+    <Content Include="Views\Template\DevelopersData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

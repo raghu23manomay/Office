@@ -1,97 +1,37 @@
 ﻿
-@model IEnumerable<office.Models.DocTemplateList>
+ 
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
 <script src="~/js/jquery-2.1.1.js"></script>
-
-
+ 
 <div class="row">
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-content mailbox-content">
                 <div class="file-manager">
                     <a class="btn btn-block btn-primary compose-mail" href="/Template/Compose">Create Template</a>
-                    <div class="space-25"></div>
-                   
+                    <div class="space-25"></div> 
                     <h5>Categories</h5>
-                    <div id="departments">
-
-
-                        
-                    </div>
-                    
+                    <div id="departments"> 
+                    </div> 
                     <div class="clearfix"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-9 animated fadeInRight">
-        <div class="mail-box-header">
-            
-            <h2>
-                Template
-            </h2>
-             
-        </div>
-        <div class="mail-box">
+    <div class="col-lg-9 animated fadeInRight" id="mgrid">
+      
 
-
-            
-            <div class="mail-attachment">
-                 
-                <div class="attachment">
-                    @foreach (var item in Model)
-                    {
-                        <div class="file-box">
-                            <div class="file">
-                                <a href="#">
-                                    <span class="corner"></span>
-                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                        <div class="icon">
-                                            <i class="fa fa-file">
-                                            </i>
-                                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                                <li><a href="Compose?id=@item.TemplateID">Edit Template</a></li>
-                                                <li><a href="contacts.html">View Template</a></li>
-                                                <li><a href="ComposeHtml?id=@item.TemplateID">Generate Document</a></li>
-
-                                            </ul>
-                                        </div>  
-                                    </a> 
-                                    <div class="file-name">
-                                        @item.TemplateName 
-                                    </div>
-                                </a>
-                            </div> 
-                        </div>
-                    } 
-                        <div class="clearfix"></div>
-                    </div>
-            </div>
-            
-            <div class="clearfix"></div> 
-
-        </div>
     </div>
 </div>
  
-<div class="row">
 
-    <div class="pnl-pagination m-b-md1">
-        <div class="pull-right">
-
-            @Html.PagedListPager((IPagedList)Model, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
-            @if (Model.Count() == 0)
-            {
-                <ul class="pagination pull-right"></ul>
-            }
-        </div>
-    </div>
-</div>
 
 <script>
+    
     $(document).ready(function () {
+
 
         $.ajax({
             url: "@Url.Action("DepartmentType", "Template")",
@@ -107,22 +47,40 @@
             error: function (error) {
             }
         });
+         $.ajax({
+            url: "@Url.Action("LoadDocTemplateGrid", "Template")",
+            data:
+            {
+                page: 1,
+                DepartmentID: 0  
+            },
+             dataType: "text",
+             type: "POST",
+             async: true,
+             success: function (data) {
+                 debugger;
+                 $('#mgrid').html(data);
+             },
+             error: function (data) {
+             },
+             complete: function () {
+             }
+        });
 
         $('#mgrid .pagination li a').on('click', function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             $('.loader').show();
             var temp = $(this).attr('href');
-
-
+            
             var pageid = temp.replace('/?page=', '');
 
             $.ajax({
-                url: "@Url.Action("DocTemplateList", "Template")",
+                url: "@Url.Action("LoadDocTemplateGrid", "Template")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     page: pageid,
-                    CName: $('#CustomerFilter').val(),
+                    DepartmentID: 0 // $('#CustomerFilter').val(),
                 }),
                 dataType: "text",
                 type: "POST",
@@ -142,4 +100,6 @@
       
     });
 
+
+   
 </script>

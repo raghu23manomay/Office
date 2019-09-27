@@ -91,7 +91,21 @@ namespace office.Models
         public string FieldName { get; set; } 
          
     }
+    public class DeveloperContactPerson
+    {
+        [Key]
+        public int DeveloperContactPersonId { get; set; }
+        public String DeveloperContactPersonName  { get; set; }
 
+    }
+    public class HtmlTemplate
+    {
+        [Key]
+        public int TemplateID { get; set; } 
+        [AllowHtml]
+        public string Description { get; set; }
+       
+    }
 }
 
 

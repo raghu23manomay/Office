@@ -1,0 +1,60 @@
+﻿@model IEnumerable<office.Models.DocTemplateList>
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+@{
+    Layout = null;
+}
+
+<div class="mail-box-header">
+    <h2>
+        Template
+    </h2>
+</div>
+<div class="mail-box Grid">
+    <div class="mail-attachment">
+        <div class="attachment">
+            @foreach (var item in Model)
+            {
+                <div class="file-box">
+                    <div class="file">
+                        <a href="#">
+                            <span class="corner"></span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <div class="icon">
+                                    <i class="fa fa-file">
+                                    </i>
+                                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                        <li><a href="Compose?id=@item.TemplateID">Edit Template</a></li>
+                                        @*<li><a href="ComposeHtml?id=@item.TemplateID">Generate Document</a></li>*@
+                                        <li><a href="GenerateDocument?id=@item.TemplateID">Generate Document</a></li>
+                                        
+                                    </ul>
+                                </div>
+                            </a>
+                            <div class="file-name">
+                                @item.TemplateName
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div  >
+
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+                @if (Model.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>

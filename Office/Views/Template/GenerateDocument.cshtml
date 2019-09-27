@@ -12,7 +12,7 @@
         <div class="gray-bg"> 
             <div class=""> 
                 <div class="row">
-                    <div class="container"> 
+                    <div class="container" id="TemplateData"> 
                         <div class="col-md-3"> 
                             <div class="timeline-row post-even" style="height: 555px;"> 
                                 <div class="ibox" style="height: 755px;">
@@ -53,7 +53,7 @@
 <script>  
     $(document).ready(function () {   
        
-            var TemplateID=10
+            var TemplateID=1
              $.ajax({
                 url: "@Url.Action("GetProjectData", "Template")",
                 data:
@@ -86,7 +86,11 @@
                 error: function (error) { 
                     eval(error);
                 }
-            }); 
+        });  
+
+        
+     
+
         
     });  
 </script>

@@ -8,6 +8,7 @@
 
 @{
     ViewBag.Title = "Project";
+
     Layout = null;
 }
 
@@ -27,50 +28,54 @@
 @Html.HiddenFor(a => a.Duration, new { @id = "Duration" })
 
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title" style="display:grid;">
 
-                <div class="row col-md-8">
+                <div class="row col-md-5">
                     <input id="DataTemplateName" type="text" placeholder="DataTemplate Name" value="@Model.DataTemplateName" class="form-control">
                 </div>
             </div>
             <div class="ibox-content">
                 <div class="col-md-12">
                     <div class="media-body">
-                        <strong>@Model.Name</strong> @Model.ShortName <br>
+                        <strong>@Model.Name</strong> @Model.ShortName  
                         <small class="text-muted">  @Model.Road @Model.Goan  @Model.Taluka    @Model.District </small>
                     </div>
                 </div>
             </div>
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <div class="ibox-title" style="display:grid;">
+                    <div class="ibox-title" style="display:table-row;">
                         <label> Developers</label>
 
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-12">
                         <table class="table" id="developerlist">
-                            <thead>
-
-                            </thead>
+                            
                             <tbody>
                                 @foreach (var item in Model.DeveloperDatalist)
                                 {
                                     <tr>
                                         <td>
-                                            <div class="" style="margin-left: 0!important">
-                                                <div>
+                                            <div class="checkbox" style="margin-left: 0!important">
 
-                                                    @if (item.isDeveloperApplied == true)
-                                                    {
-                                                        <input type="checkbox" class="i-checks chkdev" checked="checked" id="@item.DeveloperId">
-                                                    }
-                                                    else
-                                                    {
-                                                        <input type="checkbox" class="i-checks unchkdev" name="sDev" id="@item.DeveloperId">
-                                                    }
-                                                </div>
+
+                                                @if (item.isDeveloperApplied == true)
+                                                {
+                                                    <input type="checkbox" class="i-checks chkdev" divName="checkboxDiv_@item.DeveloperId" checked="checked" id="@item.DeveloperId">
+                                                    <div id="checkboxDiv_@item.DeveloperId" class="checkboxDiv_@item.DeveloperId">
+
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox"  class="i-checks chkdev" name="sDev" id="@item.DeveloperId">
+                                                    <div id="checkboxDiv_@item.DeveloperId" class="checkboxDiv">
+
+                                                    </div>
+                                                }
+
 
                                             </div>
                                         </td>
@@ -88,11 +93,11 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <div class="ibox-title" style="display:grid;">
+                <div class="ibox-title" style="display:table-row;">
                     <label> Coordinator</label>
 
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <table class="table" id="Coordinatorlist">
                         <thead>
 
@@ -134,11 +139,11 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <div class="ibox-title" style="display:grid;">
+                <div class="ibox-title" style="display:table-row;">
                     <label> Assistant List</label>
 
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <table class="table" id="assistantlist">
                         <thead>
 
@@ -174,6 +179,7 @@
                     <div class="pull-right">
                         <button class="btn btn-primary" id="btnGenerateDataTemplate" type="button">Create Data Templare</button>
                         <button class="btn btn-primary" id="btnGenerateDocument" type="button">Generate Document</button>
+                        @*<a class="btn btn-primary"  href="ReplacePlaceholderByDataTemplate?id=1&&DTTemplateID=1">  print</a>*@
                     </div>
                 </div>
             </div>
@@ -181,11 +187,16 @@
     </div>
 </div> 
 <script>
-
+    function getSearchParams(k) {
+        var p = {};
+        location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (s, k, v) { p[k] = v })
+        return k ? p[k] : p;
+    }
     $(document).ready(function () {
          $('.DTTemplateID').on("click", function (e) {
-             debugger;
-             var TemplateID = 8
+              
+
+             var TemplateID = getSearchParams("id");
              var DTTemplateID = this.id;
             $.ajax({
                 url: "@Url.Action("GetProjectData", "Template")",
@@ -205,12 +216,14 @@
             });
         });
         $('#btnGenerateDocument').on("click", function (e) {
+            
+            var TemplateID = getSearchParams("id");
             $.ajax({
                 url: "@Url.Action("ReplacePlaceholderByDataTemplate", "Template")",
                 data:
                 {
-                    TemplateID: 1,
-                    DtTemplateID: 5,
+                    TemplateID: TemplateID,
+                    DtTemplateID: 1,
                 },
                 dataType: "text",
 
@@ -259,6 +272,30 @@
 
         });
 
+        //$('.chkdev').on('click', function () {
+            
+           
+        //    $.ajax({
+        //        type: 'POST',
+        //        dataType: 'text',
+        //        url: '/Template/GetDevelopersData',
+        //        data: {
+        //            id: 8,
+        //            val: 2
+        //        },
+        //        success: function (data) {
+        //            debugger;
+        //          //  $(this).closest("div").html(data);
+
+        //            $(".checkboxDiv").html(data);
+        //        },
+        //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //            alert(errorThrown);
+        //        }
+
+        //    });
+
+        //});
     });
 
 </script>
