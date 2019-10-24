@@ -14,38 +14,43 @@
 <div class="mail-box Grid">
     <div class="mail-attachment">
         <div class="attachment">
-            @foreach (var item in Model)
-            {
-                <div class="file-box">
-                    <div class="file">
-                        <a href="#">
-                            <span class="corner"></span>
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <div class="icon">
-                                    <i class="fa fa-file">
-                                    </i>
-                                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                        <li><a href="Compose?id=@item.TemplateID">Edit Template</a></li>
-                                        @*<li><a href="ComposeHtml?id=@item.TemplateID">Generate Document</a></li>*@
-                                        <li><a href="GenerateDocument?id=@item.TemplateID">Generate Document</a></li>
-                                        
-                                    </ul>
-                                </div>
-                            </a>
-                            <div class="file-name">
-                                @item.TemplateName
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
+            <div class="table-responsive">
+                <table class="table table-striped" id="mgrid">
+                    <thead>
+                        <tr>  
+                            <th>Name </th>  
+                            <th>Date</th>
+                            <th class="pull-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+
+                        <tr>
+
+
+                            <td> @item.TemplateName</td>
+                            <td>@item.Createddate</td>
+                            <td>
+                                <button type="button" class="pull-right lnkGenerate buttonLink" aa="@item.TemplateID"><i class="fa fa-arrow-circle-o-up text-navy"></i></button>
+
+                                <a href="Compose?id=@item.TemplateID" class="pull-right"><i class="fa fa-edit text-navy"></i></a>
+                            </td>
+
+
+                        </tr>  
+                        }
+                    </tbody>
+                </table>
+            </div>
             <div class="clearfix"></div>
         </div>
     </div>
 
     <div class="clearfix"></div>
-    <div  >
-
+    <div>
         <div class="pnl-pagination m-b-md1">
             <div class="pull-right">
 
@@ -58,3 +63,29 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(".lnkGenerate").on('click', function (e) {
+        
+          var TemplateId=  $(this).attr("aa");
+              $.ajax({
+            url: "@Url.Action("GenerateDocument", "Template")",
+            data:
+            {
+                id: TemplateId 
+            },
+             dataType: "text",
+             type: "POST",
+             async: true,
+                  success: function (data) {
+                    
+                      $('#mdlGeneratemodel').html(data);
+                      $('#mdlGenerate').show();
+             },
+             error: function (data) {
+             },
+             complete: function () {
+             }
+        });
+        });
+</script>

@@ -3,34 +3,34 @@
 @{
     Layout = null;
 }
-<div class="mail-box">
-    <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
-        @try
-        {
-            if (Model != null)
-            {<hidden id="hdnDescription" value="@Model.TemplateDescription"></hidden>
-                @(new HtmlString(@Model.TemplateDescription))
-            }
-        }
-        catch { }
-    </div>
-    <div class="mail-body text-right tooltip-demo">
-        <button type="button" class="btn btn-sm btn-primary" id="Print">Print  <i class="fa fa-print " aria-hidden="true"></i></button>
 
+<div class="wrapper">
+    
+    <div class="gray-bg">
+        <div class="mail-box">
+            <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+                @try
+                {
+                    if (Model != null)
+                    {
+                        <hidden id="hdnDescription" value="@Model.TemplateDescription"></hidden>
+                        @(new HtmlString(@Model.TemplateDescription))
+                    }
+                }
+                catch { }
+            </div>
+            <div class="mail-body text-right tooltip-demo">
+                <button type="button" class="btn btn-sm btn-primary" id="Print">Print  <i class="fa fa-print " aria-hidden="true"></i></button>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
     </div>
-    <div class="clearfix"></div>
 </div>
-@*@Html.ActionLink("Export", "Template",
-       new{ Description =Model.TemplateDescription
-       } 
-       , null)*@
-@*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>*@
-<link href="~/css/style.css" rel="stylesheet" />
-<script src="~/js/jquery-2.1.1.js"></script>
+        <link href="~/css/style.css" rel="stylesheet" />
+        <script src="~/js/jquery-2.1.1.js"></script>
 
-<script>
+        <script>
         $(document).ready(function () {
         $('#Print').on("click", function (e) {
             debugger;
@@ -49,7 +49,7 @@
 
                 },
                 error: function (error) {
-                    debugger;
+                   
                     eval(error);
                 }
             });
@@ -58,4 +58,4 @@
         });
 
 
-</script>
+        </script>

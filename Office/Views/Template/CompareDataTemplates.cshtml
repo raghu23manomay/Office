@@ -1,0 +1,22 @@
+﻿
+@model  IEnumerable<office.Models.ProjectsDataWithValue>
+@{
+    Layout = null;
+}
+<div class="table-responsive">
+
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)"> 
+
+                        <hidden id="hdnDescription" value="@item.TemplateDescription"></hidden>
+                        @(new HtmlString(item.TemplateDescription))
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
