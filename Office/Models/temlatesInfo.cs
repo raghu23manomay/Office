@@ -33,7 +33,8 @@ namespace office.Models
         [Key]
         
         public String PlaceHolderName { get; set; }
-        
+        public String TableName { get; set; }
+
     }
     
         public class DepartmentType
@@ -51,7 +52,9 @@ namespace office.Models
         [AllowHtml]
         [Display(Name = "Message")]
         public string Description { get; set; }
-        public int TemplateTypeid { get; set; }
+        public int TemplateTypeid { get; set; } 
+        public string Createddate { get; set; }
+        public string DepartmentName { get; set; }
         public int? TotalRows { get; set; }
     }
     public class DocCreationTemplate
@@ -91,13 +94,7 @@ namespace office.Models
         public string FieldName { get; set; } 
          
     }
-    public class DeveloperContactPerson
-    {
-        [Key]
-        public int DeveloperContactPersonId { get; set; }
-        public String DeveloperContactPersonName  { get; set; }
-
-    }
+ 
     public class HtmlTemplate
     {
         [Key]
@@ -105,6 +102,14 @@ namespace office.Models
         [AllowHtml]
         public string Description { get; set; }
        
+    }
+    public class DocumentList
+    {
+        [Key]
+        public int TemplateID { get; set; }
+        public string DocumentName { get; set; }   
+        public string Path { get; set; }
+        public int? TotalRows { get; set; }
     }
 }
 

@@ -1,0 +1,59 @@
+﻿
+@model  IEnumerable<office.Models.ProjectsDataWithValue>
+@{
+    Layout = null;
+}
+
+<div class="wrapper animated fadeInRight">
+    <div class="row">
+       
+         
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>@item.DataTemplateName</h5>
+                        <hidden id="hdnTemplateID1"  class="hdnTemplateID1" value="@item.TemplateID"></hidden>
+                        <hidden id="hdnDTTemplateID1" class="hdnDTTemplateID1" value="@item.DTTemplateID"></hidden>
+                    </div>
+                    <div class="ibox-content">
+                        <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <hidden id="hdnDescription" value="@item.TemplateDescription"></hidden>
+                            @(new HtmlString(item.TemplateDescription))
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary center-block btnCompareGenerate" type="button"><i class="fa fa-arrow-right btnCompareGenerate"></i> Continue </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/js/jquery-2.1.1.js"></script>
+<script>
+    $('.btnCompareGenerate').on("click", function (e) {
+        debugger;
+        var TemplateID = $('.hdnTemplateID1').val();
+        var DtTemplateID = $('.hdnDTTemplateID1').val();
+         
+        $.ajax({
+            url: "@Url.Action("ReplacePlaceholderByDataTemplate", "Template")",
+            data:
+            {
+                TemplateID: TemplateID,
+                DtTemplateID: DtTemplateID,
+            },
+            dataType: "text",
+
+            success: function (data) {
+
+                $('#TemplateData').html(data);
+            },
+            error: function (error) {
+
+            }
+        });
+    });
+</script>

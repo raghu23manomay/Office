@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Calibration.Models;
 using office.Models;
 using PagedList;
+using Spire.Doc;
+using Spire.Doc.Documents;
+using Xceed.Words.NET;
 
 namespace office.Controllers
 {
@@ -62,7 +66,8 @@ namespace office.Controllers
                     ? (ActionResult)PartialView("Placeholder", result)
                     : View("Placeholder", result);
         }
- 
+       
+
         public ActionResult SaveTemplate(temlatesInfo t  )
         {
             OfficeDbContext _db = new OfficeDbContext();   
@@ -78,7 +83,7 @@ namespace office.Controllers
 
         );
 
-            return Json("Success"); 
+            return Json("Success");  
         }
    
 
@@ -94,10 +99,7 @@ namespace office.Controllers
     }
 
     public ActionResult DocTemplateList(int? page, int DepartmentID = 0)
-    {
-        //StaticPagedList<DocTemplateList> itemsAsIPagedList;
-        //itemsAsIPagedList = TemplateGridList(page, DepartmentID);
-
+    { 
         return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("DocTemplateList")
                 : View("DocTemplateList");
@@ -106,7 +108,7 @@ namespace office.Controllers
     {
         OfficeDbContext _db = new OfficeDbContext();
         var pageIndex = (page ?? 1);
-        const int pageSize = 10;
+        const int pageSize =10;
         int totalCount = 10;
             DocTemplateList clist = new  DocTemplateList();
 
@@ -126,12 +128,54 @@ namespace office.Controllers
         return itemsAsIPagedList;
 
     }
-   #endregion
+        #endregion
+        #region DocumentGeneratedList
+        public ActionResult LoadDocumentGrid(int? page, int DepartmentID = 0)
+        {
+            StaticPagedList<DocumentList> itemsAsIPagedList;
+            itemsAsIPagedList = DocumentGridList(page, DepartmentID);
 
-        public ActionResult GenerateDocument(int TemplateId = 0)
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("DocumentGrid", itemsAsIPagedList)
+                    : View("DocumentGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult DocumentList(int? page, int DepartmentID = 0)
+        {
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("DocumentList")
+                    : View("DocumentList");
+        }
+        public StaticPagedList<DocumentList> DocumentGridList(int? page, int DepartmentID = 0)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            DocumentList clist = new DocumentList();
+
+            IEnumerable<DocumentList> result = _db.DocumentLists.SqlQuery(@"exec getDocumentList
+                   @pPageIndex, @pPageSize,@DepartmentID",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@DepartmentID", DepartmentID)
+               ).ToList<DocumentList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<DocumentList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+
+        }
+        #endregion
+        public ActionResult GenerateDocument(int id = 0)  
         {
             DocTemplateList data = new DocTemplateList();
-               
+            data.TemplateID = id;
+            ViewData["TemplateID"] = id;
             return Request.IsAjaxRequest()
               ? (ActionResult)PartialView("GenerateDocument", data)
               : View("GenerateDocument", data);
@@ -158,8 +202,9 @@ namespace office.Controllers
         }
 
         #region Document Data Template
-        public ActionResult GetProjectData(int? id,int DTTemplateID=0)
+        public ActionResult GetProjectData(int? TemplateID, int DTTemplateID=0,int ProjectID=1)
         {
+
             ProjectsData data = new ProjectsData();
             try
             {
@@ -168,14 +213,14 @@ namespace office.Controllers
                     OfficeDbContext _db = new OfficeDbContext();
                     var result = _db.ProjectsData.SqlQuery(@"exec GetProjectDetailsForTemplate
                @ProjectId",
-                       new SqlParameter("@ProjectId", id)
+                       new SqlParameter("@ProjectId", ProjectID)
                        ).ToList<ProjectsData>();
 
                     data = result.FirstOrDefault();
-
+                  
                     IEnumerable<DeveloperData> result2 = _db.DeveloperData.SqlQuery(@"exec GetProjectDetailsForTemplate
                  @ProjectId,@Tno",
-                        new SqlParameter("@ProjectId", id),
+                        new SqlParameter("@ProjectId", ProjectID),
                          new SqlParameter("@Tno", 2)
                           ).ToList<DeveloperData>();
 
@@ -183,7 +228,7 @@ namespace office.Controllers
 
                     IEnumerable<CoordinatorDetailsData> result3 = _db.CoordinatorDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
                  @ProjectId,@Tno",
-                    new SqlParameter("@ProjectId", id),
+                    new SqlParameter("@ProjectId", ProjectID),
                      new SqlParameter("@Tno", 3)
                       ).ToList<CoordinatorDetailsData>();
 
@@ -193,18 +238,24 @@ namespace office.Controllers
 
                     IEnumerable<AssistantDetailsData> result4 = _db.AssistantDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
                  @ProjectId,@Tno",
-                        new SqlParameter("@ProjectId", id),
+                        new SqlParameter("@ProjectId", ProjectID),
                          new SqlParameter("@Tno", 4)
                           ).ToList<AssistantDetailsData>();
                     data.AssistantDetailsData = result4;
-
+                    IEnumerable<DeveloperSideContactPerson> result5 = _db.DeveloperSideContactPersons.SqlQuery(@"exec GetProjectDetailsForTemplate
+                 @ProjectId,@Tno,@DTTemplateID",
+                     new SqlParameter("@ProjectId", ProjectID),
+                     new SqlParameter("@Tno", 5),
+                     new SqlParameter("@DTTemplateID", DTTemplateID)
+                        ).ToList<DeveloperSideContactPerson>();
+                    data.DeveloperSideContactPersons = result5;
                 }
                 else
                 {
                     OfficeDbContext _db = new OfficeDbContext();
                     var result = _db.ProjectsData.SqlQuery(@"exec GetProjectDetailsForTemplate
                @ProjectId,@Tno,@DTTemplateID",
-                       new SqlParameter("@ProjectId", id),
+                       new SqlParameter("@ProjectId", ProjectID),
                        new SqlParameter("@Tno", 1),
                        new SqlParameter("@DTTemplateID", DTTemplateID)
                        ).ToList<ProjectsData>();
@@ -213,7 +264,7 @@ namespace office.Controllers
 
                     IEnumerable<DeveloperData> result2 = _db.DeveloperData.SqlQuery(@"exec GetProjectDetailsForTemplate
                 @ProjectId,@Tno,@DTTemplateID",
-                       new SqlParameter("@ProjectId", id),
+                       new SqlParameter("@ProjectId", ProjectID),
                        new SqlParameter("@Tno", 2),
                        new SqlParameter("@DTTemplateID", DTTemplateID)
                        ).ToList<DeveloperData>();
@@ -222,7 +273,7 @@ namespace office.Controllers
 
                     IEnumerable<CoordinatorDetailsData> result3 = _db.CoordinatorDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
                  @ProjectId,@Tno,@DTTemplateID",
-                       new SqlParameter("@ProjectId", id),
+                       new SqlParameter("@ProjectId", ProjectID),
                        new SqlParameter("@Tno", 3),
                        new SqlParameter("@DTTemplateID", DTTemplateID)
                       ).ToList<CoordinatorDetailsData>();
@@ -233,12 +284,30 @@ namespace office.Controllers
 
                     IEnumerable<AssistantDetailsData> result4 = _db.AssistantDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
                  @ProjectId,@Tno,@DTTemplateID",
-                       new SqlParameter("@ProjectId", id),
+                       new SqlParameter("@ProjectId", ProjectID),
                        new SqlParameter("@Tno", 4),
                        new SqlParameter("@DTTemplateID", DTTemplateID)
                           ).ToList<AssistantDetailsData>();
                     data.AssistantDetailsData = result4;
+
+                     
+                    IEnumerable<DeveloperSideContactPerson> result5 = _db.DeveloperSideContactPersons.SqlQuery(@"exec GetProjectDetailsForTemplate
+                 @ProjectId,@Tno,@DTTemplateID",
+                     new SqlParameter("@ProjectId", ProjectID),
+                     new SqlParameter("@Tno", 5),
+                     new SqlParameter("@DTTemplateID", DTTemplateID)
+                        ).ToList<DeveloperSideContactPerson>();
+                    data.DeveloperSideContactPersons = result5;
+
+                    IEnumerable<OfficeSideContactPerson> result6 = _db.OfficeSideContactPersons.SqlQuery(@"exec GetProjectDetailsForTemplate
+                 @ProjectId,@Tno,@DTTemplateID",
+                    new SqlParameter("@ProjectId", ProjectID),
+                    new SqlParameter("@Tno", 5),
+                    new SqlParameter("@DTTemplateID", DTTemplateID)
+                       ).ToList<OfficeSideContactPerson>();
+                    data.OfficeSideContactPersons = result6;
                 }
+                data.TemplateID = TemplateID;
             }
             catch (Exception e) { }
             return View("ProjectData", data);
@@ -259,11 +328,30 @@ namespace office.Controllers
 
                 Response.Clear();
                 Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment;filename=Grid.doc");
+                Response.AddHeader("content-disposition", "attachment;filename=file1.docx");
                 Response.Charset = "";
                 Response.ContentType = "application/vnd.ms-word";
                 Response.Output.Write(data.TemplateDescription);
-                //Response.TransmitFile(Server.MapPath("~/images/Grid.doc"));
+
+                string fileName = Server.MapPath("~/Document/"+ TemplateID + "/file-"+TemplateID+"-"+DtTemplateID+".docx");
+
+                Document doc = new Document();
+                doc.AddSection();
+
+                Paragraph para = doc.Sections[0].AddParagraph();
+
+                para.AppendHTML(data.TemplateDescription);
+
+                doc.SaveToFile(fileName, FileFormat.Docx2013);
+                //var doc = DocX.Create(fileName);
+
+                //doc.InsertParagraph("Hello Word");
+                //doc.InsertParagraph(data.TemplateDescription);
+
+                //doc.Save();
+
+                Process.Start("WINWORD.EXE", fileName);
+                Response.TransmitFile(Server.MapPath("~/Document/file1.docx"));
                 Response.Flush();
                 Response.End();
 
@@ -278,7 +366,27 @@ namespace office.Controllers
                      : View("ReplacePlaceholderByDataTemplate", data);
           //  return View("ReplacePlaceholderByDataTemplate", data);
         }
-        
+
+        public ActionResult CompareDataTemplates(int TemplateID = 1, String DTTemplateIDList = "",int  ProjectID=0)
+        { 
+               
+                OfficeDbContext _db = new OfficeDbContext();
+            try
+            {
+                IEnumerable<ProjectsDataWithValue> result = _db.ProjectsDataWithValue.SqlQuery(@"exec uspCompareTemplate
+                 @TemplateID,@DtTemplateIDList",
+                   new SqlParameter("@TemplateID", TemplateID),
+                   new SqlParameter("@DtTemplateIDList", DTTemplateIDList)
+                      ).ToList<ProjectsDataWithValue>();
+                return View("CompareDataTemplates", result);
+            }
+            catch (Exception e) { }
+            
+            return Request.IsAjaxRequest()
+                     ? (ActionResult)PartialView("CompareDataTemplates")
+                     : View("CompareDataTemplates");
+             
+        }
         [HttpPost]
          public ActionResult GenerateDataTemplate(ProjectsTemplateData sp )
         {
@@ -289,12 +397,16 @@ namespace office.Controllers
 
 
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_GenerateDataTemplate
-                @DTTemplateID,@DataTemplateName,@ProjectID,@DeveloperID,@CoordinatorID",
+                @DTTemplateID,@DataTemplateName,@ProjectID,@DeveloperID,@CoordinatorID,@ConsultantId,@contractorID,@AssistanceID",
                 new SqlParameter("@DTTemplateID", sp.DTTemplateID),
                 new SqlParameter("@DataTemplateName", sp.DataTemplateName),
                 new SqlParameter("@ProjectID", sp.ProjectID),
                 new SqlParameter("@DeveloperID", sp.DeveloperID),
-                new SqlParameter("@CoordinatorID", sp.CoordinatorID)
+                new SqlParameter("@CoordinatorID", sp.CoordinatorID), 
+                new SqlParameter("@ConsultantId", sp.ConsultantId),
+                new SqlParameter("@contractorID", sp.contractorID),
+                new SqlParameter("@AssistanceID", sp.AssistanceID)
+             
 
 
             );
@@ -338,20 +450,20 @@ namespace office.Controllers
                     ? (ActionResult)PartialView("DepartmentType", result)
                     : View("DepartmentType", result);
         }
-        public ActionResult GetDevelopersData(int? id, int val = 0)
-        {
-            OfficeDbContext _db = new OfficeDbContext();
-            DepartmentType data = new DepartmentType();
-            IEnumerable<DeveloperContactPerson> result = _db.DeveloperContactPersons.SqlQuery(@"exec GetProjectAllDetails
-              @ProjectId,@val",
-               new SqlParameter("@ProjectId", id),
-               new SqlParameter("@val", val)
-               ).ToList<DeveloperContactPerson>();
+        //public ActionResult GetDevelopersData(int? id, int val = 0)
+        //{
+        //    OfficeDbContext _db = new OfficeDbContext();
+        //    DepartmentType data = new DepartmentType();
+        //    IEnumerable<DeveloperSideContactPerson> result = _db.DeveloperSideContactPersons.SqlQuery(@"exec GetProjectAllDetails
+        //      @ProjectId,@val",
+        //       new SqlParameter("@ProjectId", id),
+        //       new SqlParameter("@val", val)
+        //       ).ToList<DeveloperSideContactPerson>();
 
-            return Request.IsAjaxRequest()
-                   ? (ActionResult)PartialView("DevelopersData", result)
-                   : View("DevelopersData", result);
-        } 
+        //    return Request.IsAjaxRequest()
+        //           ? (ActionResult)PartialView("DevelopersData", result)
+        //           : View("DevelopersData", result);
+        //} 
         [ValidateInput(false)]
         public ActionResult Export(HtmlTemplate HtmlText)
         {
@@ -406,5 +518,29 @@ namespace office.Controllers
               : View("DataTemplateList", result);
         }
         #endregion
+        [HttpPost]
+        public ActionResult SaveCustomField(int FieldID =0,String CustomFieldName = "" )
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+               
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveCustomField @Name",
+                  new SqlParameter("@Name", CustomFieldName)
+                 
+            );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex) 
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
     }
 }

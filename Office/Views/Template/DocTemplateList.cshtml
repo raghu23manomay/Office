@@ -27,17 +27,24 @@
 </div>
  
 
+<div id="mdlGenerate" class="modal fade in" data-backdrop="static" data-keyboard="false">
+     
+    <div class="modal-dialog" style="width:80%;height:600px;overflow:auto;" >
+       
+        <div class="modal-content" id="mdlGeneratemodel" >
 
+        </div>
+    </div>
+</div>
 <script>
     
     $(document).ready(function () {
-
 
         $.ajax({
             url: "@Url.Action("DepartmentType", "Template")",
             data:
             {
-                TemplateID: 1        
+                TemplateID: 1
             },
             dataType: "text",
 
@@ -47,59 +54,26 @@
             error: function (error) {
             }
         });
-         $.ajax({
+        $.ajax({
             url: "@Url.Action("LoadDocTemplateGrid", "Template")",
             data:
             {
                 page: 1,
-                DepartmentID: 0  
+                DepartmentID: 0
             },
-             dataType: "text",
-             type: "POST",
-             async: true,
-             success: function (data) {
-                 debugger;
-                 $('#mgrid').html(data);
-             },
-             error: function (data) {
-             },
-             complete: function () {
-             }
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#mgrid').html(data);
+            },
+            error: function (data) {
+            },
+            complete: function () {
+            }
         });
-
-        $('#mgrid .pagination li a').on('click', function (e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            $('.loader').show();
-            var temp = $(this).attr('href');
-            
-            var pageid = temp.replace('/?page=', '');
-
-            $.ajax({
-                url: "@Url.Action("LoadDocTemplateGrid", "Template")",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    page: pageid,
-                    DepartmentID: 0 // $('#CustomerFilter').val(),
-                }),
-                dataType: "text",
-                type: "POST",
-                async: true,
-                success: function (data) {
-                    $('#mgrid').html(data);
-
-                },
-                error: function (data) {
-                },
-                complete: function () {
-                }
-            });
-
-        });
-
-      
+       
     });
-
 
    
 </script>

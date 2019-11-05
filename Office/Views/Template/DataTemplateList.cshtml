@@ -1,20 +1,25 @@
-﻿  
+﻿
 @model  IEnumerable<office.Models.DataTemplateList>
 @{
     Layout = null;
 }
-<div class="table-responsive" >
+<div class="table-responsive">
     <table class="table scroll-x">
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td class="DTTemplateID" id="@item.DTTemplateID" name="@item.DTTemplateID" value="@item.DataTemplateName">
-                        @item.DataTemplateName
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="newsletter" class="i-checks chkTemplate" id="@item.DTTemplateID" value="@item.DTTemplateID">
+
+                </td> 
+                <td class="DTTemplateID" id="@item.DTTemplateID" name="@item.DTTemplateID" value="@item.DataTemplateName">
+                    @item.DataTemplateName
+                </td>
+            </tr>
             }
         </tbody>
     </table>
+   
 </div>
-
+<script src="~/js/jquery-2.1.1.js"></script>

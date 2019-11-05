@@ -8346,3 +8346,15 @@ body.md-skin {
 .control-label { 
     text-align: left!important;
 }
+
+.buttonLink {
+    background: none !important;
+    border: none;
+   
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}

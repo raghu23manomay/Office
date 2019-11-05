@@ -13,6 +13,7 @@ namespace office.Models
     {
         [Key]
         public int? ProjectID { get; set; }
+        public int? TemplateID { get; set; }
         public string Name { get; set; }
         public int?  DTTemplateID   { get; set; }
         public string DataTemplateName { get; set; }
@@ -26,13 +27,18 @@ namespace office.Models
         public  IEnumerable<DeveloperData> DeveloperDatalist { get; set; } 
         public IEnumerable<CoordinatorDetailsData> CoordinatorDetailsData { get; set; }
         public IEnumerable<AssistantDetailsData> AssistantDetailsData { get; set; }
+        public IEnumerable<DeveloperSideContactPerson> DeveloperSideContactPersons { get; set; }
+        public IEnumerable<OfficeSideContactPerson> OfficeSideContactPersons { get; set; }
+        
     }
     public class ProjectsDataWithValue
     {
         [Key]
+        public int? DTTemplateID { get; set; }
         public int? TemplateID { get; set; }
         public int? ProjectID { get; set; } 
-        public string TemplateName { get; set; } 
+        public string TemplateName { get; set; }
+        public string DataTemplateName { get; set; }
         public string TemplateDescription { get; set; }
     }
     public class DeveloperData
@@ -92,12 +98,28 @@ namespace office.Models
     public class ProjectsTemplateData
     {
         [Key]
-       
         public int? ProjectID { get; set; }
         public int? DeveloperID { get; set; } 
         public int? DeveloperDetailId { get; set; }
         public int? CoordinatorID { get; set; }
+        public int? ConsultantId { get; set; }
+        public int? contractorID { get; set; }
+        public int? AssistanceID { get; set; }
         public int? DTTemplateID { get; set; }
         public String DataTemplateName { get; set; }
+    }
+    public class DeveloperSideContactPerson
+    {
+        [Key] 
+        public int DeveloperContactPersonId { get; set; }
+        public string DeveloperContactPersonName { get; set; }
+        public bool isContactApplied { get; set; }
+    }
+    public class OfficeSideContactPerson
+    {
+        [Key]
+        public int OfficeContactPersonId { get; set; }
+        public string OfficeContactPersonName { get; set; }
+        public bool isContactApplied { get; set; }
     }
 }

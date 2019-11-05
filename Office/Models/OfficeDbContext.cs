@@ -20,6 +20,7 @@ namespace office.Models
         public DbSet<UserPermission> UserPermission { get; set; }
 
         public DbSet<DocTemplateList> DocTemplateLists { get; set; }
+        public DbSet<DocumentList> DocumentLists { get; set; }
         public DbSet<PerformaPlaceholders> PerformaPlaceholders { get; set; }
         public DbSet<DesignationList> DFList { get; set; }
         public DbSet<Designation> DesigList { get; set; }
@@ -75,7 +76,9 @@ namespace office.Models
         public DbSet<AssistantDetailsData> AssistantDetailsData { get; set; }
         public DbSet<DataTemplateList> DataTemplateLists { get; set; }
         public DbSet<DepartmentType> DepartmentTypes { get; set; }
-        public DbSet<DeveloperContactPerson> DeveloperContactPersons { get; set; }
+      
+        public DbSet<DeveloperSideContactPerson> DeveloperSideContactPersons { get; set; }
+        public DbSet<OfficeSideContactPerson> OfficeSideContactPersons { get; set; }
         
     }
     
