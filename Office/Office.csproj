@@ -220,6 +220,18 @@
     <Content Include="css\plugins\toastr\toastr.min.css" />
     <Content Include="css\plugins\touchspin\jquery.bootstrap-touchspin.min.css" />
     <Content Include="css\style.css" />
+    <Content Include="dist\jstree.js" />
+    <Content Include="dist\jstree.min.js" />
+    <Content Include="dist\themes\default-dark\32px.png" />
+    <Content Include="dist\themes\default-dark\40px.png" />
+    <Content Include="dist\themes\default-dark\style.css" />
+    <Content Include="dist\themes\default-dark\style.min.css" />
+    <Content Include="dist\themes\default-dark\throbber.gif" />
+    <Content Include="dist\themes\default\32px.png" />
+    <Content Include="dist\themes\default\40px.png" />
+    <Content Include="dist\themes\default\style.css" />
+    <Content Include="dist\themes\default\style.min.css" />
+    <Content Include="dist\themes\default\throbber.gif" />
     <Content Include="email_templates\action.html" />
     <Content Include="email_templates\alert.html" />
     <Content Include="email_templates\billing.html" />
@@ -1790,6 +1802,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MailBoxController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\RuleBookController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1800,6 +1813,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Master.cs" />
     <Compile Include="Models\ProdectDataTemplate.cs" />
+    <Compile Include="Models\RuleBook.cs" />
     <Compile Include="Models\temlatesInfo.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1944,6 +1958,11 @@
     <Content Include="Views\Template\DepartmentType.cshtml" />
     <Content Include="Views\Template\TemplateGrid.cshtml" />
     <Content Include="Views\Template\DevelopersData.cshtml" />
+    <Content Include="Views\RuleBook\RuleBook.cshtml" />
+    <Content Include="Views\RuleBook\Rules.cshtml" />
+    <Content Include="Views\RuleBook\DescriptionRule.cshtml" />
+    <Content Include="Views\RuleBook\SubRules.cshtml" />
+    <Content Include="Views\RuleBook\treedemo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1956,6 +1975,7 @@
     <Folder Include="js\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="js\tiny_mce\plugins\spellchecker\includes\" />
     <Folder Include="UploadFile\" />
+    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
