@@ -8,47 +8,42 @@
 <div class="modal-header">
     <button type="button" class="close">&times;</button>
     <h4 class="modal-title">Generate Document</h4>
-    
-        <div class="pull-right">
-            <button class="btn btn-primary" id="btnCompare" type="button"> Compare Template</button>
-
-        </div>
-     
+        
 </div>
 
 <div class="modal-body">
-    <div class="wrapper wrapper-content1">
-
-        <div>
+    <div class="wrapper wrapper-content1 ">
+         
 
             <div class="row" id="TemplateData">
                 <div class="col-md-3">
                     <div class="timeline-row post-even">
-                        <div class="ibox" style="height: 755px;">
-                            <div class="ibox-title">
-                                <h2 class="text-success no-margin headingsize18"> Data Template  </h2>
-                                <hidden id="hdnTemplateID" value="@Model.TemplateID"></hidden>
+                        <div class="ibox" >
+                            <div class="">
+                                <h5 class="text-success no-margin headingsize18">
+                                    Template
+                                    <button class="btn-white btn btn-xs" id="btnCompare" type="button"> Compare </button>
+                                </h5>
+                                
                             </div>
-                            <div class="ibox-content" id="DataTemplateList">
+                            <hidden id="hdnTemplateID" value="@Model.TemplateID"></hidden>
+                            <div class="" id="DataTemplateList">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="timeline-row post-even">
-                        <div class="ibox" style="height: 755px;">
-                            <div class="ibox-title">
-                                <h2 class="text-success no-margin headingsize18"> Placeholder Data  </h2>
-                            </div>
-                            <div class="ibox-content" id="ProjectGrid">
+                    <div class="timeline-row post-even ">
+                       
+ 
+                            <div class="" id="ProjectGrid">
                                 <div class="table-responsive">
                                 </div>
-                            </div>
-                        </div>
+                            </div> 
                     </div>
                 </div>
             </div>
-        </div>
+        
     </div>
     </div>
     <div class="loader"></div>
@@ -117,11 +112,7 @@
         });
         var selected;
         selected = chkArray.join(',');
-        //if (selected.length > 0) {
-        //    alert("You have selected " + selected);
-        //} else {
-        //    alert("Please at least check one of the checkbox");
-        //}
+        
          var TemplateID = @ViewData["TemplateID"];
          $.ajax({
                 url: "@Url.Action("CompareDataTemplates", "Template")",

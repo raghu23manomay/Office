@@ -99,10 +99,7 @@ namespace office.Controllers
     }
 
     public ActionResult DocTemplateList(int? page, int DepartmentID = 0)
-    {
-        //StaticPagedList<DocTemplateList> itemsAsIPagedList;
-        //itemsAsIPagedList = TemplateGridList(page, DepartmentID);
-
+    { 
         return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("DocTemplateList")
                 : View("DocTemplateList");
@@ -131,8 +128,49 @@ namespace office.Controllers
         return itemsAsIPagedList;
 
     }
-   #endregion
+        #endregion
+        #region DocumentGeneratedList
+        public ActionResult LoadDocumentGrid(int? page, int DepartmentID = 0)
+        {
+            StaticPagedList<DocumentList> itemsAsIPagedList;
+            itemsAsIPagedList = DocumentGridList(page, DepartmentID);
 
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("DocumentGrid", itemsAsIPagedList)
+                    : View("DocumentGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult DocumentList(int? page, int DepartmentID = 0)
+        {
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("DocumentList")
+                    : View("DocumentList");
+        }
+        public StaticPagedList<DocumentList> DocumentGridList(int? page, int DepartmentID = 0)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            DocumentList clist = new DocumentList();
+
+            IEnumerable<DocumentList> result = _db.DocumentLists.SqlQuery(@"exec getDocumentList
+                   @pPageIndex, @pPageSize,@DepartmentID",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@DepartmentID", DepartmentID)
+               ).ToList<DocumentList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<DocumentList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+
+        }
+        #endregion
         public ActionResult GenerateDocument(int id = 0)  
         {
             DocTemplateList data = new DocTemplateList();
@@ -295,7 +333,7 @@ namespace office.Controllers
                 Response.ContentType = "application/vnd.ms-word";
                 Response.Output.Write(data.TemplateDescription);
 
-                string fileName = Server.MapPath("~/Document/file1.docx");
+                string fileName = Server.MapPath("~/Document/"+ TemplateID + "/file-"+TemplateID+"-"+DtTemplateID+".docx");
 
                 Document doc = new Document();
                 doc.AddSection();
@@ -333,17 +371,21 @@ namespace office.Controllers
         { 
                
                 OfficeDbContext _db = new OfficeDbContext();
-                IEnumerable<ProjectsDataWithValue> result  = _db.ProjectsDataWithValue.SqlQuery(@"exec uspCompareTemplate
+            try
+            {
+                IEnumerable<ProjectsDataWithValue> result = _db.ProjectsDataWithValue.SqlQuery(@"exec uspCompareTemplate
                  @TemplateID,@DtTemplateIDList",
                    new SqlParameter("@TemplateID", TemplateID),
                    new SqlParameter("@DtTemplateIDList", DTTemplateIDList)
                       ).ToList<ProjectsDataWithValue>();
-                
-   
+                return View("CompareDataTemplates", result);
+            }
+            catch (Exception e) { }
+            
             return Request.IsAjaxRequest()
-                     ? (ActionResult)PartialView("CompareDataTemplates", result)
-                     : View("CompareDataTemplates", result);
-            //  return View("ReplacePlaceholderByDataTemplate", data);
+                     ? (ActionResult)PartialView("CompareDataTemplates")
+                     : View("CompareDataTemplates");
+             
         }
         [HttpPost]
          public ActionResult GenerateDataTemplate(ProjectsTemplateData sp )

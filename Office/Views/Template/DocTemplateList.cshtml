@@ -72,36 +72,7 @@
             complete: function () {
             }
         });
-        $('#mgrid .pagination li a').on('click', function (e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            $('.loader').show();
-            var temp = $(this).attr('href');
-
-            var pageid = temp.replace('/?page=', '');
-
-            $.ajax({
-                url: "@Url.Action("LoadDocTemplateGrid", "Template")",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    page: pageid,
-                    DepartmentID: 0
-                }),
-                dataType: "text",
-                type: "POST",
-                async: true,
-                success: function (data) {
-                    $('#mgrid').html(data);
-
-                },
-                error: function (data) {
-                },
-                complete: function () {
-                }
-            });
-           
-
-        });
+       
     });
 
    

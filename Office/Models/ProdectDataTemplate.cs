@@ -37,7 +37,8 @@ namespace office.Models
         public int? DTTemplateID { get; set; }
         public int? TemplateID { get; set; }
         public int? ProjectID { get; set; } 
-        public string TemplateName { get; set; } 
+        public string TemplateName { get; set; }
+        public string DataTemplateName { get; set; }
         public string TemplateDescription { get; set; }
     }
     public class DeveloperData

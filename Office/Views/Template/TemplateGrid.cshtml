@@ -17,9 +17,10 @@
             <div class="table-responsive">
                 <table class="table table-striped" id="mgrid">
                     <thead>
-                        <tr>  
-                            <th>Name </th>  
-                            <th>Date</th>
+                        <tr>
+                            <th>Name </th>
+                            <th>Department</th>
+                            <th>Created Date</th>
                             <th class="pull-right">Action</th>
                         </tr>
                     </thead>
@@ -29,9 +30,8 @@
 
 
                         <tr>
-
-
                             <td> @item.TemplateName</td>
+                            <td>@item.DepartmentName</td>
                             <td>@item.Createddate</td>
                             <td>
                                 <button type="button" class="pull-right lnkGenerate buttonLink" aa="@item.TemplateID"><i class="fa fa-arrow-circle-o-up text-navy"></i></button>
@@ -66,26 +66,57 @@
 
 <script>
     $(".lnkGenerate").on('click', function (e) {
-        
-          var TemplateId=  $(this).attr("aa");
-              $.ajax({
+
+        var TemplateId = $(this).attr("aa");
+        $.ajax({
             url: "@Url.Action("GenerateDocument", "Template")",
             data:
             {
-                id: TemplateId 
+                id: TemplateId
             },
-             dataType: "text",
-             type: "POST",
-             async: true,
-                  success: function (data) {
-                    
-                      $('#mdlGeneratemodel').html(data);
-                      $('#mdlGenerate').show();
-             },
-             error: function (data) {
-             },
-             complete: function () {
-             }
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+
+                $('#mdlGeneratemodel').html(data);
+                $('#mdlGenerate').show();
+            },
+            error: function (data) {
+            },
+            complete: function () {
+            }
         });
+    });
+     $('#mgrid .pagination li a').on('click', function (e) { 
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('.loader').show();
+            var temp = $(this).attr('href');
+
+            var pageid = temp.replace('/?page=', '');
+
+            $.ajax({
+                url: "@Url.Action("LoadDocTemplateGrid", "Template")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    DepartmentID: 0
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+           
+
         });
+
 </script>
