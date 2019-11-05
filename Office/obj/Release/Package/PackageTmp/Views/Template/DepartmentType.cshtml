@@ -1,0 +1,69 @@
+﻿@model IEnumerable<office.Models.DepartmentType>
+
+@{
+    ViewBag.Title = "Project";
+    Layout = null;
+}
+
+<ul class="category-list" style="padding: 0">
+    @foreach (var item in Model)
+    {
+        if (item.DepartmentId % 2 == 0)
+        {
+            <li><a href="#" id="@item.DepartmentId" class="department"> <i class="fa fa-circle text-navy"></i> @item.DepartmentName </a></li>
+        }
+        else if (item.DepartmentId % 3 == 0)
+        {
+            <li><a href="#" id="@item.DepartmentId" class="department"> <i class="fa fa-circle text-danger"></i>  @item.DepartmentName</a></li>
+        }
+        else if (item.DepartmentId % 4 == 0)
+        {
+            <li><a href="#" id="@item.DepartmentId" class="department"> <i class="fa fa-circle text-primary"></i>  @item.DepartmentName</a></li>
+        }
+        else if (item.DepartmentId % 5 == 0)
+        {
+            <li><a href="#" id="@item.DepartmentId" class="department"> <i class="fa fa-circle text-primary"></i>  @item.DepartmentName</a></li>
+        }
+        else
+        {
+            <li><a href="#" id="@item.DepartmentId" class="department"> <i class="fa fa-circle text-warning"></i>  @item.DepartmentName</a></li>
+        }
+
+    }
+</ul>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+         $('.department').on('click', function (e) {
+             debugger;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('.loader').show();
+            var temp = $(this).attr('href');
+
+             debugger;
+            var pageid =1;
+
+            $.ajax({
+                url: "@Url.Action("LoadDocTemplateGrid", "Template")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    DepartmentID: this.id
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+
+        });
+    });

@@ -1,0 +1,140 @@
+﻿@model office.Models.temlatesInfo
+@{
+    ViewBag.Title = "Compose";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-3">
+
+        <div class="file-manager" id="UserPlaceHolder">
+              
+        </div>
+    </div>
+
+    <div class="col-lg-9 animated fadeInRight">
+        <div class="mail-box-header">
+            <h2>
+                Compose Template
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @style = "width:112%;", @id = "CityID", Title = "CityID" })
+            </div>
+
+            <div class="col-lg-4">
+                @Html.DropDownList("AuthorityID", new SelectList((System.Collections.IEnumerable)ViewData["AuthorityList"], "Value", "Text"), "Select Authority", new { @class = "form-control", @style = "width:112%;", @id = "AuthorityID", Title = "AuthorityID" })
+            </div>
+
+            <div class="col-lg-4">
+                @Html.DropDownList("DepartmentID", new SelectList((System.Collections.IEnumerable)ViewData["DepartmentList"], "Value", "Text"), "Select Department", new { @class = "form-control", @id = "DepartmentID", Title = "DepartmentID" })
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                @Html.DropDownList("TemplateTypeID", new SelectList((System.Collections.IEnumerable)ViewData["TemplateTypeList"], "Value", "Text"), "Template Type", new { @class = "form-control", @id = "TemplateTypeID", Title = "TemplateTypeID" })
+            </div>
+            <div class="col-lg-8">
+                @Html.HiddenFor(a => a.TemplateID, new { @id = "TemplateID" })
+                @Html.TextBoxFor(a => a.TemplateName, new { @class = "form-control", title = "CityName", @placeholder = "Template Name", @id = "TemplateName" })
+            </div>
+        </div>
+        <div class="mail-box">
+
+            <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+                @try
+                {
+                    if (Model != null)
+                    {
+                        @(new HtmlString(@Model.Description))
+                    }
+                }
+                catch { }
+            </div>
+            <div class="mail-body text-right tooltip-demo">
+                <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send" id="btnsave"><i class="fa fa-reply"></i> Save</a>
+                <a class="btn btn-sm btn-primary " href="/Template/DocTemplateList">Cancel</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+   
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+<link href="~/css/style.css" rel="stylesheet" />
+<script src="~/js/plugins/nestable/jquery.nestable.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Write Something here',
+        tabsize: 2,
+        height: 400
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "@Url.Action("GetPlaceholder", "Template")",
+            success: function (data) {
+
+                $('#UserPlaceHolder').html(data);
+            }
+        });
+
+        $('#btnsave').on('click', function () {
+            var CityName;
+            CityName = $("#TemplateName").val();
+            if (TemplateName == "") {
+                $("#NameTemplateName").show();
+                return false;
+            }
+            else {
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Template/SaveTemplate',
+                    data: {
+                        CityID: $("#CityID").val(),
+                        AuthorityID: $("#AuthorityID").val(),
+                        DepartmentID: $("#DepartmentID").val(),
+                        TemplateID: $("#TemplateID").val(),
+                        TemplateName: $("#TemplateName").val(),
+                        Description: $(".note-editable").html(),
+                    },
+                    success: function (da) {
+                        location.href = "DocTemplateList";
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+        });
+
+
+    });
+
+
+</script>
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+</script>

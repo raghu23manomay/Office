@@ -1,0 +1,158 @@
+﻿
+
+@{
+     
+
+}
+@model  IEnumerable<office.Models.DocTemplateList>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="~/css/style.css" rel="stylesheet" />
+<style>
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f2f3f8;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #e9ebf3;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+</style>
+<div class="container">
+
+</div>
+
+
+<body>
+
+    <div class="wrapper1 wrapper-content1">
+
+        <div class="gray-bg">
+
+            <div class="">
+
+                <div class="row">
+                    <div class="container">
+
+                        <div class="col-md-3">
+
+                            <div class="timeline-row post-even" style="overflow-y: scroll;height: 755px;">
+
+                                <div class="ibox" style="height: 755px;">
+                                    <div class="ibox-title">
+                                       
+                                  </div>
+                                    <div class="ibox-content">
+                                         
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="col-lg-2 control-label">Consultant Type</label>
+
+                                                <div class="col-lg-10">
+                                                    @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.city), "Select Consultant", new { @class = "form-control", @id = "ConsultantTypeID", Title = "ConsultantTypeID" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                       
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-9">
+                            <div class="timeline-row post-even" id="userpermissiongrid">
+                                <div class="ibox" style="height: 755px;">
+                                    <div class="ibox-title">
+
+                                        <h2 class="text-success no-margin headingsize18"> Document Template List  </h2>
+
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="table-responsive" id="usergrid">
+
+                                            <table class="table scroll-x">
+
+                                                <tbody>
+                                                    @foreach (var item in Model)
+
+                                                    {
+                                                        <tr>
+                                                            <td class="user" id="@item.TemplateID" name="@item.TemplateName" value="@item.TemplateName">
+                                                                @item.TemplateName<br>
+                                                                <span style=" font-size: 11px;color: #bbb6b6;">@item.TemplateID</span>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="loader"></div>
+    <input type="text" id="saveuserid" value="" class="hidden" />
+    <input type="text" id="saveusername" value="" class="hidden" />
+    <input type="text" id="saverolename" value="" class="hidden" />
+    <hr />
+
+</body>
+
+@*<script>
+
+        $(document).ready(function () {
+            $('.loader').hide();
+
+             $('#usersearch').on('keyup', function () {
+                 $.ajax({
+                     url: "@Url.Action("LoadUserPermissions", "Master")",
+                     data:
+                     {
+                         username: $('#usersearch').val(),
+                     },
+                     dataType: "text",
+                     //  type: "POST",
+                     async: false,
+                     success: function (data) {
+
+                         $('#usergrid').html(data);
+                     }
+                 });
+         });
+
+
+        });
+
+
+
+    </script>*@

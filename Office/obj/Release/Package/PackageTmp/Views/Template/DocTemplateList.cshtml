@@ -1,0 +1,79 @@
+﻿
+ 
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+<script src="~/js/jquery-2.1.1.js"></script>
+ 
+<div class="row">
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content mailbox-content">
+                <div class="file-manager">
+                    <a class="btn btn-block btn-primary compose-mail" href="/Template/Compose">Create Template</a>
+                    <div class="space-25"></div> 
+                    <h5>Categories</h5>
+                    <div id="departments"> 
+                    </div> 
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9 animated fadeInRight" id="mgrid">
+      
+
+    </div>
+</div>
+ 
+
+<div id="mdlGenerate" class="modal fade in" data-backdrop="static" data-keyboard="false">
+     
+    <div class="modal-dialog" style="width:80%;height:600px;overflow:auto;" >
+       
+        <div class="modal-content" id="mdlGeneratemodel" >
+
+        </div>
+    </div>
+</div>
+<script>
+    
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "@Url.Action("DepartmentType", "Template")",
+            data:
+            {
+                TemplateID: 1
+            },
+            dataType: "text",
+
+            success: function (data) {
+                $('#departments').html(data);
+            },
+            error: function (error) {
+            }
+        });
+        $.ajax({
+            url: "@Url.Action("LoadDocTemplateGrid", "Template")",
+            data:
+            {
+                page: 1,
+                DepartmentID: 0
+            },
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#mgrid').html(data);
+            },
+            error: function (data) {
+            },
+            complete: function () {
+            }
+        });
+       
+    });
+
+   
+</script>

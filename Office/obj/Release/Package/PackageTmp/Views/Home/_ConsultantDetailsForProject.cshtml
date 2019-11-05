@@ -1,0 +1,42 @@
+﻿@model IEnumerable<office.Models.ConsultantDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="consultantlist">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr><td class="hidden multiconsultant" id="@item.ConsultantTypeID">@item.ConsultantId</td><td>@item.Name</td><td><span style="color: darkgray;font-size: smaller;">@item.ConsultantType</span></td><td><i class="fa fa-times deleteConsultant pull-right" id="@item.ConsultantDetailId" aria-hidden="true"></i></td></tr>
+        }
+
+    </tbody>
+</table>
+<script>
+    $(document).on('click', 'i.deleteConsultant', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/DeleteProjectInformation',
+            data:
+            {
+                Id: id,
+                Label: 'ProjectConsultantDetail',
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

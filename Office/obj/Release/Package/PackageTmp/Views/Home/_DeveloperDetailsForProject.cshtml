@@ -1,0 +1,43 @@
+﻿@model IEnumerable<office.Models.DeveloperDetails>
+
+@{
+    Layout = null;
+}
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<table class="table" id="developerlist">
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr><td class="hidden multideveloper" id="@item.OwnershipId">@item.DeveloperId</td><td>@item.Name</td><td><span style="color: darkgray;font-size: smaller;">@item.OwnershipType</span></td><td><i class="fa fa-times deleteDev pull-right" id="@item.DeveloperDetailId" aria-hidden="true"></i></td></tr>
+        }
+
+    </tbody>
+</table>
+
+<script>
+    $(document).on('click', 'i.deleteDev', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var id = $(this).attr("id");
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/DeleteProjectInformation',
+            data:
+            {
+                Id: id,
+                Label: 'ProjectDeveloperDetails',
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

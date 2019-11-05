@@ -27,23 +27,10 @@
                             <a class="edit" href="addRole?id=@item.RoleID" id="EditMember">
                                 <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
                             </a>
-                            <a class="Delete" id="DeleteMember">
+                            <a class="Delete" name="@item.RoleID" id="DeleteMember">
                                 <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
                             </a>
 
-              @*<div class="ibox-tools" style="text-align:left!important">
-
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-                <i class="">...</i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li>
-                    <a href="addRole?id=@item.RoleID">Edit</a>
-                </li>
-
-            </ul>
-
-        </div>*@
 
                         </td>
                     </tr>
@@ -97,6 +84,25 @@
                 }
             });
 
+        });
+
+         $('.Delete').click(function () {
+            if (confirm("Are you sure want to deleted!"))
+            {
+            var Id = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("DeleteMaster", "Master")",
+                data: { Id: Id, MasterName: 'Role' },
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    var mgs = data.replace(/"/g, "");
+                    alert(mgs);
+                   }
+            });
+            }
+                                 
         });
     });
 

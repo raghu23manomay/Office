@@ -1,0 +1,62 @@
+﻿@model office.Models.temlatesInfo
+
+@{
+    ViewBag.Title = "UserPermission";
+}
+@Html.HiddenFor(a => a.TemplateID, new { @id = "SubscriptionID" })
+<div class="mail-box" id="TemplateData">
+
+    <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+        @try
+        {
+            if (Model != null)
+            {
+                @(new HtmlString(@Model.Description))
+            }
+        }
+        catch { }
+    </div>
+    <div class="mail-body text-right tooltip-demo">
+        <a class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send" id="btnCreate"><i class="fa fa-reply"></i> Generate Document</a>
+        <a class="btn btn-sm btn-primary " href="/Template/DocTemplateList">Cancel</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+<link href="~/css/style.css" rel="stylesheet" />
+<script src="~/js/plugins/nestable/jquery.nestable.js"></script>
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Write Something here',
+        tabsize: 2,
+        height: 400
+    });
+</script>
+<script>
+    $('#btnCreate').on('click', function () {
+         
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'text',
+            url: '/Template/GenerateDocument',
+            data: {
+                TemplateID: $("#TemplateID").val()
+                //Description: $(".note-editable").html(),
+            },
+            success: function (data) {
+                debugger;
+                $('#TemplateData').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        
+        });
+
+    });
+
+</script>

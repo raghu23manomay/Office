@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Type</label>
+                        <label class="col-lg-2 control-label">Member Type</label>
                         <div class="col-lg-10">
                             <select id="memberid" class="form-control">
                                 <option value="1">Developer</option>
@@ -36,7 +36,23 @@
                             </select>
                         </div>
                     </div>
-                    <input type="hidden" id="MemberId" value="@Model.MemberID"/>
+
+                    <div class="form-group Consultant">
+                        <label class="col-lg-2 control-label">Consultant Type</label>
+
+                        <div class="col-lg-10">
+                            @Html.DropDownList("ConsultantTypeID", new SelectList((System.Collections.IEnumerable)ViewData["ConsultantTypeList"], "Value", "Text",Model.TypeId), "Select Consultant", new { @class = "form-control", @id = "ConsultantTypeID", Title = "ConsultantTypeID" })
+                        </div>
+                    </div>
+
+                    <div class="form-group Contractor">
+                        <label class="col-lg-2 control-label">Contractor Type</label>
+
+                        <div class="col-lg-10">
+                            @Html.DropDownList("ContractorTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ContractorTypeList"], "Value", "Text",Model.TypeId), "Select Contractor", new { @class = "form-control", @id = "ContractorTypeId", Title = "ContractorTypeId" })
+                        </div>
+                    </div>
+                    <input type="hidden" id="MemberId" value="@Model.MemberID" />
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Company</label>
                         <div class="col-lg-10"><input type="text" id="CompanyName" value="@Model.CompanyName" placeholder="Company Name" class="form-control"></div>
@@ -464,7 +480,7 @@
             $('.person').hide();
             $('.entityField').show();
         }
-
+       
         //Ajax call for binding conact list for update
          $.ajax({
             url: "@Url.Action("GetMemberConactDetails", "Master")",
@@ -538,7 +554,9 @@
 
         });
         
-        
+        $('.Consultant').hide();
+        $('.Contractor').hide();
+        TypeDispplayAndHide();
 
         $('#memberid').change(function () {
             if ($("#memberid option:selected").val() == 4) {
@@ -551,7 +569,24 @@
                 $('.entityField').show();
             }
 
+            TypeDispplayAndHide();
         });
+
+        function TypeDispplayAndHide()
+        {
+            if ($("#memberid option:selected").val() == 2) {
+                $('.Consultant').show();
+            }
+            else {
+                $('.Consultant').hide();
+            }
+            if ($("#memberid option:selected").val() == 3) {
+                $('.Contractor').show();
+            }
+            else {
+                $('.Contractor').hide();
+            }
+        }
 
         $('#Website').keyup(function () {
             $('#showWebsite').html($('#Website').val());
@@ -939,6 +974,15 @@
                 SaveMemberPerson.push(item);
             }
 
+            var TypeId = 0;
+
+            if ($("#memberid option:selected").val() == 2) {
+                TypeId = $("#ConsultantTypeID option:selected").val();
+            }
+            else if ($("#memberid option:selected").val() == 3) {
+                TypeId = $("#ContractorTypeId option:selected").val();
+            }
+
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -947,6 +991,7 @@
                 {
                     MemberId: $('#MemberId').val(),
                     MemberType: $("#memberid option:selected").val(),
+                    TypeId: TypeId,
                     TitleID: $("#TitleId option:selected").val(),
                     Name: $('#Name').val(),
                     ShortName: $('#shortname').val(),

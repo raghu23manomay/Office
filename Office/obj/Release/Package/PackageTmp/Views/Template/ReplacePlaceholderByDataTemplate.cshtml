@@ -1,0 +1,61 @@
+﻿
+@model office.Models.ProjectsDataWithValue
+@{
+    Layout = null;
+}
+
+<div class="wrapper">
+    
+    <div class="gray-bg">
+        <div class="mail-box">
+            <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+                @try
+                {
+                    if (Model != null)
+                    {
+                        <hidden id="hdnDescription" value="@Model.TemplateDescription"></hidden>
+                        @(new HtmlString(@Model.TemplateDescription))
+                    }
+                }
+                catch { }
+            </div>
+            <div class="mail-body text-right tooltip-demo">
+                <button type="button" class="btn btn-sm btn-primary" id="Print">Print  <i class="fa fa-print " aria-hidden="true"></i></button>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+        <link href="~/css/style.css" rel="stylesheet" />
+        <script src="~/js/jquery-2.1.1.js"></script>
+
+        <script>
+        $(document).ready(function () {
+        $('#Print').on("click", function (e) {
+            debugger;
+
+            $.ajax({
+                url: "@Url.Action("Export", "Template")",
+                data:
+                {
+                    TemplateID : 1,
+                    Description: $("#summernote").html()
+                },
+                dataType: "text",
+
+                success: function (data) {
+                    $('#ProjectGrid').html(data);
+
+                },
+                error: function (error) {
+                   
+                    eval(error);
+                }
+            });
+
+        });
+        });
+
+
+        </script>

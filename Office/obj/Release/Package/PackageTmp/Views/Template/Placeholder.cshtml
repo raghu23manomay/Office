@@ -1,0 +1,405 @@
+﻿@model IEnumerable<office.Models.PerformaPlaceholders>
+@{
+    /**/
+
+
+    ViewBag.Title = "Placeholder";
+    Layout = null;
+}
+<style>
+    .ibox.fullscreen .collapse-link {
+        display: none;
+    }
+</style>
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Projects </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+   
+        <div class="ibox-content" style="display: none;">
+            <div class="row">
+                <div class="col-lg-6">
+
+                    <div class="table table-hover margin bottom">
+
+
+
+                        @foreach (var item in Model)
+                        {
+                            if (item.TableName == "Project")
+                            {
+                                <div>
+
+                                    <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+
+                                        @item.PlaceHolderName
+
+                                    </button>
+                                </div>
+
+                            }
+                        }
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div id="world-map" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Developer </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="table table-hover margin bottom">
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "DeveloperInfo")
+                        {
+                            <div>
+
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+
+                                    @item.PlaceHolderName
+
+                                </button>
+                            </div>
+
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Consultant </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="table table-hover margin bottom">
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "ConsultantInfo")
+                        {
+                            <div>
+
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+
+                                    @item.PlaceHolderName
+
+                                </button>
+                            </div>
+
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Contractor </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="table table-hover margin bottom">
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "ContractorInfo")
+                        {
+                            <div>
+
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+
+                                    @item.PlaceHolderName
+
+                                </button>
+                            </div>
+
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Assistance </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="table table-hover margin bottom">
+
+
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "AssistanceInfo")
+                        {
+                            <div>
+
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+
+                                    @item.PlaceHolderName
+
+                                </button>
+                            </div>
+
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>CoOrdinator </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="table table-hover margin bottom">
+
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "CoordinatorInfo")
+                        {
+                            <div>
+
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+
+                                    @item.PlaceHolderName
+
+                                </button>
+                            </div>
+
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Custom Field </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+            <a class="close-link">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+
+
+
+            <div class="col-md-8">
+
+                <input type="text" id="txtCustomfield" class="form-control" />
+
+            </div>
+            <div class="col-md-3">
+                <input type="button" id="btnAddCustomfield" value="Add" class="btn btn-primary" />
+            </div>
+
+           
+            @foreach (var item in Model)
+            {
+                if (item.TableName == "CustomField")
+                {
+                   
+                        <div>
+
+                            <button class="bLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                @item.PlaceHolderName
+                            </button>
+                        </div>
+                        <div>
+ 
+                        </div>
+                    
+                }
+            }
+
+
+
+
+        </div>
+    </div>
+</div>
+<script src="~/js/inspinia.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.aLink').on('click', function () {
+            var texts = "";
+            texts = "##" + this.id + "##";
+            insertTextAtCursor(texts);
+        });
+        $('.bLink').on('click', function () {
+            var texts = "";
+            texts = "$$" + this.id + "$$";
+            insertTextAtCursor(texts);
+        });
+        $('#btnAddCustomfield').on('click', function () {
+            debugger;
+            var Customfield;
+            CustomFieldName = $("#txtCustomfield").val();
+            if (CustomFieldName == "") {
+                $("#Customfieldvalidation").show();
+                return false;
+            }
+            else {
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Template/SaveCustomField',
+                    data:
+                    {
+                        FieldID: 0, 
+                        CustomFieldName: CustomFieldName, 
+                    },
+                    success: function (da) {
+                       
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            }
+        });
+
+    });
+    function insertTextAtCursor(text) {
+
+        var sel, range;
+       
+        if (window.getSelection) {
+            if (window.getSelection().baseNode.parentNode.className == "aLink" || window.getSelection().baseNode.parentNode.className == "pull-right") { return; }
+            if (window.getSelection().baseNode.parentNode.className == "file-manager" || window.getSelection().baseNode.parentNode.className == "mailbox-content") { return; }
+            if (window.getSelection().baseNode.parentNode.className == "m-r-sm text-muted welcome-message" || window.getSelection().baseNode.parentNode.className == "col-lg-6") { return; }
+
+            sel = window.getSelection();
+            //if (sel.anchorNode.parentNode.className == "note-editable" || sel.anchorNode.parentNode.className =="note-editing-area") {
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(document.createTextNode(text));
+            }
+            //  }
+        } else if (document.selection && document.selection.createRange) {
+            document.selection.createRange().text = text;
+        }
+
+    }
+</script>

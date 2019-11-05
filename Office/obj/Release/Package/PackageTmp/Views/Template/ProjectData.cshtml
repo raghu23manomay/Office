@@ -1,0 +1,434 @@
+﻿
+
+
+@model office.Models.ProjectsData
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Project";
+    Layout = null;
+}
+
+<script src="~/js/jquery-2.1.1.js"></script>
+
+
+@Html.HiddenFor(a => a.DTTemplateID, new { @id = "DTTemplateID" })
+@Html.HiddenFor(a => a.TemplateID, new { @id = "TemplateID1" })
+@Html.HiddenFor(a => a.ProjectID, new { @id = "ProjectID" })
+@Html.HiddenFor(a => a.Name, new { @id = "ProjectName" })
+
+@Html.HiddenFor(a => a.ShortName, new { @id = "ShortName" })
+@Html.HiddenFor(a => a.Goan, new { @id = "Goan" })
+@Html.HiddenFor(a => a.Goan, new { @id = "Goan" })
+@Html.HiddenFor(a => a.Road, new { @id = "Road" })
+@Html.HiddenFor(a => a.Taluka, new { @id = "Taluka" })
+@Html.HiddenFor(a => a.District, new { @id = "District" })
+@Html.HiddenFor(a => a.Duration, new { @id = "Duration" })
+
+<div class="row" id="TemplateData">
+    @Html.HiddenFor(a => a.TemplateID, new { @id = "TemplateID" })
+    <div class="col-lg-12">
+        
+                <div class="row">
+                    <div class="col-md-5">
+                        <input id="DataTemplateName" type="text" placeholder="DataTemplate Name" value="@Model.DataTemplateName" class="form-control">
+                    </div>
+                    <div class="col-md-7">
+                        <strong>@Model.Name</strong> @Model.ShortName
+                        <small class="text-muted">  @Model.Road @Model.Goan  @Model.Taluka    @Model.District </small>
+                    </div>
+                </div>
+            </div> 
+             
+     
+            <div class="col-lg-12">
+            <div class="col-md-6">
+             
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="ibox-title" style="display:table-row;">
+                                <label> Developers</label>
+
+                            </div>
+                            <div class="col-sm-12">
+                                <table class="table" id="developerlist">
+
+                                    <tbody>
+                                        @foreach (var item in Model.DeveloperDatalist)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="" style="margin-left: 0!important">
+
+
+                                                        @if (item.isDeveloperApplied == true)
+                                                        {
+                                                            <input type="checkbox" class="i-checks chkdev" divName="checkboxDiv_@item.DeveloperId" checked="checked" id="@item.DeveloperId">
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="i-checks chkdev" name="sDev" id="@item.DeveloperId">
+                                                            <div id="checkboxDiv_@item.DeveloperId" class="checkboxDiv">
+
+                                                            </div>
+                                                        }
+
+
+                                                    </div>
+                                                </td>
+                                                <td class="hidden multideveloper" id="@item.OwnershipId">@item.DeveloperId</td>
+                                                <td>@item.Name</td>
+                                                <td>
+                                                    <span style="color: darkgray;font-size: smaller;">@item.OwnershipType</span>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="ibox-title" style="display:table-row;">
+                            <label> Coordinator</label>
+
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table" id="Coordinatorlist">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CoordinatorDetailsData)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="" style="margin-left: 0!important">
+                                                    <div>
+
+                                                        @if (item.isCoordinatorApplied == true)
+                                                        {
+                                                            <input type="checkbox" class="i-checks chkCoOrdinator" checked="checked" id="@item.CoordinatorId">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="i-checks chkCoOrdinator" id="@item.CoordinatorId">
+                                                        }
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                            <td class="hidden multidevelopercontactperson">@item.CoordinatorDetailId</td>
+                                            <td>
+                                                @item.FullName
+
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    
+                 
+            </div>
+            <div class="col-md-6">
+                <div class="ibox-content">
+                    <div class="ibox-title" style="display:table-row;">
+                        <label> Assistant List</label>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="assistantlist">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.AssistantDetailsData)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="" style="margin-left: 0!important">
+                                                <div>
+
+                                                    @if (item.isAssistantApplied == true)
+                                                    {
+                                                        <input type="checkbox" class="i-checks chkAss" checked="checked" id="@item.AssistantId">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="i-checks chkAss" id="@item.AssistantId">
+                                                    }
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="hidden multiassistant">@item.AssistantDetailId</td>
+                                        <td>
+                                            @item.FullName
+
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="ibox-title" style="display:table-row;">
+                        <label> Developer Side Contact Persons</label>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="DeveloperSidContact">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.DeveloperSideContactPersons)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="" style="margin-left: 0!important">
+                                                <div>
+
+                                                    @if (item.isContactApplied == true)
+                                                    {
+                                                        <input type="checkbox" class="i-checks chkdevSide" checked="checked" id="@item.DeveloperContactPersonId">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="i-checks chkdevSide" id="@item.DeveloperContactPersonId">
+                                                    }
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="hidden multidevelopercontactperson">@item.DeveloperContactPersonId</td>
+                                        <td>
+                                            @item.DeveloperContactPersonName
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="ibox-title" style="display:table-row;">
+                        <label> Office Side Contact Persons</label>
+
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="DeveloperSidContact">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                                @if (Model.OfficeSideContactPersons != null)
+                                {
+                                    foreach (var item in Model.OfficeSideContactPersons)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="" style="margin-left: 0!important">
+                                                    <div>
+
+                                                        @if (item.isContactApplied == true)
+                                                        {
+                                                            <input type="checkbox" class="i-checks chkOfficeSide" checked="checked" id="@item.OfficeContactPersonId">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" class="i-checks chkOfficeSide" id="@item.OfficeContactPersonName">
+                                                        }
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                            <td class="hidden multidevelopercontactperson">@item.OfficeContactPersonId</td>
+                                            <td>
+                                                @item.OfficeContactPersonName
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="ibox">
+
+                <div class="ibox-content">
+                     
+                    <div class="col-md-8">
+                        <div class="pull-right">
+                            <button class="btn btn-primary" id="btnGenerateDataTemplate" type="button">Save Data Templare</button>
+                            <button class="btn btn-primary" id="btnGenerateDocument" type="button">Generate Document</button>
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <script>
+    function getSearchParams(k) {
+        var p = {};
+        location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (s, k, v) { p[k] = v })
+        return k ? p[k] : p;
+    }
+    $(document).ready(function () {
+        $('.DTTemplateID').on("click", function (e) {
+
+            var TemplateID = $('#TemplateID').val();
+             var DTTemplateID = this.id;
+            $.ajax({
+                url: "@Url.Action("GetProjectData", "Template")",
+                data:
+                {
+                    id: TemplateID,
+                    DTTemplateID: DTTemplateID,
+                    ProjectID: $('#ProjectID').val()
+                },
+                dataType: "text",
+                success: function (data) {
+                    $('#ProjectGrid').html(data);
+                    $('#hdnTemplateID').val(TemplateID);
+                },
+                error: function (error) {
+                    eval(error);
+                }
+            });
+        });
+        $('#btnGenerateDocument').on("click", function (e) {
+
+            var TemplateID = $('#hdnTemplateID').val();
+           var DtTemplateID = $('#DTTemplateID').val();
+            debugger;
+            $.ajax({
+                url: "@Url.Action("ReplacePlaceholderByDataTemplate", "Template")",
+                data:
+                {
+                    TemplateID: TemplateID,
+                    DtTemplateID: DtTemplateID,
+                },
+                dataType: "text",
+
+                success: function (data) {
+
+                    $('#TemplateData').html(data);
+                },
+                error: function (error) {
+
+                }
+            });
+        });
+
+        $('#btnGenerateDataTemplate').on("click", function (e) {
+
+            var DTTemplateID = $('#DTTemplateID').val();
+            var DataTemplateName = $('#DataTemplateName').val();
+
+            var devid = 0;
+            var CoOrdinatorID = 0;
+            var AssistanceID = 0;
+            var contractorID = 0;
+            var ConsultantId = 0;
+            var AssistanceID = 0;
+            $(".chkdev:checkbox:checked").each(function () {
+                devid = $(this).attr("id");
+            });
+            $(".chkCoOrdinator:checkbox:checked").each(function () {
+                CoOrdinatorID = $(this).attr("id");
+            });
+            $(".chkAss:checkbox:checked").each(function () {
+                AssistanceID = $(this).attr("id");
+            });
+
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Template/GenerateDataTemplate',
+                data:
+                {
+                    DTTemplateID: DTTemplateID,
+                    ProjectID: $('#ProjectID').val(),
+                    DeveloperID: devid ,
+                    CoOrdinatorID: CoOrdinatorID,
+                    ConsultantId: ConsultantId,
+                    contractorID: contractorID,
+                    AssistanceID: AssistanceID,
+                    DataTemplateName: DataTemplateName
+                },
+                success: function (data) {
+                  //  $('#ProjectGrid').html(data);
+                    alert(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+
+        //$('.chkdev').on('click', function () {
+
+
+        //    $.ajax({
+        //        type: 'POST',
+        //        dataType: 'text',
+        //        url: '/Template/GetDevelopersData',
+        //        data: {
+        //            id: 8,
+        //            val: 2
+        //        },
+        //        success: function (data) {
+        //            debugger;
+        //          //  $(this).closest("div").html(data);
+
+        //            $(".checkboxDiv").html(data);
+        //        },
+        //        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //            alert(errorThrown);
+        //        }
+
+        //    });
+
+        //});
+    });
+
+    </script>
+
+

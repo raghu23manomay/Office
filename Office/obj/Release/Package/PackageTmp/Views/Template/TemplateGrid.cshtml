@@ -1,0 +1,122 @@
+﻿@model IEnumerable<office.Models.DocTemplateList>
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+@{
+    Layout = null;
+}
+
+<div class="mail-box-header">
+    <h2>
+        Template
+    </h2>
+</div>
+<div class="mail-box Grid">
+    <div class="mail-attachment">
+        <div class="attachment">
+            <div class="table-responsive">
+                <table class="table table-striped" id="mgrid">
+                    <thead>
+                        <tr>
+                            <th>Name </th>
+                            <th>Department</th>
+                            <th>Created Date</th>
+                            <th class="pull-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+
+                        <tr>
+                            <td> @item.TemplateName</td>
+                            <td>@item.DepartmentName</td>
+                            <td>@item.Createddate</td>
+                            <td>
+                                <button type="button" class="pull-right lnkGenerate buttonLink" aa="@item.TemplateID"><i class="fa fa-arrow-circle-o-up text-navy"></i></button>
+
+                                <a href="Compose?id=@item.TemplateID" class="pull-right"><i class="fa fa-edit text-navy"></i></a>
+                            </td>
+
+
+                        </tr>  
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div>
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+                @if (Model.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".lnkGenerate").on('click', function (e) {
+
+        var TemplateId = $(this).attr("aa");
+        $.ajax({
+            url: "@Url.Action("GenerateDocument", "Template")",
+            data:
+            {
+                id: TemplateId
+            },
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+
+                $('#mdlGeneratemodel').html(data);
+                $('#mdlGenerate').show();
+            },
+            error: function (data) {
+            },
+            complete: function () {
+            }
+        });
+    });
+     $('#mgrid .pagination li a').on('click', function (e) { 
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('.loader').show();
+            var temp = $(this).attr('href');
+
+            var pageid = temp.replace('/?page=', '');
+
+            $.ajax({
+                url: "@Url.Action("LoadDocTemplateGrid", "Template")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    DepartmentID: 0
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+           
+
+        });
+
+</script>

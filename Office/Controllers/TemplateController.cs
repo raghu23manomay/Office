@@ -98,13 +98,28 @@ namespace office.Controllers
                 : View("TemplateGrid", itemsAsIPagedList);
     }
 
-    public ActionResult DocTemplateList(int? page, int DepartmentID = 0)
+        //public ActionResult LoadGeneratedDocumentGrid(int? page, int DepartmentID = 0)
+        //{
+        //    StaticPagedList<GeeratedDocumentList> itemsAsIPagedList;
+        //    itemsAsIPagedList = GeneratedDocumentGridList(page, DepartmentID);
+
+        //    return Request.IsAjaxRequest()
+        //            ? (ActionResult)PartialView("TemplateGrid", itemsAsIPagedList)
+        //            : View("TemplateGrid", itemsAsIPagedList);
+        //}
+        public ActionResult DocTemplateList(int? page, int DepartmentID = 0)
     { 
         return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("DocTemplateList")
                 : View("DocTemplateList");
     }
-    public StaticPagedList<DocTemplateList> TemplateGridList(int? page, int DepartmentID = 0)
+    public ActionResult GeneratedDocumentList(int? page, int DepartmentID = 0)
+    {
+        return Request.IsAjaxRequest()
+                ? (ActionResult)PartialView("GeneratedDocumentList")
+                : View("GeneratedDocumentList"); 
+    }
+        public StaticPagedList<DocTemplateList> TemplateGridList(int? page, int DepartmentID = 0)
     {
         OfficeDbContext _db = new OfficeDbContext();
         var pageIndex = (page ?? 1);
@@ -128,11 +143,12 @@ namespace office.Controllers
         return itemsAsIPagedList;
 
     }
+        
         #endregion
         #region DocumentGeneratedList
         public ActionResult LoadDocumentGrid(int? page, int DepartmentID = 0)
         {
-            StaticPagedList<DocumentList> itemsAsIPagedList;
+            StaticPagedList<GeeratedDocumentList> itemsAsIPagedList;
             itemsAsIPagedList = DocumentGridList(page, DepartmentID);
 
             return Request.IsAjaxRequest()
@@ -146,27 +162,27 @@ namespace office.Controllers
                     ? (ActionResult)PartialView("DocumentList")
                     : View("DocumentList");
         }
-        public StaticPagedList<DocumentList> DocumentGridList(int? page, int DepartmentID = 0)
+        public StaticPagedList<GeeratedDocumentList> DocumentGridList(int? page, int DepartmentID = 0)
         {
             OfficeDbContext _db = new OfficeDbContext();
             var pageIndex = (page ?? 1);
             const int pageSize = 10;
             int totalCount = 10;
-            DocumentList clist = new DocumentList();
+            GeeratedDocumentList clist = new GeeratedDocumentList();
 
-            IEnumerable<DocumentList> result = _db.DocumentLists.SqlQuery(@"exec getDocumentList
+            IEnumerable<GeeratedDocumentList> result = _db.GeeratedDocumentLists.SqlQuery(@"exec getGeneratedDocument
                    @pPageIndex, @pPageSize,@DepartmentID",
                new SqlParameter("@pPageIndex", pageIndex),
                new SqlParameter("@pPageSize", pageSize),
                new SqlParameter("@DepartmentID", DepartmentID)
-               ).ToList<DocumentList>();
+               ).ToList<GeeratedDocumentList>();
 
             totalCount = 0;
             if (result.Count() > 0)
             {
                 totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
             }
-            var itemsAsIPagedList = new StaticPagedList<DocumentList>(result, pageIndex, pageSize, totalCount);
+            var itemsAsIPagedList = new StaticPagedList<GeeratedDocumentList>(result, pageIndex, pageSize, totalCount);
             return itemsAsIPagedList;
 
         }
@@ -332,9 +348,14 @@ namespace office.Controllers
                 Response.Charset = "";
                 Response.ContentType = "application/vnd.ms-word";
                 Response.Output.Write(data.TemplateDescription);
+                string folderPath = "~/Document/" + TemplateID;
+                string filePath = "~/Document/"+ TemplateID + "/file-"+TemplateID+"-"+DtTemplateID+".docx";
+                string fileName = Server.MapPath(filePath);
 
-                string fileName = Server.MapPath("~/Document/"+ TemplateID + "/file-"+TemplateID+"-"+DtTemplateID+".docx");
+                bool exists = System.IO.Directory.Exists(Server.MapPath(folderPath));
 
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(Server.MapPath(folderPath));
                 Document doc = new Document();
                 doc.AddSection();
 
@@ -343,28 +364,25 @@ namespace office.Controllers
                 para.AppendHTML(data.TemplateDescription);
 
                 doc.SaveToFile(fileName, FileFormat.Docx2013);
-                //var doc = DocX.Create(fileName);
 
-                //doc.InsertParagraph("Hello Word");
-                //doc.InsertParagraph(data.TemplateDescription);
 
-                //doc.Save();
+                var result2 = _db.Database.ExecuteSqlCommand(@"exec uspSaveDocument 
+                   @TemplateID, @FilePath",
+                  new SqlParameter("@TemplateID", TemplateID),
+                  new SqlParameter("@FilePath", filePath)
+               ); 
 
-                Process.Start("WINWORD.EXE", fileName);
-                Response.TransmitFile(Server.MapPath("~/Document/file1.docx"));
-                Response.Flush();
-                Response.End();
-
-                //Response.ContentType = "image/jpeg";
-                //Response.AppendHeader("Content-Disposition", "attachment; filename=SailBig.jpg");
-                //Response.TransmitFile(Server.MapPath("~/images/sailbig.jpg"));
+                //Process.Start("WINWORD.EXE", fileName);
+                //Response.TransmitFile(fileName);
+                //Response.Flush();
                 //Response.End();
+                 
             }
             catch (Exception e) { }
             return Request.IsAjaxRequest()
                      ? (ActionResult)PartialView("ReplacePlaceholderByDataTemplate", data)
                      : View("ReplacePlaceholderByDataTemplate", data);
-          //  return View("ReplacePlaceholderByDataTemplate", data);
+          
         }
 
         public ActionResult CompareDataTemplates(int TemplateID = 1, String DTTemplateIDList = "",int  ProjectID=0)
@@ -449,6 +467,16 @@ namespace office.Controllers
             return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("DepartmentType", result)
                     : View("DepartmentType", result);
+        }
+        public ActionResult DepartmentType1(int id = 1)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            DepartmentType data = new DepartmentType();
+            IEnumerable<DepartmentType> result = _db.DepartmentTypes.SqlQuery(@"exec getDepartment").ToList<DepartmentType>();
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("DepartmentType1", result)
+                    : View("DepartmentType1", result);
         }
         //public ActionResult GetDevelopersData(int? id, int val = 0)
         //{
@@ -541,6 +569,17 @@ namespace office.Controllers
 
             }
         }
-
+        public ActionResult DownloadFile(string path)
+        {
+            Response.ContentType = "application/docx";
+            Response.AddHeader("Content-Disposition", "inline;  filename=MyFile.docx");
+            //Response.AppendHeader("Content-Disposition", "attachment; filename=MyFile.docx");
+            Response.TransmitFile(Server.MapPath(path));
+            Response.End();
+            return    Request.IsAjaxRequest()
+              ? (ActionResult)PartialView("DownloadFile")
+              : View("DownloadFile");
+        }
+            
     }
 }

@@ -57,6 +57,17 @@ namespace office.Models
         public string DepartmentName { get; set; }
         public int? TotalRows { get; set; }
     }
+    public class GeeratedDocumentList
+    {
+        [Key]
+        public int DocumentID { get; set; }
+        public int TemplateID { get; set; }
+        public string TemplateName { get; set; }
+        public string FilePath  { get; set; } 
+        public string Createddate { get; set; }
+        public string DepartmentName { get; set; }
+        public int? TotalRows { get; set; }
+    }
     public class DocCreationTemplate
     {
         [Key]
@@ -103,14 +114,14 @@ namespace office.Models
         public string Description { get; set; }
        
     }
-    public class DocumentList
-    {
-        [Key]
-        public int TemplateID { get; set; }
-        public string DocumentName { get; set; }   
-        public string Path { get; set; }
-        public int? TotalRows { get; set; }
-    }
+    //public class DocumentList
+    //{
+    //    [Key]
+    //    public int TemplateID { get; set; }
+    //    public string DocumentName { get; set; }   
+    //    public string Path { get; set; }
+    //    public int? TotalRows { get; set; }
+    //}
 }
 
 
