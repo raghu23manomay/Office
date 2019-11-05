@@ -1,0 +1,60 @@
+﻿@model office.Models.RuleDescription
+<div class="row">
+    <div class="ibox " style="margin-top: 35px;">
+        <div class="ibox-title">
+            <div class="row">
+                <div class="col-sm-6"> <h5> Title</h5></div>
+                <div class="col-sm-6"> <h5> Description</h5></div>
+            </div>
+        </div>
+
+        <div class="ibox-content">
+            <div class="row">
+                <div class="form-group ">
+                    <div class="col-sm-6 Rightside ">
+                        Rule Number:-
+                    </div>
+                    <div class="col-sm-6 pull-right ">
+                        @Model.rule_no
+                    </div>
+
+                </div>
+                <hr />
+                <div class="form-group " style="padding-top:10px; ">
+                    <div class="col-sm-6 Rightside ">
+                        Page No:-
+                    </div>
+                    <div class="col-sm-6 pull-right ">
+                        @Model.page_no
+                    </div>
+
+                </div>
+                <hr />
+                <div class="form-group " style="padding-top:10px; ">
+                    <div class="col-sm-6 Rightside ">
+                        Rule Name:-
+                    </div>
+                    <div class="col-sm-6 pull-right ">
+                        @Model.name
+                    </div>
+
+                </div>
+                <hr />
+                <div class="form-group " style="padding-top:10px; ">
+                    <div class="col-sm-6 Rightside ">
+                        Rule Description:-
+                    </div>
+                    <div class="col-sm-6 pull-right ">
+                        @Model.name
+                    </div>
+
+                </div> <hr />
+
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+
+
