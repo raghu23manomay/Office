@@ -29,8 +29,10 @@ namespace office.Models
         public IEnumerable<AssistantDetailsData> AssistantDetailsData { get; set; }
         public IEnumerable<DeveloperSideContactPerson> DeveloperSideContactPersons { get; set; }
         public IEnumerable<OfficeSideContactPerson> OfficeSideContactPersons { get; set; }
-        
+        public IEnumerable<CustomPlaceholders> CustomPlaceholders { get; set; }
+
     }
+     
     public class ProjectsDataWithValue
     {
         [Key]
@@ -40,6 +42,7 @@ namespace office.Models
         public string TemplateName { get; set; }
         public string DataTemplateName { get; set; }
         public string TemplateDescription { get; set; }
+        public string FilePath { get; set; }
     }
     public class DeveloperData
     {
@@ -107,6 +110,15 @@ namespace office.Models
         public int? AssistanceID { get; set; }
         public int? DTTemplateID { get; set; }
         public String DataTemplateName { get; set; }
+        public int? TemplateID { get; set; }
+        
+    }
+    public class SaveCustomField 
+    {
+        [Key]
+        public int FieldID { get; set; }
+        public String Value { get; set; }
+
     }
     public class DeveloperSideContactPerson
     {

@@ -60,6 +60,18 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\..\placment backup date 27_05_2019\MVC 1_10_2018\mvc\mvc\bin\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Spire.Doc, Version=7.11.0.41046, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>packages\FreeSpire.Doc.7.11.0\lib\net46\Spire.Doc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Spire.License, Version=1.3.7.46, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <HintPath>packages\FreeSpire.Doc.7.11.0\lib\net46\Spire.License.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=5.11.0.2046, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>packages\FreeSpire.Doc.7.11.0\lib\net46\Spire.Pdf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -75,6 +87,10 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Xceed.Document.NET, Version=1.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Xceed.Document.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -220,18 +236,6 @@
     <Content Include="css\plugins\toastr\toastr.min.css" />
     <Content Include="css\plugins\touchspin\jquery.bootstrap-touchspin.min.css" />
     <Content Include="css\style.css" />
-    <Content Include="dist\jstree.js" />
-    <Content Include="dist\jstree.min.js" />
-    <Content Include="dist\themes\default-dark\32px.png" />
-    <Content Include="dist\themes\default-dark\40px.png" />
-    <Content Include="dist\themes\default-dark\style.css" />
-    <Content Include="dist\themes\default-dark\style.min.css" />
-    <Content Include="dist\themes\default-dark\throbber.gif" />
-    <Content Include="dist\themes\default\32px.png" />
-    <Content Include="dist\themes\default\40px.png" />
-    <Content Include="dist\themes\default\style.css" />
-    <Content Include="dist\themes\default\style.min.css" />
-    <Content Include="dist\themes\default\throbber.gif" />
     <Content Include="email_templates\action.html" />
     <Content Include="email_templates\alert.html" />
     <Content Include="email_templates\billing.html" />
@@ -1963,6 +1967,11 @@
     <Content Include="Views\RuleBook\DescriptionRule.cshtml" />
     <Content Include="Views\RuleBook\SubRules.cshtml" />
     <Content Include="Views\RuleBook\treedemo.cshtml" />
+    <Content Include="Views\Template\DocumentList.cshtml" />
+    <Content Include="Views\Template\GeneratedDocumentList.cshtml" />
+    <Content Include="Views\Template\DocumentGrid.cshtml" />
+    <Content Include="Views\Template\DepartmentType1.cshtml" />
+    <Content Include="Views\Template\CompareDataTemplates.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1972,6 +1981,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="dist\themes\default-dark\" />
+    <Folder Include="dist\themes\default\" />
     <Folder Include="js\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="js\tiny_mce\plugins\spellchecker\includes\" />
     <Folder Include="UploadFile\" />

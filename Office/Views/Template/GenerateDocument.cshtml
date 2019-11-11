@@ -1,66 +1,72 @@
 ﻿
 @model  office.Models.DocTemplateList
 
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="~/css/style.css" rel="stylesheet" />
 
+ 
 <div class="modal-header">
     <button type="button" class="close">&times;</button>
     <h4 class="modal-title">Generate Document</h4>
-        
+
 </div>
 
 <div class="modal-body">
     <div class="wrapper wrapper-content1 ">
-         
 
-            <div class="row" id="TemplateData">
-                <div class="col-md-3">
-                    <div class="timeline-row post-even">
-                        <div class="ibox" >
-                            <div class="">
-                                <h5 class="text-success no-margin headingsize18">
-                                    Template
-                                    <button class="btn-white btn btn-xs" id="btnCompare" type="button"> Compare </button>
-                                </h5>
-                                
-                            </div>
-                            <hidden id="hdnTemplateID" value="@Model.TemplateID"></hidden>
-                            <div class="" id="DataTemplateList">
-                            </div>
+
+        <div class="row" id="TemplateData">
+            <div class="col-md-3">
+                <div class="timeline-row post-even">
+                    <div class="ibox">
+                        <div class="">
+                            <h5 class="text-success no-margin headingsize18">
+                                Template
+                                <button class="btn-white btn btn-xs" id="btnCompare" type="button"> Compare </button>
+                            </h5>
+
+                        </div>
+                        <hidden id="hdnTemplateID" value="@Model.TemplateID"></hidden>
+                        <div class="" id="DataTemplateList">
+                        </div>
+                        <div class="">
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="timeline-row post-even ">
-                       
- 
-                            <div class="" id="ProjectGrid">
-                                <div class="table-responsive">
-                                </div>
-                            </div> 
+            </div>
+            <div class="col-md-9">
+                <div class="timeline-row post-even ">
+
+
+                    <div class="" id="ProjectGrid">
+                        <div class="table-responsive">
+                        </div>
                     </div>
                 </div>
             </div>
-        
+        </div>
+
     </div>
-    </div>
-    <div class="loader"></div>
-    <input type="text" id="saveuserid" value="" class="hidden" />
-    <input type="text" id="saveusername" value="" class="hidden" />
-    <input type="text" id="saverolename" value="" class="hidden" />
-    <hr />
-    <script src="~/js/jquery-2.1.1.js"></script>
- 
-    <script>
-       
+</div>
+<div class="loader"></div>
+<input type="text" id="saveuserid" value="" class="hidden" />
+<input type="text" id="saveusername" value="" class="hidden" />
+<input type="text" id="saverolename" value="" class="hidden" />
+<hr />
+
+@*<script src="~/js/inspinia.js"></script>*@
+<script src="~/js/jquery-2.1.1.js"></script>
+
+<script>
+
     $(document).ready(function () {
         $('.close').on("click", function (e) {
             $('#mdlGenerate').hide();
         });
-       
-        
+
+
         var TemplateID = @ViewData["TemplateID"];
              $.ajax({
                 url: "@Url.Action("GetProjectData", "Template")",
@@ -101,8 +107,8 @@
 
 
     });
-    </script>
-    <script>
+</script>
+<script>
     $("#btnCompare").on("click", function (e) {
 
         var chkArray = [];
@@ -112,7 +118,7 @@
         });
         var selected;
         selected = chkArray.join(',');
-        
+
          var TemplateID = @ViewData["TemplateID"];
          $.ajax({
                 url: "@Url.Action("CompareDataTemplates", "Template")",
@@ -127,11 +133,11 @@
 
                 success: function (data) {
                     $('#TemplateData').html(data);
-                   
+
                 },
                 error: function (error) {
                     eval(error);
                 }
             });
     });
-    </script>
+</script>

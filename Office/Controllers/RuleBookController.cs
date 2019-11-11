@@ -64,11 +64,17 @@ namespace office.Controllers
             IEnumerable<RuleBookData> result = _db.RuleBookData.SqlQuery(@"exec UspGetRuleBook @SubmenuID ",
                 new SqlParameter("@SubmenuID", SubmenuID))
                 .ToList<RuleBookData>();
-            return Request.IsAjaxRequest()
-                    ? (ActionResult)PartialView("SubRules", result)
-                    : View("SubRules", result);
-        }
-
+            if(result.Count()==0)
+            {
+                return Json("fail");  
+            }
+         else
+            {
+                return Request.IsAjaxRequest()
+                      ? (ActionResult)PartialView("SubRules", result)
+                      : View("SubRules", result);
+            }
+        } 
        
         public ActionResult DescriptionRule(string rule_no="1" )
         {

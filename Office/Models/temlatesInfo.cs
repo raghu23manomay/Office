@@ -28,16 +28,20 @@ namespace office.Models
         public int EmployeeID { get; set; } 
         public String EmployeeName { get; set; } 
     }
+    public class  CustomPlaceholders
+    {
+        [Key]
+        public int FieldID { get; set; }
+        public String PlaceHolderName { get; set; }
+        public String Value { get; set; }
+    }
     public class PerformaPlaceholders
     {
         [Key]
-        
         public String PlaceHolderName { get; set; }
         public String TableName { get; set; }
-
     }
-    
-        public class DepartmentType
+    public class DepartmentType
     {
         [Key]
         public int DepartmentId { get; set; }

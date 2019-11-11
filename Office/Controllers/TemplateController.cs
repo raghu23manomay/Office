@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -9,8 +10,8 @@ using Calibration.Models;
 using office.Models;
 using PagedList;
 using Spire.Doc;
-using Spire.Doc.Documents;
-using Xceed.Words.NET;
+using Spire.Doc.Documents; 
+//using Xceed.Words.NET;
 
 namespace office.Controllers
 {
@@ -66,7 +67,14 @@ namespace office.Controllers
                     ? (ActionResult)PartialView("Placeholder", result)
                     : View("Placeholder", result);
         }
-       
+        public ActionResult GetCustomPlaceholder(int TemplateID=0)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            IEnumerable<CustomPlaceholders> result = _db.CustomPlaceholders.SqlQuery(@"exec usp_GetCustomPlaceholder @TemplateID", new SqlParameter("@TemplateID",  TemplateID)).ToList<CustomPlaceholders>();
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("CustomPlaceholder", result)
+                    : View("CustomPlaceholder", result);
+        }
 
         public ActionResult SaveTemplate(temlatesInfo t  )
         {
@@ -221,6 +229,7 @@ namespace office.Controllers
         public ActionResult GetProjectData(int? TemplateID, int DTTemplateID=0,int ProjectID=1)
         {
 
+
             ProjectsData data = new ProjectsData();
             try
             {
@@ -265,6 +274,13 @@ namespace office.Controllers
                      new SqlParameter("@DTTemplateID", DTTemplateID)
                         ).ToList<DeveloperSideContactPerson>();
                     data.DeveloperSideContactPersons = result5;
+
+
+                    //  --here
+                    IEnumerable<CustomPlaceholders> resultCustomPlaceholder = _db.CustomPlaceholders.SqlQuery(@"exec usp_GetCustomPlaceholder @TemplateID,@DtTemplateID",
+                    new SqlParameter("@TemplateID", TemplateID),
+                     new SqlParameter("@DTTemplateID", DTTemplateID)).ToList<CustomPlaceholders>();
+                    data.CustomPlaceholders = resultCustomPlaceholder;
                 }
                 else
                 {
@@ -318,10 +334,14 @@ namespace office.Controllers
                     IEnumerable<OfficeSideContactPerson> result6 = _db.OfficeSideContactPersons.SqlQuery(@"exec GetProjectDetailsForTemplate
                  @ProjectId,@Tno,@DTTemplateID",
                     new SqlParameter("@ProjectId", ProjectID),
-                    new SqlParameter("@Tno", 5),
+                    new SqlParameter("@Tno", 6),
                     new SqlParameter("@DTTemplateID", DTTemplateID)
                        ).ToList<OfficeSideContactPerson>();
                     data.OfficeSideContactPersons = result6;
+                    IEnumerable<CustomPlaceholders> resultCustomPlaceholder = _db.CustomPlaceholders.SqlQuery(@"exec usp_GetCustomPlaceholder @TemplateID,@DtTemplateID",
+                       new SqlParameter("@TemplateID", TemplateID),
+                        new SqlParameter("@DTTemplateID", DTTemplateID)).ToList<CustomPlaceholders>();
+                    data.CustomPlaceholders = resultCustomPlaceholder;
                 }
                 data.TemplateID = TemplateID;
             }
@@ -335,9 +355,10 @@ namespace office.Controllers
             {
                 OfficeDbContext _db = new OfficeDbContext();
                 var result = _db.ProjectsDataWithValue.SqlQuery(@"exec usp_ReplacePlaceholder
-               @TemplateID,@dtTemplateID",
+               @TemplateID,@dtTemplateID,@withcolor",
                    new SqlParameter("@TemplateID", TemplateID),
-                   new SqlParameter("@DtTemplateID", DtTemplateID)
+                   new SqlParameter("@DtTemplateID", DtTemplateID),
+                   new SqlParameter("@withcolor", 1)
                    ).ToList<ProjectsDataWithValue>();
                 
                 data = result.FirstOrDefault();
@@ -365,18 +386,20 @@ namespace office.Controllers
 
                 doc.SaveToFile(fileName, FileFormat.Docx2013);
 
-
+              
                 var result2 = _db.Database.ExecuteSqlCommand(@"exec uspSaveDocument 
                    @TemplateID, @FilePath",
                   new SqlParameter("@TemplateID", TemplateID),
                   new SqlParameter("@FilePath", filePath)
-               ); 
+               );
+
+                data.FilePath = filePath;
 
                 //Process.Start("WINWORD.EXE", fileName);
                 //Response.TransmitFile(fileName);
                 //Response.Flush();
                 //Response.End();
-                 
+
             }
             catch (Exception e) { }
             return Request.IsAjaxRequest()
@@ -388,7 +411,7 @@ namespace office.Controllers
         public ActionResult CompareDataTemplates(int TemplateID = 1, String DTTemplateIDList = "",int  ProjectID=0)
         { 
                
-                OfficeDbContext _db = new OfficeDbContext();
+          OfficeDbContext _db = new OfficeDbContext();
             try
             {
                 IEnumerable<ProjectsDataWithValue> result = _db.ProjectsDataWithValue.SqlQuery(@"exec uspCompareTemplate
@@ -406,16 +429,39 @@ namespace office.Controllers
              
         }
         [HttpPost]
-         public ActionResult GenerateDataTemplate(ProjectsTemplateData sp )
+         public ActionResult GenerateDataTemplate(ProjectsTemplateData sp, List<SaveCustomField> SaveCustomField)
         {
             try
             {
 
                 OfficeDbContext _db = new OfficeDbContext();
+                DataTable dtCustomField = new DataTable();
+                dtCustomField.Columns.Add("FieldID", typeof(int));
+                dtCustomField.Columns.Add("Value", typeof(string));
 
+                // Adding CustomField In DT
+                if (SaveCustomField != null)
+                {
+                    if (SaveCustomField.Count > 0)
+                    {
+                        foreach (var item in SaveCustomField)
+                        {
+                            DataRow dr_CustomField = dtCustomField.NewRow();
+                            dr_CustomField["FieldID"] = item.FieldID;
+                            dr_CustomField["Value"] = item.Value;
+                            dtCustomField.Rows.Add(dr_CustomField);
+                        }
+                    }
+                }
+                SqlParameter tvpParamCustomField = new SqlParameter();
+                tvpParamCustomField.ParameterName = "@CustomField";
+                tvpParamCustomField.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamCustomField.Value = dtCustomField;
+                tvpParamCustomField.TypeName = "UT_CustomField";
 
-                var result = _db.Database.ExecuteSqlCommand(@"exec USP_GenerateDataTemplate
-                @DTTemplateID,@DataTemplateName,@ProjectID,@DeveloperID,@CoordinatorID,@ConsultantId,@contractorID,@AssistanceID",
+                var result = _db.Database.ExecuteSqlCommand(@"exec USP_GenerateDataTemplate @TemplateID,
+                @DTTemplateID,@DataTemplateName,@ProjectID,@DeveloperID,@CoordinatorID,@ConsultantId,@contractorID,@AssistanceID,@CustomField",
+                new SqlParameter("@TemplateID", sp.TemplateID),
                 new SqlParameter("@DTTemplateID", sp.DTTemplateID),
                 new SqlParameter("@DataTemplateName", sp.DataTemplateName),
                 new SqlParameter("@ProjectID", sp.ProjectID),
@@ -424,8 +470,8 @@ namespace office.Controllers
                 new SqlParameter("@ConsultantId", sp.ConsultantId),
                 new SqlParameter("@contractorID", sp.contractorID),
                 new SqlParameter("@AssistanceID", sp.AssistanceID)
-             
-
+                , tvpParamCustomField
+                
 
             );
 
