@@ -20,7 +20,7 @@
                     <th>Duration </th>
                     <th>Start Date </th>
                     <th>End Date   </th>
-                    <th>Active  </th>
+                    <th>Status  </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -41,11 +41,14 @@
                     <td style="width: 85px;"> @item.EndDate.ToString("yyyy-MM-dd")   </td>
                     <td> @item.IsActive  </td>
                     <td>
+                        <a class="l" href="../Template/DocTemplateList?ProjectID=@item.ProjectID" name="@item.ProjectID" id="linkProject">
+                            <i class="fa fa-mail-forward" style="color: darkgrey;" aria-hidden="true"></i>
+                        </a>
                         <a class="edit" href="EditProject?id=@item.ProjectID" id="EditMember">
                             <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
                         </a>
                         <a class="Delete" name="@item.ProjectID" id="DeleteProject">
-                            <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                            <i class="fa fa-trash" style="color: darkgrey;display:none" aria-hidden="true"></i>
                         </a>
 
                     </td>

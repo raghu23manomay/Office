@@ -1,0 +1,121 @@
+﻿@model IEnumerable<office.Models.ConsultantTypeList>
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+<script src="~/js/jquery-2.1.1.js"></script>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+
+                    <th>#</th>
+                    <th>Name </th>
+                    <th>Status </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ConsultantTypeID</td>
+                        <td>@item.ConsultantType</td>
+                        <td>@item.IsActive</td>
+                        <td>
+
+                            <a class="edit" href="addAuthority?id=@item.ConsultantTypeID" id="EditMember">
+                                <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                            </a>
+                            <a class="Delete" name="@item.ConsultantTypeID" id="DeleteMember">
+                                <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                            </a>
+                            @*<div class="ibox-tools" style="text-align:left!important">
+
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+                <i class="">...</i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>
+                    <a href="addAuthority?id=@item.AuthorityID">Edit</a>
+                </li>
+
+            </ul>
+
+        </div>*@
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+                @if (Model.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+                }
+            </div>
+        </div> 
+</div>
+
+<script>
+    $(document).ready(function () { 
+        $('#mgrid .pagination li a').on('click', function (e) { 
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('.loader').show();
+            var temp = $(this).attr('href');
+
+           
+            var pageid = temp.replace('/?page=', '');
+
+            $.ajax({
+                url: "@Url.Action("LoadAuthorityGrid", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    CName: $('#CustomerFilter').val(), 
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+
+        });
+
+        $('.Delete').click(function () {
+            if (confirm("Are you sure want to deleted!"))
+            {
+            var Id = $(this).attr('name');
+            $.ajax({
+                url: "@Url.Action("DeleteMaster", "Master")",
+                data: { Id: Id, MasterName: 'Authority' },
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    var mgs = data.replace(/"/g, "");
+                    alert(mgs);
+                   }
+            });
+            }
+                                 
+        });
+    });
+
+</script>

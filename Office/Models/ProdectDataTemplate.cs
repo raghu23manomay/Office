@@ -134,4 +134,13 @@ namespace office.Models
         public string OfficeContactPersonName { get; set; }
         public bool isContactApplied { get; set; }
     }
+    public class EmptyTemplateData 
+    {
+        [Key]
+         
+        public int placeholder { get; set; }
+        public int value { get; set; }
+        
+        
+    }
 }

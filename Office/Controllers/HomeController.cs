@@ -91,6 +91,7 @@ namespace office.Controllers
             ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
             ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0);
             ViewData["DeveloperList"] = binddropdown("DeveloperList", 0);
+            ViewData["CompanyNameList"] = binddropdown("CompanyNameList", 0); 
             ViewData["ConsultantList"] = binddropdown("ConsultantList", 0);
             ViewData["ContracterList"] = binddropdown("ContracterList", 0);
             ViewData["ProjectStatusList"] = binddropdown("ProjectStatusList", 0);
@@ -114,6 +115,7 @@ namespace office.Controllers
             ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
             ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0);
             ViewData["DeveloperList"] = binddropdown("DeveloperList", 0);
+            ViewData["CompanyNameList"] = binddropdown("CompanyNameList", 0);
             ViewData["ConsultantList"] = binddropdown("ConsultantList", 0);
             ViewData["ContracterList"] = binddropdown("ContracterList", 0);
             ViewData["ProjectStatusList"] = binddropdown("ProjectStatusList", 0);
@@ -154,12 +156,19 @@ namespace office.Controllers
         public ActionResult GetDeveloperDetailsForProject(int? ProjectID)
         {
             OfficeDbContext _db = new OfficeDbContext();
-
-            IEnumerable<DeveloperDetails> result = _db.DFDeveloperDetails.SqlQuery(@"exec GetProjectDeveloperDetails
+            try
+            {
+                IEnumerable<DeveloperDetails> result = _db.DFDeveloperDetails.SqlQuery(@"exec GetProjectDeveloperDetails
                @ProjectId",
-               new SqlParameter("@ProjectId", ProjectID)
-               ).ToList<DeveloperDetails>();
-            return View("_DeveloperDetailsForProject", result);
+                   new SqlParameter("@ProjectId", ProjectID)
+                   ).ToList<DeveloperDetails>();
+                return View("_DeveloperDetailsForProject", result);
+            }
+            catch (Exception ex)
+            {
+                return View("_DeveloperDetailsForProject");
+            }
+            
 
         }
 

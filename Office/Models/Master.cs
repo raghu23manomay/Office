@@ -380,6 +380,23 @@ namespace office.Models
         public int CreatedBy { get; set; }        
 
     }
+    public class ConsultantTypeMaster
+    {
+        [Key]
+        public int? ConsultantTypeID { get; set; }
+        public string ConsultantType { get; set; }
+        public bool IsActive { get; set; }
+    }
+    public class ConsultantTypeList
+    {
+        [Key]
+        public int? ConsultantTypeID { get; set; }
+        public string ConsultantType { get; set; }
+        public string IsActive { get; set; } 
+        public int? TotalRows { get; set; }
+
+    }
+
 }
 
 

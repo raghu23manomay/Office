@@ -29,80 +29,84 @@
 
 <div class="row" id="TemplateData">
     @Html.HiddenFor(a => a.TemplateID, new { @id = "TemplateID" })
-    <div class="col-lg-12">
-        
-                <div class="row">
-                    <div class="col-md-5">
-                        <input id="DataTemplateName" type="text" placeholder="DataTemplate Name" value="@Model.DataTemplateName" class="form-control">
-                    </div>
-                    <div class="col-md-7">
-                        <strong>@Model.Name</strong> @Model.ShortName
-                        <small class="text-muted">  @Model.Road @Model.Goan  @Model.Taluka    @Model.District </small>
-                    </div>
-                </div>
-            </div> 
-             
-     
-    <div class="col-lg-12">
-        <div class="col-md-4">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
 
-
-            <div class="ibox float-e-margins">
-                <div class="ibox-content">
-                    <div class="ibox-title" style="display:table-row;">
-                        <label> Developers</label>
-
-                    </div>
-                    <div class="col-sm-12">
-                        <table class="table" id="developerlist">
-
-                            <tbody>
-                                @foreach (var item in Model.DeveloperDatalist)
-                                {
-                                    <tr>
-                                        <td>
-                                            <div class="" style="margin-left: 0!important">
-
-
-                                                @if (item.isDeveloperApplied == true)
-                                                {
-                                                    <input type="checkbox" class="i-checks chkdev" divName="checkboxDiv_@item.DeveloperId" checked="checked" id="@item.DeveloperId">
-
-                                                }
-                                                else
-                                                {
-                                                    <input type="checkbox" class="i-checks chkdev" name="sDev" id="@item.DeveloperId">
-                                                    <div id="checkboxDiv_@item.DeveloperId" class="checkboxDiv">
-
-                                                    </div>
-                                                }
-
-
-                                            </div>
-                                        </td>
-                                        <td class="hidden multideveloper" id="@item.OwnershipId">@item.DeveloperId</td>
-                                        <td>@item.Name</td>
-                                         
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="row">
+                <input id="DataTemplateName" type="text" placeholder="DataTemplate Name" value="@Model.DataTemplateName" class="form-control">
             </div>
-            <div class="ibox-content">
-                <div class="ibox-title" style="display:table-row;">
-                    <label> Coordinator</label>
+            <div class="row">
 
-                </div>
-                <div class="col-sm-12">
-                    <table class="table" id="Coordinatorlist">
-                        <thead>
 
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.CoordinatorDetailsData)
+                <strong>@Model.Name</strong> <br />@Model.ShortName
+                <small class="text-muted">  @Model.Road @Model.Goan  @Model.Taluka    @Model.District </small>
+
+            </div>
+        </div>
+
+
+
+        <div class="ibox-content">
+            <div class="ibox-title" style="display:table-row;">
+                <label> Developers</label>
+
+            </div>
+            <div class="Row">
+                <table class="table" id="developerlist" style="margin-bottom: 0px!important">
+
+                    <tbody>
+                        @if (Model.DeveloperDatalist != null)
+                        {
+                            foreach (var item in Model.DeveloperDatalist)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="" style="margin-left: 0!important">
+
+
+                                            @if (item.isDeveloperApplied == true)
+                                            {
+                                                <input type="checkbox" class="i-checks chkdev" divName="checkboxDiv_@item.DeveloperId" checked="checked" id="@item.DeveloperId">
+
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" class="i-checks chkdev" name="sDev" id="@item.DeveloperId">
+                                                <div id="c
+
+                                                         heckboxDiv_@item.DeveloperId" class="checkboxDiv">
+
+                                                </div>
+                                            }
+
+
+                                        </div>
+                                    </td>
+                                    <td class="hidden multideveloper" id="@item.OwnershipId">@item.DeveloperId</td>
+                                    <td>@item.Name</td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="ibox-content">
+            <div class="ibox-title" style="display:table-row;">
+                <label> Coordinator</label>
+
+            </div>
+            <div class="Row">
+                <table class="table" id="Coordinatorlist" style="margin-bottom: 0px!important">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        @if (Model.CoordinatorDetailsData != null)
+                        {
+                            foreach (var item in Model.CoordinatorDetailsData)
                             {
                                 <tr>
                                     <td>
@@ -132,28 +136,29 @@
                                     </td>
                                 </tr>
                             }
-
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
-
-
-
         </div>
-        <div class="col-md-4">
-            <div class="ibox-content">
-                <div class="ibox-title" style="display:table-row;">
-                    <label> Assistant List</label>
 
-                </div>
-                <div class="col-sm-12">
-                    <table class="table" id="assistantlist">
-                        <thead>
 
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.AssistantDetailsData)
+
+
+        <div class="ibox-content">
+            <div class="ibox-title" style="display:table-row;">
+                <label> Assistant List</label>
+
+            </div>
+            <div class="Row">
+                <table class="table" id="assistantlist" style="margin-bottom: 0px!important">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        @if (Model.AssistantDetailsData != null)
+                        {
+                            foreach (var item in Model.AssistantDetailsData)
                             {
                                 <tr>
                                     <td>
@@ -184,23 +189,25 @@
                                 </tr>
 
                             }
-
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
-            <div class="ibox-content">
-                <div class="ibox-title" style="display:table-row;">
-                    <label> Developer Side Contact Persons</label>
+        </div>
+        <div class="ibox-content">
+            <div class="ibox-title" style="display:table-row;">
+                <label> Developer Side Contact Persons</label>
 
-                </div>
-                <div class="col-sm-12">
-                    <table class="table" id="DeveloperSidContact">
-                        <thead>
+            </div>
+            <div class="Row">
+                <table class="table" id="DeveloperSidContact" style="margin-bottom: 0px!important">
+                    <thead>
 
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.DeveloperSideContactPersons)
+                    </thead>
+                    <tbody>
+                        @if (Model.DeveloperSideContactPersons != null)
+                        {
+                            foreach (var item in Model.DeveloperSideContactPersons)
                             {
                                 <tr>
                                     <td>
@@ -230,102 +237,94 @@
                                     </td>
                                 </tr>
                             }
+                        }
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="ibox-title" style="display:table-row;">
-                    <label> Office Side Contact Persons</label>
-
-                </div>
-                <div class="col-sm-12">
-                    <table class="table" id="DeveloperSidContact">
-                        <thead>
-
-                        </thead>
-                        <tbody>
-                            @if (Model.OfficeSideContactPersons != null)
-                            {
-                                foreach (var item in Model.OfficeSideContactPersons)
-                                {
-                                    <tr>
-                                        <td>
-                                            <div class="" style="margin-left: 0!important">
-                                                <div>
-
-                                                    @if (item.isContactApplied == true)
-                                                    {
-                                                        <input type="checkbox" class="i-checks chkOfficeSide" checked="checked" id="@item.OfficeContactPersonId">
-                                                    }
-                                                    else
-                                                    {
-                                                        <input type="checkbox" class="i-checks chkOfficeSide" id="@item.OfficeContactPersonName">
-                                                    }
-
-
-                                                </div>
-
-                                            </div>
-
-                                        </td>
-
-                                        <td class="hidden multidevelopercontactperson">@item.OfficeContactPersonId</td>
-                                        <td>
-                                            @item.OfficeContactPersonName
-
-                                        </td>
-                                    </tr>
-                                }
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class=" float-e-margins border-bottom">
-                <div class="ibox-title">
-                    <label>Custom Field </label>
+        <div class="ibox-content">
+            <div class="ibox-title" style="display:table-row;">
+                <label> Office Side Contact Persons</label>
 
-                </div>
-                <div class="ibox-content">
+            </div>
+            <div class="Row">
+                <table class="table" id="DeveloperSidContact">
+                    <thead>
 
-                    @foreach (var item in Model.CustomPlaceholders)
+                    </thead>
+                    <tbody>
+
+                        @if (Model.OfficeSideContactPersons != null)
+                        {
+                            foreach (var item in Model.OfficeSideContactPersons)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="" style="margin-left: 0!important">
+                                            <div>
+
+                                                @if (item.isContactApplied == true)
+                                                {
+                                                    <input type="checkbox" class="i-checks chkOfficeSide" checked="checked" id="@item.OfficeContactPersonId">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" class="i-checks chkOfficeSide" id="@item.OfficeContactPersonName">
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="hidden multidevelopercontactperson">@item.OfficeContactPersonId</td>
+                                    <td>
+                                        @item.OfficeContactPersonName
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="ibox-content">
+            <div class="ibox-title">
+                <label>Custom Field</label>
+            </div>
+            <div class="col-sm-12">
+                @if (Model.OfficeSideContactPersons != null)
+                {
+                    foreach (var item in Model.CustomPlaceholders)
                     {
                         <div class="row">
                             <div class="col-md-4">
                                 @item.PlaceHolderName
                             </div>
                             <div class="col-md-8">
-                                
-                                <input type="text" id="@item.PlaceHolderName" fid="@item.FieldID" class="form-control CustomFieldName" fVal="@item.Value" value="@item.Value"  />
+
+                                <input type="text" id="@item.PlaceHolderName" fid="@item.FieldID" class="form-control CustomFieldName" fVal="@item.Value" value="@item.Value" />
                             </div>
                         </div>
                     }
-
-
-                </div>
+                }
             </div>
-           
-           
         </div>
-        <div class="ibox-content">
 
-            <div class="col-md-8">
+
+        <div class="ibox-content">
+            <div class="row">
                 <div class="pull-right">
                     <button class="btn btn-primary" id="btnGenerateDataTemplate" type="button">Save Data Templare</button>
-                    <button class="btn btn-primary" id="btnGenerateDocument" type="button">Generate Document</button>
-
+                    <button class="btn btn-primary" id="btnGenerateDocument" type="button" style="display:none;">Generate Document</button>
                 </div>
             </div>
         </div>
     </div>
-        </div>
-
-        <script>
+</div>
+<script>
             function getSearchParams(k) {
                 var p = {};
                 location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (s, k, v) { p[k] = v })
@@ -334,9 +333,9 @@
 
             $(document).ready(function () {
                 var TemplateID = $('#TemplateID').val();
-                
+
                 $('.DTTemplateID').on("click", function (e) {
-                     
+
             var TemplateID = $('#TemplateID').val();
              var DTTemplateID = this.id;
             $.ajax({
@@ -356,13 +355,13 @@
                     eval(error);
                 }
             });
-             
+
         });
         $('#btnGenerateDocument').on("click", function (e) {
 
             var TemplateID = $('#hdnTemplateID').val();
            var DtTemplateID = $('#DTTemplateID').val();
-            
+
             $.ajax({
                 url: "@Url.Action("ReplacePlaceholderByDataTemplate", "Template")",
                 data:
@@ -404,7 +403,7 @@
             });
 
             //for custom field
-            
+
             var idArrCustomField = [];
             $('.CustomFieldName').each(function (k, v) {
               //  var fid = $(this).attr("fid");
@@ -428,7 +427,7 @@
                 url: '/Template/GenerateDataTemplate',
                 data:
                 {
-                    
+
                     DTTemplateID: DTTemplateID,
                     ProjectID: $('#ProjectID').val(),
                     DeveloperID: devid ,
@@ -441,7 +440,22 @@
                     SaveCustomField: SaveCustomField
                 },
                 success: function (data) {
-                  //  $('#ProjectGrid').html(data);
+                    $.ajax({
+                        url: "@Url.Action("GenerateDocument", "Template")",
+                        data:
+                        {
+                            id: TemplateID
+                        },
+                        dataType: "text",
+
+                        success: function (data) {
+
+                            $('#mdlGeneratemodel').html(data);
+                        },
+                        error: function (error) {
+                            eval(error);
+                        }
+                    });
                     alert(data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -450,32 +464,9 @@
 
         });
 
-        //$('.chkdev').on('click', function () {
 
-
-        //    $.ajax({
-        //        type: 'POST',
-        //        dataType: 'text',
-        //        url: '/Template/GetDevelopersData',
-        //        data: {
-        //            id: 8,
-        //            val: 2
-        //        },
-        //        success: function (data) {
-        //            debugger;
-        //          //  $(this).closest("div").html(data);
-
-        //            $(".checkboxDiv").html(data);
-        //        },
-        //        error: function (XMLHttpRequest, textStatus, errorThrown) {
-        //            alert(errorThrown);
-        //        }
-
-        //    });
-
-        //});
     });
 
-        </script>
+</script>
 
 

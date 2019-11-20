@@ -83,7 +83,7 @@ namespace office.Models
       
         public DbSet<DeveloperSideContactPerson> DeveloperSideContactPersons { get; set; }
         public DbSet<OfficeSideContactPerson> OfficeSideContactPersons { get; set; }
-        
+        public DbSet<EmptyTemplateData> EmptyTemplateData { get; set; }
     }
     
 }

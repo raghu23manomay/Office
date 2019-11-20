@@ -115,8 +115,9 @@ namespace office.Controllers
         //            ? (ActionResult)PartialView("TemplateGrid", itemsAsIPagedList)
         //            : View("TemplateGrid", itemsAsIPagedList);
         //}
-        public ActionResult DocTemplateList(int? page, int DepartmentID = 0)
-    { 
+        public ActionResult DocTemplateList( int ProjectID=0)
+    {
+            ViewData["ProjectID"] = ProjectID;
         return Request.IsAjaxRequest()
                 ? (ActionResult)PartialView("DocTemplateList")
                 : View("DocTemplateList");
@@ -348,53 +349,77 @@ namespace office.Controllers
             catch (Exception e) { }
             return View("ProjectData", data);
         }
-        public ActionResult ReplacePlaceholderByDataTemplate(int TemplateID=1,int DtTemplateID=1)
+        public ActionResult EmptyTemplateData(int TemplateID = 1, int DtTemplateID = 1, int EmptyField = 0)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                IEnumerable<EmptyTemplateData> result = _db.EmptyTemplateData.SqlQuery(@"exec usp_ReplacePlaceholder
+                       @TemplateID,@dtTemplateID,@withcolor,@EmptyField",
+                   new SqlParameter("@TemplateID", TemplateID),
+                   new SqlParameter("@DtTemplateID", DtTemplateID),
+                   new SqlParameter("@withcolor", 1),
+                   new SqlParameter("@EmptyField", 1)
+                   ).ToList<EmptyTemplateData>();
+                var a = result.Count();
+                return Request.IsAjaxRequest()
+                   ? (ActionResult)PartialView("EmptyTemplateData", result)
+                   : View("EmptyTemplateData", result);
+            }
+            catch (Exception e) { }
+           
+            return Request.IsAjaxRequest()
+                     ? (ActionResult)PartialView("EmptyTemplateData")
+                     : View("EmptyTemplateData");
+
+        }
+        public ActionResult ReplacePlaceholderByDataTemplate(int TemplateID=1,int DtTemplateID=1,int EmptyField=0)
         {
             ProjectsDataWithValue data = new ProjectsDataWithValue();
             try
             {
-                OfficeDbContext _db = new OfficeDbContext();
-                var result = _db.ProjectsDataWithValue.SqlQuery(@"exec usp_ReplacePlaceholder
-               @TemplateID,@dtTemplateID,@withcolor",
-                   new SqlParameter("@TemplateID", TemplateID),
-                   new SqlParameter("@DtTemplateID", DtTemplateID),
-                   new SqlParameter("@withcolor", 1)
-                   ).ToList<ProjectsDataWithValue>();
-                
-                data = result.FirstOrDefault();
+                 
+                    OfficeDbContext _db = new OfficeDbContext();
+                    var result = _db.ProjectsDataWithValue.SqlQuery(@"exec usp_ReplacePlaceholder
+               @TemplateID,@dtTemplateID",
+                       new SqlParameter("@TemplateID", TemplateID),
+                       new SqlParameter("@DtTemplateID", DtTemplateID)
+                       ).ToList<ProjectsDataWithValue>();
 
-                Response.Clear();
-                Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment;filename=file1.docx");
-                Response.Charset = "";
-                Response.ContentType = "application/vnd.ms-word";
-                Response.Output.Write(data.TemplateDescription);
-                string folderPath = "~/Document/" + TemplateID;
-                string filePath = "~/Document/"+ TemplateID + "/file-"+TemplateID+"-"+DtTemplateID+".docx";
-                string fileName = Server.MapPath(filePath);
+                    data = result.FirstOrDefault();
 
-                bool exists = System.IO.Directory.Exists(Server.MapPath(folderPath));
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.AddHeader("content-disposition", "attachment;filename=file1.docx");
+                    Response.Charset = "";
+                    Response.ContentType = "application/vnd.ms-word";
+                    Response.Output.Write(data.TemplateDescription);
+                    string folderPath = "~/Document/" + TemplateID;
+                    string filePath = "~/Document/" + TemplateID + "/file-" + TemplateID + "-" + DtTemplateID + ".docx";
+                    string fileName = Server.MapPath(filePath);
 
-                if (!exists)
-                    System.IO.Directory.CreateDirectory(Server.MapPath(folderPath));
-                Document doc = new Document();
-                doc.AddSection();
+                    bool exists = System.IO.Directory.Exists(Server.MapPath(folderPath));
 
-                Paragraph para = doc.Sections[0].AddParagraph();
+                    if (!exists)
+                        System.IO.Directory.CreateDirectory(Server.MapPath(folderPath));
+                    Document doc = new Document();
+                    doc.AddSection();
 
-                para.AppendHTML(data.TemplateDescription);
+                    Paragraph para = doc.Sections[0].AddParagraph();
 
-                doc.SaveToFile(fileName, FileFormat.Docx2013);
+                    para.AppendHTML(data.TemplateDescription);
 
-              
-                var result2 = _db.Database.ExecuteSqlCommand(@"exec uspSaveDocument 
+                    doc.SaveToFile(fileName, FileFormat.Docx2013);
+
+
+                    var result2 = _db.Database.ExecuteSqlCommand(@"exec uspSaveDocument 
                    @TemplateID, @FilePath",
-                  new SqlParameter("@TemplateID", TemplateID),
-                  new SqlParameter("@FilePath", filePath)
-               );
+                      new SqlParameter("@TemplateID", TemplateID),
+                      new SqlParameter("@FilePath", filePath)
+                   );
 
-                data.FilePath = filePath;
-
+                    data.FilePath = filePath;
+                 
                 //Process.Start("WINWORD.EXE", fileName);
                 //Response.TransmitFile(fileName);
                 //Response.Flush();

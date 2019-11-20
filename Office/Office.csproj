@@ -1972,6 +1972,11 @@
     <Content Include="Views\Template\DocumentGrid.cshtml" />
     <Content Include="Views\Template\DepartmentType1.cshtml" />
     <Content Include="Views\Template\CompareDataTemplates.cshtml" />
+    <Content Include="Views\Shared\LayoutNoLeftBar.cshtml" />
+    <Content Include="Views\Template\EmptyTemplateData.cshtml" />
+    <Content Include="Views\Master\AddConsultantType.cshtml" />
+    <Content Include="Views\Master\ConsultantTypeGrid.cshtml" />
+    <Content Include="Views\Master\ConsultantTypeList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
