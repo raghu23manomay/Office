@@ -1007,7 +1007,6 @@ namespace Calibration.Controllers
 
                 string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
                 return Json(message);
-
             }
         }
 
@@ -1024,8 +1023,353 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("AddMember")
                     : View("AddMember");
         }
+        public ActionResult AddCompanyInfo()
+        {
+            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+            ViewData["CityList"] = binddropdown("CityList", 0);
+            ViewData["StateList"] = binddropdown("StateList", 0);
+            ViewData["ConactPersonList"] = binddropdown("ConactPersonList", 0);
+            ViewData["PersonList"] = binddropdown("PersonList", 0);
+            ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
+            ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
+            ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0); 
+            ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
+            ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0); 
+            ViewData["CertificationList"] = binddropdown("CertificationList", 0);
+            
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("AddCompanyInfo")
+                    : View("AddCompanyInfo");
+        }
+        public ActionResult AddPersonInfo()
+        {
+            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+            ViewData["CityList"] = binddropdown("CityList", 0);
+            ViewData["StateList"] = binddropdown("StateList", 0);
+            ViewData["ConactPersonList"] = binddropdown("ConactPersonList", 0);
+            ViewData["PersonList"] = binddropdown("PersonList", 0);
+            ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
+            ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
 
-                    
+            ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0);
+            ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
+            ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0);
+            ViewData["CertificationList"] = binddropdown("CertificationList", 0);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("AddPersonInfo")
+                    : View("AddPersonInfo");
+        }
+        [HttpPost]
+        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile,List<CompanyAddress> SaveAddress)
+        {
+            try
+            {
+                DataTable dtMobile = new DataTable();   
+                DataTable dtEmail = new DataTable();
+                DataTable dtAddress = new DataTable();
+                dtMobile.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobile.Columns.Add("PhoneType", typeof(int));
+                dtMobile.Columns.Add("PhoneNumber", typeof(string)); 
+                dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobile.Columns.Add("Extension", typeof(string));
+                
+                //dtEmail.Columns.Add("CompanyEmailId", typeof(string));
+                //dtEmail.Columns.Add("Email", typeof(string));
+                //dtEmail.Columns.Add("WorkDepartmentID", typeof(int));
+                //dtEmail.Columns.Add("Extension", typeof(string));
+    
+                dtAddress.Columns.Add("AddressID", typeof(int));
+                dtAddress.Columns.Add("AddressType", typeof(string));
+                dtAddress.Columns.Add("Address1", typeof(string));
+                dtAddress.Columns.Add("Address2", typeof(string));
+                dtAddress.Columns.Add("StateID", typeof(int));
+                dtAddress.Columns.Add("District", typeof(string));
+                dtAddress.Columns.Add("CityID", typeof(int));
+                dtAddress.Columns.Add("ZipCode", typeof(string));
+                dtAddress.Columns.Add("Website", typeof(string));
+                
+
+                // Adding Contact Person In DT
+                if (SaveMobile != null)
+                {
+                    if (SaveMobile.Count > 0)
+                    {
+                        foreach (var item in SaveMobile)
+                        {
+                            DataRow dr_Mobile = dtMobile.NewRow();
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+                            dr_Mobile["Extension"] = item.Extension;
+                            dtMobile.Rows.Add(dr_Mobile);
+                        }
+                    }
+                } 
+
+                if (SaveAddress != null)
+                {
+                    if (SaveAddress.Count > 0)
+                    {
+                        foreach (var item in SaveAddress)
+                        {
+                            DataRow dr_SaveAddress = dtAddress.NewRow();
+                            dr_SaveAddress["AddressID"] = 0;
+                            dr_SaveAddress["AddressType"] = 1;
+                            dr_SaveAddress["Address1"] = item.OfcAddress1;
+                            dr_SaveAddress["Address2"] = item.OfcAddress2;
+                            dr_SaveAddress["StateID"] = item.StateID2;
+                            dr_SaveAddress["District"] = item.OfcDistrict;
+                            dr_SaveAddress["CityID"] = item.CityID2;
+                            dr_SaveAddress["ZipCode"] = item.OfcZip;
+                            dr_SaveAddress["Website"] = "";
+
+                            dtAddress.Rows.Add(dr_SaveAddress);
+                        }
+                    }
+                } 
+                SqlParameter tvpParamMobile = new SqlParameter();
+                tvpParamMobile.ParameterName = "@CompanyMobileParam";
+                tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobile.Value = dtMobile;
+                tvpParamMobile.TypeName = "UTT_CompanyMobile";  
+
+                SqlParameter tvpParamAddress = new SqlParameter();
+                tvpParamAddress.ParameterName = "@CompanyAddressParam";
+                tvpParamAddress.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamAddress.Value = dtAddress;
+                tvpParamAddress.TypeName = "UTT_CompanyAddress";
+
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveCompany
+                 @CompanyID  
+                ,@CompanyName  
+                ,@ShortName 
+                ,@BusinessCategoryID  
+                ,@BusinessSubCategoryID  
+                ,@CertificationID  
+                ,@CompanyOwnershipTypeID  
+                ,@Isclient  
+                ,@RequestDate  
+                ,@InceptionDate  
+                ,@CreatedBy  
+                ,@CompanyMobileParam
+                ,@CompanyAddressParam
+                ",
+                new SqlParameter("@CompanyID", -1),
+                new SqlParameter("@CompanyName", Company.CompanyName), 
+                new SqlParameter("@ShortName", Company.ShortName),
+                new SqlParameter("@BusinessCategoryID", Company.BusinessCategoryID),
+                new SqlParameter("@BusinessSubCategoryID", Company.BusinessSubCategoryID),
+                new SqlParameter("@CertificationID", Company.CertificationID),
+                new SqlParameter("@CompanyOwnershipTypeID", Company.CompanyOwnershipTypeID),
+                new SqlParameter("@Isclient", Company.Isclient),
+                new SqlParameter("@RequestDate", Company.RequestDate),
+                new SqlParameter("@InceptionDate", Company.InceptionDate),
+                new SqlParameter("@CreatedBy", 1)  
+                , tvpParamMobile 
+                , tvpParamAddress 
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            { 
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message); 
+            }
+        }
+        
+            [HttpPost]
+        public ActionResult SavePersonInfo(PersonInfo Mem,   List<SaveMobile> SaveMobile, List<SavePhone> SavePhone, List<SaveEmail> SaveEmail, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter)
+        {
+            try
+            {
+
+                 
+                DataTable dtMobile = new DataTable();
+                DataTable dtPhone = new DataTable(); 
+                DataTable dtEmail = new DataTable();
+                DataTable dtAdditionalFiled = new DataTable();
+                DataTable dtParameter = new DataTable();
+                DataTable dtMemberPerson = new DataTable();
+
+                 
+                dtMobile.Columns.Add("Mobile", typeof(string));
+                dtPhone.Columns.Add("Phone", typeof(string));
+                
+                dtEmail.Columns.Add("Email", typeof(string));
+                dtAdditionalFiled.Columns.Add("AdditionlField", typeof(string));
+                dtParameter.Columns.Add("Parameter", typeof(string));
+                dtMemberPerson.Columns.Add("PersonMemberID", typeof(int));
+                dtMemberPerson.Columns.Add("DesignationId", typeof(int));
+
+                
+
+                // Adding Contact Person In DT
+                if (SaveMobile != null)
+                {
+                    if (SaveMobile.Count > 0)
+                    {
+                        foreach (var item in SaveMobile)
+                        {
+                            DataRow dr_Mobile = dtMobile.NewRow();
+                            dr_Mobile["Mobile"] = item.Mobile;
+                            dtMobile.Rows.Add(dr_Mobile);
+                        }
+                    }
+                }
+
+                // Adding Phone In DT
+                if (SavePhone != null)
+                {
+                    if (SavePhone.Count > 0)
+                    {
+                        foreach (var item in SavePhone)
+                        {
+                            DataRow dr_Phone = dtPhone.NewRow();
+                            dr_Phone["Phone"] = item.Phone;
+                            dtPhone.Rows.Add(dr_Phone);
+                        }
+                    }
+                }
+ 
+
+
+                // Adding Email In DT
+                if (SaveEmail != null)
+                {
+                    if (SaveEmail.Count > 0)
+                    {
+                        foreach (var item in SaveEmail)
+                        {
+                            DataRow dr_SaveEmail = dtEmail.NewRow();
+                            dr_SaveEmail["Email"] = item.Email;
+                            dtEmail.Rows.Add(dr_SaveEmail);
+                        }
+                    }
+                }
+
+                // Adding Additional Field In DT
+                if (SaveAdditionalFiled != null)
+                {
+                    if (SaveAdditionalFiled.Count > 0)
+                    {
+                        foreach (var item in SaveAdditionalFiled)
+                        {
+                            DataRow dr_AdditionField = dtAdditionalFiled.NewRow();
+                            dr_AdditionField["AdditionlField"] = item.AdditionlField;
+                            dtAdditionalFiled.Rows.Add(dr_AdditionField);
+                        }
+                    }
+                }
+
+               
+
+
+                 
+
+                SqlParameter tvpParamMobile = new SqlParameter();
+                tvpParamMobile.ParameterName = "@MemberMobileParam";
+                tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobile.Value = dtMobile;
+                tvpParamMobile.TypeName = "UT_MemberMobile";
+
+                SqlParameter tvpParamPhone = new SqlParameter();
+                tvpParamPhone.ParameterName = "@MemberPhoneParam ";
+                tvpParamPhone.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamPhone.Value = dtPhone;
+                tvpParamPhone.TypeName = "UT_MemberPhone";
+
+                 
+
+                SqlParameter tvpParamEmail = new SqlParameter();
+                tvpParamEmail.ParameterName = "@MemberEmailParam";
+                tvpParamEmail.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamEmail.Value = dtEmail;
+                tvpParamEmail.TypeName = "UT_MemberEmail";
+
+                SqlParameter tvpParamAdditionalFeild = new SqlParameter();
+                tvpParamAdditionalFeild.ParameterName = "@MemberAdditionalFeildParam ";
+                tvpParamAdditionalFeild.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamAdditionalFeild.Value = dtAdditionalFiled;
+                tvpParamAdditionalFeild.TypeName = "UT_MemberAdditionField";
+
+                SqlParameter tvpParamParameter = new SqlParameter();
+                tvpParamParameter.ParameterName = "@MemberParameterParam";
+                tvpParamParameter.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamParameter.Value = dtParameter;
+                tvpParamParameter.TypeName = "UT_MemberParameter";
+
+
+                SqlParameter tvpParamMemberPerson = new SqlParameter();
+                tvpParamMemberPerson.ParameterName = "@MemberPersonParam";
+                tvpParamMemberPerson.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMemberPerson.Value = dtMemberPerson;
+                tvpParamMemberPerson.TypeName = "UT_MemberPerson";
+
+
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec USP_SavePersonInfo
+                 @PersonID
+                ,@MemberType
+                ,@TitleID
+                ,@PersonName
+                ,@ShortName
+                ,@DesignationId
+                ,@Website
+                ,@Address1
+                ,@Address2
+                ,@StateID
+                ,@District
+                ,@CityID
+                ,@ZipCode
+                ,@BirthDate
+                ,@ShippingAddress
+                ,@PowerofAttorny
+                ,@CreatedBy
+                ,@MemberMobileParam                  
+                ,@MemberOfficeNoParam 
+                ,@MemberEmailParam 
+                ,@MemberAdditionalFeildParam
+                ,@MemberParameterParam
+              ",
+                new SqlParameter("@PersonId", Mem.PersonID),
+                new SqlParameter("@MemberType", Mem.MemberType),
+                new SqlParameter("@TitleID", Mem.TitleID),
+                new SqlParameter("@Name", Mem.PersonName == null ? (object)DBNull.Value : Mem.PersonName),
+                new SqlParameter("@ShortName", Mem.ShortName),
+                new SqlParameter("@Website", Mem.Website),
+                new SqlParameter("@Address1", Mem.Address1 == null ? (object)DBNull.Value : Mem.Address1),
+                new SqlParameter("@Address2", Mem.Address2 == null ? (object)DBNull.Value : Mem.Address2),
+                new SqlParameter("@StateID", Mem.StateID == null ? (object)DBNull.Value : Mem.StateID),
+                new SqlParameter("@District", Mem.District == null ? (object)DBNull.Value : Mem.District),
+                new SqlParameter("@CityID", Mem.CityID == null ? (object)DBNull.Value : Mem.CityID),
+                new SqlParameter("@ZipCode", Mem.ZipCode == null ? (object)DBNull.Value : Mem.ZipCode),
+                new SqlParameter("@BirthDate", Mem.BirthDate),
+                new SqlParameter("@PowerofAttorny", Mem.PowerofAttorny),
+                new SqlParameter("@CreatedBy", 1)
+                 
+                , tvpParamMobile
+                , tvpParamPhone 
+                , tvpParamEmail
+                , tvpParamAdditionalFeild
+                , tvpParamParameter
+                , tvpParamMemberPerson
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+
+            }
+        }
+
         [HttpPost]
         public ActionResult SaveMember(Member Mem, List<SaveConactPerson> SaveConactPerson, List<SaveMobile> SaveMobile, List<SavePhone> SavePhone, List<SaveOfficeNo> SaveOfficeNo, List<SaveEmail> SaveEmail, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter, List<SaveMemberPerson> SaveMemberPerson)
         {
@@ -1293,7 +1637,14 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("_StateWsieCityFilter")
                     : View("_StateWsieCityFilter");
         }
+        public ActionResult CategoryWiseSubCategory(int CategoryID = 0)
+        {
 
+            ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList",  CategoryID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("_SubCategory")
+                    : View("_StateWsieCityFilter");
+        }
 
         // Getting Member Details For Update
         public ActionResult GetMemberDetailsForUpdate(int? MemberId)
@@ -1707,6 +2058,39 @@ namespace Calibration.Controllers
         }
 
         #endregion
+        public ActionResult CompanyList(int? page, String Name = null)
+        {
+            StaticPagedList<CompanyDetailsList> itemsAsIPagedList;
+            itemsAsIPagedList = CompanyGridList(page, Name);
 
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("CompanyList", itemsAsIPagedList)
+                    : View("CompanyList", itemsAsIPagedList);
+        }
+               
+        public StaticPagedList<CompanyDetailsList> CompanyGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            SaveProject clist = new SaveProject();
+
+            IEnumerable<CompanyDetailsList> result = _db.CompanyDetailsList.SqlQuery(@"exec GetCompany
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<CompanyDetailsList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<CompanyDetailsList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+
+        }
     }
 }

@@ -1,0 +1,9 @@
+﻿
+
+@{
+
+    Layout = null;
+}
+
+@Html.DropDownList("BusinessSubCategoryID", new SelectList((System.Collections.IEnumerable)ViewData["BusinessSubCategoryList"], "Value", "Text"), "SubCategoryID", new { @class = "form-control", @id = "SubCategoryID", Title = "SubCategoryID" })
+

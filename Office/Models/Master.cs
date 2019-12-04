@@ -291,6 +291,30 @@ namespace office.Models
        
     }
 
+    public class PersonInfo
+    {
+        [Key]
+        public int? PersonID { get; set; }  
+        public int MemberType { get; set; } 
+        public int TitleID { get; set; }
+        public string PersonName { get; set; }
+        public string ShortName { get; set; } 
+        public string Website { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public int? StateID { get; set; }
+        public string District { get; set; }
+        public int? CityID { get; set; }
+        public string ZipCode { get; set; }
+        public DateTime BirthDate { get; set; }
+        public int CertificationID { get; set; }
+        public string PowerofAttorny { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        
+
+    }
+
     public class MemberList
     {
        [Key]
@@ -397,6 +421,71 @@ namespace office.Models
 
     }
 
+    public class CompanyDetails
+    {
+        [Key] 
+       public int CompanyID                 { get; set; }
+       public string CompanyName            { get; set; }
+       public string ShortName              { get; set; }
+       public int BusinessCategoryID        { get; set; }
+       public int BusinessSubCategoryID     { get; set; }
+       public int CertificationID           { get; set; }
+       public int CompanyOwnershipTypeID    { get; set; }
+       public int Isclient                  { get; set; }
+       public DateTime RequestDate          { get; set; }
+       public DateTime InceptionDate        { get; set; }
+       public int CreatedBy                 { get; set; }
+       public DateTime CreatedDate          { get; set; }
+                                                          
+}
+    public class CompanyDetailsList
+    {
+        [Key]
+        public int CompanyID { get; set; }
+        public string CompanyName { get; set; }
+        public string ShortName { get; set; }
+        public int BusinessCategoryID { get; set; }
+        public int BusinessSubCategoryID { get; set; }
+        public int CertificationID { get; set; }
+        public int CompanyOwnershipTypeID { get; set; }
+        public int Isclient { get; set; }
+        public DateTime RequestDate { get; set; }
+        public DateTime InceptionDate { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+
+    }
+  
+    public class SaveCompanyMobile
+    {
+        [Key]
+           public string Value     { get; set; }
+           public int Type          { get; set; } 
+           public int WorkDepartmentID   { get; set; }
+           public string Extension       { get; set; }
+
+    }
+    public class SaveCompanyEmail
+    {
+        [Key]
+        public string Email { get; set; } 
+        public int WorkDepartmentID { get; set; }
+        public string Extension { get; set; }
+
+    }
+    public class CompanyAddress
+    {
+        [Key]
+        public int AddressID { get; set; }
+        public string OfcAddress1 { get; set; }
+        public string OfcAddress2 { get; set; }
+        public int? StateID2 { get; set; }
+        public string OfcDistrict { get; set; }
+        public int? CityID2 { get; set; }
+        public string OfcZip { get; set; }
+        public string Website { get; set; }
+    }
 }
 
 
