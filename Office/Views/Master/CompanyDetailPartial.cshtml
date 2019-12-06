@@ -1,0 +1,1017 @@
+﻿
+<script src="~/js/jquery-2.1.1.js"></script>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Company Info</h5>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Company</label>
+                        <div class="col-lg-10"><input type="text" id="CompanyName" placeholder="Company Name" class="form-control"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Short Name</label>
+                        <div class="col-lg-10">
+                            <input id="shortname" type="text" placeholder="Short Form" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Business Category</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("CategoryID", new SelectList((System.Collections.IEnumerable)ViewData["BusinessCategoryList"], "Value", "Text"), "Select Business", new { @class = "form-control", @id = "CategoryID1", Title = "CategoryID" })
+                        </div>
+                        <div>
+                            <label class="col-lg-2 control-label">Sub Category</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("SubCategoryID", new SelectList((System.Collections.IEnumerable)ViewData["BusinessSubCategoryList"], "Value", "Text"), "Select Business", new { @class = "form-control", @id = "SubCategoryID1", Title = "SubCategoryID" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Certification / Taxation</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("CertificationID", new SelectList((System.Collections.IEnumerable)ViewData["CertificationList"], "Value", "Text"), "Select Certification", new { @class = "form-control", @id = "CertificationID", Title = "CertificationID" })
+                        </div>
+                        <div>
+                            <label class="col-lg-2 control-label">Value</label>
+                            <div class="col-lg-4" style="display:inline-flex;">
+                                <input type="text" id="CertificationValue" placeholder="Value" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"> Formation Type</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("OwnershipTypeId", new SelectList((System.Collections.IEnumerable)ViewData["OwnershipTypeList"], "Value", "Text"), "Select", new { @class = "form-control", @id = "OwnershipTypeID", Title = "OwnershipTypeID" })
+                        </div>
+                        <label class="col-lg-2 control-label">Is he client</label>
+                        <div class="col-lg-4">
+                            <select class="form-control" id="IsClient">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Request Date</label>
+                        <div class="col-lg-4" style="display: inline-flex;">
+                            <input type="date" id="Requestdate" placeholder="Request date" class="form-control">
+                        </div>
+                        <label class="col-lg-2 control-label">Inception Date</label>
+                        <div class="col-lg-4">
+                            <input type="date" id="InceptionDate" placeholder="Date Of Inception" class="form-control">
+                        </div> 
+                    </div> 
+
+                   
+                        <div class="ibox-title">
+                            <h5>
+                                Office Address <i class="fa fa-plus" id="addMultiOfficeAddress" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            </h5>
+
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="#">Config option 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="form-group rowMobile" id="rowMobile">
+                                <div class="col-lg-2" style="display: inline-flex;">
+                                    <select class="form-control" id="MobileType">
+                                        <option value="0">Select</option>
+                                        <option value="1">Mobile</option>
+                                        <option value="2">Phone</option>
+                                        <option value="3">Email</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4" style="display: inline-flex;">
+                                    <input type="text" id="MobileNo" placeholder="Mobile Number" class="form-control">
+
+                                </div>
+                                <div class="col-lg-3" style="display: inline-flex;">
+                                    <select class="form-control" id="MobileWorkDepartment">
+                                        <option value="1">Work Department</option>
+                                        <option value="0">HR</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-3" style="display: inline-flex;">
+                                    <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control">
+                                    <i class="fa fa-plus" id="addMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Address 1</label>
+
+                                <div class="col-lg-10">
+                                    <input id="OfcAddress1" type="text" placeholder="Address 1" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Address 2</label>
+                                <div class="col-lg-10">
+                                    <input id="OfcAddress2" type="text" placeholder="Address 2" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">State</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("StateID2", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID2", Title = "StateID2" })
+                                </div>
+                                <label class="col-lg-2 control-label">District</label>
+
+                                <div class="col-lg-4">
+                                    <input id="OfcDistrict" type="text" placeholder="District" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">City</label>
+
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("CityID2", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID2", Title = "CityID2" })
+                                </div>
+                                <label class="col-lg-2 control-label">Zip Code</label>
+
+                                <div class="col-lg-4">
+                                    <input id="OfcZip" type="text" placeholder="Zip Code" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Website</label>
+                                <div class="col-lg-10">
+                                    <input id="Website" type="text" placeholder="Website" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Team">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <h3 class="help-block m-b-none">Add Team</h3>
+                                    <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Person</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("InternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "InternalPersonId", Title = "PersonId" })
+                                </div>
+                                <label class="col-lg-2 control-label">Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("DesignationId1", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId1", Title = "DesignationID" })
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("SubdesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubDesignationID1", Title = "PersonId" })
+                                </div>
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubPartDesignationID1", Title = "DesignationID" })
+                                    <i class="fa fa-plus" id="addInternalTeam" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Team">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <h3 class="help-block m-b-none">Add Support Team</h3>
+                                    <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Relation to Company</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("RelationID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyRelationList"], "Value", "Text"), "Select Relation", new { @class = "form-control", @id = "RelationID", Title = "RelationID" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Business Category</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("CategoryID2", new SelectList((System.Collections.IEnumerable)ViewData["BusinessCategoryList"], "Value", "Text"), "Select Business", new { @class = "form-control", @id = "CategoryID2", Title = "CategoryID" })
+                                </div>
+                                <div>
+                                    <label class="col-lg-2 control-label">Sub Category</label>
+                                    <div class="col-lg-4">
+                                        @Html.DropDownList("SubCategoryID2", new SelectList((System.Collections.IEnumerable)ViewData["BusinessSubCategoryList"], "Value", "Text"), "Select Business", new { @class = "form-control", @id = "SubCategoryID2", Title = "SubCategoryID" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Company</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("SupportCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "SupportCompanyID", Title = "CompanyID" })
+                                </div>
+                                <div class="col-lg-6" style="display:inline-flex;">
+                                    @Html.ActionLink("Add New", "AddCompanyInfo", "Master", new { target = "_blank" })
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Person</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("SupportPersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "SupportPersonId", Title = "PersonId" })
+
+                                </div>
+                                <label class="col-lg-2 control-label">Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("DesignationId2", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId2", Title = "DesignationID" })
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("SubdesignationID2", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "SubDesignationID2", Title = "DesignationID" })
+                                </div>
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "SubPartDesignationID2", Title = "DesignationID" })
+                                    <i class="fa fa-plus" id="AddSupportTeamCompany" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-8 pull-right">
+                                <div class="pull-right">
+                                    @Html.ActionLink("Cancel", "CompanyList", "Master", null, new { @class = "btn btn-white" })
+                                    <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+</form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title" style="display:grid;">
+                <h4 class="entityField" style="margin-bottom: 2px;"><span id="showcompanynameOnHeader">No Name..!</span></h4>
+                <h4 class="person" style="margin-bottom: 2px;"><span id="showtitle">Mr.</span>&nbsp;<span id="showname">No Name ..!</span></h4>
+                <span class="person" id="showdesignation" style="color: darkgray;font-size: smaller;">No Designation ..!</span>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Basic Information</h5>
+                            <hr style="margin-top: 11px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group person">
+                        <span id="showcompanyname" class="col-lg-12">No Information ..! </span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showshortname" class="col-lg-12">No Information ..!</span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showDOB" class="col-lg-12"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showWebsite" class="col-lg-12"></span>
+                    </div>
+                    <div class="form-group">
+                        <span id="showNote" class="col-lg-12"></span>
+                    </div>
+
+                </div>
+                <p></p>
+
+                <div class="row entityField">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Person Details</h5>
+                            <hr id="personrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="noPersons">
+                        <span id="noperson" class="col-lg-12" style="overflow-wrap:break-word;">No Persons..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="MemberDatails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row entityField">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Person Details</h5>
+                            <hr id="Conactpersonrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontactsPersons">
+                        <span id="nocontactsperson" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts Persons..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="PersonDatails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Details</h5>
+                            <hr id="Conactrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="nocontacts">
+                        <span id="shownocontacts" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts ..! </span>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table" id="Datails">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <p class="person"></p>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Office Address</h5>
+                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <div class="form-group">
+
+                            </div>
+                            <div class="divAddress">
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+                        <div class="form-group">
+                            <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div class="form-group">
+                            <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div class="form-group">
+                            <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div class="form-group">
+                            <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Internal Team </h5>
+                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+
+                        </div>
+                    </div>
+                    <div class="form-group DivInternalTeam ">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <h5 class="help-block m-b-none">Support Team </h5>
+                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+
+                        </div>
+                    </div>
+                    <div class="form-group DivSupportTeam ">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.person').hide();
+        $('.Consultant').hide();
+        $('.Contractor').hide();
+
+        $('#DesignationId1').change(function ()
+        { 
+            $.ajax({
+            url: "@Url.Action("BindTeamSubDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    DesignationID: $('#DesignationId1').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) { 
+                $('#SubDesignationID1').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+         $('#DesignationId2').change(function ()
+        {
+       
+            $.ajax({
+            url: "@Url.Action("BindTeamSubDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    DesignationID: $('#DesignationId2').val(),
+                    Val : 2
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) { 
+                $('#SubDesignationID2').html(data); 
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+        $('#SubDesignationID1').change(function ()
+        {
+          
+            $.ajax({
+            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    SubDesignationId: $('#SubDesignationID1').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) { 
+                $('#SubPartDesignationID1').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+        $('#SubDesignationID2').change(function () {
+          
+            $.ajax({
+            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    SubDesignationId: $('#SubDesignationID2').val(),
+                    Val: 2
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) { 
+                $('#SubPartDesignationID2').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+        $('#addMultiMobile').on("click", function (e) {
+            var cloneCount = 1;
+
+            //add new row
+
+        $('#rowMobile')
+                .clone(true)
+            .attr('id', 'row' + cloneCount++, 'class', 'row')
+            .insertAfter('[id^=rowMobile]:last').find("input[type='text']").val("");
+            return false;
+        });
+        $('#CategoryID1').change(function () {
+
+            $.ajax({
+                url: "@Url.Action("CategoryWiseSubCategory", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    CategoryID: $('#CategoryID1').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#SubCategoryID1').html(data);
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+                }
+            });
+            return true;
+
+        });
+        $('#CategoryID2').change(function () {
+         
+            $.ajax({
+                url: "@Url.Action("CategoryWiseSubCategory", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    CategoryID: $('#CategoryID2').val(),
+                    val:2
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#SubCategoryID2').html(data);
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+                }
+            });
+            return true;
+
+        });
+        
+        $('#addInternalTeam').on("click", function (e) {
+           
+            var InternalPersonId = $("#InternalPersonId").val();
+            var DesignationId1 = $("#DesignationId1 option:selected").val();
+            var DesignationId1_text = $("#DesignationId1 option:selected").text();
+            var SubDesignationID1 = $("#SubDesignationID1 option:selected").val();
+            var SubDesignationID1_Text = $("#SubDesignationID1 option:selected").text();
+            var SubPartDesignationID1 = $("#SubPartDesignationID1 option:selected").val();
+            var SubPartDesignationID1_text = $("#SubPartDesignationID1 option:selected").text();
+            var binding = '<div class="row"><div class="form-group MultiInternalTeam"  InternalPersonId="' + InternalPersonId + '" DesignationId1="' + DesignationId1 + '" SubDesignationID1="' + SubDesignationID1 + '" SubPartDesignationID1 ="' + SubPartDesignationID1 + '"> <span id= "ShowInternalPersonId" class="col-lg-12" style = "overflow-wrap:break-word;" >' + InternalPersonId + '</span>  </div> <div class="form-group"><span id="showDesignationId1" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId1_text + '</span></div><div class="form-group"> <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div class="form-group"><span id="showSubDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID1_Text + '</span> </div> <div class="form-group"> <span id="showSubPartDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID1_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
+            $('.DivInternalTeam').last().append(binding);
+        });
+        $('#AddSupportTeamCompany').on("click", function (e) {
+           
+            var SupportCompanyID = $("#SupportCompanyID").val();
+            var SupportPersonId = $("#SupportPersonId").val();
+            var SupportCompanyName = $("#SupportCompanyID option:selected").text();
+            var SupportPersonName = $("#SupportPersonId").val();
+            var DesignationId2 = $("#DesignationId2 option:selected").val();
+            var DesignationId2_text = $("#DesignationId2 option:selected").text();
+            var SubDesignationID2 = $("#SubDesignationID2 option:selected").val();
+            var SubDesignationID2_Text = $("#SubDesignationID2 option:selected").text();
+            var SubPartDesignationID2 = $("#SubPartDesignationID2 option:selected").val();
+            var SubPartDesignationID2_text = $("#SubPartDesignationID2 option:selected").text();
+
+            var RelationID = $("#RelationID").val();
+            var CategoryID2 = $("#CategoryID2").val();
+            var SubCategoryID2 = $("#SubCategoryID2").val();
+
+            var RelationName =  $("#RelationID option:selected").text();
+            var CategoryID2Name =  $("#CategoryID2 option:selected").text();
+            var SubCategoryID2Name = $("#SubCategoryID2 option:selected").text();
+            var binding = '<div class="row"><div class="form-group MultiExternalTeam" RelationID ="' + RelationID + '" CategoryID2 ="' + CategoryID2 + '" SubCategoryID2 ="' + SubCategoryID2 + '"SupportCompanyID ="' + SupportCompanyID + '"SupportPersonId="' + SupportPersonId + '" DesignationId2="' + DesignationId2 + '" SubDesignationID2="' + SubDesignationID2 + '" SubPartDesignationID2 =' + SubPartDesignationID2 + '> <span id= "ShowSupportPersonName" class="col-lg-12" style = "overflow-wrap:break-word;" >' + SupportPersonName + '</span>  </div><div class="form-group"><span id="showRelationName" class="col-lg-12" style="overflow-wrap:break-word;">' + RelationName + '</span></div> <div class="form-group"><span id="showCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + CategoryID2Name + '</span></div><div class="form-group"><span id="showSubCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + SubCategoryID2Name + '</span></div><div class="form-group"><span id="showCompanyName" class="col-lg-12" style="overflow-wrap:break-word;">' + SupportCompanyName + '</span></div> <div class="form-group"><span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId2_text + '</span></div> <div class="form-group"><span id="showSubDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID2_Text + '</span> </div> <div class="form-group"> <span id="showSubPartDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID2_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
+            $('.DivSupportTeam').last().append(binding);
+        });
+        
+        $('#addMultiOfficeAddress').on("click", function (e) {
+            
+            $('#nocontactsPersons').hide();
+            $('#Conactpersonrow').hide();
+            var OfcAddress1 = $("#OfcAddress1").val();
+            var OfcAddress2 = $("#OfcAddress2").val();
+            var StateID2 = $("#StateID2 option:selected").text();
+            var StateID2Val = $("#StateID2 option:selected").val();
+            var OfcDistrict = $("#OfcDistrict").val();
+            var CityID2 = $("#CityID2 option:selected").text();
+            var CityID2Val = $("#CityID2 option:selected").val();
+            var OfcZip = $("#OfcZip").val();
+            var ContactPersonId = $("#PersonId option:selected").val();
+            var binding = '<div class="row"><div class="form-group MultiOfficeAddress"  OfcAddress1="' + OfcAddress1 + '" OfcAddress2="' + OfcAddress2 + '" StateID2Val="' + StateID2Val + '" OfcDistrict =' + OfcDistrict + ' CityID2Val="' + CityID2Val + '" OfcZip = ' + OfcZip + '> <span id= "showOfcaddress1" class="col-lg-12" style = "overflow-wrap:break-word;" >' + OfcAddress1 + '</span>  </div> <div class="form-group"><span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;">' + OfcAddress2 + '</span></div><div class="form-group"> <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div class="form-group"><span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;">' + StateID2Val + '</span> </div> <div class="form-group"> <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;">' + OfcDistrict + '</span></div><div class="form-group"><span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;">' + OfcZip + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
+            //var bindrow = '<tr><td class="hidden MultiOfficeAddress" OfcAddress1="' + OfcAddress1 + '" OfcAddress2="' + OfcAddress2 + '" StateID2Val="' + StateID2Val + '" OfcDistrict =' + OfcDistrict + ' CityID2Val="' + CityID2Val + '" OfcZip = ' + OfcZip+'>' + OfcAddress1 + '</td><td>' + OfcAddress2 + '</td><td>' + StateID2 + '</td><td>' + OfcDistrict +'</td><td>' + CityID2 + '</td><td>' + OfcZip +'</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+           // $('#showOfcaddressALL tbody').append(binding);
+            $('.divAddress').append('<div class="DivAddressMobile"> </div>')
+            $('.divAddress').append('<div class="DivAddressInner"> </div>')
+            //$('.DivAddressMobile').last().append('<hr style = "margin-top: 11px; margin-bottom: 10px;" ></hr>');
+            $('.DivAddressInner').last().append(binding);
+
+          //  var idArrMobile = [];
+            $('.rowMobile').each(function (k, v) {
+
+                var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                var MobileType = $(this).closest("div").find("#MobileType").val();
+                var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
+
+                var bindrow1 = '<tr><td class="MultiMobileNo" MobileNo="' + MobileNo + '" MobileWorkDepartmentID="' + MobileWorkDepartmentID + '" MobileNoExtension="' + MobileNoExtension + '" MobileType="' + MobileType + '" >' + MobileWorkDepartment + ' - ' + MobileNoExtension + '-' + MobileNo+'<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                // $('#showMultiMobile tbody').append(bindrow1);
+                $('.DivAddressMobile').last().append(bindrow1);
+            });
+
+        });
+
+        $('#memberid').change(function () {
+            if ($("#memberid option:selected").val() == 4) {
+                $('.person').show();
+                $('.entityField').hide();
+            }
+            else
+            {
+                $('.person').hide();
+                $('.entityField').show();
+            }
+
+            if ($("#memberid option:selected").val() == 2) {
+                $('.Consultant').show();
+            }
+            else
+            {
+                $('.Consultant').hide();
+            }
+            if ($("#memberid option:selected").val() == 3) {
+                $('.Contractor').show();
+            }
+            else
+            {
+                $('.Contractor').hide();
+            }
+        });
+
+        $('#Website').keyup(function () {
+            $('#showWebsite').html($('#Website').val());
+        });
+
+        $('#Note').keyup(function () {
+            $('#showNote').html($('#Note').val());
+        });
+
+        $('#CompanyName').keyup(function () {
+            $('#showcompanyname').html($('#CompanyName').val());
+        });
+
+        $('#CompanyName').keyup(function () {
+            $('#showcompanynameOnHeader').html($('#CompanyName').val());
+        });
+     
+        // Filling details on events
+
+        $('#Name').keyup(function () {
+            $('#showname').html($('#Name').val());
+        });
+
+        $('#TitleId').change(function () {
+            $('#showtitle').html($("#TitleId option:selected").text());
+                });
+                $('#DesignationID').change(function () {
+                    $('#showdesignation').html($("#DesignationID option:selected").text());
+                });
+
+                $('#shortname').keyup(function () {
+                    $('#showshortname').html($('#shortname').val());
+                });
+
+                $('#Dob').change(function () {
+                    $('#showDOB').html($("#Dob").val());
+
+        });
+
+
+        $('#addPerson').on("click", function (e) {
+
+                $('#nocontactsPersons').hide();
+                $('#Conactpersonrow').hide();
+                var contactperosntext = $("#PersonId option:selected").text();
+                var ContactPersonId = $("#PersonId option:selected").val();
+                var bindrow = '<tr><td class="hidden multiperson">' + ContactPersonId + '</td><td>' + contactperosntext + '</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('#PersonDatails tbody').append(bindrow);
+
+        });
+
+        $('#addMember').on("click", function (e) {
+
+            $('#noPersons').hide();
+            $('#personrow').hide();
+            var Membertext = $("#MemberPersonId option:selected").text();
+            var MemberId = $("#MemberPersonId option:selected").val();
+            var DesignationID = $("#DesignationID option:selected").val();
+            var Degtext = $("#DesignationID option:selected").text();
+            var bindrow = '<tr><td class="hidden multimember" id="' + DesignationID + '">' + MemberId + '</td><td>' + Membertext + '</td><td><span style="color: darkgray;font-size: smaller;">' + Degtext +'</span></td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+            $('#MemberDatails tbody').append(bindrow); 
+        });
+  
+        $('#Office').on("keypress", function (e) {
+            if (e.keyCode == 13) {
+                if ($('#Office').val().trim() != "") {
+                    $('#nocontacts').hide();
+                    $('#Conactrow').hide();
+                    var Officetext = $('#Office').val();
+                    var bindrow = '<tr><td class="multioffice">' + Officetext + '</td><td style="color: darkgray;font-size: smaller;">Office</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                    $('#Datails tbody').append(bindrow);
+                    $('#Office').val('');
+                }
+            }
+        }); 
+
+                $('#AdditionalField').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#AdditionalField').val().trim() != "") {
+                            $('#nocontacts').hide();
+                            $('#Conactrow').hide();
+                            var AdditionalFieldtext = $('#AdditionalField').val();
+                            var bindrow = '<tr><td class="multiadditionalfield">' + AdditionalFieldtext + '</td><td style="color: darkgray;font-size: smaller;">Additional field</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            $('#Datails tbody').append(bindrow);
+                            $('#AdditionalField').val('');
+                        }
+                    }
+                });
+
+                $('#Parameter').on("keypress", function (e) {
+                    if (e.keyCode == 13) {
+                        if ($('#Parameter').val().trim() != "") {
+                            $('#nocontacts').hide();
+                            $('#Conactrow').hide();
+                            var Parametertext = $('#Parameter').val();
+                            var bindrow = '<tr><td class="multiparameter">' + Parametertext + '</td><td style="color: darkgray;font-size: smaller;">Parameter</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                            $('#Datails tbody').append(bindrow);
+                            $('#Parameter').val('');
+                        }
+                    }
+                });
+
+                $(document).on('click', 'i.deleterow', function (e) {
+                    e.preventDefault();
+                    $(this).parents('tr').remove();
+                });
+
+
+        $('#StateID2').change(function ()
+         {
+            $.ajax({
+            url: "@Url.Action("FliterStateWiseCity", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                StateID: $('#StateID2').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#CityID2').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+
+
+        $('#StateID').change(function ()
+         {
+            $.ajax({
+            url: "@Url.Action("FliterStateWiseCity", "Master")",
+            contentType: "application/text",
+                data: JSON.stringify({
+                StateID: $('#StateID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#CityID').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+
+        });
+
+
+        $('#btnsave').on('click', function () {
+
+
+
+           // Adding multipal Contact No into array
+
+
+            //Adding multipal Mobile No into array
+            var idArrMobile = [];
+            $('.MultiMobileNo').each(function (k, v) {
+                var tdVals = $(this).attr("MobileNo") + "~" + $(this).attr("MobileWorkDepartmentID") + "~" + $(this).attr("MobileNoExtension") + "~" + $(this).attr("MobileType") ;
+               // var tdVals = $(this).text();
+                idArrMobile.push(tdVals);
+            });
+
+            var SaveMobile = [];
+            for (var i = 0; i < idArrMobile.length; i++) {
+                var arrElement = idArrMobile[i].split("~");
+                item = {}
+                item["Value"] = arrElement[0];
+                item["WorkDepartmentID"] = arrElement[1];
+                item["Extension"] = arrElement[2];
+                item["Type"] = arrElement[3];
+                SaveMobile.push(item);
+            }
+            //Adding Email into array
+            var idArrEmail = [];
+            $('.multiemail').each(function (k, v) {
+                var tdVals = $(this).text();
+                idArrEmail.push(tdVals);
+            });
+
+            var SaveEmail = [];
+            for (var i = 0; i < idArrEmail.length; i++) {
+                var arrElement = idArrEmail[i].split("~");
+                item = {}
+                item["Email"] = arrElement[0];
+                SaveEmail.push(item);
+            }
+
+       
+            //Adding multipal Mobile No into array
+            var idArrAddress = [];
+            $('.MultiOfficeAddress').each(function (k, v) {
+                var tdVals = $(this).attr("OfcAddress1") + "~" + $(this).attr("OfcAddress2") + "~" + $(this).attr("StateID2Val") + "~" + $(this).attr("OfcDistrict") + "~" + $(this).attr("CityID2Val") + "~" + $(this).attr("OfcZip");
+                //var tdVals = $(this).text() + "~" + $(this).attr("id");
+                //var tdVals = $(this).text();
+                idArrAddress.push(tdVals);
+            });
+
+            var SaveAddress = [];
+            for (var i = 0; i < idArrAddress.length; i++) {
+                var arrElement = idArrAddress[i].split("~");
+                item = {}
+                item["OfcAddress1"] = arrElement[0];
+                item["OfcAddress2"] = arrElement[1];
+                item["StateID2"] = arrElement[2];
+                item["OfcDistrict"] = arrElement[3];
+                item["CityID2"] = arrElement[4];
+                item["OfcZip"] = arrElement[5];
+                SaveAddress.push(item);
+            }
+            debugger;
+            //Adding multipal Internal Team into array
+            var idArrInternalTeam = [];
+            $('.MultiInternalTeam').each(function (k, v) {
+                debugger;
+                var tdVals = $(this).attr("internalpersonid") + "~" + $(this).attr("designationid1") + "~" + $(this).attr("subdesignationid1") + "~" + $(this).attr("subpartdesignationid1");
+                idArrInternalTeam.push(tdVals);
+            });
+
+            var SaveInternalTeam = [];
+            for (var i = 0; i < idArrInternalTeam.length; i++) {
+                var arrElement = idArrInternalTeam[i].split("~");
+                item = {}
+                item["internalTeamid"] = 0;
+                item["internalpersonid"] = arrElement[0];
+                item["designationid1"] = arrElement[1];
+                item["subdesignationid1"] = arrElement[2];
+                item["subpartdesignationid1"] = arrElement[3]; 
+                SaveInternalTeam.push(item);
+            }
+
+            var idArrExternalTeam = [];
+            $('.MultiExternalTeam').each(function (k, v) { 
+                debugger;
+                var tdVals = $(this).attr("relationid") + "~" + $(this).attr("categoryid2") + "~" + $(this).attr("subcategoryid2") + "~" + $(this).attr("supportcompanyid") + "~" + $(this).attr("supportpersonid") + "~"   + $(this).attr("designationid1") + "~" + $(this).attr("subdesignationid1") + "~" + $(this).attr("subpartdesignationid1");
+                idArrExternalTeam.push(tdVals);
+            });
+
+            var SaveExternalTeam = [];
+            for (var i = 0; i < idArrExternalTeam.length; i++) {
+                var arrElement = idArrExternalTeam[i].split("~");
+                item = {}
+               
+                item["ExternalTeamid"] = 0;
+                item["RelationId"] = arrElement[0];
+                item["CategoryId"] = arrElement[1];
+                item["SubCategoryId"] = arrElement[2];  
+                item["ExternalCompanyId"] = arrElement[3];
+                item["ExternalPersonId"] = arrElement[4];  
+                item["DesignationId"] = arrElement[5];
+                item["SubDesignationId"] = arrElement[6];
+                item["SubpartDesignationId"] = arrElement[7];
+                SaveExternalTeam.push(item);
+            }
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Master/SaveCompany',
+                data:
+                {
+                  CompanyID  :0
+                , CompanyName: $('#CompanyName').val()
+                , ShortName: $('#shortname').val()
+                , BusinessCategoryID: $("#CategoryID1 option:selected").val()
+                , BusinessSubCategoryID: $("#SubCategoryID1 option:selected").val()
+                , CertificationID: $("#CertificationID option:selected").val()
+                , CompanyOwnershipTypeID: $("#CompanyOwnershipTypeID option:selected").val()
+                , Isclient  :    $("#Isclient option:selected").val()
+                , RequestDate: $('#Requestdate').val()
+                , InceptionDate: $('#InceptionDate').val()
+                , CreatedBy  :1
+                , SaveMobile: SaveMobile
+                , SaveEmail: SaveEmail
+                , SaveAddress: SaveAddress
+                , SaveInternalTeam: SaveInternalTeam
+                , SaveExternalTeam: SaveExternalTeam
+                },
+                success: function (da) {
+                    alert(da);
+                 },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+
+    });
+
+
+</script>

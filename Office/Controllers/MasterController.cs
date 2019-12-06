@@ -1028,7 +1028,6 @@ namespace Calibration.Controllers
             ViewData["DesignationList"] = binddropdown("DesignationList", 0);
             ViewData["CityList"] = binddropdown("CityList", 0);
             ViewData["StateList"] = binddropdown("StateList", 0);
-            ViewData["ConactPersonList"] = binddropdown("ConactPersonList", 0);
             ViewData["PersonList"] = binddropdown("PersonList", 0);
             ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
             ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
@@ -1036,7 +1035,21 @@ namespace Calibration.Controllers
             ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
             ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0); 
             ViewData["CertificationList"] = binddropdown("CertificationList", 0);
-            
+            ViewData["CompanyRelationList"] = binddropdown("CompanyRelationList", 0);
+            ViewData["CompanyList"] = binddropdown("CompanyList", 0);
+
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+            ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", 0);
+            ViewData["TeamSubPartDesignationList"] = binddropdown("TeamSubPartDesignationList", 0);
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.layout = "0";
+            }
+            else
+            {
+                ViewBag.layout = "1";
+            }
+
             return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("AddCompanyInfo")
                     : View("AddCompanyInfo");
@@ -1055,28 +1068,28 @@ namespace Calibration.Controllers
             ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
             ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0);
             ViewData["CertificationList"] = binddropdown("CertificationList", 0);
+            ViewData["CompanyList"] = binddropdown("CompanyList", 0);
             return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("AddPersonInfo")
                     : View("AddPersonInfo");
         }
         [HttpPost]
-        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile,List<CompanyAddress> SaveAddress)
+        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile,List<CompanyAddress> SaveAddress , List<SaveInternalTeam> SaveInternalTeam, List<SaveExternalTeam> SaveExternalTeam)
         {
             try
             {
                 DataTable dtMobile = new DataTable();   
                 DataTable dtEmail = new DataTable();
                 DataTable dtAddress = new DataTable();
+                DataTable dtInternalTeam = new DataTable();
+                DataTable dtExternalTeam = new DataTable();
                 dtMobile.Columns.Add("CompanyPhoneID", typeof(string));
                 dtMobile.Columns.Add("PhoneType", typeof(int));
                 dtMobile.Columns.Add("PhoneNumber", typeof(string)); 
                 dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
                 dtMobile.Columns.Add("Extension", typeof(string));
                 
-                //dtEmail.Columns.Add("CompanyEmailId", typeof(string));
-                //dtEmail.Columns.Add("Email", typeof(string));
-                //dtEmail.Columns.Add("WorkDepartmentID", typeof(int));
-                //dtEmail.Columns.Add("Extension", typeof(string));
+               
     
                 dtAddress.Columns.Add("AddressID", typeof(int));
                 dtAddress.Columns.Add("AddressType", typeof(string));
@@ -1087,7 +1100,24 @@ namespace Calibration.Controllers
                 dtAddress.Columns.Add("CityID", typeof(int));
                 dtAddress.Columns.Add("ZipCode", typeof(string));
                 dtAddress.Columns.Add("Website", typeof(string));
-                
+
+                dtInternalTeam.Columns.Add("internalpersonid", typeof(int));
+                dtInternalTeam.Columns.Add("internalTeamid", typeof(int));
+                dtInternalTeam.Columns.Add("designationid1", typeof(int));
+                dtInternalTeam.Columns.Add("subdesignationid1", typeof(int));
+                dtInternalTeam.Columns.Add("subpartdesignationid1", typeof(int));
+
+              
+                dtExternalTeam.Columns.Add("ExternalTeamid", typeof(int));
+              
+                dtExternalTeam.Columns.Add("RelationId", typeof(int));
+                dtExternalTeam.Columns.Add("CategoryId", typeof(int));
+                dtExternalTeam.Columns.Add("SubCategoryId", typeof(int));
+                dtExternalTeam.Columns.Add("ExternalCompanyId", typeof(int));
+                dtExternalTeam.Columns.Add("ExternalPersonId", typeof(int));
+                dtExternalTeam.Columns.Add("designationid", typeof(int));
+                dtExternalTeam.Columns.Add("subdesignationid", typeof(int));
+                dtExternalTeam.Columns.Add("subpartdesignationid", typeof(int));
 
                 // Adding Contact Person In DT
                 if (SaveMobile != null)
@@ -1126,7 +1156,45 @@ namespace Calibration.Controllers
                             dtAddress.Rows.Add(dr_SaveAddress);
                         }
                     }
-                } 
+                }
+
+                if (SaveInternalTeam != null)
+                {
+                    if (SaveInternalTeam.Count > 0)
+                    {
+                        foreach (var item in SaveInternalTeam)
+                        {
+                            DataRow dr_InternalTeam = dtInternalTeam.NewRow();
+                            dr_InternalTeam["internalpersonid"] = item.internalpersonid;
+                            dr_InternalTeam["internalTeamid"] = item.internalTeamid;
+                            dr_InternalTeam["designationid1"] = item.designationid1;
+                            dr_InternalTeam["subdesignationid1"] = item.subdesignationid1;
+                            dr_InternalTeam["subpartdesignationid1"] = item.subpartdesignationid1;
+                            dtInternalTeam.Rows.Add(dr_InternalTeam);
+                        }
+                    }
+                }
+                if (SaveExternalTeam != null)
+                {
+                    if (SaveExternalTeam.Count > 0)
+                    {
+                        foreach (var item in SaveExternalTeam)
+                        {
+                            DataRow dr_ExternalTeam = dtExternalTeam.NewRow();
+                            dr_ExternalTeam["ExternalPersonId"] = item.ExternalPersonId;
+                            dr_ExternalTeam["ExternalTeamid"] = item.ExternalTeamid;
+                            dr_ExternalTeam["RelationId"] = item.RelationId;
+                            dr_ExternalTeam["CategoryId"] = item.CategoryId;
+                            dr_ExternalTeam["SubCategoryId"] = item.SubCategoryId;
+                            dr_ExternalTeam["ExternalCompanyId"] = item.ExternalCompanyId;
+                            dr_ExternalTeam["ExternalPersonId"] = item.ExternalPersonId;
+                            dr_ExternalTeam["DesignationId"] = item.DesignationId;
+                            dr_ExternalTeam["SubDesignationId"] = item.SubDesignationId;
+                            dr_ExternalTeam["SubpartDesignationId"] = item.SubpartDesignationId;
+                            dtExternalTeam.Rows.Add(dr_ExternalTeam);
+                        }
+                    }
+                }
                 SqlParameter tvpParamMobile = new SqlParameter();
                 tvpParamMobile.ParameterName = "@CompanyMobileParam";
                 tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
@@ -1138,6 +1206,18 @@ namespace Calibration.Controllers
                 tvpParamAddress.SqlDbType = System.Data.SqlDbType.Structured;
                 tvpParamAddress.Value = dtAddress;
                 tvpParamAddress.TypeName = "UTT_CompanyAddress";
+
+                SqlParameter tvpParamInternalTeam= new SqlParameter();
+                tvpParamInternalTeam.ParameterName = "@InternalTeamParam";
+                tvpParamInternalTeam.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamInternalTeam.Value = dtInternalTeam;
+                tvpParamInternalTeam.TypeName = "UTT_InternalTeam";
+
+                SqlParameter tvpParamExternalTeam = new SqlParameter();
+                tvpParamExternalTeam.ParameterName = "@ExternalTeamParam";
+                tvpParamExternalTeam.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamExternalTeam.Value = dtExternalTeam;
+                tvpParamExternalTeam.TypeName = "UTT_ExternalTeam";
 
                 OfficeDbContext _db = new OfficeDbContext();
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveCompany
@@ -1154,6 +1234,8 @@ namespace Calibration.Controllers
                 ,@CreatedBy  
                 ,@CompanyMobileParam
                 ,@CompanyAddressParam
+                ,@InternalTeamParam
+                ,@ExternalTeamParam
                 ",
                 new SqlParameter("@CompanyID", -1),
                 new SqlParameter("@CompanyName", Company.CompanyName), 
@@ -1168,6 +1250,8 @@ namespace Calibration.Controllers
                 new SqlParameter("@CreatedBy", 1)  
                 , tvpParamMobile 
                 , tvpParamAddress 
+                , tvpParamInternalTeam
+                ,tvpParamExternalTeam
                 );
 
                 return Json("Success");
@@ -1181,74 +1265,41 @@ namespace Calibration.Controllers
         }
         
             [HttpPost]
-        public ActionResult SavePersonInfo(PersonInfo Mem,   List<SaveMobile> SaveMobile, List<SavePhone> SavePhone, List<SaveEmail> SaveEmail, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter)
+        public ActionResult SavePersonInfo(PersonInfo Mem, List<SaveMobilePerson> SaveMobilePerson, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter)
         {
             try
-            {
-
+            { 
                  
                 DataTable dtMobile = new DataTable();
-                DataTable dtPhone = new DataTable(); 
-                DataTable dtEmail = new DataTable();
+                
                 DataTable dtAdditionalFiled = new DataTable();
                 DataTable dtParameter = new DataTable();
                 DataTable dtMemberPerson = new DataTable();
-
-                 
-                dtMobile.Columns.Add("Mobile", typeof(string));
-                dtPhone.Columns.Add("Phone", typeof(string));
-                
-                dtEmail.Columns.Add("Email", typeof(string));
+                dtMobile.Columns.Add("id", typeof(int));
+                dtMobile.Columns.Add("Type", typeof(string));
+                dtMobile.Columns.Add("Value", typeof(string));
+                dtMobile.Columns.Add("DepartmentID", typeof(string));
                 dtAdditionalFiled.Columns.Add("AdditionlField", typeof(string));
                 dtParameter.Columns.Add("Parameter", typeof(string));
                 dtMemberPerson.Columns.Add("PersonMemberID", typeof(int));
                 dtMemberPerson.Columns.Add("DesignationId", typeof(int));
-
-                
-
+                 
                 // Adding Contact Person In DT
-                if (SaveMobile != null)
+                if (SaveMobilePerson != null)
                 {
-                    if (SaveMobile.Count > 0)
+                    if (SaveMobilePerson.Count > 0)
                     {
-                        foreach (var item in SaveMobile)
+                        foreach (var item in SaveMobilePerson)
                         {
                             DataRow dr_Mobile = dtMobile.NewRow();
-                            dr_Mobile["Mobile"] = item.Mobile;
+                            dr_Mobile["id"] = 0;
+                            dr_Mobile["Type"] = item.Type;
+                            dr_Mobile["Value"] = item.Value;
+                            dr_Mobile["DepartmentID"] = item.DepartmentID;
                             dtMobile.Rows.Add(dr_Mobile);
                         }
                     }
-                }
-
-                // Adding Phone In DT
-                if (SavePhone != null)
-                {
-                    if (SavePhone.Count > 0)
-                    {
-                        foreach (var item in SavePhone)
-                        {
-                            DataRow dr_Phone = dtPhone.NewRow();
-                            dr_Phone["Phone"] = item.Phone;
-                            dtPhone.Rows.Add(dr_Phone);
-                        }
-                    }
-                }
- 
-
-
-                // Adding Email In DT
-                if (SaveEmail != null)
-                {
-                    if (SaveEmail.Count > 0)
-                    {
-                        foreach (var item in SaveEmail)
-                        {
-                            DataRow dr_SaveEmail = dtEmail.NewRow();
-                            dr_SaveEmail["Email"] = item.Email;
-                            dtEmail.Rows.Add(dr_SaveEmail);
-                        }
-                    }
-                }
+                } 
 
                 // Adding Additional Field In DT
                 if (SaveAdditionalFiled != null)
@@ -1264,31 +1315,12 @@ namespace Calibration.Controllers
                     }
                 }
 
-               
-
-
-                 
-
                 SqlParameter tvpParamMobile = new SqlParameter();
                 tvpParamMobile.ParameterName = "@MemberMobileParam";
                 tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
                 tvpParamMobile.Value = dtMobile;
-                tvpParamMobile.TypeName = "UT_MemberMobile";
-
-                SqlParameter tvpParamPhone = new SqlParameter();
-                tvpParamPhone.ParameterName = "@MemberPhoneParam ";
-                tvpParamPhone.SqlDbType = System.Data.SqlDbType.Structured;
-                tvpParamPhone.Value = dtPhone;
-                tvpParamPhone.TypeName = "UT_MemberPhone";
-
-                 
-
-                SqlParameter tvpParamEmail = new SqlParameter();
-                tvpParamEmail.ParameterName = "@MemberEmailParam";
-                tvpParamEmail.SqlDbType = System.Data.SqlDbType.Structured;
-                tvpParamEmail.Value = dtEmail;
-                tvpParamEmail.TypeName = "UT_MemberEmail";
-
+                tvpParamMobile.TypeName = "UTT_PersonMobile";
+                  
                 SqlParameter tvpParamAdditionalFeild = new SqlParameter();
                 tvpParamAdditionalFeild.ParameterName = "@MemberAdditionalFeildParam ";
                 tvpParamAdditionalFeild.SqlDbType = System.Data.SqlDbType.Structured;
@@ -1300,23 +1332,16 @@ namespace Calibration.Controllers
                 tvpParamParameter.SqlDbType = System.Data.SqlDbType.Structured;
                 tvpParamParameter.Value = dtParameter;
                 tvpParamParameter.TypeName = "UT_MemberParameter";
-
-
-                SqlParameter tvpParamMemberPerson = new SqlParameter();
-                tvpParamMemberPerson.ParameterName = "@MemberPersonParam";
-                tvpParamMemberPerson.SqlDbType = System.Data.SqlDbType.Structured;
-                tvpParamMemberPerson.Value = dtMemberPerson;
-                tvpParamMemberPerson.TypeName = "UT_MemberPerson";
-
-
+                 
+              
                 OfficeDbContext _db = new OfficeDbContext();
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_SavePersonInfo
                  @PersonID
-                ,@MemberType
                 ,@TitleID
-                ,@PersonName
-                ,@ShortName
-                ,@DesignationId
+                ,@fName  
+                ,@mName
+                ,@lName
+                ,@ShortName 
                 ,@Website
                 ,@Address1
                 ,@Address2
@@ -1325,37 +1350,30 @@ namespace Calibration.Controllers
                 ,@CityID
                 ,@ZipCode
                 ,@BirthDate
-                ,@ShippingAddress
-                ,@PowerofAttorny
                 ,@CreatedBy
-                ,@MemberMobileParam                  
-                ,@MemberOfficeNoParam 
-                ,@MemberEmailParam 
+                ,@MemberMobileParam  
                 ,@MemberAdditionalFeildParam
                 ,@MemberParameterParam
               ",
-                new SqlParameter("@PersonId", Mem.PersonID),
-                new SqlParameter("@MemberType", Mem.MemberType),
+                new SqlParameter("@PersonId", Mem.PersonID == null ? 0 : Mem.PersonID), 
                 new SqlParameter("@TitleID", Mem.TitleID),
-                new SqlParameter("@Name", Mem.PersonName == null ? (object)DBNull.Value : Mem.PersonName),
+                new SqlParameter("@fName", Mem.fName == null ? (object)DBNull.Value : Mem.fName),
+                new SqlParameter("@mName", Mem.fName == null ? (object)DBNull.Value : Mem.mName),
+                new SqlParameter("@lName", Mem.fName == null ? (object)DBNull.Value : Mem.lName),
                 new SqlParameter("@ShortName", Mem.ShortName),
-                new SqlParameter("@Website", Mem.Website),
-                new SqlParameter("@Address1", Mem.Address1 == null ? (object)DBNull.Value : Mem.Address1),
-                new SqlParameter("@Address2", Mem.Address2 == null ? (object)DBNull.Value : Mem.Address2),
-                new SqlParameter("@StateID", Mem.StateID == null ? (object)DBNull.Value : Mem.StateID),
-                new SqlParameter("@District", Mem.District == null ? (object)DBNull.Value : Mem.District),
-                new SqlParameter("@CityID", Mem.CityID == null ? (object)DBNull.Value : Mem.CityID),
-                new SqlParameter("@ZipCode", Mem.ZipCode == null ? (object)DBNull.Value : Mem.ZipCode),
-                new SqlParameter("@BirthDate", Mem.BirthDate),
-                new SqlParameter("@PowerofAttorny", Mem.PowerofAttorny),
+                new SqlParameter("@Website", Mem.Website),  
+                new SqlParameter("@Address1", Mem.ResidentialAddress1 == null ? (object)DBNull.Value : Mem.ResidentialAddress1),
+                new SqlParameter("@Address2", Mem.ResidentialAddress2 == null ? (object)DBNull.Value : Mem.ResidentialAddress2),
+                new SqlParameter("@StateID", Mem.ResidentialStateID == null ? (object)DBNull.Value : Mem.ResidentialStateID),
+                new SqlParameter("@District", Mem.ResidentialDistrict == null ? (object)DBNull.Value : Mem.ResidentialDistrict),
+                new SqlParameter("@CityID", Mem.ResidentialCityID == null ? (object)DBNull.Value : Mem.ResidentialCityID),
+                new SqlParameter("@ZipCode", Mem.ResidentialZipCode == null ? (object)DBNull.Value : Mem.ResidentialZipCode),
+                new SqlParameter("@BirthDate", Mem.BirthDate), 
                 new SqlParameter("@CreatedBy", 1)
-                 
-                , tvpParamMobile
-                , tvpParamPhone 
-                , tvpParamEmail
+                , tvpParamMobile 
                 , tvpParamAdditionalFeild
                 , tvpParamParameter
-                , tvpParamMemberPerson
+              
                 );
 
                 return Json("Success");
@@ -1637,15 +1655,54 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("_StateWsieCityFilter")
                     : View("_StateWsieCityFilter");
         }
-        public ActionResult CategoryWiseSubCategory(int CategoryID = 0)
+        public ActionResult CategoryWiseSubCategory(int CategoryID = 0, int val = 0)
         {
+            if (val == 0)
+            {
+                ViewBag.value = 1;
+                ;
+            }
+            else
+            {
+                ViewBag.value = 2;
+            }
 
             ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList",  CategoryID);
             return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("_SubCategory")
-                    : View("_StateWsieCityFilter");
+                    : View("_SubCategory");
         }
 
+        public ActionResult BindTeamSubDesignation(int DesignationID = 0,int val=0)
+        {
+            if(val==0)
+            {
+                ViewBag.value = 1;
+;            }
+            else
+            {
+                ViewBag.value = 2;
+            }
+            ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", DesignationID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("SubDesignationList")
+                    : View("SubDesignationList");
+        }
+        public ActionResult BindTeamSubPartDesignation(int SubDesignationID = 0, int val = 0)
+        {
+            if (val == 0)
+            {
+                ViewBag.value = 1; 
+            }
+            else
+            {
+                ViewBag.value = 2;
+            }
+            ViewData["TeamSubPartDesignationList"] = binddropdown("TeamSubPartDesignationList", SubDesignationID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("SubPartDesignationList")
+                    : View("SubDesignationList");
+        }
         // Getting Member Details For Update
         public ActionResult GetMemberDetailsForUpdate(int? MemberId)
         {

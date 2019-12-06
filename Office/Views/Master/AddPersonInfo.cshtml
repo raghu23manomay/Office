@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Title</label>
 
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <select class="form-control" id="TitleId">
                                 <option value="1">Mr.</option>
                                 <option value="2">Miss.</option>
@@ -61,106 +61,79 @@
                         </div>
 
                         <div>
-                            <label class="col-lg-1 control-label">Name</label>
-                            <div class="col-lg-7 ">
-                                <input type="text" id="Name" placeholder="Name" class="form-control entity">
+                            <label class="col-lg-2 control-label">First Name</label>
+                            <div class="col-lg-4 ">
+                                <input type="text" id="PfName" placeholder="First Name" class="form-control entity">
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Short Name</label>
-
-                        <div class="col-lg-10">
-                            <input id="shortname" type="text" placeholder="Short Form" class="form-control">
+                        <label class="col-lg-2 control-label">Middle Name</label> 
+                        <div class="col-lg-4 ">
+                            <input type="text" id="PmName" placeholder="Middle Name" class="form-control entity">
+                        </div> 
+                        <div>
+                            <label class="col-lg-2 control-label">Last Name</label>
+                            <div class="col-lg-4">
+                                <input type="text" id="PlName" placeholder="Last Name" class="form-control entity">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Short Name</label> 
+                        <div class="col-lg-4">
+                            <input id="Pshortname" type="text" placeholder="Short Form" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Birth Date</label>
                         <div class="col-lg-4">
-                            <input type="date" id="Dob" placeholder="Dob" class="form-control">
-
-                        </div>
-
-                        <label class="col-lg-2 control-label">Request Date</label>
-
+                            <input type="date" id="pDob" placeholder="Dob" class="form-control"> 
+                        </div> 
+                        <label class="col-lg-2 control-label">Request Date</label> 
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="date" placeholder="Request date" class="form-control">
-
-                        </div>
-
+                            <input type="date" placeholder="Request date" class="form-control"> 
+                        </div> 
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Mobile No</label>
+                    <div class="form-group rowMobile" id="ProwMobile">
+                        <div class="col-lg-2" style="display: inline-flex;">
+                            <select class="form-control" id="MobileType">
+                                <option value="0">Select</option>
+                                <option value="1">Mobile</option>
+                                <option value="2">Phone</option>
+                                <option value="3">Email</option>
+                            </select>
+                        </div>
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="Mobile" placeholder="Mobile Number" class="form-control">
-                            <i class="fa fa-plus" id="addMultiOfficeAddress" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            <input type="text" id="PMobile" placeholder="Mobile Number" class="form-control">
+
                         </div>
                         <label class="col-lg-2 control-label">Type</label>
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <select class="form-control" id="IsClient">
+                            <select class="form-control" id="pDepartment">
                                 <option value="1">personal </option>
                                 <option value="2">Work </option>
                                 <option value="3">residential </option>
                             </select>
-
+                            <i class="fa fa-plus" id="addMultiMobilePerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                         </div>
 
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Phone No</label>
 
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input id="Phone" type="text" placeholder="Phone Number" class="form-control">
-                            <i class="fa fa-plus" id="addMultiOfficeAddress" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                        </div>
-                        <label class="col-lg-2 control-label">Type</label>
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <select class="form-control" id="IsClient">
-                                <option value="1">personal </option>
-                                <option value="2">Work </option>
-                                <option value="3">residential </option>
-                            </select>
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-
-
-                        <label class="col-lg-2 control-label">Email</label>
-
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input id="Email" type="text" placeholder="Email" class="form-control">
-                            <i class="fa fa-plus" id="addMultiOfficeAddress" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                        </div>
-
-
-                        <label class="col-lg-2 control-label">Type</label>
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <select class="form-control" id="IsClient">
-                                <option value="1">personal </option>
-                                <option value="2">Work </option>
-                                <option value="3">residential </option>
-                            </select>
-
-                        </div>
-
-                    </div>
 
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Additional</label>
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="AdditionalField" placeholder="Additional Field" class="form-control">
+                            <input type="text" id="PAdditionalField" placeholder="Additional Field" class="form-control">
 
                         </div>
 
                         <label class="col-lg-2 control-label">Parameter</label>
 
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="Parameter" placeholder="Parameter" class="form-control">
+                            <input type="text" id="PParameter" placeholder="Parameter" class="form-control">
 
                         </div>
 
@@ -169,7 +142,7 @@
                         <label class="col-lg-2 control-label">Certification / Taxation</label>
 
                         <div class="col-lg-4">
-                            <select class="form-control" id="Certification">
+                            <select class="form-control" id="PCertification">
                                 <option value="1">Licence</option>
                                 <option value="2">PAN </option>
                                 <option value="3">Adhar</option>
@@ -179,7 +152,7 @@
                         <div>
                             <label class="col-lg-2 control-label">Name</label>
                             <div class="col-lg-4 ">
-                                <input type="text" id="Name" placeholder="Name" class="form-control entity">
+                                <input type="text" id="PName" placeholder="Name" class="form-control entity">
                             </div>
                         </div>
                     </div>
@@ -256,13 +229,14 @@
                 </div>
                 <div class="ibox-content">
                     <div class="form-group">
-                        <div class="col-lg-6">
-                            @Html.DropDownList("ConsultantTypeID", new SelectList((System.Collections.IEnumerable)ViewData["ConsultantTypeList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ConsultantTypeID", Title = "ConsultantTypeID" })
+                        <label class="col-lg-2 control-label">Company </label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("CompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "CompanyID", Title = "CompanyID" })
                         </div>
                         <div class="col-lg-6">
-                            <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                            <button class="btn btn-primary" id="btnAddNewCompany" type="button">Add New</button>
                         </div>
-                        </div>
+                    </div>
                     </div> 
                     <div class="ibox-title">
                         <h5>Other</h5>
@@ -287,7 +261,7 @@
                             <label class="col-lg-2 control-label">Website</label>
 
                             <div class="col-lg-10">
-                                <input id="Website" type="text" placeholder="Website" class="form-control">
+                                <input id="pWebsite" type="text" placeholder="Website" class="form-control">
                             </div>
                         </div>
 
@@ -305,7 +279,7 @@
                             <div class="col-md-8 pull-right">
                                 <div class="pull-right">
                                     @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
-                                    <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                                    <button class="btn btn-primary" id="btnsavePerson" type="button">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -473,12 +447,50 @@
     </div>
 
 </div>
-
-<script>
+<div class="modal fade-in bs-example-modal-md" id="mdlAddCompany" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog" style="width:90%;height:600px;overflow:scroll;" >
+        <div class="ibox">
+            <div class="ibox-content">
+                <div id="CompanyInfo"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
     $(document).ready(function () {
         $('.person').hide();
         $('.Consultant').hide();
         $('.Contractor').hide();
+
+        $('#addMultiMobilePerson').on("click", function (e) {
+            var cloneCount = 1;
+            debugger;
+            //add new row
+
+            $('#ProwMobile')
+                .clone(true)
+                .attr('id', 'row' + cloneCount++, 'class', 'row')
+                .insertAfter('[id^=ProwMobile]:last').find("input[type='text']").val("");
+            return false;
+             
+        });
+        $('#btnAddNewCompany').on("click", function (e) {
+           
+            $.ajax({
+                type: 'GET',
+                dataType: "text",
+                url: '/Master/AddCompanyInfo',
+
+                success: function (data) {
+                    $('#CompanyInfo').html(data);
+                    $('#mdlAddCompany').show();                    
+                },
+
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+        });
         $('#memberid').change(function () {
             if ($("#memberid option:selected").val() == 4) {
                 $('.person').show();
@@ -764,8 +776,27 @@
         });
 
 
-        $('#btnsave').on('click', function () {
+        $('#btnsavePerson').on('click', function () {
 
+            var idArrMobile = [];
+            $('.rowMobile').each(function (k, v) {
+
+                var MobileNo = $(this).closest("div").find("#PMobile").val();
+                var MobileType = $(this).closest("div").find("#MobileType").val();
+                var Department = $(this).closest("div").find("#pDepartment option:selected").val();
+                var tdVals = MobileNo + "~" + MobileType + "~" + Department ;
+                // var tdVals = $(this).text();
+                idArrMobile.push(tdVals);
+              
+            });
+
+
+            //Adding multipal Mobile No into array
+           
+            //$('.multimobile').each(function (k, v) {
+            //    var tdVals = $(this).text();
+            //    idArrMobile.push(tdVals);
+            //});
 
 
            // Adding multipal Contact No into array
@@ -774,46 +805,32 @@
                 var tdVals = $(this).text();
                 idArrContactPerson.push(tdVals);
             });
-
-            var SaveConactPerson = [];
-            for (var i = 0; i < idArrContactPerson.length; i++) {
-                var arrElement = idArrContactPerson[i].split("~");
-                item = {}
-                item["ContactPersonId"] = arrElement[0];
-                SaveConactPerson.push(item);
-            }
-
-
-            //Adding multipal Mobile No into array
-            var idArrMobile = [];
-            $('.multimobile').each(function (k, v) {
-                var tdVals = $(this).text();
-                idArrMobile.push(tdVals);
-            });
-
-            var SaveMobile = [];
+           
+            var SaveMobilePerson = [];
             for (var i = 0; i < idArrMobile.length; i++) {
                 var arrElement = idArrMobile[i].split("~");
                 item = {}
-                item["Mobile"] = arrElement[0];
-                SaveMobile.push(item);
+                item["Value"] = arrElement[0];
+                item["Type"] = arrElement[1];
+                item["DepartmentID"] = arrElement[2];
+                SaveMobilePerson.push(item);
             }
 
 
-            //Adding multipal phone into array
-            var idArrPhone = [];
-            $('.multiphone').each(function (k, v) {
-                 var tdVals = $(this).text();
-                idArrPhone.push(tdVals);
-            });
+            ////Adding multipal phone into array
+            //var idArrPhone = [];
+            //$('.multiphone').each(function (k, v) {
+            //     var tdVals = $(this).text();
+            //    idArrPhone.push(tdVals);
+            //});
 
-            var SavePhone = [];
-            for (var i = 0; i < idArrPhone.length; i++) {
-                var arrElement = idArrPhone[i].split("~");
-                item = {}
-                item["Phone"] = arrElement[0];
-                SavePhone.push(item);
-            }
+            //var SavePhone = [];
+            //for (var i = 0; i < idArrPhone.length; i++) {
+            //    var arrElement = idArrPhone[i].split("~");
+            //    item = {}
+            //    item["Phone"] = arrElement[0];
+            //    SavePhone.push(item);
+            //}
 
             //Adding OfficeNo into array
             var idArrOffice = [];
@@ -901,7 +918,7 @@
             else if ($("#memberid option:selected").val() == 3) {
                 TypeId = $("#ContractorTypeId option:selected").val();
             }
-            
+
 
             $.ajax({
                 type: 'POST',
@@ -909,38 +926,24 @@
                 url: '/Master/SavePersonInfo',
                 data:
                 {
-                    MemberID : 0,
-                    MemberType: $("#memberid option:selected").val(),
-                    TypeId: TypeId,
+                    MemberID : 0,  
                     TitleID: $("#TitleId option:selected").val(),
-                    Name: $('#Name').val(),
-                    ShortName: $('#shortname').val(),
-                    CompanyName: $('#CompanyName').val(),
-                    DesignationId: $("#DesignationID option:selected").val(),
-                    Website: $('#Website').val(),
-                    OfficeAddress1: $('#OfcAddress1').val(),
-                    OfficeAddress2: $('#OfcAddress2').val(),
-                    StateID: $("#StateID2 option:selected").val(),
-                    District: $('#OfcDistrict').val(),
-                    CityID: $("#CityID2 option:selected").val(),
-                    ZipCode: $('#OfcZip').val(),
-                    BirthDate: $('#Dob').val(),
-                    ShippingAddress:"test address",
-                    PowerofAttorny: "NA",
+                    fName: $('#pfName').val(),
+                    mName: $('#PmName').val(),
+                    lName: $('#PlName').val(),
+                    ShortName: $('#Pshortname').val(),  
+                    Website: $('#pWebsite').val(), 
+                    BirthDate: $('#pDob').val(), 
                     ResidentialAddress1  :$('#RAddress1').val(),
-                    ResidentialAddress2  :$('#RAddress2').val(),
-                    ResidentialStateID: $('#StateID').val(),
-                    ResidentialDistrict: $('#RDistrict').val(),
-                    ResidentialCityID: $('#CityID ').val(),
-                    ResidentialZipCode: $('#RZip').val(),
-                    SaveConactPerson: SaveConactPerson,
-                    SaveMobile: SaveMobile,
-                    SavePhone: SavePhone, 
-                    SaveEmail: SaveEmail,
+                    ResidentialAddress2  : $('#RAddress2').val(),
+                    ResidentialStateID   : $('#RStateID').val(),
+                    ResidentialDistrict  : $('#RDistrict').val(),
+                    ResidentialCityID    : $('#RCityID ').val(),
+                    ResidentialZipCode   : $('#RZip').val(),
+                  
+                    SaveMobilePerson: SaveMobilePerson, 
                     SaveAdditionalFiled: SaveAdditionalFiled,
-                    SaveParameter: SaveParameter,
-                
-
+                    SaveParameter: SaveParameter, 
 
                 },
                 success: function (da) {
@@ -955,4 +958,4 @@
     });
 
 
-</script>
+    </script>

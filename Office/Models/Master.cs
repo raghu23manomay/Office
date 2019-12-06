@@ -214,7 +214,13 @@ namespace office.Models
         [Key]
         public string Mobile { get; set; }
     }
-
+    public class SaveMobilePerson
+    {
+        [Key] 
+        public string Value { get; set; }
+        public int Type { get; set; }
+        public int DepartmentID { get; set; }
+    }
     public class SaveEmail
     {
         [Key]
@@ -294,25 +300,24 @@ namespace office.Models
     public class PersonInfo
     {
         [Key]
-        public int? PersonID { get; set; }  
-        public int MemberType { get; set; } 
+        public int? PersonID { get; set; }   
         public int TitleID { get; set; }
-        public string PersonName { get; set; }
+        public string fName { get; set; }
+        public string mName { get; set; } 
+        public string lName { get; set; }
         public string ShortName { get; set; } 
         public string Website { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public int? StateID { get; set; }
-        public string District { get; set; }
-        public int? CityID { get; set; }
-        public string ZipCode { get; set; }
-        public DateTime BirthDate { get; set; }
-        public int CertificationID { get; set; }
-        public string PowerofAttorny { get; set; }
+        public string SocialMedia { get; set; }
+        public DateTime BirthDate { get; set; } 
+        public int CertificationID { get; set; } 
+        public string ResidentialAddress1 { get; set; }
+        public string ResidentialAddress2 { get; set; }
+        public int? ResidentialStateID { get; set; }
+        public string ResidentialDistrict { get; set; }
+        public int? ResidentialCityID { get; set; }
+        public string ResidentialZipCode { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        
-
     }
 
     public class MemberList
@@ -446,6 +451,8 @@ namespace office.Models
         public string ShortName { get; set; }
         public int BusinessCategoryID { get; set; }
         public int BusinessSubCategoryID { get; set; }
+        public string BusinessCategoryName { get; set; } 
+        public string BusinessSubCategoryName { get; set; }
         public int CertificationID { get; set; }
         public int CompanyOwnershipTypeID { get; set; }
         public int Isclient { get; set; }
@@ -486,9 +493,29 @@ namespace office.Models
         public string OfcZip { get; set; }
         public string Website { get; set; }
     }
+    public class SaveInternalTeam
+    {
+        [Key]
+        public int internalpersonid { get; set; }
+        public int internalTeamid { get; set; } 
+        public int designationid1 { get; set; }
+        public int subdesignationid1 { get; set; }
+        public int subpartdesignationid1 { get; set; }
+    }
+    public class SaveExternalTeam
+    {
+        [Key]
+        public int ExternalPersonId { get; set; }
+        public int ExternalTeamid { get; set; }
+        public int RelationId { get; set; }
+        public int CategoryId { get; set; }
+        public int SubCategoryId { get; set; }
+        public int ExternalCompanyId { get; set; }
+        public int DesignationId { get; set; } 
+        public int SubDesignationId { get; set; }
+        public int SubpartDesignationId { get; set; }
+    }
 }
-
-
 
 
 

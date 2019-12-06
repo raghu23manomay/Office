@@ -12,9 +12,10 @@
 
                     <th>Name </th>
                     <th>Short Name   </th>
-                    <th>Date   </th>
+
                     <th>Business Category </th>
-                    <th>Business SubCategory  </th> 
+                    <th>Business SubCategory  </th>
+                    <th>Date   </th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -24,19 +25,20 @@
                 <tr>
                     <td>@item.CompanyName </td>
                     <td> @item.ShortName </td>
+
+                    <td> @item.BusinessCategoryName </td>
+                    <td> @item.BusinessSubCategoryName </td>
                     <td style="width: 85px;"> @item.CreatedDate.ToString("yyyy-MM-dd")   </td>
-                    <td> @item.BusinessCategoryID </td>
-                    <td> @item.BusinessSubCategoryID </td> 
                     <td>
-                        <a class="l" href="../Template/DocTemplateList?ProjectID=@item.CompanyID" name="@item.CompanyID" id="linkProject">
+                        @*<a class="l" href="../Template/DocTemplateList?ProjectID=@item.CompanyID" name="@item.CompanyID" id="linkProject">
                             <i class="fa fa-mail-forward" style="color: darkgrey;" aria-hidden="true"></i>
-                        </a>
-                        <a class="edit" href="EditProject?id=@item.CompanyID" id="EditMember">
+                        </a>*@
+                        <a class="edit" href="AddCompanyInfo?id=@item.CompanyID" id="EditMember">
                             <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
                         </a>
                         <a class="Delete" name="@item.CompanyID" id="DeleteProject">
                             <i class="fa fa-trash" style="color: darkgrey;display:none" aria-hidden="true"></i>
-                        </a> 
+                        </a>
                     </td>
                 </tr>
                 }

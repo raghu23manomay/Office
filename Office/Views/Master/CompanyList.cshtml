@@ -1,17 +1,12 @@
-﻿
-
-@model IEnumerable<office.Models.CompanyDetailsList>
-
- 
+﻿ 
+@model IEnumerable<office.Models.CompanyDetailsList> 
 
 <div class="row">
-    <script src="~/js/jquery-2.1.1.js"></script>
-
-
+    <script src="~/js/jquery-2.1.1.js"></script> 
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Projects </h5>
+                <h5>Company </h5>
 
             </div>
             <div class="ibox-content">
@@ -44,7 +39,7 @@
 <script>
     $('#ProjectFilter').keyup(function () {
         $.ajax({
-                url: "@Url.Action("LoadProjectList", "Home")",
+                url: "@Url.Action("CompanyList", "Home")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     Name: $('#ProjectFilter').val(),
