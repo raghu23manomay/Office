@@ -3,38 +3,29 @@
 @{
     Layout = null;
 }
-
 <div class="wrapper">
-    
     <div class="gray-bg">
         <div class="mail-box">
-            <div id="summernote" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div  ondrop="drop(event)" ondragover="allowDrop(event)">
                 @try
                 {
                     if (Model != null)
                     {
-                        <hidden id="hdnDescription" value="@Model.TemplateDescription"></hidden>
-                        @(new HtmlString(@Model.TemplateDescription))
+                     <a href="DownloadFile?path=@Model.FilePath" class="pull-right"><i class="fa fa-download text-navy"></i></a>
                     }
                 }
-                catch { }
-            </div>
-            <div class="mail-body text-right tooltip-demo">
-                <button type="button" class="btn btn-sm btn-primary" id="Print">Print  <i class="fa fa-print " aria-hidden="true"></i></button>
-
+                catch { } 
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
-        <link href="~/css/style.css" rel="stylesheet" />
-        <script src="~/js/jquery-2.1.1.js"></script>
+<link href="~/css/style.css" rel="stylesheet" />
+<script src="~/js/jquery-2.1.1.js"></script>
 
-        <script>
+   <script>
         $(document).ready(function () {
-        $('#Print').on("click", function (e) {
-            debugger;
-
+        $('#Print').on("click", function (e) { 
             $.ajax({
                 url: "@Url.Action("Export", "Template")",
                 data:
@@ -45,17 +36,12 @@
                 dataType: "text",
 
                 success: function (data) {
-                    $('#ProjectGrid').html(data);
-
+                    $('#ProjectGrid').html(data); 
                 },
-                error: function (error) {
-                   
+                error: function (error) { 
                     eval(error);
                 }
-            });
-
+            }); 
         });
-        });
-
-
-        </script>
+     }); 
+</script> 

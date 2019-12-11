@@ -1,0 +1,52 @@
+﻿
+<script src="~/Scripts/jquery-2.1.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<div class="row">
+    <div class="col-lg-4">
+        @Html.DropDownList("AuthorityID", new SelectList((System.Collections.IEnumerable)ViewData["AuthorityList"], "Value", "Text"), "Select Authority", new { @class = "form-control", @id = "AuthorityID", Title = "AuthorityID" })
+        <div class="file-manager " id="Rules">
+
+           
+
+        </div>
+      
+    </div>
+
+
+    <div class="col-lg-7 pull-right">
+       
+        <div class="" id="Description">
+
+
+
+        </div>
+    </div>
+
+</div>
+ 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+<link href="~/css/style.css" rel="stylesheet" />
+<script src="~/js/plugins/nestable/jquery.nestable.js"></script>
+<script>
+ 
+        $(document).ready(function () {
+           
+              
+        $.ajax({
+            url: "@Url.Action("GetRuleBook", "RuleBook")",
+            data: {
+                localauthority_id: 1
+            },
+            success: function (data) {
+
+                $('#Rules').html(data);
+            }
+            });
+
+
+    });
+
+</script>

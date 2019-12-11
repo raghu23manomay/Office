@@ -47,7 +47,7 @@
                         <label class="col-lg-2 control-label">Developers</label>
 
                         <div class="col-lg-4" style="display:inline-flex;">
-                            @Html.DropDownList("DeveloperId", new SelectList((System.Collections.IEnumerable)ViewData["DeveloperList"], "Value", "Text"), "Select Developer", new { @class = "form-control", @id = "DeveloperId", Title = "DeveloperId" })
+                            @Html.DropDownList("DeveloperId", new SelectList((System.Collections.IEnumerable)ViewData["CompanyNameList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "DeveloperId", Title = "DeveloperId" })
                         </div>
                         <label class="col-lg-2 control-label">Relation</label>
 

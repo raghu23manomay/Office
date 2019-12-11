@@ -1,0 +1,104 @@
+﻿
+
+@{
+    /**/
+
+
+    ViewBag.Title = "SubRules";
+    Layout = null; 
+}
+
+
+        <div class="row">
+            <div class="col-lg-6">
+
+
+                <div class="table table-hover margin bottom" id="manu">
+
+                    <table>
+
+                        <tr>
+                            <td>
+                                @foreach (var item in Model)
+                                {
+
+
+                                <div>
+                                    <button class="aLink  btn btn-link idname childID" id="@item.text" style="margin-bottom: 0px!important;" aa="@item.rule_no">
+                                        @item.text
+                                    </button>
+                                    <input type="text" id="txtID" value="@item.rule_no" hidden />
+
+                                    <div id="child" class="child">
+
+                                    </div>
+ 
+
+
+
+                                </div>
+                                    
+                                   
+                                }
+
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+               
+            </div>
+        </div>
+
+
+<script>
+    $(document).ready(function () {
+       
+        $('.childID').on('click', function () {
+           
+            $("div").removeClass("SelectedSubDiv");
+            $(this).closest("div").find(".child").addClass("SelectedSubDiv");
+         $.ajax({
+            url: "@Url.Action("SubRules", "RuleBook")",
+            contentType: "application/json",
+             data: JSON.stringify({
+                 SubmenuID: $(this).attr("aa")+"."
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+             success: function (data) {
+                 
+                 if (data.length <= 6) { }
+                 else {
+                     $(".SelectedSubDiv").html(data);
+                 }
+                
+                
+
+             },
+            error: function (data) {
+
+
+            },
+
+
+            });
+                $.ajax({
+            url: "@Url.Action("DescriptionRule", "RuleBook")",
+            data: {
+                rule_no: $(this).attr("aa")
+            },
+            success: function (data) {
+
+                $('#Description').html(data);
+            }
+            });
+        });
+    });
+</script>

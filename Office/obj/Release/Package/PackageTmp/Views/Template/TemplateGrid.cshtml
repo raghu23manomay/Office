@@ -5,7 +5,6 @@
 @{
     Layout = null;
 }
-
 <div class="mail-box-header">
     <h2>
         Template
@@ -26,20 +25,15 @@
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
-                        {
-
-
+                        { 
                         <tr>
                             <td> @item.TemplateName</td>
                             <td>@item.DepartmentName</td>
                             <td>@item.Createddate</td>
                             <td>
-                                <button type="button" class="pull-right lnkGenerate buttonLink" aa="@item.TemplateID"><i class="fa fa-arrow-circle-o-up text-navy"></i></button>
-
-                                <a href="Compose?id=@item.TemplateID" class="pull-right"><i class="fa fa-edit text-navy"></i></a>
-                            </td>
-
-
+                                 <a class="pull-right lnkGenerate"><i class="fa fa-mail-forward text-navy"></i></a>
+                                 <a href="Compose?id=@item.TemplateID" class="pull-right"><i class="fa fa-edit text-navy"></i></a>
+                            </td> 
                         </tr>  
                         }
                     </tbody>
@@ -47,8 +41,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-    </div>
-
+    </div> 
     <div class="clearfix"></div>
     <div>
         <div class="pnl-pagination m-b-md1">
@@ -66,9 +59,20 @@
 
 <script>
     $(".lnkGenerate").on('click', function (e) {
+       // href="GenerateDocument?TemplateID=item.TemplateID&ProjectID=ViewData["ProjectID"]" 
+        
+        var urlParams = new URLSearchParams(location.search);
+        if (urlParams.has('ProjectID')) {
+            ProjectID = urlParams.get('ProjectID');
+        }
+        else {
+            ProjectID = 0;
+        }
+        
+         
+        window.location.href = "../Template/GenerateDocument?TemplateID="+@Model.FirstOrDefault().TemplateID+"&ProjectID="+ProjectID;
 
-        var TemplateId = $(this).attr("aa");
-        $.ajax({
+        @*$.ajax({
             url: "@Url.Action("GenerateDocument", "Template")",
             data:
             {
@@ -86,7 +90,7 @@
             },
             complete: function () {
             }
-        });
+        });*@
     });
      $('#mgrid .pagination li a').on('click', function (e) { 
             e.preventDefault();
@@ -114,9 +118,6 @@
                 },
                 complete: function () {
                 }
-            });
-           
-
-        });
-
+            });  
+        }); 
 </script>

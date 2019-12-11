@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<office.Models.PerformaPlaceholders>
 @{
-    /**/
-
+     
 
     ViewBag.Title = "Placeholder";
     Layout = null;
@@ -10,41 +9,35 @@
     .ibox.fullscreen .collapse-link {
         display: none;
     }
+    .ibox {
+        margin-bottom: 5px!important;
+    }
 </style>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Projects </h5>
+        <h5>Project Details </h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
+            
         </div>
     </div>
    
         <div class="ibox-content" style="display: none;">
             <div class="row">
-                <div class="col-lg-6">
-
+                <div class="col-lg-6"> 
                     <div class="table table-hover margin bottom">
-
-
-
+                        
                         @foreach (var item in Model)
                         {
                             if (item.TableName == "Project")
                             {
                                 <div>
-
                                     <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
-
                                         @item.PlaceHolderName
-
                                     </button>
                                 </div>
-
                             }
                         }
 
@@ -58,25 +51,19 @@
     </div>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Developer </h5>
+        <h5>Developer Details</h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
+            
         </div>
     </div>
     <div class="ibox-content" style="display: none;">
 
         <div class="row">
-            <div class="col-lg-6">
-
-                <div class="table table-hover margin bottom">
-
-
-
+            <div class="col-lg-6"> 
+                <div class="table table-hover margin bottom">  
                     @foreach (var item in Model)
                     {
                         if (item.TableName == "DeveloperInfo")
@@ -103,14 +90,12 @@
 </div>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Consultant </h5>
+        <h5>Consultant Details </h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
+            
         </div>
     </div>
     <div class="ibox-content" style="display: none;">
@@ -119,9 +104,7 @@
             <div class="col-lg-6">
 
                 <div class="table table-hover margin bottom">
-
-
-
+                     
                     @foreach (var item in Model)
                     {
                         if (item.TableName == "ConsultantInfo")
@@ -148,14 +131,12 @@
 </div>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Contractor </h5>
+        <h5>Contractor Details</h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
+            
         </div>
     </div>
     <div class="ibox-content" style="display: none;">
@@ -163,9 +144,7 @@
         <div class="row">
             <div class="col-lg-6">
 
-                <div class="table table-hover margin bottom">
-
-
+                <div class="table table-hover margin bottom"> 
 
                     @foreach (var item in Model)
                     {
@@ -194,14 +173,12 @@
 
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Assistance </h5>
+        <h5>Assistance Details</h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
+            
         </div>
     </div>
     <div class="ibox-content" style="display: none;">
@@ -209,9 +186,7 @@
         <div class="row">
             <div class="col-lg-6">
 
-                <div class="table table-hover margin bottom">
-
-
+                <div class="table table-hover margin bottom"> 
 
                     @foreach (var item in Model)
                     {
@@ -241,24 +216,20 @@
 
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>CoOrdinator </h5>
+        <h5>CoOrdinator Details</h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
+            
         </div>
     </div>
     <div class="ibox-content" style="display: none;">
 
         <div class="row">
-            <div class="col-lg-6">
-
+            <div class="col-lg-6"> 
                 <div class="table table-hover margin bottom">
-
-
+                     
                     @foreach (var item in Model)
                     {
                         if (item.TableName == "CoordinatorInfo")
@@ -292,12 +263,10 @@
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            <a class="close-link">
-                <i class="fa fa-times"></i>
-            </a>
+            
         </div>
     </div>
-    <div class="ibox-content" style="display: none;">
+    <div class="ibox-content" id="ibox-Customfield" style="display: none;">
 
         <div class="row">
 
@@ -329,10 +298,7 @@
                         </div>
                     
                 }
-            }
-
-
-
+            } 
 
         </div>
     </div>
@@ -352,36 +318,40 @@
             insertTextAtCursor(texts);
         });
         $('#btnAddCustomfield').on('click', function () {
-            debugger;
+             
             var Customfield;
             CustomFieldName = $("#txtCustomfield").val();
             if (CustomFieldName == "") {
                 $("#Customfieldvalidation").show();
                 return false;
             }
-            else {
-
+            else { 
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     url: '/Template/SaveCustomField',
                     data:
                     {
-                        FieldID: 0, 
-                        CustomFieldName: CustomFieldName, 
+                        FieldID: 0,
+                        CustomFieldName: CustomFieldName,
                     },
                     success: function (da) {
-                       
+                        $.ajax({
+                            url: "@Url.Action("GetPlaceholder", "Template")",
+                            success: function (data) {
+
+                                $('#UserPlaceHolder').html(data);
+                                $("#ibox-Customfield").show();
+                            }
+                        });
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                     }
                 });
             }
-        });
-
+        }); 
     });
     function insertTextAtCursor(text) {
-
         var sel, range;
        
         if (window.getSelection) {
@@ -396,7 +366,7 @@
                 range.deleteContents();
                 range.insertNode(document.createTextNode(text));
             }
-            //  }
+           
         } else if (document.selection && document.selection.createRange) {
             document.selection.createRange().text = text;
         }

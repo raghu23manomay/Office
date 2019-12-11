@@ -1,74 +1,95 @@
 ﻿
 @model  office.Models.DocTemplateList
+@{
+    ViewBag.Title = "Compose";
+    Layout = "~/Views/Shared/LayoutNoLeftBar.cshtml";
+}
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="~/css/style.css" rel="stylesheet" />
 
-<div class="modal-header">
-    <button type="button" class="close">&times;</button>
-    <h4 class="modal-title">Generate Document</h4>
-        
-</div>
+  <style>
+      .ibox-content{padding-bottom:5px!important;}
+  </style>
+<div class="wrapper wrapper-content1">
 
-<div class="modal-body">
-    <div class="wrapper wrapper-content1 ">
-         
+    <div class="row" id="TemplateData">
 
-            <div class="row" id="TemplateData">
-                <div class="col-md-3">
-                    <div class="timeline-row post-even">
-                        <div class="ibox" >
-                            <div class="">
-                                <h5 class="text-success no-margin headingsize18">
-                                    Template
-                                    <button class="btn-white btn btn-xs" id="btnCompare" type="button"> Compare </button>
-                                </h5>
-                                
-                            </div>
-                            <hidden id="hdnTemplateID" value="@Model.TemplateID"></hidden>
-                            <div class="" id="DataTemplateList">
+
+        <div class="col-md-2">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="timeline-row post-even">
+                            <div class="ibox">
+                                <div class="">
+                                    <h5 class="text-success no-margin headingsize18">
+                                        Template
+                                        <button class="btn-white btn btn-xs" id="btnCompare" type="button"> Compare/Preview </button>
+                                    </h5>
+
+                                </div>
+                                <hidden id="hdnTemplateID" value="@Model.TemplateID"></hidden>
+                                <div class="" id="DataTemplateList">
+                                </div>
+                                <div class="">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="timeline-row post-even ">
-                       
- 
-                            <div class="" id="ProjectGrid">
-                                <div class="table-responsive">
-                                </div>
-                            </div> 
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="timeline-row post-even ">
+
+
+                <div class="" id="ProjectGrid">
+                    <div class="table-responsive">
                     </div>
                 </div>
             </div>
-        
+        </div>
+        <div class="col-md-8" id="CompareTemplateDiv">
+            </div>
+
+        </div>
     </div>
-    </div>
-    <div class="loader"></div>
-    <input type="text" id="saveuserid" value="" class="hidden" />
-    <input type="text" id="saveusername" value="" class="hidden" />
-    <input type="text" id="saverolename" value="" class="hidden" />
-    <hr />
-    <script src="~/js/jquery-2.1.1.js"></script>
- 
-    <script>
-       
+            <div class="loader"></div>
+            <input type="text" id="saveuserid" value="" class="hidden" />
+            <input type="text" id="saveusername" value="" class="hidden" />
+            <input type="text" id="saverolename" value="" class="hidden" />  
+            <hr /> 
+            <script src="~/js/jquery-2.1.1.js"></script>
+
+            <script>
+
     $(document).ready(function () {
         $('.close').on("click", function (e) {
             $('#mdlGenerate').hide();
         });
-       
+        var urlParams = new URLSearchParams(location.search);
+        if (urlParams.has('ProjectID')) {
+            ProjectID = urlParams.get('ProjectID');
+        }
+        else {
+            ProjectID = 0;
+        }
+        if (urlParams.has('TemplateID')) {
+            TemplateID = urlParams.get('TemplateID');
+        }
+        else {
+            TemplateID = 0;
+        }
         
-        var TemplateID = @ViewData["TemplateID"];
              $.ajax({
                 url: "@Url.Action("GetProjectData", "Template")",
                 data:
                 {
                     TemplateID: TemplateID,
                     DTTemplateID : 0,
-                    ProjectID : 14
+                    ProjectID: ProjectID
 
                 },
                 dataType: "text",
@@ -80,58 +101,75 @@
                 error: function (error) {
                     eval(error);
                 }
-            });
+        });
 
-             $.ajax({
-                url: "@Url.Action("GetDataTemplateList", "Template")",
-                data:
-                {
-                    ProjectID: 14,
-                },
-                dataType: "text",
+        $.ajax({
+            url: "@Url.Action("GetDataTemplateList", "Template")",
+            data:
+            {
+                ProjectID: ProjectID
+            },
+            dataType: "text",
 
-                success: function (data) {
+            success: function (data) {
 
-                    $('#DataTemplateList').html(data);
-                },
-                error: function (error) {
-                    eval(error);
-                }
+                $('#DataTemplateList').html(data);
+            },
+            error: function (error) {
+                eval(error);
+            }
         });
 
 
     });
-    </script>
-    <script>
+            </script>
+            <script>
     $("#btnCompare").on("click", function (e) {
 
         var chkArray = [];
-
+        debugger;
         $(".chkTemplate:checked").each(function () {
             chkArray.push($(this).val());
         });
         var selected;
         selected = chkArray.join(',');
-        
-         var TemplateID = @ViewData["TemplateID"];
+        var l = chkArray.length;
+        if (l > 3) {
+            alert("Do not select more than 3 template to compare ");
+            return;
+        }
+        var urlParams = new URLSearchParams(location.search);
+        if (urlParams.has('ProjectID')) {
+            ProjectID = urlParams.get('ProjectID');
+        }
+        else {
+            ProjectID = 0;
+        }
+        if (urlParams.has('TemplateID')) {
+            TemplateID = urlParams.get('TemplateID');
+        }
+        else {
+            TemplateID = 0;
+        }
+         
          $.ajax({
                 url: "@Url.Action("CompareDataTemplates", "Template")",
                 data:
                 {
                     TemplateID: TemplateID,
                     DTTemplateIDList: selected,
-                    ProjectID : 14
+                    ProjectID:  $("#ProjectID").val()
 
                 },
                 dataType: "text",
 
                 success: function (data) {
-                    $('#TemplateData').html(data);
-                   
+                    $('#CompareTemplateDiv').html(data);
+
                 },
                 error: function (error) {
                     eval(error);
                 }
             });
     });
-    </script>
+            </script>

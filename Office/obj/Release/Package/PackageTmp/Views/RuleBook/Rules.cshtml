@@ -1,0 +1,136 @@
+﻿
+@model IEnumerable<office.Models.RuleBookData>
+@{
+
+    ViewBag.Title = "Rules";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="ibox " style="width:372px;">
+            <div class="ibox-title">
+                <h5>Rule Book </h5>
+               
+            </div>
+            <div class="ibox-content">
+                <div class="table table-hover margin bottom" style="width:372px; max-height:700px;overflow:scroll; margin-right:10px;" id="manu">
+
+                    <table> 
+                        <tr> 
+                            <td>
+
+                                @foreach (var item in Model)
+                                {
+
+
+                                    <div>
+
+
+                                        <i class="fa fa-angle-right" aa="@item.rule_no."></i>
+                                        <i class="fa fa-folder" aria-hidden="true" aa="@item.rule_no."></i>
+                                        <a class="rule_head_no aLink  btn btn-link idname SmenuID" id="rule_head_no" aa="@item.rule_no." aaa="@item.rule_head_no">
+
+                                            @item.text
+
+                                        </a>
+
+
+                                        <div id="node" class="node">
+
+                                        </div>
+
+
+                                    </div>
+
+
+
+                                }
+
+                            </td>
+                        </tr> 
+                    </table> 
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6"> 
+
+    </div>
+
+</div>
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="exponential.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#refrshId').on('click', function () {
+            location.reload();
+        });
+        $('#ExpandId').on('click', function () {
+            $.ajax({
+                url: "@Url.Action("SubRules", "RuleBook")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    SubmenuID: '0'
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#root').html(data);
+
+                },
+                error: function (data) {
+                },
+
+            });
+        });
+        $('.SmenuID').on('click', function () {
+        
+            var SubmenuID = $(this).attr("aa");
+            $("div").removeClass("SelectedDiv");
+            $(this).closest("div").find(".node").addClass("SelectedDiv");
+            $.ajax({
+                url: "@Url.Action("SubRules", "RuleBook")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    SubmenuID: $(this).attr("aa")
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    if (data.length <= 6) { }
+                    else {
+                        $(".SelectedDiv").html(data);
+                    }
+                },
+                error: function (data) {
+
+                },
+
+            });
+
+            $.ajax({
+                url: "@Url.Action("DescriptionRule", "RuleBook")",
+                data: {
+                    rule_no: $(this).attr("aaa")
+                },
+                success: function (data) {
+
+                    $('#Description').html(data);
+                }
+            });
+        });
+
+    });
+</script>
+
+
+
+

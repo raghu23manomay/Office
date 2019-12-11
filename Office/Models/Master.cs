@@ -432,8 +432,8 @@ namespace office.Models
        public int CompanyID                 { get; set; }
        public string CompanyName            { get; set; }
        public string ShortName              { get; set; }
-       public int BusinessCategoryID        { get; set; }
-       public int BusinessSubCategoryID     { get; set; }
+       public int CategoryID1               { get; set; }
+       public int SubCategoryID1            { get; set; }
        public int CertificationID           { get; set; }
        public int CompanyOwnershipTypeID    { get; set; }
        public int Isclient                  { get; set; }
@@ -441,8 +441,18 @@ namespace office.Models
        public DateTime InceptionDate        { get; set; }
        public int CreatedBy                 { get; set; }
        public DateTime CreatedDate          { get; set; }
-                                                          
-}
+      
+        
+    }
+    public class CompanyDetailsLeftSide
+    {
+        public int CompanyID { get; set; }
+        public IEnumerable<CompanyAddress> CompanyAddress { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
+        public IEnumerable<SaveCertification> SaveCertification { get; set; }
+        public IEnumerable<SaveInternalTeam> SaveInternalTeam { get; set; } 
+        public IEnumerable<SaveExternalTeam> SaveExternalTeam { get; set; }
+    }
     public class CompanyDetailsList
     {
         [Key]
@@ -467,11 +477,13 @@ namespace office.Models
     public class SaveCompanyMobile
     {
         [Key]
-           public string Value     { get; set; }
-           public int Type          { get; set; } 
-           public int WorkDepartmentID   { get; set; }
+          
+           public string Value          { get; set; }
+           public int Type                { get; set; } 
+           public int WorkDepartmentID   { get; set; } 
            public string Extension       { get; set; }
-
+           public int AddressID { get; set; }
+        public int? CompanyPhoneID { get; set; }
     }
     public class SaveCompanyEmail
     {
@@ -485,12 +497,12 @@ namespace office.Models
     {
         [Key]
         public int AddressID { get; set; }
-        public string OfcAddress1 { get; set; }
-        public string OfcAddress2 { get; set; }
-        public int? StateID2 { get; set; }
-        public string OfcDistrict { get; set; }
-        public int? CityID2 { get; set; }
-        public string OfcZip { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public int? StateID { get; set; }
+        public string District { get; set; }
+        public int? CityID { get; set; }
+        public string ZipCode { get; set; }
         public string Website { get; set; }
     }
     public class SaveInternalTeam
@@ -501,6 +513,10 @@ namespace office.Models
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
+        public string InternalPersonName { get; set; }
+        public string DesignationidText { get; set; }
+        public string SubDesignationText { get; set; }
+        public string SubPartDesignationText { get; set; }
     }
     public class SaveExternalTeam
     {
@@ -514,7 +530,38 @@ namespace office.Models
         public int DesignationId { get; set; } 
         public int SubDesignationId { get; set; }
         public int SubpartDesignationId { get; set; }
+        public string RelationName { get; set; }
+        public string CategoryName { get; set; }
+        public string SubCategoryName { get; set; }
+        public string ExternalPersonName { get; set; }
+        public string DesignationidText { get; set; }
+        public string SubDesignationText { get; set; }
+        public string SubPartDesignationText { get; set; }
     }
+    public class SaveCertification
+    {
+        [Key]
+        public int CertificationID { get; set; } 
+        public String CertificationText { get; set; }
+        public int CompanyCertificationsDetailID { get; set; } 
+        public String Value { get; set; }
+        
+    }
+    public class CompanyAddressMobile
+    {
+        [Key]
+        public int AddressID { get; set; }
+        public string OfcAddress1 { get; set; }
+        public string OfcAddress2 { get; set; }
+        public int? StateID2 { get; set; }
+        public string OfcDistrict { get; set; }
+        public int? CityID2 { get; set; }
+        public string OfcZip { get; set; }
+        public string Website { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
+         
+        }
+
 }
 
 

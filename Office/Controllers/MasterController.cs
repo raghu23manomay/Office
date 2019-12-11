@@ -1023,17 +1023,60 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("AddMember")
                     : View("AddMember");
         }
-        public ActionResult AddCompanyInfo()
+        public ActionResult GetCompanyInfoLeftSide(int CompanyId = 0)
         {
+            CompanyDetailsLeftSide data = new CompanyDetailsLeftSide();
+            OfficeDbContext _db = new OfficeDbContext();
+             
+
+                IEnumerable<CompanyAddress> result1 = _db.CompanyAddress.SqlQuery(@"exec uspGetCompanyAddress
+                @CompanyID",
+                new SqlParameter("@CompanyID", CompanyId)
+                ).ToList<CompanyAddress>();
+                data.CompanyAddress = result1;
+
+                IEnumerable<SaveCompanyMobile> result2 = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetCompanyPhoneNo
+                @CompanyID",
+              new SqlParameter("@CompanyID", CompanyId)
+              ).ToList<SaveCompanyMobile>();
+                data.SaveCompanyMobile = result2;
+
+            IEnumerable<SaveCertification> result3 = _db.SaveCertification.SqlQuery(@"exec uspGetCompanyCertification
+                @CompanyID",
+             new SqlParameter("@CompanyID", CompanyId)
+             ).ToList<SaveCertification>();
+            data.SaveCertification = result3;
+
+            IEnumerable<SaveInternalTeam> result4 = _db.SaveInternalTeam.SqlQuery(@"exec uspGetInternalTeam
+                @CompanyID",
+           new SqlParameter("@CompanyID", CompanyId)
+           ).ToList<SaveInternalTeam>();
+            data.SaveInternalTeam = result4;
+
+            IEnumerable<SaveExternalTeam> result5 = _db.SaveExternalTeam.SqlQuery(@"exec uspGetExternalTeam
+                @CompanyID",
+          new SqlParameter("@CompanyID", CompanyId) 
+          ).ToList<SaveExternalTeam>();
+            data.SaveExternalTeam = result5;
+            data.CompanyID = CompanyId;
+                return Request.IsAjaxRequest()
+                   ? (ActionResult)PartialView("PartialCompanyAddress", data)
+                   : View("PartialCompanyAddress", data);
+              
+        }
+        public ActionResult AddCompanyInfo(int id = 0)
+        {
+            CompanyDetails data = new CompanyDetails();
+            OfficeDbContext _db = new OfficeDbContext();
             ViewData["DesignationList"] = binddropdown("DesignationList", 0);
             ViewData["CityList"] = binddropdown("CityList", 0);
             ViewData["StateList"] = binddropdown("StateList", 0);
             ViewData["PersonList"] = binddropdown("PersonList", 0);
             ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
             ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
-            ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0); 
+            ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0);
             ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
-            ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0); 
+            ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0);
             ViewData["CertificationList"] = binddropdown("CertificationList", 0);
             ViewData["CompanyRelationList"] = binddropdown("CompanyRelationList", 0);
             ViewData["CompanyList"] = binddropdown("CompanyList", 0);
@@ -1049,10 +1092,34 @@ namespace Calibration.Controllers
             {
                 ViewBag.layout = "1";
             }
+            if (id > 0)
+            {
+                var result = _db.CompanyDetails.SqlQuery(@"exec uspGetCompanyDetails
+                   @CompanyID",
+                new SqlParameter("@CompanyID", id)
+                ).ToList<CompanyDetails>();
+                data = result.FirstOrDefault();
+
+                //  IEnumerable<CompanyAddress> result1 = _db.CompanyAddress.SqlQuery(@"exec uspGetCompanyAddress
+                //  @CompanyID",
+                //  new SqlParameter("@CompanyID", id)
+                //  ).ToList<CompanyAddress>();
+                //  data.CompanyAddress = result1;
+
+                //  IEnumerable<SaveCompanyMobile> result2 = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetCompanyPhoneNo
+                //  @CompanyID",
+                //new SqlParameter("@CompanyID", id)
+                //).ToList<SaveCompanyMobile>();
+                //  data.SaveCompanyMobile = result2;
+
+                return Request.IsAjaxRequest()
+                   ? (ActionResult)PartialView("AddCompanyInfo", data)
+                   : View("AddCompanyInfo", data);
+            }
 
             return Request.IsAjaxRequest()
-                    ? (ActionResult)PartialView("AddCompanyInfo")
-                    : View("AddCompanyInfo");
+                    ? (ActionResult)PartialView("AddCompanyInfo",data)
+                    : View("AddCompanyInfo",data);
         }
         public ActionResult AddPersonInfo()
         {
@@ -1074,7 +1141,179 @@ namespace Calibration.Controllers
                     : View("AddPersonInfo");
         }
         [HttpPost]
-        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile,List<CompanyAddress> SaveAddress , List<SaveInternalTeam> SaveInternalTeam, List<SaveExternalTeam> SaveExternalTeam)
+        public ActionResult SaveCompanyOfficeAddress(int CompanyId,CompanyAddress Address, List<SaveCompanyMobile>   SaveMobileNo)
+        {
+            try
+            {
+                DataTable dtMobile = new DataTable();
+
+                dtMobile.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobile.Columns.Add("PhoneType", typeof(int));
+                dtMobile.Columns.Add("PhoneNumber", typeof(string));
+                dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobile.Columns.Add("Extension", typeof(string));
+                dtMobile.Columns.Add("AdressID", typeof(int));
+                // Adding Contact Person In DT
+                if (SaveMobileNo != null)
+                {
+                    if (SaveMobileNo.Count > 0)
+                    {
+                        foreach (var item in SaveMobileNo)
+                        {
+                            DataRow dr_Mobile = dtMobile.NewRow();
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+                            dr_Mobile["Extension"] = item.Extension;
+                            dr_Mobile["CompanyPhoneID"] = item.CompanyPhoneID == null ? 0 : item.CompanyPhoneID;
+                            dr_Mobile["AdressID"] = item.AddressID;
+                            dtMobile.Rows.Add(dr_Mobile);
+                        }
+                    }
+                }
+
+
+                SqlParameter tvpParamMobile = new SqlParameter();
+                tvpParamMobile.ParameterName = "@CompanyMobileParam";
+                tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobile.Value = dtMobile;
+                tvpParamMobile.TypeName = "UTT_CompanyMobile";
+
+
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspUpdateCompanyAddress
+                 @CompanyId  
+                ,@AddressID   
+                ,@Address1  
+                ,@Address2  
+                ,@StateID  
+                ,@District  
+                ,@CityID  
+                ,@ZipCode  
+                ,@Website  
+                ,@CompanyMobileParam
+                ",
+                new SqlParameter("@CompanyId", CompanyId),
+                new SqlParameter("@AddressID", Address.AddressID), 
+                new SqlParameter("@Address1", Address.Address1),
+                new SqlParameter("@Address2", Address.Address2),
+                new SqlParameter("@StateID", Address.StateID),
+                new SqlParameter("@District", Address.District),
+                new SqlParameter("@CityID", Address.CityID),
+                new SqlParameter("@ZipCode", Address.ZipCode == null ? (object)DBNull.Value : Address.ZipCode),
+                new SqlParameter("@Website", Address.Website == null ? (object)DBNull.Value : Address.Website)
+                , tvpParamMobile
+
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult SaveCompanyCertification(int CompanyId, SaveCertification Cert)
+        {
+            try
+            { 
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdateCompanyCertification
+                 @CompanyId  
+                ,@CertificationID   
+                ,@CompanyCertificationsDetailID  
+                ,@Value  
+                ",
+                new SqlParameter("@CompanyId", CompanyId),
+                new SqlParameter("@CertificationID", Cert.CertificationID),
+                new SqlParameter("@CompanyCertificationsDetailID", Cert.CompanyCertificationsDetailID),
+                new SqlParameter("@Value", Cert.Value)
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult SaveInternalTeam(int CompanyId, SaveInternalTeam InternalTeam) 
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdateInternalTeam
+                 @CompanyId  
+                ,@internalTeamid   
+                ,@internalpersonid  
+                ,@designationid1
+                ,@subdesignationid1 
+                ,@subpartdesignationid1
+                ",
+                new SqlParameter("@CompanyId", CompanyId),
+                new SqlParameter("@internalTeamid", InternalTeam.internalTeamid),
+                new SqlParameter("@internalpersonid", InternalTeam.internalpersonid),
+                new SqlParameter("@designationid1", InternalTeam.designationid1),
+                 new SqlParameter("@subdesignationid1", InternalTeam.subdesignationid1),
+                new SqlParameter("@subpartdesignationid1", InternalTeam.subpartdesignationid1));
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult SaveCompanySupportTeam(int CompanyId, SaveExternalTeam ExternalTeam)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdateExternalTeam
+                 @CompanyId  
+                ,@CategoryID   
+                ,@SubCategoryID  
+                ,@PersonID
+                ,@Designationid 
+                ,@SubdesignationId
+                ,@subpartDesignationId
+                ,@ExternalCompanyID 
+                ,@ExternalTeamID
+                ,@RelationID
+                ",
+                new SqlParameter("@CompanyId", CompanyId),
+                new SqlParameter("@CategoryID", ExternalTeam.CategoryId),
+                new SqlParameter("@SubCategoryID", ExternalTeam.SubCategoryId),
+                new SqlParameter("@PersonID", ExternalTeam.ExternalPersonId),
+                new SqlParameter("@Designationid", ExternalTeam.DesignationId),
+                new SqlParameter("@SubdesignationId", ExternalTeam.SubDesignationId),
+                new SqlParameter("@subpartDesignationId", ExternalTeam.SubpartDesignationId),
+                new SqlParameter("@ExternalCompanyID", ExternalTeam.ExternalCompanyId),
+                new SqlParameter("@ExternalTeamID", ExternalTeam.ExternalTeamid),
+                 new SqlParameter("@RelationID", ExternalTeam.RelationId)
+                
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile,List<CompanyAddress> SaveAddress , List<SaveInternalTeam> SaveInternalTeam, List<SaveExternalTeam> SaveExternalTeam , List<SaveCertification> SaveCertification)
         {
             try
             {
@@ -1082,15 +1321,16 @@ namespace Calibration.Controllers
                 DataTable dtEmail = new DataTable();
                 DataTable dtAddress = new DataTable();
                 DataTable dtInternalTeam = new DataTable();
-                DataTable dtExternalTeam = new DataTable();
+                DataTable dtExternalTeam = new DataTable(); 
+                DataTable dtCertificaton = new DataTable();
                 dtMobile.Columns.Add("CompanyPhoneID", typeof(string));
                 dtMobile.Columns.Add("PhoneType", typeof(int));
                 dtMobile.Columns.Add("PhoneNumber", typeof(string)); 
                 dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
                 dtMobile.Columns.Add("Extension", typeof(string));
-                
-               
-    
+                dtMobile.Columns.Add("AdressID", typeof(int));
+
+
                 dtAddress.Columns.Add("AddressID", typeof(int));
                 dtAddress.Columns.Add("AddressType", typeof(string));
                 dtAddress.Columns.Add("Address1", typeof(string));
@@ -1117,8 +1357,27 @@ namespace Calibration.Controllers
                 dtExternalTeam.Columns.Add("ExternalPersonId", typeof(int));
                 dtExternalTeam.Columns.Add("designationid", typeof(int));
                 dtExternalTeam.Columns.Add("subdesignationid", typeof(int));
-                dtExternalTeam.Columns.Add("subpartdesignationid", typeof(int));
+                dtExternalTeam.Columns.Add("subpartdesignationid", typeof(int)); 
 
+                dtCertificaton.Columns.Add("CompanyCertificationsDetailID", typeof(int));
+                dtCertificaton.Columns.Add("CertificationID", typeof(int));
+                dtCertificaton.Columns.Add("Value", typeof(string));
+
+                if (SaveCertification != null)
+                {
+                    if (SaveCertification.Count > 0)
+                    {
+                        foreach (var item in SaveCertification)
+                        {
+                            DataRow dr_Certification = dtCertificaton.NewRow();
+                            dr_Certification["CompanyCertificationsDetailID"] = item.CompanyCertificationsDetailID;
+                            dr_Certification["CertificationID"] = item.CertificationID;
+                            dr_Certification["Value"] = item.Value; 
+                            dtCertificaton.Rows.Add(dr_Certification);
+                        }
+                    }
+                }
+                 
                 // Adding Contact Person In DT
                 if (SaveMobile != null)
                 {
@@ -1131,6 +1390,7 @@ namespace Calibration.Controllers
                             dr_Mobile["PhoneType"] = item.Type;
                             dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
                             dr_Mobile["Extension"] = item.Extension;
+                            dr_Mobile["AdressID"] = item.AddressID;
                             dtMobile.Rows.Add(dr_Mobile);
                         }
                     }
@@ -1143,14 +1403,14 @@ namespace Calibration.Controllers
                         foreach (var item in SaveAddress)
                         {
                             DataRow dr_SaveAddress = dtAddress.NewRow();
-                            dr_SaveAddress["AddressID"] = 0;
+                            dr_SaveAddress["AddressID"] = item.AddressID;
                             dr_SaveAddress["AddressType"] = 1;
-                            dr_SaveAddress["Address1"] = item.OfcAddress1;
-                            dr_SaveAddress["Address2"] = item.OfcAddress2;
-                            dr_SaveAddress["StateID"] = item.StateID2;
-                            dr_SaveAddress["District"] = item.OfcDistrict;
-                            dr_SaveAddress["CityID"] = item.CityID2;
-                            dr_SaveAddress["ZipCode"] = item.OfcZip;
+                            dr_SaveAddress["Address1"] = item.Address1;
+                            dr_SaveAddress["Address2"] = item.Address2;
+                            dr_SaveAddress["StateID"] = item.StateID;
+                            dr_SaveAddress["District"] = item.District;
+                            dr_SaveAddress["CityID"] = item.CityID;
+                            dr_SaveAddress["ZipCode"] = item.ZipCode;
                             dr_SaveAddress["Website"] = "";
 
                             dtAddress.Rows.Add(dr_SaveAddress);
@@ -1219,6 +1479,12 @@ namespace Calibration.Controllers
                 tvpParamExternalTeam.Value = dtExternalTeam;
                 tvpParamExternalTeam.TypeName = "UTT_ExternalTeam";
 
+                SqlParameter tvpParamCertification = new SqlParameter();
+                tvpParamCertification.ParameterName = "@CompanyCertificationParam";
+                tvpParamCertification.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamCertification.Value = dtCertificaton;
+                tvpParamCertification.TypeName = "UTT_CompanyCertification"; 
+
                 OfficeDbContext _db = new OfficeDbContext();
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveCompany
                  @CompanyID  
@@ -1236,12 +1502,13 @@ namespace Calibration.Controllers
                 ,@CompanyAddressParam
                 ,@InternalTeamParam
                 ,@ExternalTeamParam
+                ,@CompanyCertificationParam
                 ",
-                new SqlParameter("@CompanyID", -1),
+                new SqlParameter("@CompanyID", Company.CompanyID),
                 new SqlParameter("@CompanyName", Company.CompanyName), 
                 new SqlParameter("@ShortName", Company.ShortName),
-                new SqlParameter("@BusinessCategoryID", Company.BusinessCategoryID),
-                new SqlParameter("@BusinessSubCategoryID", Company.BusinessSubCategoryID),
+                new SqlParameter("@BusinessCategoryID", Company.CategoryID1),
+                new SqlParameter("@BusinessSubCategoryID", Company.SubCategoryID1),
                 new SqlParameter("@CertificationID", Company.CertificationID),
                 new SqlParameter("@CompanyOwnershipTypeID", Company.CompanyOwnershipTypeID),
                 new SqlParameter("@Isclient", Company.Isclient),
@@ -1251,7 +1518,8 @@ namespace Calibration.Controllers
                 , tvpParamMobile 
                 , tvpParamAddress 
                 , tvpParamInternalTeam
-                ,tvpParamExternalTeam
+                ,tvpParamExternalTeam,
+                tvpParamCertification
                 );
 
                 return Json("Success");

@@ -85,7 +85,14 @@ namespace office.Models
         public DbSet<OfficeSideContactPerson> OfficeSideContactPersons { get; set; }
         public DbSet<EmptyTemplateData> EmptyTemplateData { get; set; }
         public DbSet<CompanyDetailsList> CompanyDetailsList { get; set; }
-        
+        public DbSet<CompanyDetails> CompanyDetails { get; set; }
+        public DbSet<CompanyAddress> CompanyAddress { get; set; }
+        public DbSet<SaveCompanyMobile> SaveCompanyMobile { get; set; }
+        public DbSet<SaveMobile> SaveMobile { get; set; }
+        public DbSet<SaveEmail> SaveEmail { get; set; }
+        public DbSet<SaveCertification> SaveCertification { get; set; }
+        public DbSet<SaveInternalTeam> SaveInternalTeam { get; set; }
+        public DbSet<SaveExternalTeam> SaveExternalTeam { get; set; }
     }
-    
+     
 }

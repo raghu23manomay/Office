@@ -1983,6 +1983,11 @@
     <Content Include="Views\Master\_SubCategory.cshtml" />
     <Content Include="Views\Master\CompanyList.cshtml" />
     <Content Include="Views\Master\CompanyGrid.cshtml" />
+    <Content Include="Views\Master\CompanyDetailPartial.cshtml" />
+    <Content Include="Views\Shared\LayoutAsPartial.cshtml" />
+    <Content Include="Views\Master\SubDesignationList.cshtml" />
+    <Content Include="Views\Master\SubPartDesignationList.cshtml" />
+    <Content Include="Views\Master\PartialCompanyAddress.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

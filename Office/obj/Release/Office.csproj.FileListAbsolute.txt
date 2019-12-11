@@ -145,8 +145,6 @@ D:\Projects\GitProjectNew\officeBeta\Office\obj\Release\Calibration.pdb
 D:\Projects\GitProjectNew\officeBeta\Office\bin\Spire.Doc.dll
 D:\Projects\GitProjectNew\officeBeta\Office\bin\Spire.License.dll
 D:\Projects\GitProjectNew\officeBeta\Office\bin\Spire.Pdf.dll
-D:\Projects\GitProjectNew\officeBeta\Office\bin\Xceed.Document.NET.dll
-D:\Projects\GitProjectNew\officeBeta\Office\bin\Xceed.Words.NET.dll
 D:\Projects\GitProjectNew\officeBeta\Office\bin\Microsoft.mshtml.dll
 D:\Projects\GitProjectNew\officeBeta\Office\bin\Spire.Doc.xml
 D:\Projects\GitProjectNew\officeBeta\Office\bin\Spire.License.xml
