@@ -136,10 +136,11 @@
                     @item5.RelationName
                     @item5.CategoryName
                     @item5.SubCategoryName
-                     <br /> 
+                    <br />
                     @item5.DesignationidText
                     @item5.SubDesignationText
                     @item5.SubPartDesignationText
+                    <i class="fa fa-pencil-square-o EditExternalTeam" ExternalTeamid="@item5.ExternalTeamid" id="EditExternalTeam-@item5.ExternalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                 </span>
             </div>
 
@@ -261,27 +262,197 @@
         });
 
         $('.EditinternalTeam').on("click", function (e) {
-            debugger;
+           
             $("select#InternalPersonId").prop('selectedIndex', 0);
             $("select#DesignationId1").prop('selectedIndex', 0);
             $("select#SubDesignationID1").prop('selectedIndex', 0);
             $("select#SubPartDesignationID1").prop('selectedIndex', 0);
             var internalteamid = $(this).attr("internalteamid");
-            $("#DBInternalTeamId").val(internalteamid);
+            $("#DbInternalTeamID").val(internalteamid);
 
-            var internalpersonid = $(this).attr("internalpersonid");
-            var designationid1 = $(this).attr("designationid1");
-            var subdesignationid1 = $(this).attr("subdesignationid1");
-            var subpartdesignationid1 = $(this).attr("subpartdesignationid1");
+            var internalpersonid = $(this).closest(".showInternalTeam").attr("internalpersonid");
+            var designationid1 = $(this).closest(".showInternalTeam").attr("designationid1");
+            var subdesignationid1 = $(this).closest(".showInternalTeam").attr("subdesignationid1");
+            var subpartdesignationid1 = $(this).closest(".showInternalTeam").attr("subpartdesignationid1");
 
 
             $("#InternalPersonId").val(internalpersonid);
             $("#DesignationId1").val(designationid1);
+            GetSubDesignation();
             $("#SubDesignationID1").val(subdesignationid1);
+            GetSubPartDesignation();
             $("#SubPartDesignationID1").val(subpartdesignationid1);
-
+           
             
         });
-        
+
+        $('.EditExternalTeam').on("click", function (e) {
+           
+            $("select#RelationID").prop('selectedIndex', 0);
+            $("select#CategoryID2").prop('selectedIndex', 0);
+            $("select#SubCategoryID").prop('selectedIndex', 0);
+            $("select#SupportCompanyID").prop('selectedIndex', 0);
+            $("select#SupportPersonId").prop('selectedIndex', 0);
+            $("select#DesignationId2").prop('selectedIndex', 0);
+            $("select#SubDesignationID2").prop('selectedIndex', 0);
+            $("select#SubPartDesignationID2").prop('selectedIndex', 0);
+
+
+            var externalteamid = $(this).attr("externalteamid");
+            $("#DbExternalTeamID").val(externalteamid);
+
+            var relationid = $(this).closest(".showExternalTeam").attr("relationid");
+            var categoryid = $(this).closest(".showExternalTeam").attr("categoryid");
+            var subcategoryid = $(this).closest(".showExternalTeam").attr("subcategoryid");
+            var externalpersonid = $(this).closest(".showExternalTeam").attr("externalpersonid");
+
+            var designationid = $(this).closest(".showExternalTeam").attr("designationid");
+            var subdesignationid = $(this).closest(".showExternalTeam").attr("subdesignationid");
+            var subpartdesignationid = $(this).closest(".showExternalTeam").attr("subpartdesignationid");
+            
+
+            $("#RelationID").val(relationid);
+            $("#CategoryID2").val(categoryid);
+            GetSupportTeamSubCategory();
+            $("#SubCategoryID2").val(subcategoryid);
+          //  $("#SupportCompanyID").val(externalpersonid);
+            $("#SupportPersonId").val(externalpersonid); 
+            $("#DesignationId2").val(designationid); 
+            GetSupportTeamSubDesignation();
+            $("#SubDesignationID2").val(subdesignationid);
+            GetSupportTeamSubPartDesignation();
+            $("#SubPartDesignationID2").val(subpartdesignationid);
+
+
+        });
     });
+        function GetSubDesignation() {
+
+          $.ajax({
+            url: "@Url.Action("BindTeamSubDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    DesignationID: $('#DesignationId1').val(),
+            }),
+            dataType: "text",
+              type: "POST",
+              async: false,
+                success: function (data) {
+                $('#SubDesignationID1').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+        }
+        function GetSubPartDesignation() { 
+
+            $.ajax({
+            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    SubDesignationId: $('#SubDesignationID1').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: false,
+                success: function (data) {
+                $('#SubPartDesignationID1').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+        }
+
+        function GetSupportTeamSubCategory() { 
+            $.ajax({
+                url: "@Url.Action("CategoryWiseSubCategory", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    CategoryID: $('#CategoryID2').val(),
+                    val:2
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    $('#SubCategoryID2').html(data);
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+                }
+            });
+            return true;
+        }
+    function GetSupportTeamSubDesignation() {
+        $.ajax({
+            url: "@Url.Action("BindTeamSubDesignation", "Master")",
+            contentType: "application/json",
+            data: JSON.stringify({
+                DesignationID: $('#DesignationId2').val(),
+                Val: 2
+            }),
+            dataType: "text",
+            type: "POST",
+            async: false,
+            success: function (data) {
+                $('#SubDesignationID2').html(data);
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+        return true;
+    }
+
+    function GetSupportTeamSubPartDesignation() {
+
+        $.ajax({
+            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+            contentType: "application/json",
+            data: JSON.stringify({
+                SubDesignationId: $('#SubDesignationID2').val(),
+                Val: 2
+            }),
+            dataType: "text",
+            type: "POST",
+            async: false,
+            success: function (data) {
+                $('#SubPartDesignationID2').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+        });
+        return true;
+    }
+  
 </script>

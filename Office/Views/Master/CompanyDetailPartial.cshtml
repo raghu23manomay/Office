@@ -186,7 +186,7 @@
                         </div>
                         <div class="form-group entityField">
                             <label class="col-lg-2 control-label">Person</label>
-                            <input type="hidden" value="0" id="DbInternalPersonId" />
+                            <input type="hidden" value="0" id="DbInternalTeamID" />
                             <div class="col-lg-4">
                                 @Html.DropDownList("InternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "InternalPersonId", Title = "PersonId" })
                             </div>
@@ -216,6 +216,7 @@
                         </div>
                         <div class="form-group entityField">
                             <label class="col-lg-2 control-label">Relation to Company</label>
+                            <input type="hidden" value="0" id="DbExternalTeamID" />
                             <div class="col-lg-4">
                                 @Html.DropDownList("RelationID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyRelationList"], "Value", "Text"), "Select Relation", new { @class = "form-control", @id = "RelationID", Title = "RelationID" })
                             </div>
@@ -544,6 +545,7 @@
             }
             else {
                 var InternalPersonId = $("#InternalPersonId").val();
+                var internalTeamid = $("#DbInternalTeamID").val();
                 var DesignationId1 = $("#DesignationId1 option:selected").val();
                 var DesignationId1_text = $("#DesignationId1 option:selected").text();
                 var SubDesignationID1 = $("#SubDesignationID1 option:selected").val();
@@ -556,7 +558,8 @@
                     url: '/Master/SaveInternalTeam',
                     data:
                     {
-                         CompanyId: CompanyID
+                        CompanyId: CompanyID
+                        , internalTeamid: internalTeamid
                         , InternalPersonId: InternalPersonId
                         , DesignationId1: DesignationId1
                         , SubDesignationID1: SubDesignationID1
@@ -565,22 +568,19 @@
                     },
                     success: function (da) {
                         alert(da);
-                        $("#InternalPersonId").val(0);
-                        $("#DesignationId1").val(0);
-                        $("#SubDesignationID1").val(0);
-                        $("#SubPartDesignationID1").val(0);
+                        $("select#InternalPersonId").prop('selectedIndex', 0);
+                        $("select#DesignationId1").prop('selectedIndex', 0);
+                        $("select#SubDesignationID1").prop('selectedIndex', 0);
+                        $("select#SubPartDesignationID1").prop('selectedIndex', 0);
                         $.ajax({
                             type: 'GET',
                             dataType: "text",
                             url: '/Master/GetCompanyInfoLeftSide',
                             data:
                             {
-                                CompanyId: $('#CompanyID').val()
-
+                                CompanyId: $('#CompanyID').val() 
                             },
-                            success: function (data) {
-                                debugger;
-
+                            success: function (data) {  
                                 $('#CompanyAddressOuterDiv').html(data);
 
                             },
@@ -621,14 +621,14 @@
                 $('.DivSupportTeam').last().append(binding);
             }
             else {
-                var ExternalTeamID = $("#ExternalTeamID").val();
+                var ExternalTeamID = $("#DbExternalTeamID").val();
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
                     url: '/Master/SaveCompanySupportTeam',
                     data:
                     {
-                        CompanyId: CompanyID
+                          CompanyId: CompanyID
                         , ExternalPersonId: SupportPersonId
                         , ExternalTeamid: ExternalTeamID
                         , RelationId: RelationID
@@ -638,14 +638,17 @@
                         , DesignationId: DesignationId2
                         , SubDesignationId: SubDesignationID2
                         , SubpartDesignationId: SubPartDesignationID2
-                         
-
-                    },
+                       },
                     success: function (da) {
                         alert(da);
-                        //$("#CertificationDetailID").val(0);
-                        //$("#CertificationValue").val("");
-                        //$("#CertificationID").val(0);
+                        $("select#RelationID").prop('selectedIndex', 0);
+                        $("select#CategoryID2").prop('selectedIndex', 0);
+                        $("select#SubCategoryID").prop('selectedIndex', 0);
+                        $("select#SupportCompanyID").prop('selectedIndex', 0);
+                        $("select#SupportPersonId").prop('selectedIndex', 0);
+                        $("select#DesignationId2").prop('selectedIndex', 0);
+                        $("select#SubDesignationID2").prop('selectedIndex', 0);
+                        $("select#SubPartDesignationID2").prop('selectedIndex', 0);
 
                         $.ajax({
                             type: 'GET',
@@ -657,9 +660,9 @@
 
                             },
                             success: function (data) {
-                                debugger;
-
+                               
                                 $('#CompanyAddressOuterDiv').html(data);
+
 
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
