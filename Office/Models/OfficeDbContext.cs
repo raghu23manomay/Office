@@ -93,6 +93,12 @@ namespace office.Models
         public DbSet<SaveCertification> SaveCertification { get; set; }
         public DbSet<SaveInternalTeam> SaveInternalTeam { get; set; }
         public DbSet<SaveExternalTeam> SaveExternalTeam { get; set; }
+        public DbSet<PersonInfo> PersonInfo { get; set; }
+        public DbSet<BussinessCategoryList> BussinessCategoryList { get; set; }
+        public DbSet<BussinessCategory> BussinessCategory { get; set; }
+        public DbSet<BussinessSubCategoryList> BussinessSubCategoryList { get; set; }
+        public DbSet<BussinessSubCategory> BussinessSubCategory { get; set; }
+        
     }
      
 }

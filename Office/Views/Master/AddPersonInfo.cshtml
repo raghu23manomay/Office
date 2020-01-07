@@ -1,38 +1,42 @@
-﻿@{
+﻿@model office.Models.PersonInfo
+@{
     ViewBag.Title = "AddMember";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .ibox.fullscreen .collapse-link {
+        display: none;
+    }
 
+    .ibox-other, .ibox-residential, .ibox-NewCompany {
+        display: none;
+    }
+
+    .ibox-content1, .iboxCompanyInfo {
+        display: block;
+    }
+
+    .ibox {
+        margin-bottom: 15px !important;
+    }
+</style>
 <script src="~/js/jquery-2.1.1.js"></script>
-<div class="row">
-    <div class="col-lg-8">
-        <div class="ibox float-e-margins">
-            
-          
-            <form class="form-horizontal">
+<form class="form-horizontal">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Member form</h5>
+                    <h5>Member Info</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
+
+
+
                     </div>
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content iboxCompanyInfo ">
                     <div class="form-group Consultant">
                         <label class="col-lg-2 control-label">Consultant Type</label>
                         <div class="col-lg-10">
@@ -63,38 +67,42 @@
                         <div>
                             <label class="col-lg-2 control-label">First Name</label>
                             <div class="col-lg-4 ">
-                                <input type="text" id="PfName" placeholder="First Name" class="form-control entity">
+                                @Html.HiddenFor(a => a.ResidentialStateID, new { @id = "ResidentialStateID" })
+                                @Html.HiddenFor(a => a.ResidentialCityID, new { @id = "ResidentialCityID" })
+                                @Html.HiddenFor(a => a.PersonID, new { @id = "PersonID" })
+                                
+                                <input type="text" id="fName" placeholder="First Name" value="@Model.fName" class="form-control entity">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Middle Name</label> 
+                        <label class="col-lg-2 control-label">Middle Name</label>
                         <div class="col-lg-4 ">
-                            <input type="text" id="PmName" placeholder="Middle Name" class="form-control entity">
-                        </div> 
+                            <input type="text" id="mName" placeholder="Middle Name"  value="@Model.mName" class="form-control entity">
+                        </div>
                         <div>
                             <label class="col-lg-2 control-label">Last Name</label>
                             <div class="col-lg-4">
-                                <input type="text" id="PlName" placeholder="Last Name" class="form-control entity">
+                                <input type="text" id="lName" placeholder="Last Name"  value="@Model.lName" class="form-control entity">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Short Name</label> 
+                        <label class="col-lg-2 control-label">Short Name</label>
                         <div class="col-lg-4">
-                            <input id="Pshortname" type="text" placeholder="Short Form" class="form-control">
+                            <input id="Pshortname" type="text"  value="@Model.ShortName" placeholder="Short Form" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Birth Date</label>
                         <div class="col-lg-4">
-                            <input type="date" id="pDob" placeholder="Dob" class="form-control"> 
-                        </div> 
-                        <label class="col-lg-2 control-label">Request Date</label> 
+                            <input type="date" id="pDob" placeholder="Dob"  value="@Model.BirthDate" class="form-control">
+                        </div>
+                        <label class="col-lg-2 control-label">Request Date</label>
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="date" placeholder="Request date" class="form-control"> 
-                        </div> 
+                            <input type="date" placeholder="Request date"     class="form-control">
+                        </div>
                     </div>
 
                     <div class="form-group rowMobile" id="ProwMobile">
@@ -157,19 +165,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="ibox-content">
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Residential Address</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+
+
+                    </div>
+                </div>
+                <div class="ibox-content ibox-residential">
                     <div id="residential address">
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <h3 class="help-block m-b-none">Residential Address</h3>
-                                <hr style="margin-top: 11px; margin-bottom: 10px;" />
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Address 1</label>
 
                             <div class="col-lg-10">
-                                <input type="text" id="RAddress1" placeholder="Address 1" class="form-control">
+                                <input type="text" id="RAddress1" placeholder="Address 1" value="@Model.ResidentialAddress1" class="form-control">
                             </div>
                         </div>
 
@@ -177,19 +193,19 @@
                             <label class="col-lg-2 control-label">Address 2</label>
 
                             <div class="col-lg-10">
-                                <input type="text" id="RAddress2" placeholder="Address 2" class="form-control">
+                                <input type="text" id="RAddress2" placeholder="Address 2" value="@Model.ResidentialAddress2"  class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">State</label>
 
                             <div class="col-lg-4">
-                                @Html.DropDownList("StateID", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID", Title = "StateID" })
+                                @Html.DropDownList("ResidentialStateID", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "RStateID", Title = "StateID" })
                             </div>
                             <label class="col-lg-2 control-label">District</label>
 
                             <div class="col-lg-4">
-                                <input type="text" id="RDistrict" placeholder="District" class="form-control">
+                                <input type="text" id="RDistrict" placeholder="District"  value="@Model.ResidentialDistrict" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -198,12 +214,12 @@
                             <label class="col-lg-2 control-label">City</label>
 
                             <div class="col-lg-4">
-                                @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID", Title = "CityID" })
+                                @Html.DropDownList("ResidentialCityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "RCityID", Title = "CityID" })
                             </div>
                             <label class="col-lg-2 control-label">Zip Code</label>
 
                             <div class="col-lg-4">
-                                <input type="text" id="RZip" placeholder="Zip Code" class="form-control">
+                                <input type="text" id="RZip" placeholder="Zip Code" value="@Model.ResidentialZipCode" class="form-control">
                             </div>
 
                         </div>
@@ -211,23 +227,19 @@
 
                     </div>
                 </div>
-                 
+            </div>
+            <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Company Info</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
 
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
+
                     </div>
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content ibox-NewCompany">
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Company </label>
                         <div class="col-lg-4">
@@ -237,245 +249,208 @@
                             <button class="btn btn-primary" id="btnAddNewCompany" type="button">Add New</button>
                         </div>
                     </div>
-                    </div> 
-                    <div class="ibox-title">
-                        <h5>Other</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Other</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
 
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
 
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content ibox-other">
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Website</label>
+
+                        <div class="col-lg-10">
+                            <input id="pWebsite" type="text" placeholder="Website" class="form-control">
                         </div>
                     </div>
 
-                    <div class="ibox-content">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Note</label>
 
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Website</label>
-
-                            <div class="col-lg-10">
-                                <input id="pWebsite" type="text" placeholder="Website" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Note</label>
-
-                            <div class="col-lg-10">
-                                <textarea id="Note" type="text" value="" placeholder="Note" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-8 pull-right">
-                                <div class="pull-right">
-                                    @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
-                                    <button class="btn btn-primary" id="btnsavePerson" type="button">Save changes</button>
-                                </div>
-                            </div>
+                        <div class="col-lg-10">
+                            <textarea id="Note" type="text" value="" placeholder="Note" class="form-control"></textarea>
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-8 pull-right">
+                    <div class="pull-right">
+                        @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
+                        <button class="btn btn-primary" id="btnsavePerson" type="button">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title" style="display:grid;">
+                    <h4 class="entityField" style="margin-bottom: 2px;"><span id="showcompanynameOnHeader">No Name..!</span></h4>
+                    <h4 class="person" style="margin-bottom: 2px;"><span id="showtitle">Mr.</span>&nbsp;<span id="showname">No Name ..!</span></h4>
+                    <span class="person" id="showdesignation" style="color: darkgray;font-size: smaller;">No Designation ..!</span>
+                </div>
+                <div class="ibox-content ibox-content1 ">
+                    <div class="row">
+
+                        <div>
+                            <div class="col-lg-12">
+                                <h5 class="help-block m-b-none">Basic Information</h5>
+                                <hr style="margin-top: 11px; margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div class="form-group person">
+                            <span id="showcompanyname" class="col-lg-12">No Information ..! </span>
+                        </div>
+                        <div>
+                            <span id="showshortname" class="col-lg-12">No Information ..!</span>
+                        </div>
+                        <div>
+                            <span id="showDOB" class="col-lg-12"></span>
+                        </div>
+                        <div>
+                            <span id="showWebsite" class="col-lg-12"></span>
+                        </div>
+                        <div>
+                            <span id="showNote" class="col-lg-12"></span>
+                        </div>
+
+                    </div>
+                    <p></p>
+
+
+
+
+
+                    <div class="row">
+                        <div>
+                            <div class="col-lg-12">
+                                <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Details</h5>
+                                <hr id="Conactrow" style="margin-top: 0px; margin-bottom: 5px;" />
+                            </div>
+                        </div>
+                        <div id="nocontacts">
+                            <span id="shownocontacts" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts ..! </span>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table" id="Datails">
+                                <thead>
+
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row person">
+
+                        <div>
+                            <div class="col-lg-12">
+                                <h5 class="help-block m-b-none">Residential Address</h5>
+                                <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                            </div>
+                        </div>
+                        <div>
+                            <span id="showRaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
+                        </div>
+                        <div>
+                            <span id="showRaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showRstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showRcity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showRdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showRzip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+
+                    </div>
+                    <p class="person"></p>
+                    <div class="row">
+                        <div>
+                            <div class="col-lg-12">
+                                <h5 class="help-block m-b-none">Office Address</h5>
+                                <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                            </div>
+                        </div>
+                        <div>
+                            <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
+                        </div>
+                        <div>
+                            <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+
+                        <div>
+                            <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade-in bs-example-modal-md" id="mdlAddCompany" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog" style="width:90%;height:600px;overflow:scroll;">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div id="CompanyInfo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
-            </div>
-        </div>
-    
-    <div class="col-lg-4">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title" style="display:grid;">
-                <h4 class="entityField" style="margin-bottom: 2px;"><span id="showcompanynameOnHeader">No Name..!</span></h4>
-                <h4 class="person" style="margin-bottom: 2px;"><span id="showtitle">Mr.</span>&nbsp;<span id="showname">No Name ..!</span></h4>
-                <span class="person" id="showdesignation" style="color: darkgray;font-size: smaller;">No Designation ..!</span>
-            </div>
-            <div class="ibox-content">
-                <div class="row">
-
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            <h5 class="help-block m-b-none">Basic Information</h5>
-                            <hr style="margin-top: 11px; margin-bottom: 5px;" />
-                        </div>
-                    </div>
-                    <div class="form-group person">
-                        <span id="showcompanyname" class="col-lg-12">No Information ..! </span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showshortname" class="col-lg-12">No Information ..!</span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showDOB" class="col-lg-12"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showWebsite" class="col-lg-12"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showNote" class="col-lg-12"></span>
-                    </div>
-
-                </div>
-                <p></p>
-
-                <div class="row entityField">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Person Details</h5>
-                            <hr id="personrow" style="margin-top: 0px; margin-bottom: 5px;" />
-                        </div>
-                    </div>
-                    <div class="form-group" id="noPersons">
-                        <span id="noperson" class="col-lg-12" style="overflow-wrap:break-word;">No Persons..! </span>
-                    </div>
-                    <div class="col-sm-12">
-                        <table class="table" id="MemberDatails">
-                            <thead>
-
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row entityField">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Person Details</h5>
-                            <hr id="Conactpersonrow" style="margin-top: 0px; margin-bottom: 5px;" />
-                        </div>
-                    </div>
-                    <div class="form-group" id="nocontactsPersons">
-                        <span id="nocontactsperson" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts Persons..! </span>
-                    </div>
-                    <div class="col-sm-12">
-                        <table class="table" id="PersonDatails">
-                            <thead>
-
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Contact Details</h5>
-                            <hr id="Conactrow" style="margin-top: 0px; margin-bottom: 5px;" />
-                        </div>
-                    </div>
-                    <div class="form-group" id="nocontacts">
-                        <span id="shownocontacts" class="col-lg-12" style="overflow-wrap:break-word;">No Contacts ..! </span>
-                    </div>
-                    <div class="col-sm-12">
-                        <table class="table" id="Datails">
-                            <thead>
-
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row person">
-
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            <h5 class="help-block m-b-none">Residential Address</h5>
-                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span id="showRaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showRaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showRstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showRcity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showRdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showRzip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-
-                </div>
-                <p class="person"></p>
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-lg-12">
-                            <h5 class="help-block m-b-none">Office Address</h5>
-                            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">No Address ..! </span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-                    <div class="form-group">
-                        <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-</div>
-<div class="modal fade-in bs-example-modal-md" id="mdlAddCompany" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog" style="width:90%;height:600px;overflow:scroll;" >
-        <div class="ibox">
-            <div class="ibox-content">
-                <div id="CompanyInfo"></div>
-            </div>
-        </div>
-    </div>
-</div>
-    <script>
+<script>
     $(document).ready(function () {
         $('.person').hide();
         $('.Consultant').hide();
         $('.Contractor').hide();
-
+        debugger;
+        var StateID1 = $('#ResidentialStateID').val();
+        
+        $("#RStateID").val(StateID1);
         $('#addMultiMobilePerson').on("click", function (e) {
             var cloneCount = 1;
-            debugger;
-            //add new row
 
             $('#ProwMobile')
                 .clone(true)
                 .attr('id', 'row' + cloneCount++, 'class', 'row')
                 .insertAfter('[id^=ProwMobile]:last').find("input[type='text']").val("");
             return false;
-             
+
         });
         $('#btnAddNewCompany').on("click", function (e) {
-           
+
             $.ajax({
                 type: 'GET',
                 dataType: "text",
@@ -483,7 +458,7 @@
 
                 success: function (data) {
                     $('#CompanyInfo').html(data);
-                    $('#mdlAddCompany').show();                    
+                    $('#mdlAddCompany').show();
                 },
 
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -544,12 +519,12 @@
             $('#showRaddress2').html($('#RAddress2').val());
         });
 
-        $('#CityID').change(function () {
-            $('#showRcity').html($("#CityID option:selected").text());
+        $('#RCityID').change(function () {
+            $('#showRcity').html($("#RCityID option:selected").text());
         });
 
-        $('#StateID').change(function () {
-            $('#showRstate').html($("#StateID option:selected").text());
+        $('#RStateID').change(function () {
+            $('#showRstate').html($("#RStateID option:selected").text());
         });
 
         $('#RZip').keyup(function () {
@@ -718,62 +693,14 @@
                 });
 
 
-        $('#StateID2').change(function ()
+        $('#RStateID').change(function ()
          {
-            $.ajax({
-            url: "@Url.Action("FliterStateWiseCity", "Master")",
-            contentType: "application/json",
-                data: JSON.stringify({
-                StateID: $('#StateID2').val(),
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
-            success: function (data) {
-                $('#CityID2').html(data);
-
-            },
-            error: function (data) {
-
-
-            },
-            complete: function () {
-
-            }
-
-            });
-            return true;
+           
 
         });
 
 
-        $('#StateID').change(function ()
-         {
-            $.ajax({
-            url: "@Url.Action("FliterStateWiseCity", "Master")",
-            contentType: "application/json",
-                data: JSON.stringify({
-                StateID: $('#StateID').val(),
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
-            success: function (data) {
-                $('#CityID').html(data);
-
-            },
-            error: function (data) {
-
-
-            },
-            complete: function () {
-
-            }
-
-            });
-            return true;
-
-        });
+        
 
 
         $('#btnsavePerson').on('click', function () {
@@ -787,12 +714,12 @@
                 var tdVals = MobileNo + "~" + MobileType + "~" + Department ;
                 // var tdVals = $(this).text();
                 idArrMobile.push(tdVals);
-              
+
             });
 
 
             //Adding multipal Mobile No into array
-           
+
             //$('.multimobile').each(function (k, v) {
             //    var tdVals = $(this).text();
             //    idArrMobile.push(tdVals);
@@ -805,7 +732,7 @@
                 var tdVals = $(this).text();
                 idArrContactPerson.push(tdVals);
             });
-           
+
             var SaveMobilePerson = [];
             for (var i = 0; i < idArrMobile.length; i++) {
                 var arrElement = idArrMobile[i].split("~");
@@ -817,21 +744,7 @@
             }
 
 
-            ////Adding multipal phone into array
-            //var idArrPhone = [];
-            //$('.multiphone').each(function (k, v) {
-            //     var tdVals = $(this).text();
-            //    idArrPhone.push(tdVals);
-            //});
-
-            //var SavePhone = [];
-            //for (var i = 0; i < idArrPhone.length; i++) {
-            //    var arrElement = idArrPhone[i].split("~");
-            //    item = {}
-            //    item["Phone"] = arrElement[0];
-            //    SavePhone.push(item);
-            //}
-
+            
             //Adding OfficeNo into array
             var idArrOffice = [];
             $('.multioffice').each(function (k, v) {
@@ -926,24 +839,24 @@
                 url: '/Master/SavePersonInfo',
                 data:
                 {
-                    MemberID : 0,  
+                    PersonID: $('#PersonID').val(),
                     TitleID: $("#TitleId option:selected").val(),
-                    fName: $('#pfName').val(),
-                    mName: $('#PmName').val(),
-                    lName: $('#PlName').val(),
-                    ShortName: $('#Pshortname').val(),  
-                    Website: $('#pWebsite').val(), 
-                    BirthDate: $('#pDob').val(), 
+                    fName: $('#fName').val(),
+                    mName: $('#mName').val(),
+                    lName: $('#lName').val(),
+                    ShortName: $('#Pshortname').val(),
+                    Website: $('#pWebsite').val(),
+                    BirthDate: $('#pDob').val(),
                     ResidentialAddress1  :$('#RAddress1').val(),
                     ResidentialAddress2  : $('#RAddress2').val(),
                     ResidentialStateID   : $('#RStateID').val(),
                     ResidentialDistrict  : $('#RDistrict').val(),
                     ResidentialCityID    : $('#RCityID ').val(),
                     ResidentialZipCode   : $('#RZip').val(),
-                  
-                    SaveMobilePerson: SaveMobilePerson, 
+
+                    SaveMobilePerson: SaveMobilePerson,
                     SaveAdditionalFiled: SaveAdditionalFiled,
-                    SaveParameter: SaveParameter, 
+                    SaveParameter: SaveParameter,
 
                 },
                 success: function (da) {
@@ -954,8 +867,33 @@
             });
 
         });
+        function GetCity() {
+             $.ajax({
+            url: "@Url.Action("FliterStateWiseCity", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    StateID: $('#RStateID').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+            success: function (data) {
+                $('#RCityID').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+        }
 
     });
 
 
-    </script>
+</script>

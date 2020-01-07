@@ -14,11 +14,10 @@
                     <th>FullName </th>
                     <th> Designation</th>
                     <th>BirthDate</th>
-                    <th>Mobile </th>
-                    <th>Email </th>
+                    
                     <th>Address 1</th>
                     <th>Address 2</th>
-                    <th>Note</th>
+                     
                     <th>Action</th>
 
                 </tr>
@@ -27,19 +26,18 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                    <td>@item.FullName</td>
+                    <td>@item.FirstName  @item.LastName </td>
                     <td>@item.DesignationName</td>
                     <td>@item.BirthDate</td>
-                    <td style="overflow-wrap: break-word;max-width: 78px;">@item.Mobile</td>
-                    <td style="max-width: 137px;overflow-wrap: break-word;">@item.Email</td>
+                   
                     <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address1</td>
                     <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address2</td>
-                    <td style="max-width: 110px;overflow-wrap: break-word;">@item.Note</td>
+                 
                     <td>
-                        <a class="edit" href="EditPerson?Id=@item.PersonalInfoID"  id="EditContactPerson">
+                        <a class="edit" href="AddPersonInfo?id=@item.PersonID"  id="EditContactPerson">
                             <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
                         </a>
-                        <a class="Delete" name="@item.PersonalInfoID" id="DeleteContactPerson">
+                        <a class="Delete" name="@item.PersonID" id="DeleteContactPerson">
                             <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
                         </a>
                                                

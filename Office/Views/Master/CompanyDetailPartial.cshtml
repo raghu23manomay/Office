@@ -1,14 +1,42 @@
 ﻿@model office.Models.CompanyDetails
-
+<style>
+    .ibox.fullscreen .collapse-link  {
+        display: none;
+    }
+    .ibox-content1  , .iboxCompanynfo {
+        display: block;
+    }
+     .iboxexternal , .iboxOffice, .iboxInternal {
+        display: none;
+    }
+     
+    .ibox {
+        margin-bottom: 15px !important;
+    }
+</style>
 <script src="~/js/jquery-2.1.1.js"></script>
-<div class="row">
-    <div class="col-lg-8">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Company Info</h5>
-            </div>
-            <div class="ibox-content">
-                <form class="form-horizontal">
+<form class="form-horizontal">
+    <div class="row">
+
+        <div class="col-lg-8">
+            <div class="ibox float-e-margins"  >
+                <div class="ibox-title">
+                    <h5>Company Info</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                        
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+
+                <div class="ibox-content iboxCompanynfo">
+
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Company</label>
                         <div class="col-lg-10">
@@ -65,118 +93,136 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Request Date</label>
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="date" id="Requestdate" placeholder="Request date" class="form-control">
+                            <input type="date" id="Requestdate" placeholder="Request date" value="@Model.RequestDate" class="form-control">
                         </div>
                         <label class="col-lg-2 control-label">Inception Date</label>
                         <div class="col-lg-4">
-                            <input type="date" id="InceptionDate" placeholder="Date Of Inception" class="form-control">
+                            <input type="date" id="InceptionDate" value="@Model.InceptionDate" placeholder="Date Of Inception" class="form-control">
                         </div>
                     </div>
 
+                </div>
+            </div>
+            <div class="ibox float-e-margins" >
+                <div class="ibox-title">
+                    <h5>
+                        Office Address
 
-                    <div class="ibox-title">
-                        <h5>
-                            Office Address 
-                            <button id="addMultiOfficeAddress" class="btn btn-white" type="button">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </h5>
-                         
+                    </h5>
 
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a href="#">Config option 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
+
+                    <div class="ibox-tools">
+                        <button id="addMultiOfficeAddress" class="btn btn-white pull-left" style="padding:0px 12px;" type="button">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                     
+                        
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content iboxOffice">
+                    <input type="hidden" value="0" id="DbAddressID" />
+                    <div class="form-group rowMobile" id="rowMobile">
+                        <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
+                        <div class="col-lg-2" style="display: inline-flex;">
+                            <select class="form-control" id="MobileType">
+                                <option value="0">Select</option>
+                                <option value="1">Mobile</option>
+                                <option value="2">Phone</option>
+                                <option value="3">Email</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4" style="display: inline-flex;">
+                            <input type="text" id="MobileNo" placeholder="Mobile Number" class="form-control">
+
+                        </div>
+                        <div class="col-lg-3" style="display: inline-flex;">
+                            <select class="form-control" id="MobileWorkDepartment">
+                                <option value="1">Work Department</option>
+                                <option value="0">HR</option>
+                            </select>
+
+                        </div>
+                        <div class="col-lg-3" style="display: inline-flex;">
+                            <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control">
+                            <i class="fa fa-plus" id="addMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                         </div>
                     </div>
-                    <div class="ibox-content row">
-                        <input type="hidden" value="0" id="DbAddressID" />
-                        <div class="form-group rowMobile" id="rowMobile">
-                            <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID"/>
-                            <div class="col-lg-2" style="display: inline-flex;">
-                                <select class="form-control" id="MobileType">
-                                    <option value="0">Select</option>
-                                    <option value="1">Mobile</option>
-                                    <option value="2">Phone</option>
-                                    <option value="3">Email</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-4" style="display: inline-flex;">
-                                <input type="text" id="MobileNo" placeholder="Mobile Number" class="form-control">
 
-                            </div>
-                            <div class="col-lg-3" style="display: inline-flex;">
-                                <select class="form-control" id="MobileWorkDepartment">
-                                    <option value="1">Work Department</option>
-                                    <option value="0">HR</option>
-                                </select>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Address 1</label>
 
-                            </div>
-                            <div class="col-lg-3" style="display: inline-flex;">
-                                <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control">
-                                <i class="fa fa-plus" id="addMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Address 1</label>
-
-                            <div class="col-lg-10">
-                                <input id="OfcAddress1" type="text" placeholder="Address 1" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Address 2</label>
-                            <div class="col-lg-10">
-                                <input id="OfcAddress2" type="text" placeholder="Address 2" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">State</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("StateID2", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID2", Title = "StateID2" })
-                            </div>
-                            <label class="col-lg-2 control-label">District</label>
-
-                            <div class="col-lg-4">
-                                <input id="OfcDistrict" type="text" placeholder="District" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">City</label>
-
-                            <div class="col-lg-4">
-                                @Html.DropDownList("CityID2", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID2", Title = "CityID2" })
-                            </div>
-                            <label class="col-lg-2 control-label">Zip Code</label>
-
-                            <div class="col-lg-4">
-                                <input id="OfcZip" type="text" placeholder="Zip Code" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Website</label>
-                            <div class="col-lg-10">
-                                <input id="Website" type="text" placeholder="Website" class="form-control">
-                            </div>
+                        <div class="col-lg-10">
+                            <input id="OfcAddress1" type="text" placeholder="Address 1" class="form-control">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Address 2</label>
+                        <div class="col-lg-10">
+                            <input id="OfcAddress2" type="text" placeholder="Address 2" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">State</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("StateID2", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID2", Title = "StateID2" })
+                        </div>
+                        <label class="col-lg-2 control-label">District</label>
+
+                        <div class="col-lg-4">
+                            <input id="OfcDistrict" type="text" placeholder="District" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">City</label>
+
+                        <div class="col-lg-4">
+                            @Html.DropDownList("CityID2", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID2", Title = "CityID2" })
+                        </div>
+                        <label class="col-lg-2 control-label">Zip Code</label>
+
+                        <div class="col-lg-4">
+                            <input id="OfcZip" type="text" placeholder="Zip Code" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Website</label>
+                        <div class="col-lg-10">
+                            <input id="Website" type="text" placeholder="Website" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins" >
+                <div class="ibox-title">
+                    <h5>
+                        Team
+                       
+                    </h5>
+
+
+                    <div class="ibox-tools">
+                        <button id="addMultiOfficeAddress" class="btn btn-white pull-left" style="padding: 0px 12px;" type="button">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                      
+                        
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content iboxInternal">
                     <div class="Team">
                         <div class="form-group">
                             <div class="col-lg-12">
@@ -207,6 +253,28 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins" >
+                <div class="ibox-title">
+                    <h5>
+                        Support  Team 
+                    </h5>  
+                    <div class="ibox-tools">
+                        <button id="addMultiOfficeAddress" class="btn btn-white pull-left" type="button"  style="padding: 0px 12px;" >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                     
+                         
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content iboxexternal">
                     <div class="Team">
                         <div class="form-group">
                             <div class="col-lg-12">
@@ -265,75 +333,72 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="row form-group">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-8 pull-right">
-                            <div class="pull-right">
-                                @Html.ActionLink("Cancel", "CompanyList", "Master", null, new { @class = "btn btn-white" })
-                                <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="ibox float-e-margins">
-           
-            <div class="ibox-content">
-                   
-
-                <div class="divCertification">
-                    <table class="table" id="tblCertification">
-                        <thead>
-
-                        </thead>
-                        <tbody></tbody>
-                    </table>
                 </div>
-                <p class="person"></p>
-                <div class="row">
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-8 pull-right">
+                    <div class="pull-right">
+                        @Html.ActionLink("Cancel", "CompanyList", "Master", null, new { @class = "btn btn-white" })
+                        <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+
+                <div class="ibox-content ibox-content1 ">
+
+
+                    <div class="divCertification">
+                        <table class="table" id="tblCertification">
+                            <thead>
+
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                     
                     
-                    <div>
-                        <div class="form-group">
-                            <div class="form-group">
 
-                            </div>
-                            <div class="CompanyAddressOuterDiv" id="CompanyAddressOuterDiv">
-                                
-                            </div>
-                        </div>
-                            <div class="form-group">
+                        <div>
+                           
+                                 
+                                <div class="CompanyAddressOuterDiv" id="CompanyAddressOuterDiv">
 
-                            </div>
-                            <div class="form-group">
+                                </div>
+                             
+                           
+                            <div  >
                                 <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                             </div>
-                            <div class="form-group">
+                            <div >
                                 <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                             </div>
-                            <div class="form-group">
+                            <div  >
                                 <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                             </div>
-                            <div class="form-group">
+                            <div  >
                                 <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                             </div>
 
-                            <div class="form-group">
+                            <div >
                                 <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
                             </div>
                         </div>
+                     
+
                 </div>
-               
             </div>
         </div>
     </div>
-
-</div>
-
+</form>
 <script>
     $(document).ready(function () {
         $('.person').hide();
@@ -351,7 +416,7 @@
 
             },
             success: function (data) {
-               
+
 
                 $('#CompanyAddressOuterDiv').html(data);
 
@@ -578,9 +643,9 @@
                             url: '/Master/GetCompanyInfoLeftSide',
                             data:
                             {
-                                CompanyId: $('#CompanyID').val() 
+                                CompanyId: $('#CompanyID').val()
                             },
-                            success: function (data) {  
+                            success: function (data) {
                                 $('#CompanyAddressOuterDiv').html(data);
 
                             },
@@ -616,7 +681,7 @@
             var CategoryID2Name = $("#CategoryID2 option:selected").text();
             var SubCategoryID2Name = $("#SubCategoryID2 option:selected").text();
             if (CompanyID == 0) {
-               
+
                 var binding = '<div class="row"><div class="form-group MultiExternalTeam" RelationID ="' + RelationID + '" CategoryID2 ="' + CategoryID2 + '" SubCategoryID2 ="' + SubCategoryID2 + '"SupportCompanyID ="' + SupportCompanyID + '"SupportPersonId="' + SupportPersonId + '" DesignationId2="' + DesignationId2 + '" SubDesignationID2="' + SubDesignationID2 + '" SubPartDesignationID2 =' + SubPartDesignationID2 + '> <span id= "ShowSupportPersonName" class="col-lg-12" style = "overflow-wrap:break-word;" >' + SupportPersonName + '</span>  </div><div class="form-group"><span id="showRelationName" class="col-lg-12" style="overflow-wrap:break-word;">' + RelationName + '</span></div> <div class="form-group"><span id="showCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + CategoryID2Name + '</span></div><div class="form-group"><span id="showSubCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + SubCategoryID2Name + '</span></div><div class="form-group"><span id="showCompanyName" class="col-lg-12" style="overflow-wrap:break-word;">' + SupportCompanyName + '</span></div> <div class="form-group"><span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId2_text + '</span></div> <div class="form-group"><span id="showSubDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID2_Text + '</span> </div> <div class="form-group"> <span id="showSubPartDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID2_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
                 $('.DivSupportTeam').last().append(binding);
             }
@@ -660,7 +725,7 @@
 
                             },
                             success: function (data) {
-                               
+
                                 $('#CompanyAddressOuterDiv').html(data);
 
 
@@ -677,12 +742,12 @@
         });
 
         $('.EditAddress').on("click", function (e) {
-            
+
             $("#MobileType").val(0);
             $("#MobileNo").val("");
             $("#MobileWorkDepartment").val(0);
             $("#MobileNoExtension").val("");
-            
+
             if ($("#row1").length > 0) {
                 $("#row1").remove();
             }
@@ -697,7 +762,7 @@
             }
             $("#DbAddressID").val(0);
             var liveaddressID = $(this).closest(".MultiOfficeAddress").attr("liveaddressID");
-            
+
             $("#DbAddressID").val(liveaddressID);
             var ofcaddress1 = $(this).closest(".MultiOfficeAddress").attr("ofcaddress1");
             var ofcaddress2 = $(this).closest(".MultiOfficeAddress").attr("ofcaddress2");
@@ -732,14 +797,14 @@
                     var extension = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("extension");
                     var companyphoneid = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("companyphoneid");
                     var workdepartmentid = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("workdepartmentid");
-                    
+
                     $("#rowMobile").find("#MobileNo").val(MobileNo);
                     $("#rowMobile").find("#MobileNoExtension").val(extension);
                     $("#rowMobile").find("#companyphoneid").val(companyphoneid);
                     $("#rowMobile").find("#CompanyPhoneIDValue").val(companyphoneid);
                     $("#rowMobile").find("#MobileWorkDepartment").val(workdepartmentid);
                     $("#rowMobile").find("#MobileType").val(MobileType);
-                    
+
                     j++;
                 }
                 if (j == 2) {
@@ -785,10 +850,10 @@
                     j++;
                 }
             }
-        }); 
+        });
         });
 
-    $('#addMultiCertification').on("click", function (e) { 
+    $('#addMultiCertification').on("click", function (e) {
         debugger;
         var CompanyID = $('#CompanyID').val();
         if (CompanyID == 0) {
@@ -811,17 +876,17 @@
                 data:
                 {
                     CompanyId: CompanyID
-                    , CertificationID: CertificationID 
+                    , CertificationID: CertificationID
                     , CertificationDetailID: CertificationDetailID
-                    , Value: CertificationValue 
+                    , Value: CertificationValue
 
                 },
                 success: function (da) {
                     alert(da);
                     $("#CertificationDetailID").val(0);
                     $("#CertificationValue").val("");
-                    $("#CertificationID").val(0); 
-                   
+                    $("#CertificationID").val(0);
+
                     $.ajax({
                         type: 'GET',
                         dataType: "text",
@@ -893,8 +958,8 @@
             item["Extension"] = arrElement[4];
             item["AddressID"] = DbAddressID;
             SaveMobileNo.push(item);
-        } 
-    
+        }
+
 
         if (DbAddressID > 0) {
             $.ajax({
@@ -906,14 +971,14 @@
                       CompanyId: $('#CompanyID').val()
                     , AddressID: $('#DbAddressID').val()
                     , Address1:  $('#OfcAddress1').val()
-                    , Address2:  $('#OfcAddress2').val() 
+                    , Address2:  $('#OfcAddress2').val()
                     , StateID:   $("#StateID2 option:selected").val()
                     , District:  $('#OfcDistrict').val()
                     , CityID:    $("#CityID2 option:selected").val()
-                    , ZipCode:   $('#OfcZip').val() 
+                    , ZipCode:   $('#OfcZip').val()
                     , Website: ""
                     , SaveMobileNo: SaveMobileNo
-                       
+
                 },
                 success: function (da) {
                     alert(da);
@@ -952,9 +1017,9 @@
                         },
                         success: function (data) {
                             debugger;
-                       
+
                             $('#CompanyAddressOuterDiv').html(data);
-                            
+
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                         }
@@ -962,7 +1027,7 @@
 
                 }, error: function (XMLHttpRequest, textStatus, errorThrown) {
                     }
-                
+
             });
         }
         else {

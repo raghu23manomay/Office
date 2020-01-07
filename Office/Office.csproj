@@ -1913,18 +1913,9 @@
     <Content Include="Views\Master\_StateWsieCityFilter.cshtml" />
     <Content Include="Views\Master\PersonList.cshtml" />
     <Content Include="Views\Master\_PersonGrid.cshtml" />
-    <Content Include="Views\Master\AddPerson.cshtml" />
     <Content Include="Views\Master\MemberList.cshtml" />
-    <Content Include="Views\Master\_MemberGrid.cshtml" />
-    <Content Include="Views\Master\_GetMemberPersonList.cshtml" />
-    <Content Include="Views\Master\_GetMemberContactPerson.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="Views\Master\EditMember.cshtml" />
     <Content Include="Views\Master\_MemberWiseContactDetailsList.cshtml" />
-    <Content Include="Views\Master\_MemberListForUpdate.cshtml" />
-    <Content Include="Views\Master\EditPerson.cshtml" />
-    <Content Include="Views\Master\_GetContactPersonMobileList.cshtml" />
-    <Content Include="Views\Master\_GetContactPersonEmailList.cshtml" />
     <Content Include="Views\Master\DepartmentList.cshtml" />
     <Content Include="Views\Master\_DepartmentGrid.cshtml" />
     <Content Include="Views\Master\AddDepartment.cshtml" />
@@ -1979,7 +1970,6 @@
     <Content Include="Views\Master\ConsultantTypeList.cshtml" />
     <Content Include="Views\Master\AddPersonInfo.cshtml" />
     <Content Include="Views\Master\AddCompanyInfo.cshtml" />
-    <Content Include="Views\Master\AddPersonDetails.cshtml" />
     <Content Include="Views\Master\_SubCategory.cshtml" />
     <Content Include="Views\Master\CompanyList.cshtml" />
     <Content Include="Views\Master\CompanyGrid.cshtml" />
@@ -1988,6 +1978,12 @@
     <Content Include="Views\Master\SubDesignationList.cshtml" />
     <Content Include="Views\Master\SubPartDesignationList.cshtml" />
     <Content Include="Views\Master\PartialCompanyAddress.cshtml" />
+    <Content Include="Views\Master\BussinessCategoryGrid.cshtml" />
+    <Content Include="Views\Master\BussinessCategoryList.cshtml" />
+    <Content Include="Views\Master\AddBussinessCategory.cshtml" />
+    <Content Include="Views\Master\AddBussinessSubCategory.cshtml" />
+    <Content Include="Views\Master\BussinessSubCategoryGrid.cshtml" />
+    <Content Include="Views\Master\BussinessSubCategoryList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

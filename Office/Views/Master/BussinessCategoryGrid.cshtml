@@ -1,4 +1,4 @@
-﻿@model IEnumerable<office.Models.AuthorityList>
+﻿@model IEnumerable<office.Models.BussinessCategoryList>
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
@@ -19,17 +19,17 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.AuthorityID</td>
-                        <td>@item.AuthorityName</td>
+                        <td>@item.BusinessCategoryID</td>
+                        <td>@item.BusinessCategoryName</td>
                         <td>@item.IsActive</td>
                         <td>
 
-                            <a class="edit" href="addAuthority?id=@item.AuthorityID" id="EditMember">
+                            <span class="edit" v="@item.BusinessCategoryID" >
                                 <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
-                            </a>
-                            <a class="Delete" name="@item.AuthorityID" id="DeleteMember">
+                            </span>
+                            @*<a class="Delete" v="@item.BusinessCategoryID" id="DeleteMember">
                                 <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
-                            </a>
+                            </a>*@
                             
 
                         </td>
@@ -55,23 +55,7 @@
 
 <script>
     $(document).ready(function () { 
-         $.ajax({
-                url: "@Url.Action("AddAuthority", "Master")",
-                contentType: "application/json",
-                
-                dataType: "text",
-                type: "POST",
-                async: true,
-                success: function (data) {
-                    $('#AddNew').html(data);
-
-                },
-                error: function (data) {
-                },
-                complete: function () {
-                }
-            });
-
+       
         $('#mgrid .pagination li a').on('click', function (e) { 
             e.preventDefault();
             e.stopImmediatePropagation();
@@ -82,7 +66,7 @@
             var pageid = temp.replace('/?page=', '');
 
             $.ajax({
-                url: "@Url.Action("LoadAuthorityGrid", "Master")",
+                url: "@Url.Action("LoadBussinessCategoryGrid", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     page: pageid,
@@ -102,25 +86,33 @@
             });
 
         });
-
-        $('.Delete').click(function () {
-            if (confirm("Are you sure want to deleted!"))
-            {
-            var Id = $(this).attr('name');
-            $.ajax({
-                url: "@Url.Action("DeleteMaster", "Master")",
-                data: { Id: Id, MasterName: 'Authority' },
+        $('.edit').on('click', function () {
+            debugger;
+            var CategoryID = $(this).attr("v");
+          $.ajax({
+                url: "@Url.Action("AddBussinessCategory", "Master")",
+                contentType: "application/json", 
                 dataType: "text",
-                type: "POST",
-                async: false,
+                type: "GET",
+                async: true,
+                  data:
+                  {
+                      id: CategoryID
+                 
+                  },
                 success: function (data) {
-                    var mgs = data.replace(/"/g, "");
-                    alert(mgs);
-                   }
-            });
-            }
-                                 
+                    $('#AddNew').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            }); 
         });
+        
+                                 
+   
     });
 
 </script>

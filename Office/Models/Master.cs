@@ -177,16 +177,19 @@ namespace office.Models
     public class PersonList
     {
         [Key]
-        public int? PersonalInfoID { get; set; }
-        public string FullName { get; set; }
-        public string BirthDate { get; set; }
+        public int? PersonID { get; set; }
+        public string ShortName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
+        public int? DesignationId { get; set; }
+        
         public string DesignationName { get; set; }
-        public string Note { get; set; }
-        public string Email { get; set; }
-        public string Mobile { get; set; }
         public int? TotalRows { get; set; }
+        public bool IsActive { get; set; }
 
     }
 
@@ -561,7 +564,51 @@ namespace office.Models
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
          
         }
+    public class BussinessCategoryList
+    {
+        [Key]
+        public int? BusinessCategoryID { get; set; }
+        public string BusinessCategoryName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
 
+    }
+
+    public class BussinessCategory
+    {
+        [Key]
+        public int? BusinessCategoryID { get; set; }
+        public string BusinessCategoryName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+      
+    }
+    public class BussinessSubCategoryList
+    {
+        [Key]
+        
+        public int? BusinessSubCategoryID { get; set; }
+        public int? BusinessCategoryID { get; set; }
+        public string BusinessSubCategoryName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+
+    }
+
+    public class BussinessSubCategory
+    {
+        [Key]
+        public int? BusinessSubCategoryID { get; set; }
+        public int? BusinessCategoryID { get; set; }
+        public string BusinessSubCategoryName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+
+    }
 }
 
 

@@ -7,151 +7,158 @@
 
  
 <div class="row">
-    <div class="form-group">
-        <div class="col-lg-12">
-            <h5 class="help-block m-b-none">Certification </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
 
-        </div>
-    </div>
-    <div class="row Padl15">
-        @foreach (var item2 in Model.SaveCertification)
-        {
-            <span class="col-lg-12 showMobileNo showCertification" CertificationID="@item2.CertificationID" CertificationValue="@item2.Value" CompanyCertificationsDetailID="@item2.CompanyCertificationsDetailID" style="overflow-wrap:break-word;">
-                @item2.CertificationText   @item2.Value
+    <div class="col-lg-12">
+        <h5 class="help-block m-b-none">Certification </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
 
-            </span>
-             
-        }
     </div>
+
+
+    @foreach (var item2 in Model.SaveCertification)
+    {
+        <span class="col-lg-12 showMobileNo showCertification" CertificationID="@item2.CertificationID" CertificationValue="@item2.Value" CompanyCertificationsDetailID="@item2.CompanyCertificationsDetailID" style="overflow-wrap:break-word;">
+            @item2.CertificationText   @item2.Value
+
+        </span>
+       
+    }
+
+
 </div>
 <div class="row">
 
-    <div class="form-group">
-        <div class="col-lg-12">
-            <h5 class="help-block m-b-none">Office Address</h5>
-            
-        </div>
+    
+    <div class="col-lg-12">
+        <hr style="margin-top: 11px; margin-bottom: 10px;">
+        <h5 class="help-block m-b-none">Office Address</h5>
+
     </div>
-    </div>
+
+</div>
 <div class="row">
-    <div class="divAddress">
-        @if (Model.CompanyID != 0)
-        {
+    <div class="col-lg-12">
+        <div class="divAddress">
+            @if (Model.CompanyID != 0)
+            {
 
 
-            <hr style="margin-top: 11px; margin-bottom: 10px;">
-            <div class="form-group">
+                <hr style="margin-top: 11px; margin-bottom: 10px;">
+                <div>
 
-                @foreach (var item in Model.CompanyAddress)
-                {
-                    int k = 1;
-                    <div class="row Padl15">
-                        @foreach (var item1 in Model.SaveCompanyMobile)
-                        {
-                            if (item1.AddressID == item.AddressID)
+                    @foreach (var item in Model.CompanyAddress)
+                    {
+                        int k = 1;
+                        <div  class="row">
+                            @foreach (var item1 in Model.SaveCompanyMobile)
                             {
-                                <div class="form-group">
-                                    <span class="col-lg-12 showMobileNo showMobileNo-@k" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
-                                        @item1.Value -
-                                        @item1.Extension - @item1.WorkDepartmentID
-                                    </span>
-                                </div>
-                                k++;
+                                if (item1.AddressID == item.AddressID)
+                                {
+                                    <div >
+                                        <span class="col-lg-12 showMobileNo showMobileNo-@k" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
+                                            @item1.Value -
+                                            @item1.Extension - @item1.WorkDepartmentID
+                                        </span>
+                                    </div>
+                                    k++;
+                                }
                             }
-                        }
 
-                        <div class="form-group MultiOfficeAddress" liveaddressID="@item.AddressID" ofcaddress1="@item.Address1" ofcaddress2="@item.Address2" stateid2val="@item.StateID" ofcdistrict="@item.District" cityid2val="@item.CityID" ofczip="@item.ZipCode">
-                            <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">
-                                @item.Address1
-                                &nbsp; &nbsp; &nbsp;
-                                <i class="fa fa-pencil-square-o EditAddress" addressID="@item.AddressID" id="EditAddress-@item.AddressID" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            <div class=" MultiOfficeAddress" liveaddressID="@item.AddressID" ofcaddress1="@item.Address1" ofcaddress2="@item.Address2" stateid2val="@item.StateID" ofcdistrict="@item.District" cityid2val="@item.CityID" ofczip="@item.ZipCode">
+                                <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">
+                                    @item.Address1
+                                    &nbsp; &nbsp; &nbsp;
+                                    <i class="fa fa-pencil-square-o EditAddress" addressID="@item.AddressID" id="EditAddress-@item.AddressID" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
 
-                            </span>
+                                </span>
+                            </div>
+                            <div >
+                                <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;">@item.Address2</span>
+                            </div>
+                            <div >
+                                <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;">
+                                    @item.StateID
+                                    @item.District
+                                </span>
+
+                            </div>
+                            <div >
+                                <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;">
+                                    @item.CityID
+                                    @item.ZipCode
+                                </span>
+
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;">@item.Address2</span>
-                        </div>
-                        <div class="form-group">
-                            <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;">
-                                @item.StateID
-                                @item.District
-                            </span>
+                        <hr style="margin-top: 11px; margin-bottom: 10px;">
+                    }
 
-                        </div>
-                        <div class="form-group">
-                            <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;">
-                                @item.CityID
-                                @item.ZipCode
-                            </span>
 
-                        </div>
-                    </div>
-                    <hr style="margin-top: 11px; margin-bottom: 10px;">
-                }
-                
-
-            </div>
-        }
+                </div>
+            }
         </div>
     </div>
-<div class="row">
-    <div class="form-group">
+</div>
+    <div class="row">
+
         <div class="col-lg-12">
             <h5 class="help-block m-b-none">Internal Team </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+            <hr style="margin-top: 11px; margin-bottom: 10px;" /> 
+        </div> 
+        <div class="DivInternalTeam ">
+            @foreach (var item4 in Model.SaveInternalTeam)
+            {
+                <div >
+                    <span class="col-lg-12 showInternalTeam" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
+                        @item4.InternalPersonName
+                        @item4.DesignationidText
+                        @item4.SubDesignationText
+                        @item4.SubPartDesignationText
+                        <i class="fa fa-pencil-square-o EditinternalTeam" internalTeamid="@item4.internalTeamid" id="EditInternalTeam-@item4.internalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                    </span>
+                </div>
 
+            }
         </div>
     </div>
-    <div class="form-group DivInternalTeam ">
-        @foreach (var item4 in Model.SaveInternalTeam)
-        {
-            <div class="form-group">
-                <span class="col-lg-12 showInternalTeam" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
-                    @item4.InternalPersonName
-                    @item4.DesignationidText
-                    @item4.SubDesignationText
-                    @item4.SubPartDesignationText
-                    <i class="fa fa-pencil-square-o EditinternalTeam" internalTeamid="@item4.internalTeamid" id="EditInternalTeam-@item4.internalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                </span>
-            </div>
+    <div class="row">
 
-        }
-    </div>
-</div>
-<div class="row">
-    <div class="form-group">
         <div class="col-lg-12">
+            <hr style="margin-top: 11px; margin-bottom: 10px;">
             <h5 class="help-block m-b-none">Support Team </h5>
             <hr style="margin-top: 11px; margin-bottom: 10px;" />
 
         </div>
-    </div>
-    <div class="form-group DivSupportTeam ">
-        @foreach (var item5 in Model.SaveExternalTeam)
-        {
-            <div class="form-group">
-                <span class="col-lg-12 showExternalTeam" RelationId="@item5.RelationId" CategoryId="@item5.CategoryId" SubCategoryId="@item5.SubCategoryId" ExternalPersonId="@item5.ExternalPersonId" DesignationId="@item5.DesignationId" SubDesignationId="@item5.SubDesignationId" SubpartDesignationId="@item5.SubpartDesignationId" ExternalTeamid="@item5.ExternalTeamid" style="overflow-wrap:break-word;">
-                    @item5.ExternalPersonName
-                    @item5.RelationName
-                    @item5.CategoryName
-                    @item5.SubCategoryName
-                    <br />
-                    @item5.DesignationidText
-                    @item5.SubDesignationText
-                    @item5.SubPartDesignationText
-                    <i class="fa fa-pencil-square-o EditExternalTeam" ExternalTeamid="@item5.ExternalTeamid" id="EditExternalTeam-@item5.ExternalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                </span>
-            </div>
 
-        }
-    </div>
-</div>
+        <div class=" DivSupportTeam ">
+            @foreach (var item5 in Model.SaveExternalTeam)
+            {
+                <div>
+                    <span class="col-lg-12 showExternalTeam" RelationId="@item5.RelationId" CategoryId="@item5.CategoryId" SubCategoryId="@item5.SubCategoryId" ExternalPersonId="@item5.ExternalPersonId" DesignationId="@item5.DesignationId" SubDesignationId="@item5.SubDesignationId" SubpartDesignationId="@item5.SubpartDesignationId" ExternalTeamid="@item5.ExternalTeamid" style="overflow-wrap:break-word;">
+                        @item5.ExternalPersonName
+                        @item5.RelationName
+                        @item5.CategoryName
+                        @item5.SubCategoryName
+                        <br />
+                        @item5.DesignationidText
+                        @item5.SubDesignationText
+                        @item5.SubPartDesignationText
+                        <i class="fa fa-pencil-square-o EditExternalTeam" ExternalTeamid="@item5.ExternalTeamid" id="EditExternalTeam-@item5.ExternalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                    </span>
+                </div>
 
-<script>
+            }
+        </div>
+    </div>
+
+    <script>
     $(document).ready(function () {
         $('.EditAddress').on("click", function (e) {
-
+            
+            $(".iboxOffice").show();
+            $(".iboxCompanynfo").hide();
+            $(".iboxInternal").hide();
+            $(".iboxexternal").hide();
             $("#MobileType").val(0);
             $("#MobileNo").val("");
             $("#MobileWorkDepartment").val(0);
@@ -262,7 +269,10 @@
         });
 
         $('.EditinternalTeam').on("click", function (e) {
-           
+            $(".iboxOffice").hide();
+            $(".iboxCompanynfo").hide();
+            $(".iboxInternal").show();
+            $(".iboxexternal").hide();
             $("select#InternalPersonId").prop('selectedIndex', 0);
             $("select#DesignationId1").prop('selectedIndex', 0);
             $("select#SubDesignationID1").prop('selectedIndex', 0);
@@ -282,12 +292,15 @@
             $("#SubDesignationID1").val(subdesignationid1);
             GetSubPartDesignation();
             $("#SubPartDesignationID1").val(subpartdesignationid1);
-           
-            
+
+
         });
 
         $('.EditExternalTeam').on("click", function (e) {
-           
+            $(".iboxOffice").hide();
+            $(".iboxCompanynfo").hide();
+            $(".iboxInternal").hide();
+            $(".iboxexternal").show();
             $("select#RelationID").prop('selectedIndex', 0);
             $("select#CategoryID2").prop('selectedIndex', 0);
             $("select#SubCategoryID").prop('selectedIndex', 0);
@@ -309,15 +322,15 @@
             var designationid = $(this).closest(".showExternalTeam").attr("designationid");
             var subdesignationid = $(this).closest(".showExternalTeam").attr("subdesignationid");
             var subpartdesignationid = $(this).closest(".showExternalTeam").attr("subpartdesignationid");
-            
+
 
             $("#RelationID").val(relationid);
             $("#CategoryID2").val(categoryid);
             GetSupportTeamSubCategory();
             $("#SubCategoryID2").val(subcategoryid);
           //  $("#SupportCompanyID").val(externalpersonid);
-            $("#SupportPersonId").val(externalpersonid); 
-            $("#DesignationId2").val(designationid); 
+            $("#SupportPersonId").val(externalpersonid);
+            $("#DesignationId2").val(designationid);
             GetSupportTeamSubDesignation();
             $("#SubDesignationID2").val(subdesignationid);
             GetSupportTeamSubPartDesignation();
@@ -352,7 +365,7 @@
             });
             return true;
         }
-        function GetSubPartDesignation() { 
+        function GetSubPartDesignation() {
 
             $.ajax({
             url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
@@ -379,7 +392,7 @@
             return true;
         }
 
-        function GetSupportTeamSubCategory() { 
+        function GetSupportTeamSubCategory() {
             $.ajax({
                 url: "@Url.Action("CategoryWiseSubCategory", "Master")",
                 contentType: "application/json",
@@ -454,5 +467,5 @@
         });
         return true;
     }
-  
-</script>
+
+    </script>

@@ -1099,18 +1099,7 @@ namespace Calibration.Controllers
                 new SqlParameter("@CompanyID", id)
                 ).ToList<CompanyDetails>();
                 data = result.FirstOrDefault();
-
-                //  IEnumerable<CompanyAddress> result1 = _db.CompanyAddress.SqlQuery(@"exec uspGetCompanyAddress
-                //  @CompanyID",
-                //  new SqlParameter("@CompanyID", id)
-                //  ).ToList<CompanyAddress>();
-                //  data.CompanyAddress = result1;
-
-                //  IEnumerable<SaveCompanyMobile> result2 = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetCompanyPhoneNo
-                //  @CompanyID",
-                //new SqlParameter("@CompanyID", id)
-                //).ToList<SaveCompanyMobile>();
-                //  data.SaveCompanyMobile = result2;
+ 
 
                 return Request.IsAjaxRequest()
                    ? (ActionResult)PartialView("AddCompanyInfo", data)
@@ -1121,12 +1110,14 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("AddCompanyInfo",data)
                     : View("AddCompanyInfo",data);
         }
-        public ActionResult AddPersonInfo()
+        public ActionResult AddPersonInfo(int id=0)
         {
+            PersonInfo data = new PersonInfo();
+            OfficeDbContext _db = new OfficeDbContext();
             ViewData["DesignationList"] = binddropdown("DesignationList", 0);
             ViewData["CityList"] = binddropdown("CityList", 0);
             ViewData["StateList"] = binddropdown("StateList", 0);
-            ViewData["ConactPersonList"] = binddropdown("ConactPersonList", 0);
+            //ViewData["ConactPersonList"] = binddropdown("ConactPersonList", 0);
             ViewData["PersonList"] = binddropdown("PersonList", 0);
             ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
             ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
@@ -1136,9 +1127,20 @@ namespace Calibration.Controllers
             ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0);
             ViewData["CertificationList"] = binddropdown("CertificationList", 0);
             ViewData["CompanyList"] = binddropdown("CompanyList", 0);
+
+            if (id > 0)
+            {
+                var result = _db.PersonInfo.SqlQuery(@"exec [GetPersonDetailsForupdate]
+                   @PersonID",
+                new SqlParameter("@PersonID", id)
+                ).ToList<PersonInfo>();
+                data = result.FirstOrDefault(); 
+                 
+            }
+
             return Request.IsAjaxRequest()
-                    ? (ActionResult)PartialView("AddPersonInfo")
-                    : View("AddPersonInfo");
+                 ? (ActionResult)PartialView("AddPersonInfo", data)
+                 : View("AddPersonInfo", data);
         }
         [HttpPost]
         public ActionResult SaveCompanyOfficeAddress(int CompanyId,CompanyAddress Address, List<SaveCompanyMobile>   SaveMobileNo)
@@ -1626,17 +1628,17 @@ namespace Calibration.Controllers
                 new SqlParameter("@PersonId", Mem.PersonID == null ? 0 : Mem.PersonID), 
                 new SqlParameter("@TitleID", Mem.TitleID),
                 new SqlParameter("@fName", Mem.fName == null ? (object)DBNull.Value : Mem.fName),
-                new SqlParameter("@mName", Mem.fName == null ? (object)DBNull.Value : Mem.mName),
-                new SqlParameter("@lName", Mem.fName == null ? (object)DBNull.Value : Mem.lName),
-                new SqlParameter("@ShortName", Mem.ShortName),
-                new SqlParameter("@Website", Mem.Website),  
+                new SqlParameter("@mName", Mem.mName == null ? (object)DBNull.Value : Mem.mName),
+                new SqlParameter("@lName", Mem.lName == null ? (object)DBNull.Value : Mem.lName),
+                new SqlParameter("@ShortName", Mem.ShortName == null ? (object)DBNull.Value : Mem.ShortName),
+                new SqlParameter("@Website", Mem.Website == null ? (object)DBNull.Value : Mem.Website),  
                 new SqlParameter("@Address1", Mem.ResidentialAddress1 == null ? (object)DBNull.Value : Mem.ResidentialAddress1),
                 new SqlParameter("@Address2", Mem.ResidentialAddress2 == null ? (object)DBNull.Value : Mem.ResidentialAddress2),
                 new SqlParameter("@StateID", Mem.ResidentialStateID == null ? (object)DBNull.Value : Mem.ResidentialStateID),
                 new SqlParameter("@District", Mem.ResidentialDistrict == null ? (object)DBNull.Value : Mem.ResidentialDistrict),
                 new SqlParameter("@CityID", Mem.ResidentialCityID == null ? (object)DBNull.Value : Mem.ResidentialCityID),
                 new SqlParameter("@ZipCode", Mem.ResidentialZipCode == null ? (object)DBNull.Value : Mem.ResidentialZipCode),
-                new SqlParameter("@BirthDate", Mem.BirthDate), 
+                new SqlParameter("@BirthDate", Mem.BirthDate == null ? (object)DBNull.Value : Mem.BirthDate), 
                 new SqlParameter("@CreatedBy", 1)
                 , tvpParamMobile 
                 , tvpParamAdditionalFeild
@@ -2060,198 +2062,198 @@ namespace Calibration.Controllers
                     : View("_PersonGrid", itemsAsIPagedList);
         }
 
-        public ActionResult AddPerson(int? id)
-        {
-            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
-            return Request.IsAjaxRequest()
-                    ? (ActionResult)PartialView("AddPerson")
-                    : View("AddPerson");
-        }
+        //public ActionResult AddPerson(int? id)
+        //{
+        //    ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+        //    return Request.IsAjaxRequest()
+        //            ? (ActionResult)PartialView("AddPerson")
+        //            : View("AddPerson");
+        //}
 
         // Getting Person Details For Update
-        public ActionResult EditPerson(int? Id)
-        {
-            OfficeDbContext _db = new OfficeDbContext();
+        //public ActionResult EditPerson(int? Id)
+        //{
+        //    OfficeDbContext _db = new OfficeDbContext();
 
-            var result = _db.DFPerson.SqlQuery(@"exec GetPersonDetailsForupdate
-               @Id",
-               new SqlParameter("@Id", Id)
-               ).ToList<Person>();
+        //    var result = _db.DFPerson.SqlQuery(@"exec GetPersonDetailsForupdate
+        //       @Id",
+        //       new SqlParameter("@Id", Id)
+        //       ).ToList<Person>();
 
-            Person data = new Person();
-            data = result.FirstOrDefault();            
-            string Dob = data.BirthDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);            
-            ViewBag.Dob = Dob;
-            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
-            return View("EditPerson", data);
+        //    Person data = new Person();
+        //    data = result.FirstOrDefault();            
+        //    string Dob = data.BirthDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);            
+        //    ViewBag.Dob = Dob;
+        //    ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+        //    return View("EditPerson", data);
 
-        }
+        //}
 
-        public ActionResult GetPersonMobileList(int? Id)
-        {
-            OfficeDbContext _db = new OfficeDbContext();
+        //public ActionResult GetPersonMobileList(int? Id)
+        //{
+        //    OfficeDbContext _db = new OfficeDbContext();
 
-            IEnumerable<PersonMobileList> result = _db.DFPersonMobileList.SqlQuery(@"exec GetContactPersonMobileList
-               @Id",
-               new SqlParameter("@Id", Id)
-               ).ToList<PersonMobileList>();
+        //    IEnumerable<PersonMobileList> result = _db.DFPersonMobileList.SqlQuery(@"exec GetContactPersonMobileList
+        //       @Id",
+        //       new SqlParameter("@Id", Id)
+        //       ).ToList<PersonMobileList>();
 
-            return View("_GetContactPersonMobileList", result);
+        //    return View("_GetContactPersonMobileList", result);
 
-        }
+        //}
 
-        public ActionResult GetPersonEmailList(int? Id)
-        {
-            OfficeDbContext _db = new OfficeDbContext();
+        //public ActionResult GetPersonEmailList(int? Id)
+        //{
+        //    OfficeDbContext _db = new OfficeDbContext();
 
-            IEnumerable<PersonEmailList> result = _db.DFPersonEmailList.SqlQuery(@"exec GetContactPersonEmailList
-               @Id",
-               new SqlParameter("@Id", Id)
-               ).ToList<PersonEmailList>();
+        //    IEnumerable<PersonEmailList> result = _db.DFPersonEmailList.SqlQuery(@"exec GetContactPersonEmailList
+        //       @Id",
+        //       new SqlParameter("@Id", Id)
+        //       ).ToList<PersonEmailList>();
 
-            return View("_GetContactPersonEmailList", result);
+        //    return View("_GetContactPersonEmailList", result);
 
-        }
-
-
-        [HttpPost]
-        public ActionResult DeleteContactPersonMobile(int? Id)
-        {
-            try
-            {
-                OfficeDbContext _db = new OfficeDbContext();
-                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactPersonMobile 
-                 @Id",
-                new SqlParameter("@Id", Id));
-
-                return Json("Mobile Deleted");
-            }
-            catch (Exception ex)
-            {
-
-                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
-                return Json(message);
-
-            }
-        }
-
-        [HttpPost]
-        public ActionResult DeleteContactPersonEmail(int? Id)
-        {
-            try
-            {
-                OfficeDbContext _db = new OfficeDbContext();
-                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactPersonEmail 
-                 @Id",
-                new SqlParameter("@Id", Id));
-
-                return Json("Email Deleted");
-            }
-            catch (Exception ex)
-            {
-
-                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
-                return Json(message);
-
-            }
-        }
-
-        [HttpPost]
-        public ActionResult SavePerson(Person Cp, List<SaveMobile> SaveMobile,List<SaveEmail> SaveEmail)
-        {
-            try
-            {
-                DataTable dt = new DataTable();
-                DataTable dt1 = new DataTable();
-                dt.Columns.Add("Mobile", typeof(string));
-                dt1.Columns.Add("Email", typeof(string));
-
-                if (SaveMobile != null)
-                {
-                    if (SaveMobile.Count > 0)
-                    {
-                    foreach (var item in SaveMobile)
-                    {
-                           DataRow dr = dt.NewRow();
-                           dr["Mobile"] = item.Mobile;                            
-                           dt.Rows.Add(dr);
-                    }
-                    }
-                }
-                if (SaveEmail != null)
-                {
-                    if (SaveEmail.Count > 0)
-                    {                        
-                        foreach (var item in SaveEmail)
-                        {
-                            DataRow dr1 = dt1.NewRow();
-                            dr1["Email"] = item.Email;
-                            dt1.Rows.Add(dr1);
-                        }
-                    }
-                }
-
-                SqlParameter tvpParam = new SqlParameter();
-                tvpParam.ParameterName = "@MobileParameters";
-                tvpParam.SqlDbType = System.Data.SqlDbType.Structured;
-                tvpParam.Value = dt;
-                tvpParam.TypeName = "UT_PersonMobile";
-
-                SqlParameter tvpParam1 = new SqlParameter();
-                tvpParam1.ParameterName = "@EmailParameters";
-                tvpParam1.SqlDbType = System.Data.SqlDbType.Structured;
-                tvpParam1.Value = dt1;
-                tvpParam1.TypeName = "UT_PersonEmail";
+        //}
 
 
-                OfficeDbContext _db = new OfficeDbContext();
-                Boolean Active = true;
-                if (Cp.IsActive.ToString() == "false")
-                {
-                    Active = false;
-                }
-                var result = _db.Database.ExecuteSqlCommand(@"exec USP_SavePerson 
-                @PersonalInfoID
-               ,@Prefix    
-               ,@FirstName 
-               ,@MiddleName
-               ,@LastName  
-               ,@BirthDate 
-               ,@Address1   
-               ,@Address2   
-               ,@DesignationId
-               ,@Note  
-               ,@CreatedBy    
-               ,@IsActive
-               ,@MobileParameters
-               ,@EmailParameters",
-                new SqlParameter("@PersonalInfoID", Cp.PersonalInfoID),
-                new SqlParameter("@Prefix",Cp.Prefix),
-                new SqlParameter("@FirstName", Cp.FirstName),
-                new SqlParameter("@MiddleName", Cp.MiddleName == null ? (object)DBNull.Value : Cp.MiddleName),
-                new SqlParameter("@LastName", Cp.LastName),
-                new SqlParameter("@BirthDate", Cp.BirthDate == null ? (object)DBNull.Value : Cp.BirthDate),
-                new SqlParameter("@Address1", Cp.Address1 == null ? (object)DBNull.Value : Cp.Address1),
-                new SqlParameter("@Address2", Cp.Address2 == null ? (object)DBNull.Value : Cp.Address2),
-                new SqlParameter("@DesignationId", Cp.DesignationId == null ? (object)DBNull.Value : Cp.DesignationId),
-                new SqlParameter("@Note", Cp.Note == null ? (object)DBNull.Value : Cp.Note),
-                new SqlParameter("@CreatedBy",1),
-                new SqlParameter("@IsActive", Active),
-                tvpParam == null ? (object)DBNull.Value : tvpParam,
-                tvpParam1 == null ? (object)DBNull.Value : tvpParam1
-                );
+        //[HttpPost]
+        //public ActionResult DeleteContactPersonMobile(int? Id)
+        //{
+        //    try
+        //    {
+        //        OfficeDbContext _db = new OfficeDbContext();
+        //        var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactPersonMobile 
+        //         @Id",
+        //        new SqlParameter("@Id", Id));
 
-                return Json("Success");
+        //        return Json("Mobile Deleted");
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-            catch (Exception ex)
-            {
+        //        string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+        //        return Json(message);
 
-                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
-                return Json(message);
+        //    }
+        //}
 
-            }
-        }
+        //[HttpPost]
+        //public ActionResult DeleteContactPersonEmail(int? Id)
+        //{
+        //    try
+        //    {
+        //        OfficeDbContext _db = new OfficeDbContext();
+        //        var result = _db.Database.ExecuteSqlCommand(@"exec DeleteContactPersonEmail 
+        //         @Id",
+        //        new SqlParameter("@Id", Id));
+
+        //        return Json("Email Deleted");
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+        //        return Json(message);
+
+        //    }
+        //}
+
+        //[HttpPost]
+        //public ActionResult SavePerson(Person Cp, List<SaveMobile> SaveMobile,List<SaveEmail> SaveEmail)
+        //{
+        //    try
+        //    {
+        //        DataTable dt = new DataTable();
+        //        DataTable dt1 = new DataTable();
+        //        dt.Columns.Add("Mobile", typeof(string));
+        //        dt1.Columns.Add("Email", typeof(string));
+
+        //        if (SaveMobile != null)
+        //        {
+        //            if (SaveMobile.Count > 0)
+        //            {
+        //            foreach (var item in SaveMobile)
+        //            {
+        //                   DataRow dr = dt.NewRow();
+        //                   dr["Mobile"] = item.Mobile;                            
+        //                   dt.Rows.Add(dr);
+        //            }
+        //            }
+        //        }
+        //        if (SaveEmail != null)
+        //        {
+        //            if (SaveEmail.Count > 0)
+        //            {                        
+        //                foreach (var item in SaveEmail)
+        //                {
+        //                    DataRow dr1 = dt1.NewRow();
+        //                    dr1["Email"] = item.Email;
+        //                    dt1.Rows.Add(dr1);
+        //                }
+        //            }
+        //        }
+
+        //        SqlParameter tvpParam = new SqlParameter();
+        //        tvpParam.ParameterName = "@MobileParameters";
+        //        tvpParam.SqlDbType = System.Data.SqlDbType.Structured;
+        //        tvpParam.Value = dt;
+        //        tvpParam.TypeName = "UT_PersonMobile";
+
+        //        SqlParameter tvpParam1 = new SqlParameter();
+        //        tvpParam1.ParameterName = "@EmailParameters";
+        //        tvpParam1.SqlDbType = System.Data.SqlDbType.Structured;
+        //        tvpParam1.Value = dt1;
+        //        tvpParam1.TypeName = "UT_PersonEmail";
+
+
+        //        OfficeDbContext _db = new OfficeDbContext();
+        //        Boolean Active = true;
+        //        if (Cp.IsActive.ToString() == "false")
+        //        {
+        //            Active = false;
+        //        }
+        //        var result = _db.Database.ExecuteSqlCommand(@"exec USP_SavePerson 
+        //        @PersonalInfoID
+        //       ,@Prefix    
+        //       ,@FirstName 
+        //       ,@MiddleName
+        //       ,@LastName  
+        //       ,@BirthDate 
+        //       ,@Address1   
+        //       ,@Address2   
+        //       ,@DesignationId
+        //       ,@Note  
+        //       ,@CreatedBy    
+        //       ,@IsActive
+        //       ,@MobileParameters
+        //       ,@EmailParameters",
+        //        new SqlParameter("@PersonalInfoID", Cp.PersonalInfoID),
+        //        new SqlParameter("@Prefix",Cp.Prefix),
+        //        new SqlParameter("@FirstName", Cp.FirstName),
+        //        new SqlParameter("@MiddleName", Cp.MiddleName == null ? (object)DBNull.Value : Cp.MiddleName),
+        //        new SqlParameter("@LastName", Cp.LastName),
+        //        new SqlParameter("@BirthDate", Cp.BirthDate == null ? (object)DBNull.Value : Cp.BirthDate),
+        //        new SqlParameter("@Address1", Cp.Address1 == null ? (object)DBNull.Value : Cp.Address1),
+        //        new SqlParameter("@Address2", Cp.Address2 == null ? (object)DBNull.Value : Cp.Address2),
+        //        new SqlParameter("@DesignationId", Cp.DesignationId == null ? (object)DBNull.Value : Cp.DesignationId),
+        //        new SqlParameter("@Note", Cp.Note == null ? (object)DBNull.Value : Cp.Note),
+        //        new SqlParameter("@CreatedBy",1),
+        //        new SqlParameter("@IsActive", Active),
+        //        tvpParam == null ? (object)DBNull.Value : tvpParam,
+        //        tvpParam1 == null ? (object)DBNull.Value : tvpParam1
+        //        );
+
+        //        return Json("Success");
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+        //        return Json(message);
+
+        //    }
+        //}
 
         #endregion
 
@@ -2383,6 +2385,99 @@ namespace Calibration.Controllers
         }
 
         #endregion
+
+
+        #region BussinessCategoryMaster
+        public ActionResult LoadBussinessCategoryGrid(int? page, String Name = null)
+        {
+            StaticPagedList<BussinessCategoryList> itemsAsIPagedList;
+            itemsAsIPagedList = BussinessCategoryGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("BussinessCategoryGrid", itemsAsIPagedList)
+                    : View("BussinessCategoryGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult BussinessCategoryList(int? page, String Name = null)
+        {
+            StaticPagedList<BussinessCategoryList> itemsAsIPagedList;
+            itemsAsIPagedList = BussinessCategoryGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("BussinessCategoryList", itemsAsIPagedList)
+                    : View("BussinessCategoryList", itemsAsIPagedList);
+        }
+        public StaticPagedList<BussinessCategoryList> BussinessCategoryGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            BussinessCategoryList clist = new BussinessCategoryList();
+
+            IEnumerable<BussinessCategoryList> result = _db.BussinessCategoryList.SqlQuery(@"exec GetBusinessCategoryList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<BussinessCategoryList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<BussinessCategoryList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList; 
+        }
+        public ActionResult AddBussinessCategory(int id = 0)
+        {
+            BussinessCategory data = new BussinessCategory();
+            OfficeDbContext _db = new OfficeDbContext();
+               
+            if (id > 0)
+            { 
+                var result = _db.BussinessCategory.SqlQuery(@"exec GetBussinessCategoryDetails 
+                @BussinessCategoryID",
+                 new SqlParameter("@BussinessCategoryID", id)).ToList<BussinessCategory>();
+                data = result.FirstOrDefault(); 
+            }
+            else
+            {
+                data.BusinessCategoryID = 0;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddBussinessCategory", data)
+                  : View("AddBussinessCategory", data);
+        }
+        [HttpPost]
+        public ActionResult SaveBussinessCategory(int BussinessCategoryID = 0, String BussinessCategoryName = "", String IsActive = "")
+        {
+            try
+            { 
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveBusinessCategory 
+               @BusinessCategoryID, @BusinessCategoryName,@CreatedBy,@IsActive",
+                new SqlParameter("@BusinessCategoryID", BussinessCategoryID),
+                new SqlParameter("@BusinessCategoryName", BussinessCategoryName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            ); 
+                return Json("Success"); 
+            }
+            catch (Exception ex)
+            { 
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message); 
+            }
+        }
+        #endregion
         public ActionResult CompanyList(int? page, String Name = null)
         {
             StaticPagedList<CompanyDetailsList> itemsAsIPagedList;
@@ -2417,5 +2512,97 @@ namespace Calibration.Controllers
             return itemsAsIPagedList;
 
         }
+
+        #region Bussiness SubCategoryMaster
+        public ActionResult LoadBussinessSubCategoryGrid(int? page, String Name = null)
+        {
+            StaticPagedList<BussinessSubCategoryList> itemsAsIPagedList;
+            itemsAsIPagedList = BussinessSubCategoryGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("BussinessSubCategoryGrid", itemsAsIPagedList)
+                    : View("BussinessSubCategoryGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult BussinessSubCategoryList(int? page, String Name = null)
+        {
+            StaticPagedList<BussinessSubCategoryList> itemsAsIPagedList;
+            itemsAsIPagedList = BussinessSubCategoryGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("BussinessSubCategoryList", itemsAsIPagedList)
+                    : View("BussinessSubCategoryList", itemsAsIPagedList);
+        }
+        public StaticPagedList<BussinessSubCategoryList> BussinessSubCategoryGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            BussinessSubCategoryList clist = new BussinessSubCategoryList();
+
+            IEnumerable<BussinessSubCategoryList> result = _db.BussinessSubCategoryList.SqlQuery(@"exec GetBusinessSubCategoryList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<BussinessSubCategoryList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<BussinessSubCategoryList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddBussinessSubCategory(int id = 0)
+        {
+            BussinessSubCategory data = new BussinessSubCategory();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.BussinessSubCategory.SqlQuery(@"exec GetBussinessSubCategoryDetails 
+                @BussinessSubCategoryID",
+                 new SqlParameter("@BussinessSubCategoryID", id)).ToList<BussinessSubCategory>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.BusinessCategoryID = 0;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddBussinessSubCategory", data)
+                  : View("AddBussinessSubCategory", data);
+        }
+        [HttpPost]
+        public ActionResult SaveBussinessSubCategory(int BussinessSubCategoryID = 0, String BussinessSubCategoryName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveBusinessCategory 
+               @BusinessCategoryID, @BusinessCategoryName,@CreatedBy,@IsActive",
+                new SqlParameter("@BusinessCategoryID", BussinessSubCategoryID),
+                new SqlParameter("@BusinessCategoryName", BussinessSubCategoryName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
     }
 }
