@@ -1064,7 +1064,32 @@ namespace Calibration.Controllers
                    : View("PartialCompanyAddress", data);
               
         }
-        public ActionResult AddCompanyInfo(int id = 0)
+        public ActionResult GetLeftSideForPerson(int PersonID = 0)
+        {
+            CompanyDetailsforPerson data = new CompanyDetailsforPerson();
+            OfficeDbContext _db = new OfficeDbContext();
+            try
+            {
+                IEnumerable<SaveCompanyList> result = _db.SaveCompanyList.SqlQuery(@"exec uspGetCompanyListForPerson
+                @PersonID",
+              new SqlParameter("@PersonID", PersonID)
+              ).ToList<SaveCompanyList>();
+                data.SaveCompanyList = result;
+                data.PersonID = PersonID;
+
+                IEnumerable<SaveCertificationPerson> result1 = _db.SaveCertificationPerson.SqlQuery(@"exec uspGetPersonCertification
+                @PersonID",
+           new SqlParameter("@PersonID", PersonID)
+           ).ToList<SaveCertificationPerson>();
+                data.SaveCertificationPerson = result1;
+            }
+            catch (Exception ee) { }
+            return Request.IsAjaxRequest()
+               ? (ActionResult)PartialView("PersonLeftSide", data)
+               : View("PersonLeftSide", data);
+
+        }
+        public ActionResult AddCompanyInfo(int id = 0, int i = 0)
         {
             CompanyDetails data = new CompanyDetails();
             OfficeDbContext _db = new OfficeDbContext();
@@ -1092,7 +1117,16 @@ namespace Calibration.Controllers
             {
                 ViewBag.layout = "1";
             }
-            if (id > 0)
+            if (i > 0)
+            {
+                ViewData["redirect"] = 1;
+            }
+            else
+            {
+                ViewData["redirect"] = 0;
+            }
+
+           if (id > 0)
             {
                 var result = _db.CompanyDetails.SqlQuery(@"exec uspGetCompanyDetails
                    @CompanyID",
@@ -1110,7 +1144,7 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("AddCompanyInfo",data)
                     : View("AddCompanyInfo",data);
         }
-        public ActionResult AddPersonInfo(int id=0)
+        public ActionResult AddPersonInfo(int id=0, int i = 0)
         {
             PersonInfo data = new PersonInfo();
             OfficeDbContext _db = new OfficeDbContext();
@@ -1127,7 +1161,17 @@ namespace Calibration.Controllers
             ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0);
             ViewData["CertificationList"] = binddropdown("CertificationList", 0);
             ViewData["CompanyList"] = binddropdown("CompanyList", 0);
-
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+            ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", 0);
+            ViewData["TeamSubPartDesignationList"] = binddropdown("TeamSubPartDesignationList", 0);
+            if (i > 0)
+            {
+                ViewData["redirect"] = 1;
+            }
+            else
+            {
+                ViewData["redirect"] = 0;
+            }
             if (id > 0)
             {
                 var result = _db.PersonInfo.SqlQuery(@"exec [GetPersonDetailsForupdate]
@@ -1245,6 +1289,33 @@ namespace Calibration.Controllers
             }
         }
         [HttpPost]
+        public ActionResult SavePersonCertification(int PersonId, SaveCertificationPerson Cert)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdatePersonCertification
+                 @PersonId  
+                ,@CertificationID   
+                ,@PersonCertificationsDetailID  
+                ,@Value  
+                ",
+                new SqlParameter("@PersonId", PersonId),
+                new SqlParameter("@CertificationID", Cert.CertificationID),
+                new SqlParameter("@PersonCertificationsDetailID", Cert.PersonCertificationsDetailID),
+                new SqlParameter("@Value", Cert.Value)
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
         public ActionResult SaveInternalTeam(int CompanyId, SaveInternalTeam InternalTeam) 
         {
             try
@@ -1315,7 +1386,7 @@ namespace Calibration.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile,List<CompanyAddress> SaveAddress , List<SaveInternalTeam> SaveInternalTeam, List<SaveExternalTeam> SaveExternalTeam , List<SaveCertification> SaveCertification)
+        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile, List<SaveCompanyEmail> SaveEmail, List<CompanyAddress> SaveAddress , List<SaveInternalTeam> SaveInternalTeam, List<SaveExternalTeam> SaveExternalTeam , List<SaveCertification> SaveCertification)
         {
             try
             {
@@ -1332,6 +1403,12 @@ namespace Calibration.Controllers
                 dtMobile.Columns.Add("Extension", typeof(string));
                 dtMobile.Columns.Add("AdressID", typeof(int));
 
+                //dtEmail.Columns.Add("CompanyPhoneID", typeof(string));
+                //dtEmail.Columns.Add("PhoneType", typeof(int));
+                //dtEmail.Columns.Add("PhoneNumber", typeof(string));
+                //dtEmail.Columns.Add("WorkDepartmentID", typeof(int));
+                //dtEmail.Columns.Add("Extension", typeof(string));
+                //dtEmail.Columns.Add("AdressID", typeof(int));
 
                 dtAddress.Columns.Add("AddressID", typeof(int));
                 dtAddress.Columns.Add("AddressType", typeof(string));
@@ -1388,15 +1465,42 @@ namespace Calibration.Controllers
                         foreach (var item in SaveMobile)
                         {
                             DataRow dr_Mobile = dtMobile.NewRow();
+                            if(item.Type==3)
+                            {
+                                dr_Mobile["Extension"] = "";
+                            }
+                            else
+                            {
+                                dr_Mobile["Extension"] = item.Extension;
+                            }
+
                             dr_Mobile["PhoneNumber"] = item.Value;
                             dr_Mobile["PhoneType"] = item.Type;
                             dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
-                            dr_Mobile["Extension"] = item.Extension;
+                            
                             dr_Mobile["AdressID"] = item.AddressID;
                             dtMobile.Rows.Add(dr_Mobile);
                         }
                     }
-                } 
+                }
+
+                // Adding Contact Person In DT
+                //if (SaveEmail != null)
+                //{
+                //    if (SaveEmail.Count > 0)
+                //    {
+                //        foreach (var item in SaveEmail)
+                //        {
+                //            DataRow dr_Email = dtEmail.NewRow();
+                //            dr_Email["PhoneNumber"] = item.Value;
+                //            dr_Email["PhoneType"] = item.Type;
+                //            dr_Email["WorkDepartmentID"] = item.WorkDepartmentID;
+                //            dr_Email["AdressID"] = item.AddressID;
+                //            dr_Email["Extension"] = "";
+                //            dtEmail.Rows.Add(dr_Email);
+                //        }
+                //    }
+                //}
 
                 if (SaveAddress != null)
                 {
@@ -1461,7 +1565,13 @@ namespace Calibration.Controllers
                 tvpParamMobile.ParameterName = "@CompanyMobileParam";
                 tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
                 tvpParamMobile.Value = dtMobile;
-                tvpParamMobile.TypeName = "UTT_CompanyMobile";  
+                tvpParamMobile.TypeName = "UTT_CompanyMobile";
+
+                //SqlParameter tvpParamEmail = new SqlParameter();
+                //tvpParamEmail.ParameterName = "@CompanyMobileParam";
+                //tvpParamEmail.SqlDbType = System.Data.SqlDbType.Structured;
+                //tvpParamEmail.Value = dtEmail;
+                //tvpParamEmail.TypeName = "UTT_CompanyMobile";
 
                 SqlParameter tvpParamAddress = new SqlParameter();
                 tvpParamAddress.ParameterName = "@CompanyAddressParam";
@@ -1535,7 +1645,7 @@ namespace Calibration.Controllers
         }
         
             [HttpPost]
-        public ActionResult SavePersonInfo(PersonInfo Mem, List<SaveMobilePerson> SaveMobilePerson, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter)
+        public ActionResult SavePersonInfo(PersonInfo Mem, List<SaveMobilePerson> SaveMobilePerson, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter, List<SaveCompanyList> SaveCompanyList, List<SaveCertificationPerson> SaveCertification)
         {
             try
             { 
@@ -1545,6 +1655,8 @@ namespace Calibration.Controllers
                 DataTable dtAdditionalFiled = new DataTable();
                 DataTable dtParameter = new DataTable();
                 DataTable dtMemberPerson = new DataTable();
+                DataTable dtCompanyList = new DataTable();
+                DataTable dtCertificaton = new DataTable();
                 dtMobile.Columns.Add("id", typeof(int));
                 dtMobile.Columns.Add("Type", typeof(string));
                 dtMobile.Columns.Add("Value", typeof(string));
@@ -1553,7 +1665,17 @@ namespace Calibration.Controllers
                 dtParameter.Columns.Add("Parameter", typeof(string));
                 dtMemberPerson.Columns.Add("PersonMemberID", typeof(int));
                 dtMemberPerson.Columns.Add("DesignationId", typeof(int));
-                 
+
+
+                dtCompanyList.Columns.Add("Listid", typeof(int));
+                dtCompanyList.Columns.Add("CompanyID", typeof(int));
+                dtCompanyList.Columns.Add("designationid1", typeof(int));
+                dtCompanyList.Columns.Add("subdesignationid1", typeof(int));
+                dtCompanyList.Columns.Add("subpartdesignationid1", typeof(int));
+
+                dtCertificaton.Columns.Add("PersonCertificationsDetailID", typeof(int));
+                dtCertificaton.Columns.Add("CertificationID", typeof(int));
+                dtCertificaton.Columns.Add("Value", typeof(string));
                 // Adding Contact Person In DT
                 if (SaveMobilePerson != null)
                 {
@@ -1585,6 +1707,38 @@ namespace Calibration.Controllers
                     }
                 }
 
+                if (SaveCompanyList != null)
+                {
+                    if (SaveCompanyList.Count > 0)
+                    {
+                        foreach (var item in SaveCompanyList)
+                        {
+                            DataRow dr_CompanyList = dtCompanyList.NewRow();
+                            dr_CompanyList["CompanyID"] = item.CompanyID;
+                            dr_CompanyList["Listid"] = item.Listid;
+                            dr_CompanyList["designationid1"] = item.designationid1;
+                            dr_CompanyList["subdesignationid1"] = item.subdesignationid1;
+                            dr_CompanyList["subpartdesignationid1"] = item.subpartdesignationid1;
+                            dtCompanyList.Rows.Add(dr_CompanyList);
+                        }
+                    }
+                }
+
+                if (SaveCertification != null)
+                {
+                    if (SaveCertification.Count > 0)
+                    {
+                        foreach (var item in SaveCertification)
+                        {
+                            DataRow dr_Certification = dtCertificaton.NewRow();
+                            dr_Certification["PersonCertificationsDetailID"] = item.PersonCertificationsDetailID;
+                            dr_Certification["CertificationID"] = item.CertificationID;
+                            dr_Certification["Value"] = item.Value;
+                            dtCertificaton.Rows.Add(dr_Certification);
+                        }
+                    }
+                }
+
                 SqlParameter tvpParamMobile = new SqlParameter();
                 tvpParamMobile.ParameterName = "@MemberMobileParam";
                 tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
@@ -1602,8 +1756,19 @@ namespace Calibration.Controllers
                 tvpParamParameter.SqlDbType = System.Data.SqlDbType.Structured;
                 tvpParamParameter.Value = dtParameter;
                 tvpParamParameter.TypeName = "UT_MemberParameter";
-                 
-              
+                
+                SqlParameter tvpParamCompanyList = new SqlParameter();
+                tvpParamCompanyList.ParameterName = "@MemberParameterCompanyList";
+                tvpParamCompanyList.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamCompanyList.Value = dtCompanyList;
+                tvpParamCompanyList.TypeName = "UTT_CompanyList";
+
+                SqlParameter tvpParamCertification = new SqlParameter();
+                tvpParamCertification.ParameterName = "@CompanyCertificationParam";
+                tvpParamCertification.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamCertification.Value = dtCertificaton;
+                tvpParamCertification.TypeName = "UTT_CompanyCertification";
+
                 OfficeDbContext _db = new OfficeDbContext();
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_SavePersonInfo
                  @PersonID
@@ -1621,9 +1786,12 @@ namespace Calibration.Controllers
                 ,@ZipCode
                 ,@BirthDate
                 ,@CreatedBy
+                ,@CreatedDate
                 ,@MemberMobileParam  
                 ,@MemberAdditionalFeildParam
                 ,@MemberParameterParam
+                 ,@MemberParameterCompanyList
+                 ,@CompanyCertificationParam
               ",
                 new SqlParameter("@PersonId", Mem.PersonID == null ? 0 : Mem.PersonID), 
                 new SqlParameter("@TitleID", Mem.TitleID),
@@ -1639,11 +1807,13 @@ namespace Calibration.Controllers
                 new SqlParameter("@CityID", Mem.ResidentialCityID == null ? (object)DBNull.Value : Mem.ResidentialCityID),
                 new SqlParameter("@ZipCode", Mem.ResidentialZipCode == null ? (object)DBNull.Value : Mem.ResidentialZipCode),
                 new SqlParameter("@BirthDate", Mem.BirthDate == null ? (object)DBNull.Value : Mem.BirthDate), 
-                new SqlParameter("@CreatedBy", 1)
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@CreatedDate", Mem.CreatedDate == null ? (object)DBNull.Value : Mem.CreatedDate)
                 , tvpParamMobile 
                 , tvpParamAdditionalFeild
                 , tvpParamParameter
-              
+               , tvpParamCompanyList
+               ,tvpParamCertification
                 );
 
                 return Json("Success");
@@ -1916,7 +2086,17 @@ namespace Calibration.Controllers
 
             }
         }
-
+        [HttpGet]
+        public JsonResult GetCompanyName( )
+        {
+            var lstitem = binddropdown("CompanyList", 0).Select(i => new { i.Value, i.Text }).ToList().FirstOrDefault();
+            return Json(lstitem, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult CategoryWiseSubCategory1(int CategoryID = 0, int val = 0)
+        {
+            var lstitem = binddropdown("BusinessSubCategoryList", CategoryID).Select(i => new { i.Value, i.Text }).ToList().FirstOrDefault();
+            return Json(lstitem, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult FliterStateWiseCity(int StateID = 0)
         {
            
@@ -2560,7 +2740,7 @@ namespace Calibration.Controllers
         {
             BussinessSubCategory data = new BussinessSubCategory();
             OfficeDbContext _db = new OfficeDbContext();
-
+            ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
             if (id > 0)
             {
                 var result = _db.BussinessSubCategory.SqlQuery(@"exec GetBussinessSubCategoryDetails 
@@ -2578,8 +2758,8 @@ namespace Calibration.Controllers
                   : View("AddBussinessSubCategory", data);
         }
         [HttpPost]
-        public ActionResult SaveBussinessSubCategory(int BussinessSubCategoryID = 0, String BussinessSubCategoryName = "", String IsActive = "")
-        {
+        public ActionResult SaveBussinessSubCategory(int BussinessCategoryID  = 0, int BussinessSubCategoryID = 0, String BussinessSubCategoryName = "", String IsActive = "")
+        { 
             try
             {
                 OfficeDbContext _db = new OfficeDbContext();
@@ -2588,10 +2768,11 @@ namespace Calibration.Controllers
                 {
                     Active = false;
                 }
-                var result = _db.Database.ExecuteSqlCommand(@"exec SaveBusinessCategory 
-               @BusinessCategoryID, @BusinessCategoryName,@CreatedBy,@IsActive",
-                new SqlParameter("@BusinessCategoryID", BussinessSubCategoryID),
-                new SqlParameter("@BusinessCategoryName", BussinessSubCategoryName),
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveBusinessSubCategory 
+               @BusinessCategoryID,@BussinessSubCategoryID, @BusinessSubCategoryName,@CreatedBy,@IsActive",
+                new SqlParameter("@BusinessCategoryID", BussinessCategoryID),
+                new SqlParameter("@BussinessSubCategoryID", BussinessSubCategoryID),
+                new SqlParameter("@BusinessSubCategoryName", BussinessSubCategoryName),
                 new SqlParameter("@CreatedBy", 1),
                 new SqlParameter("@IsActive", Active)
             );
@@ -2604,5 +2785,355 @@ namespace Calibration.Controllers
             }
         }
         #endregion
+
+        #region TeamDesignationMaster
+        public ActionResult LoadTeamDesignationGrid(int? page, String Name = null)
+        {
+            StaticPagedList<TeamDesignationList> itemsAsIPagedList;
+            itemsAsIPagedList = TeamDesignationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("TeamDesignationGrid", itemsAsIPagedList)
+                    : View("TeamDesignationGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult TeamDesignationList(int? page, String Name = null)
+        {
+            StaticPagedList<TeamDesignationList> itemsAsIPagedList;
+            itemsAsIPagedList = TeamDesignationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("TeamDesignationList", itemsAsIPagedList)
+                    : View("TeamDesignationList", itemsAsIPagedList);
+        }
+        public StaticPagedList<TeamDesignationList> TeamDesignationGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            TeamDesignationList clist = new TeamDesignationList();
+
+            IEnumerable<TeamDesignationList> result = _db.TeamDesignationList.SqlQuery(@"exec GetTeamDesignationList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<TeamDesignationList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<TeamDesignationList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddTeamDesignation(int id = 0)
+        {
+            TeamDesignation data = new TeamDesignation();
+            OfficeDbContext _db = new OfficeDbContext(); 
+            if (id > 0)
+            {
+                var result = _db.TeamDesignation.SqlQuery(@"exec GetTeamDesignationDetails 
+                @TeamDesignationID",
+                 new SqlParameter("@TeamDesignationID", id)).ToList<TeamDesignation>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.TeamDesignationID = 0;
+            } 
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddTeamDesignation", data)
+                  : View("AddTeamDesignation", data);
+        }
+        [HttpPost]
+        public ActionResult SaveTeamDesignation(int TeamDesignationID = 0, String TeamDesignationName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveTeamDesignation 
+               @TeamDesignationID, @TeamDesignationName,@CreatedBy,@IsActive",
+                new SqlParameter("@TeamDesignationID", TeamDesignationID),
+                new SqlParameter("@TeamDesignationName", TeamDesignationName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region TeamSubDesignationMaster
+        public ActionResult LoadTeamSubDesignationGrid(int? page, String Name = null)
+        {
+            StaticPagedList<TeamSubDesignationList> itemsAsIPagedList;
+            itemsAsIPagedList = TeamSubDesignationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("TeamSubDesignationGrid", itemsAsIPagedList)
+                    : View("TeamSubDesignationGrid", itemsAsIPagedList);
+        }
+
+        //public ActionResult TeamSubDesignationList(int? page, String Name = null)
+        //{
+        //    StaticPagedList<TeamSubDesignationList> itemsAsIPagedList;
+        //    itemsAsIPagedList = TeamSubDesignationGridList(page, Name);
+
+        //    return Request.IsAjaxRequest()
+        //            ? (ActionResult)PartialView("TeamSubDesignationList", itemsAsIPagedList)
+        //            : View("TeamSubDesignationList", itemsAsIPagedList);
+        //}
+        public StaticPagedList<TeamSubDesignationList> TeamSubDesignationGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            TeamSubDesignationList clist = new TeamSubDesignationList();
+
+            IEnumerable<TeamSubDesignationList> result = _db.TeamSubDesignationList.SqlQuery(@"exec GetTeamSubDesignationList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<TeamSubDesignationList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<TeamSubDesignationList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddTeamSubDesignation(int id = 0)
+        {
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+            TeamSubDesignation data = new TeamSubDesignation();
+            OfficeDbContext _db = new OfficeDbContext();
+            if (id > 0)
+            {
+                var result = _db.TeamSubDesignation.SqlQuery(@"exec GetTeamSubDesignationDetails 
+                @TeamSubDesignationID",
+                 new SqlParameter("@TeamSubDesignationID", id)).ToList<TeamSubDesignation>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.TeamSubDesignationID = 0;
+            }
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddTeamSubDesignation", data)
+                  : View("AddTeamSubDesignation", data);
+        }
+        [HttpPost]
+        public ActionResult SaveTeamSubDesignation(int TeamDesignationID,int TeamSubDesignationID = 0, String TeamSubDesignationName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveTeamSubDesignation 
+               @TeamDesignationID,@TeamSubDesignationID, @TeamSubDesignationName,@CreatedBy,@IsActive",
+               new SqlParameter("@TeamDesignationID", TeamDesignationID),
+               new SqlParameter("@TeamSubDesignationID", TeamSubDesignationID),
+                new SqlParameter("@TeamSubDesignationName", TeamSubDesignationName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region TeamSubSubDesignationMaster
+        public ActionResult LoadTeamSubSubDesignationGrid(int? page, String Name = null)
+        {
+            StaticPagedList<TeamSubSubDesignationList> itemsAsIPagedList;
+            itemsAsIPagedList = TeamSubSubDesignationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("TeamSubSubDesignationGrid", itemsAsIPagedList)
+                    : View("TeamSubSubDesignationGrid", itemsAsIPagedList);
+        } 
+        public StaticPagedList<TeamSubSubDesignationList> TeamSubSubDesignationGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            TeamSubSubDesignationList clist = new TeamSubSubDesignationList();
+
+            IEnumerable<TeamSubSubDesignationList> result = _db.TeamSubSubDesignationList.SqlQuery(@"exec GetTeamSubSubDesignationList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<TeamSubSubDesignationList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<TeamSubSubDesignationList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddTeamSubSubDesignation(int id = 0)
+        {
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+            ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", 0);
+            TeamSubSubDesignation data = new TeamSubSubDesignation();
+            OfficeDbContext _db = new OfficeDbContext();
+            if (id > 0)
+            {
+                try
+                {
+                    var result = _db.TeamSubSubDesignation.SqlQuery(@"exec GetTeamSubSubDesignationDetails 
+                @TeamSubSubDesignationID",
+                     new SqlParameter("@TeamSubSubDesignationID", id)).ToList<TeamSubSubDesignation>();
+                    data = result.FirstOrDefault();
+                    ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", Convert.ToInt32(data.TeamDesignationID.ToString()));
+                }
+                catch(Exception ee) { }
+            }
+            else
+            {
+                data.TeamSubSubDesignationID = 0;
+            }
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddTeamSubSubDesignation", data)
+                  : View("AddTeamSubSubDesignation", data);
+        }
+        [HttpPost]
+        public ActionResult SaveTeamSubSubDesignation(int TeamDesignationID, int TeamSubDesignationID, int TeamSubSubDesignationID = 0, String TeamSubSubDesignationName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveTeamSubSubDesignation 
+               @TeamDesignationID,@TeamSubDesignationID,@TeamSubSubDesignationID, @TeamSubSubDesignationName,@CreatedBy,@IsActive",
+               new SqlParameter("@TeamDesignationID", TeamDesignationID),
+                new SqlParameter("@TeamSubDesignationID", TeamSubDesignationID),
+                new SqlParameter("@TeamSubSubDesignationID", TeamSubSubDesignationID),
+                new SqlParameter("@TeamSubSubDesignationName", TeamSubSubDesignationName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+        public ActionResult ProjectNew(int id = 0)
+        {
+            CompanyDetails data = new CompanyDetails();
+            OfficeDbContext _db = new OfficeDbContext();
+            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+            ViewData["CityList"] = binddropdown("CityList", 0);
+            ViewData["StateList"] = binddropdown("StateList", 0);
+            ViewData["PersonList"] = binddropdown("PersonList", 0);
+            ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
+            ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
+            ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0);
+            ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
+            ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0);
+            ViewData["CertificationList"] = binddropdown("CertificationList", 0);
+            ViewData["CompanyRelationList"] = binddropdown("CompanyRelationList", 0);
+            ViewData["CompanyList"] = binddropdown("CompanyList", 0);
+
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+            ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", 0);
+            ViewData["TeamSubPartDesignationList"] = binddropdown("TeamSubPartDesignationList", 0);
+            if (Request.IsAjaxRequest())
+            {
+                ViewBag.layout = "0";
+            }
+            else
+            {
+                ViewBag.layout = "1";
+            }
+            if (id > 0)
+            {
+                var result = _db.CompanyDetails.SqlQuery(@"exec uspGetCompanyDetails
+                   @CompanyID",
+                new SqlParameter("@CompanyID", id)
+                ).ToList<CompanyDetails>();
+                data = result.FirstOrDefault();
+
+
+                return Request.IsAjaxRequest()
+                   ? (ActionResult)PartialView("ProjectNew", data)
+                   : View("ProjectNew", data);
+            }
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("AddCompanyInfo", data)
+                    : View("ProjectNew", data);
+        }
+        public ActionResult BindCompanyNames(int val = 0) 
+        {
+            if (val == 0)
+            {
+                ViewBag.value = 1; 
+            }
+            else
+            {
+                ViewBag.value = 2;
+            } 
+            ViewData["CompanyList"] = binddropdown("CompanyList", 0);
+             
+          
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("BindCompanyNames")
+                    : View("BindCompanyNames");
+        }
+
+        public ActionResult BindPersonNames(int val = 0)
+        {
+            if (val == 0)
+            {
+                ViewBag.value = 1;
+            }
+            else
+            {
+                ViewBag.value = 2;
+            } 
+            ViewData["PersonList"] = binddropdown("PersonList", 0);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("BindPersonNames")
+                    : View("BindPersonNames");
+        }
     }
 }

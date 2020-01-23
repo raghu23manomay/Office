@@ -12,12 +12,8 @@
                 <tr>
 
                     <th>FullName </th>
-                    <th> Designation</th>
-                    <th>BirthDate</th>
-                    
-                    <th>Address 1</th>
-                    <th>Address 2</th>
-                     
+                    <th> ShortName</th> 
+                    <th>Address </th> 
                     <th>Action</th>
 
                 </tr>
@@ -27,11 +23,10 @@
                 {
                 <tr>
                     <td>@item.FirstName  @item.LastName </td>
-                    <td>@item.DesignationName</td>
-                    <td>@item.BirthDate</td>
+                    <td>@item.ShortName</td> 
                    
                     <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address1</td>
-                    <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address2</td>
+                    @*<td style="max-width: 137px;overflow-wrap: break-word;">@item.Address2</td>*@
                  
                     <td>
                         <a class="edit" href="AddPersonInfo?id=@item.PersonID"  id="EditContactPerson">

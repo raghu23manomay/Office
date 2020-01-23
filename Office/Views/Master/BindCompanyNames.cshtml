@@ -1,0 +1,15 @@
+﻿
+@{
+    Layout = null;
+}
+
+@if (ViewBag.value == 1)
+{
+    @Html.DropDownList("CompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "CompanyID", Title = "CompanyID" })
+
+}
+else
+{
+    @Html.DropDownList("SupportCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "SupportCompanyID", Title = "CompanyID" })
+
+}

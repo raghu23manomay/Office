@@ -440,8 +440,8 @@ namespace office.Models
        public int CertificationID           { get; set; }
        public int CompanyOwnershipTypeID    { get; set; }
        public int Isclient                  { get; set; }
-       public DateTime RequestDate          { get; set; }
-       public DateTime InceptionDate        { get; set; }
+       public Nullable<DateTime> RequestDate          { get; set; }
+       public Nullable<DateTime> InceptionDate        { get; set; }
        public int CreatedBy                 { get; set; }
        public DateTime CreatedDate          { get; set; }
       
@@ -455,6 +455,12 @@ namespace office.Models
         public IEnumerable<SaveCertification> SaveCertification { get; set; }
         public IEnumerable<SaveInternalTeam> SaveInternalTeam { get; set; } 
         public IEnumerable<SaveExternalTeam> SaveExternalTeam { get; set; }
+    }
+    public class CompanyDetailsforPerson
+    {
+        public int PersonID { get; set; } 
+        public IEnumerable<SaveCompanyList> SaveCompanyList { get; set; }
+        public IEnumerable<SaveCertificationPerson> SaveCertificationPerson { get; set; }
     }
     public class CompanyDetailsList
     {
@@ -480,21 +486,23 @@ namespace office.Models
     public class SaveCompanyMobile
     {
         [Key]
-          
-           public string Value          { get; set; }
-           public int Type                { get; set; } 
-           public int WorkDepartmentID   { get; set; } 
-           public string Extension       { get; set; }
-           public int AddressID { get; set; }
-        public int? CompanyPhoneID { get; set; }
+        public string Value { get; set; }
+        public int? CompanyPhoneID { get; set; }  
+        public int Type                { get; set; } 
+        public int WorkDepartmentID   { get; set; } 
+        public string Extension       { get; set; }
+        public int AddressID { get; set; }
+        
     }
     public class SaveCompanyEmail
     {
         [Key]
-        public string Email { get; set; } 
-        public int WorkDepartmentID { get; set; }
+        public string Value { get; set; }
+        public int? CompanyPhoneID { get; set; } 
+        public int Type { get; set; }
+        public int WorkDepartmentID { get; set; } 
+        public int AddressID { get; set; }
         public string Extension { get; set; }
-
     }
     public class CompanyAddress
     {
@@ -517,6 +525,19 @@ namespace office.Models
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
         public string InternalPersonName { get; set; }
+        public string DesignationidText { get; set; }
+        public string SubDesignationText { get; set; }
+        public string SubPartDesignationText { get; set; }
+    }
+    public class SaveCompanyList
+    {
+        [Key]
+        public int CompanyID { get; set; }
+        public int? Listid { get; set; }
+        public int designationid1 { get; set; }
+        public int subdesignationid1 { get; set; }
+        public int subpartdesignationid1 { get; set; }
+        public string CompanyName { get; set; }
         public string DesignationidText { get; set; }
         public string SubDesignationText { get; set; }
         public string SubPartDesignationText { get; set; }
@@ -544,11 +565,18 @@ namespace office.Models
     public class SaveCertification
     {
         [Key]
+        public int CompanyCertificationsDetailID { get; set; }
         public int CertificationID { get; set; } 
+        public String CertificationText { get; set; } 
+        public String Value { get; set; } 
+    }
+    public class SaveCertificationPerson
+    {
+        [Key]
+        public int PersonCertificationsDetailID { get; set; }
+        public int CertificationID { get; set; }
         public String CertificationText { get; set; }
-        public int CompanyCertificationsDetailID { get; set; } 
         public String Value { get; set; }
-        
     }
     public class CompanyAddressMobile
     {
@@ -591,6 +619,7 @@ namespace office.Models
         
         public int? BusinessSubCategoryID { get; set; }
         public int? BusinessCategoryID { get; set; }
+        public string BusinessCategoryName { get; set; }
         public string BusinessSubCategoryName { get; set; }
         public string IsActive { get; set; }
         public int CreatedBy { get; set; }
@@ -608,6 +637,73 @@ namespace office.Models
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
 
+    }
+    public class TeamDesignation
+    {
+        [Key]
+        public int? TeamDesignationID { get; set; } 
+        public string TeamDesignationName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+
+    }
+    public class TeamDesignationList
+    {
+        [Key]
+        public int? TeamDesignationID { get; set; }
+        public string TeamDesignationName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+
+    }
+    public class TeamSubDesignation
+    {
+        [Key]
+        public int? TeamSubDesignationID { get; set; }
+        public int? TeamDesignationID { get; set; }
+        public string TeamSubDesignationName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+
+    }
+    public class TeamSubDesignationList
+    {
+        [Key]
+        public int? TeamSubDesignationID { get; set; }
+        public int? TeamDesignationID { get; set; }
+        public string TeamDesignationName { get; set; }
+        public string TeamSubDesignationName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+
+    }
+    public class TeamSubSubDesignation
+    {
+        [Key]
+        public int? TeamSubSubDesignationID { get; set; }
+        public int? TeamSubDesignationID { get; set; }
+        public int? TeamDesignationID { get; set; }
+        public string TeamSubSubDesignationName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; } 
+    }
+    public class TeamSubSubDesignationList
+    {
+        [Key]
+        public int? TeamSubDesignationID { get; set; }
+        public int? TeamSubSubDesignationID { get; set; }
+        public int? TeamDesignationID { get; set; }
+        public string TeamDesignationName { get; set; }
+        public string TeamSubDesignationName { get; set; }
+        public string TeamSubSubDesignationName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
     }
 }
 

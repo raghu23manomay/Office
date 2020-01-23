@@ -91,6 +91,7 @@ namespace office.Models
         public DbSet<SaveMobile> SaveMobile { get; set; }
         public DbSet<SaveEmail> SaveEmail { get; set; }
         public DbSet<SaveCertification> SaveCertification { get; set; }
+        public DbSet<SaveCertificationPerson> SaveCertificationPerson { get; set; }
         public DbSet<SaveInternalTeam> SaveInternalTeam { get; set; }
         public DbSet<SaveExternalTeam> SaveExternalTeam { get; set; }
         public DbSet<PersonInfo> PersonInfo { get; set; }
@@ -98,7 +99,13 @@ namespace office.Models
         public DbSet<BussinessCategory> BussinessCategory { get; set; }
         public DbSet<BussinessSubCategoryList> BussinessSubCategoryList { get; set; }
         public DbSet<BussinessSubCategory> BussinessSubCategory { get; set; }
-        
+        public DbSet<TeamDesignation> TeamDesignation { get; set; }
+        public DbSet<TeamDesignationList> TeamDesignationList { get; set; }
+        public DbSet<TeamSubDesignation> TeamSubDesignation { get; set; }
+        public DbSet<TeamSubDesignationList> TeamSubDesignationList { get; set; }
+        public DbSet<TeamSubSubDesignation> TeamSubSubDesignation { get; set; }
+        public DbSet<TeamSubSubDesignationList> TeamSubSubDesignationList { get; set; }
+        public DbSet<SaveCompanyList> SaveCompanyList { get; set; }
     }
      
 }

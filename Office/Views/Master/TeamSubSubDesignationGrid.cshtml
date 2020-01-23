@@ -1,0 +1,120 @@
+﻿@model IEnumerable<office.Models.TeamSubSubDesignationList>
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+<script src="~/js/jquery-2.1.1.js"></script>
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+
+                    <th>#</th>
+                    <th>Designation </th>
+                    <th>Sub Designation </th>
+                    <th>Sub Sub Designation </th>
+                    <th>Status </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.TeamSubSubDesignationID</td>
+                    <td>@item.TeamDesignationName</td>
+                    <td>@item.TeamSubDesignationName</td>
+                    <td>@item.TeamSubSubDesignationName</td>
+                    <td>@item.IsActive</td>
+                    <td>
+
+                        <span class="edit3" v="@item.TeamSubSubDesignationID">
+                            <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                        </span>
+
+
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid3", OnComplete = "PagedOnComplete" }))
+                @if (Model.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+                }
+            </div>
+        </div> 
+</div>
+
+<script>
+    $(document).ready(function () { 
+       
+        $('#mgrid3 .pagination li a').on('click', function (e) { 
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            $('.loader').show();
+            var temp = $(this).attr('href');
+
+           
+            var pageid = temp.replace('/?page=', '');
+
+            $.ajax({
+                url: "@Url.Action("LoadTeamSubSubDesignationIDGrid", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    CName: $('#CustomerFilter').val(), 
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#mgrid3').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+
+        });
+        $('.edit3').on('click', function () {
+            debugger;
+            var CategoryID = $(this).attr("v");
+          $.ajax({
+                url: "@Url.Action("AddTeamSubSubDesignation", "Master")",
+                contentType: "application/json", 
+                dataType: "text",
+                type: "GET",
+                async: true,
+                  data:
+                  {
+                      id: CategoryID
+                 
+                  },
+                success: function (data) {
+                    $('#AddNew3').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            }); 
+        });
+        
+                                 
+   
+    });
+
+</script>
