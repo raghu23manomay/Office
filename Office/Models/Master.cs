@@ -321,6 +321,7 @@ namespace office.Models
         public string ResidentialZipCode { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
     }
 
     public class MemberList
@@ -455,12 +456,15 @@ namespace office.Models
         public IEnumerable<SaveCertification> SaveCertification { get; set; }
         public IEnumerable<SaveInternalTeam> SaveInternalTeam { get; set; } 
         public IEnumerable<SaveExternalTeam> SaveExternalTeam { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile2 { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile3 { get; set; }
     }
     public class CompanyDetailsforPerson
     {
         public int PersonID { get; set; } 
         public IEnumerable<SaveCompanyList> SaveCompanyList { get; set; }
         public IEnumerable<SaveCertificationPerson> SaveCertificationPerson { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
     }
     public class CompanyDetailsList
     {
@@ -493,6 +497,18 @@ namespace office.Models
         public string Extension       { get; set; }
         public int AddressID { get; set; }
         
+    }
+
+    public class SavePersonMobile
+    {
+        [Key]
+        public string Value { get; set; }
+        public int? PersonPhoneID { get; set; }
+        public int Type { get; set; }
+        public int WorkDepartmentID { get; set; }
+        public string Extension { get; set; }
+        public int AddressID { get; set; }
+
     }
     public class SaveCompanyEmail
     {

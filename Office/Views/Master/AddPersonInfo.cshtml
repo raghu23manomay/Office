@@ -6,16 +6,13 @@
 <style>
     .ibox.fullscreen .collapse-link {
         display: none;
-    }
-
+    } 
     .ibox-other, .ibox-residential, .ibox-NewCompany {
         display: none;
-    }
-
+    } 
     .ibox-content1, .iboxCompanyInfo {
         display: block;
-    }
-
+    } 
     .ibox {
         margin-bottom: 15px !important;
     }
@@ -90,81 +87,132 @@
                             @Html.TextBoxFor(m => m.CreatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "Request date", type = "date", id = "RequestDate" })
 
                         </div>
-                    </div> 
+                    </div>
                     <input type="hidden" value="0" id="DbAddressID" />
-                    <div class="form-group rowMobile" id="rowMobile">
-                        <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
-                        <input type="hidden" value="1" id="MobileType" class="MobileType" />
-                        <label class="col-lg-2 control-label"> Contact  </label>
+                    <div id="MobileData">
+                        @{int mobilecount = 0, emailcount = 0; }
+                        @if (Model.PersonID != 0 && Model.SaveCompanyMobile != null)
+                        {
+                            foreach (var item2 in Model.SaveCompanyMobile)
+                            {
+                                if (item2.Type != 3)
+                                {
+                                    
+                                    mobilecount = mobilecount + 1;
+                                    <div class="form-group rowMobile" id="rowMobile">
+                                        <input type="hidden" value="@item2.CompanyPhoneID" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
+                                        <input type="hidden" value="1" id="MobileType" class="MobileType" />
+                                        <label class="col-lg-2 control-label"> Contact  </label>
 
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="MobileNo" placeholder="Contact Number" class="form-control MobileNo">
+                                        <div class="col-lg-4" style="display: inline-flex;">
+                                            <input type="text" id="MobileNo" placeholder="Contact Number" value="@item2.Value" class="form-control MobileNo">
 
-                        </div>
-                        <div class="col-lg-3" style="display: inline-flex;">
-                            <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
-                                <option value="0">Work Department</option>
-                                <option value="1">HR</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2" style="display: inline-flex;">
-                            <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control MobileNoExtension">
-                        </div>
-                        <div class="col-lg-1" style="display: inline-flex;">
-                            <i class="fa fa-plus-circle addMultiMobile" aria-hidden="true" id="addMultiMobile" style="margin-left: 8px; margin-top: 9px;"></i>
-                            <i class="fa fa-minus-circle removeMultiMobile" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                            @*<i class="fas fa-minus-circle removeMultiMobile" id="removeMultiMobile"  aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>*@
-                        </div>
+                                        </div>
+                                        <div class="col-lg-3" style="display: inline-flex;">
+                                            <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                                <option value="0">Work Department</option>
+                                                <option value="1">HR</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2" style="display: inline-flex;">
+                                            <input type="text" id="MobileNoExtension" placeholder="Extension" value="@item2.Extension" class="form-control MobileNoExtension">
+                                        </div>
+                                        <div class="col-lg-1" style="display: inline-flex;">
+                                            <i class="fa fa-plus-circle addMultiMobile" aria-hidden="true" id="addMultiMobile" style="margin-left: 8px; margin-top: 9px;"></i>
+                                            <i class="fa fa-minus-circle removeMultiMobile" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    emailcount = emailcount + 1;
+
+                                    <div class="form-group rowEmail" id="rowEmail">
+                                        <input type="hidden" value="@item2.CompanyPhoneID" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
+                                        <input type="hidden" value="3" id="MobileType" class="MobileType" />
+                                        <label class="col-lg-2 control-label"> Email  </label>
+
+
+                                        <div class="col-lg-4" style="display: inline-flex;">
+                                            <input type="text" id="MobileNo" placeholder="Email" value="@item2.Value" class="form-control MobileNo">
+
+                                        </div>
+                                        <div class="col-lg-3" style="display: inline-flex;">
+                                            <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                                <option value="1">Work Department</option>
+                                                <option value="0">HR</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2" style="display: inline-flex;">
+
+                                        </div>
+                                        <div class="col-lg-1" style="display: inline-flex;">
+                                            <i class="fa fa-plus-circle addMultiEmail" aria-hidden="true" id="addMultiEmail" style="margin-left: 8px; margin-top: 9px;"></i>
+                                            <i class="fa fa-minus-circle removeMultiEmail" id="removeMultiEmail" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+
+                        }
+                        @if (mobilecount == 0)
+                        {
+                            <div class="form-group rowMobile" id="rowMobile">
+                                <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
+                                <input type="hidden" value="1" id="MobileType" class="MobileType" />
+                                <label class="col-lg-2 control-label"> Contact  </label>
+
+                                <div class="col-lg-4" style="display: inline-flex;">
+                                    <input type="text" id="MobileNo" placeholder="Contact Number" class="form-control MobileNo">
+
+                                </div>
+                                <div class="col-lg-3" style="display: inline-flex;">
+                                    <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                        <option value="0">Work Department</option>
+                                        <option value="1">HR</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2" style="display: inline-flex;">
+                                    <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control MobileNoExtension">
+                                </div>
+                                <div class="col-lg-1" style="display: inline-flex;">
+                                    <i class="fa fa-plus-circle addMultiMobile" aria-hidden="true" id="addMultiMobile" style="margin-left: 8px; margin-top: 9px;"></i>
+                                    <i class="fa fa-minus-circle removeMultiMobile" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
+                        }
+                        @if (emailcount == 0)
+                        {
+                            <div class="form-group rowEmail" id="rowEmail">
+                                <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
+                                <input type="hidden" value="3" id="MobileType" class="MobileType" />
+                                <label class="col-lg-2 control-label"> Email  </label>
+
+
+                                <div class="col-lg-4" style="display: inline-flex;">
+                                    <input type="text" id="MobileNo" placeholder="Email" class="form-control MobileNo">
+
+                                </div>
+                                <div class="col-lg-3" style="display: inline-flex;">
+                                    <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                        <option value="1">Work Department</option>
+                                        <option value="0">HR</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2" style="display: inline-flex;">
+
+                                </div>
+                                <div class="col-lg-1" style="display: inline-flex;">
+                                    <i class="fa fa-plus-circle addMultiEmail" aria-hidden="true" id="addMultiEmail" style="margin-left: 8px; margin-top: 9px;"></i>
+                                    <i class="fa fa-minus-circle removeMultiEmail" id="removeMultiEmail" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    <div class="form-group rowEmail" id="rowEmail">
-                        <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
-                        <input type="hidden" value="3" id="MobileType" class="MobileType" />
-                        <label class="col-lg-2 control-label"> Email  </label>
 
 
-                        <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="text" id="MobileNo" placeholder="Email" class="form-control MobileNo">
-
-                        </div>
-                        <div class="col-lg-3" style="display: inline-flex;">
-                            <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
-                                <option value="1">Work Department</option>
-                                <option value="0">HR</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2" style="display: inline-flex;">
-
-                        </div>
-                        <div class="col-lg-1" style="display: inline-flex;">
-                            <i class="fa fa-plus-circle addMultiEmail" aria-hidden="true" id="addMultiEmail" style="margin-left: 8px; margin-top: 9px;"></i>
-                            <i class="fa fa-minus-circle removeMultiEmail" id="removeMultiEmail" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                        </div>
-                    </div>
-
-                    @*<div class="form-group rowMobile" id="ProwMobile">
-            <div class="col-lg-2" style="display: inline-flex;">
-                <select class="form-control" id="MobileType">
-                    <option value="0">Select</option>
-                    <option value="1">Mobile</option>
-                    <option value="2">Phone</option>
-                    <option value="3">Email</option>
-                </select>
-            </div>
-            <div class="col-lg-4" style="display: inline-flex;">
-                <input type="text" id="PMobile" placeholder="Mobile Number" class="form-control">
-
-            </div>
-            <label class="col-lg-2 control-label">Type</label>
-            <div class="col-lg-4" style="display: inline-flex;">
-                <select class="form-control" id="pDepartment">
-                    <option value="1">personal </option>
-                    <option value="2">Work </option>
-                    <option value="3">residential </option>
-                </select>
-                <i class="fa fa-plus-circle" id="addMultiMobilePerson" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-            </div>
-
-        </div>*@
+                     
 
 
                     <div class="form-group">
@@ -307,6 +355,50 @@
                                     @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubPartDesignationID1", Title = "DesignationID" })
                                 </div>
                             </div>
+                            <div class="form-group rowMobileTeam" id="rowMobileTeam">
+                                <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
+                                <input type="hidden" value="1" id="MobileType" class="MobileType" />
+                                <label class="col-lg-2 control-label"> Contact  </label>
+                                <div class="col-lg-4" style="display: inline-flex;">
+                                    <input type="text" id="MobileNo" placeholder="Contact Number" class="form-control MobileNo">
+
+                                </div>
+                                <div class="col-lg-3" style="display: inline-flex;">
+                                    <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                        <option value="1">Work Department</option>
+                                        <option value="0">HR</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2" style="display: inline-flex;">
+                                    <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control MobileNoExtension">
+                                </div>
+                                <div class="col-lg-1" style="display: inline-flex;">
+                                    <i class="fa fa-plus-circle addMultiMobileTeam" aria-hidden="true" id="addMultiMobileTeam" style="margin-left: 8px; margin-top: 9px;"></i>
+                                    <i class="fa fa-minus-circle removeMultiMobileTeam" id="removeMultiMobileTeam" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group rowEmailTeam" id="rowEmailTeam">
+                                <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
+                                <input type="hidden" value="3" id="MobileType" class="MobileType" />
+                                <label class="col-lg-2 control-label"> Email  </label>
+                                <div class="col-lg-4" style="display: inline-flex;">
+                                    <input type="text" id="MobileNo" placeholder="Email" class="form-control MobileNo">
+                                </div>
+                                <div class="col-lg-3" style="display: inline-flex;">
+                                    <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                        <option value="1">Work Department</option>
+                                        <option value="0">HR</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2" style="display: inline-flex;">
+
+                                </div>
+                                <div class="col-lg-1" style="display: inline-flex;">
+                                    <i class="fa fa-plus-circle addMultiEmailTeam" aria-hidden="true" id="addMultiEmailTeam" style="margin-left: 8px; margin-top: 9px;"></i>
+                                    <i class="fa fa-minus-circle removeMultiEmailTeam" id="removeMultiEmailTeam" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -371,18 +463,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-    </div>
-    <div class="modal fade-in bs-example-modal-md" id="mdlAddCompany" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog" style="width:90%;height:600px;overflow:scroll;">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div id="CompanyInfo"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+        </div> 
+    </div> 
 </form>
 <script>
     $(document).ready(function () {
@@ -498,7 +580,6 @@
          
         $('#SubDesignationID1').change(function ()
         {
-
             $.ajax({
             url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
             contentType: "application/json",
@@ -513,51 +594,59 @@
 
             },
             error: function (data) {
-
-
+                 
             },
             complete: function () {
 
             }
 
             });
-            return true;
-
+            return true; 
         });
         $('.addMultiMobile').on("click", function (e) {
             var cloneCount = 1;
             $('#rowMobile')
                 .clone(true)
                 .attr('id', 'row' + cloneCount++, 'class', 'row rowMobilen')
-                .insertAfter('[id^=rowMobile]:last').find("input").val("");
-
+                .insertAfter('[id=rowMobile]:last').find("input").val(""); 
             return false;
         });
-        $('.addMultiEmail').on("click", function (e) {
-
+        $('.addMultiEmail').on("click", function (e) { 
             var cloneCount = 1;
             $('#rowEmail')
                 .clone(true)
                 .attr('id', 'rowEmail' + cloneCount++, 'class', 'row rowEmailn')
-                .insertAfter('[id^=rowEmail]:last').find("input").val(""); 
+                .insertAfter('[id=rowEmail]:last').find("input").val(""); 
+            return false;
+        }); 
+        $('.addMultiMobileTeam').on("click", function (e) {
+            var cloneCount = 1;
+            $('#rowMobileTeam')
+                .clone(true)
+                .attr('id', 'rowMobileTeam' + cloneCount++, 'class', 'row rowMobileTeam')
+                .insertAfter('[id=rowMobileTeam]:last').find("input").val(""); 
+                 return false;
+        });
+        $('.addMultiEmailTeam').on("click", function (e) { 
+            var cloneCount = 1;
+            $('#rowEmailTeam')
+                .clone(true)
+                .attr('id', 'rowEmailTem' + cloneCount++, 'class', 'row rowEmailTeam')
+                .insertAfter('[id=rowEmailTeam]:last').find("input").val(""); 
             return false;
         });
-        $('.removeMultiMobile').on("click", function (e) {
-
+        $('.removeMultiMobile').on("click", function (e) { 
             var MobileID = $(this).closest(".rowMobile").find("#CompanyPhoneIDValue").val();
-            if (MobileID > 0) {
-
+            if (MobileID > 0) { 
             }
             else {
                 var MobileLength = $('.rowMobile').length;
                 if (MobileLength > 1) {
                     $(this).closest(".rowMobile").remove();
                 }
-
             }
         });
-        $('.removeMultiEmail').on("click", function (e) {
-
+        $('.removeMultiEmail').on("click", function (e) { 
             var MobileID = $(this).closest(".rowEmail").find("#CompanyPhoneIDValue").val();
             if (MobileID > 0) {
 
@@ -566,51 +655,54 @@
                 var MobileLength = $('.rowEmail').length;
                 if (MobileLength > 1) {
                     $(this).closest(".rowEmail").remove();
-                }
-
+                } 
             }
         });
-        $('#btnAddNewCompany').on("click", function (e) {
+        $('.removeMultiMobileTeam').on("click", function (e) {
+            var MobileID = $(this).closest(".rowMobileTeam").find("#CompanyPhoneIDValue").val();
+            if (MobileID > 0) { 
+            }
+            else {
+                var MobileLength = $('.rowMobileTeam').length;
+                if (MobileLength > 1) {
+                    $(this).closest(".rowMobileTeam").remove();
+                }
+            }
+        });
+        $('.removeMultiEmailTeam').on("click", function (e) { 
+            var MobileID = $(this).closest(".rowEmailTeam").find("#CompanyPhoneIDValue").val();
+            if (MobileID > 0) {
 
+            }
+            else {
+                var MobileLength = $('.rowEmailTeam').length;
+                if (MobileLength > 1) {
+                    $(this).closest(".rowEmailTeam").remove();
+                } 
+            }
+        });
+        $('#btnAddNewCompany').on("click", function (e) { 
             $.ajax({
                 type: 'GET',
                 dataType: "text",
                 url: '/Master/AddCompanyInfo',
-
                 success: function (data) {
                     $('#CompanyInfo').html(data);
                     $('#mdlAddCompany').show();
-                },
-
+                }, 
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
 
                 }
             });
-        });
-         
-             
-        $('#TitleId').change(function () {
-            $('#showtitle').html($("#TitleId option:selected").text());
-                });
-                $('#DesignationID').change(function () {
-                    $('#showdesignation').html($("#DesignationID option:selected").text());
-                });
-
-                $('#shortname').keyup(function () {
-                    $('#showshortname').html($('#shortname').val());
-                });
-
-                $('#Dob').change(function () {
-                    $('#showDOB').html($("#Dob").val());
-
-        });
+        }); 
+        
         $('#addCompany').on("click", function (e) {
-             
-          
-            var CompanyID = $('#CompanyID').val();
-           // if (CompanyID == 0) {
+            debugger;
+            var PersonID = $('#PersonID').val();
+            if (PersonID == 0) {
 
-                var CompanyID_text = $("#CompanyID option:selected").text(); 
+                var CompanyID = $('#CompanyID').val();
+                var CompanyID_text = $("#CompanyID option:selected").text();
                 var DesignationId1 = $("#DesignationId1 option:selected").val();
                 var DesignationId1_text = $("#DesignationId1 option:selected").text();
                 var SubDesignationID1 = $("#SubDesignationID1 option:selected").val();
@@ -623,170 +715,264 @@
                 if (SubPartDesignationID1_text.trim() == "Select Sub Designation") {
                     SubPartDesignationID1_text = "";
                 }
-                var binding = '<div class=""><div class="MultiInternalTeam"  CompanyID="' + CompanyID + '" DesignationId1="' + DesignationId1 + '" SubDesignationID1="' + SubDesignationID1 + '" SubPartDesignationID1 ="' + SubPartDesignationID1 + '"> <span id= "ShowCompanyID" class="col-lg-12" style = "overflow-wrap:break-word;" >' + CompanyID_text + '</span>  </div> <div ><span id="showDesignationId1" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId1_text + '</span></div><div > <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div ><span id="showSubDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID1_Text + '</span> </div> <div > <span id="showSubPartDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID1_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
+                var InternalTeamCount = 1;
+                $('.MultiInternalTeam').each(function (k, v) {
+                    InternalTeamCount++;
+                });
+                var binding = '<div class=""><div class="MultiInternalTeam"  InternalTeamCount= "' + InternalTeamCount + '" CompanyID="' + CompanyID + '" DesignationId1="' + DesignationId1 + '" SubDesignationID1="' + SubDesignationID1 + '" SubPartDesignationID1 ="' + SubPartDesignationID1 + '"> <span id= "ShowCompanyID" class="col-lg-12" style = "overflow-wrap:break-word;" >' + CompanyID_text + '</span>  </div> <div ><span id="showDesignationId1" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId1_text + '</span></div><div > <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div ><span id="showSubDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID1_Text + '</span> </div> <div > <span id="showSubPartDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID1_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
 
-               // if (InternalPersonId != "" && DesignationId1 != "") {
-            $('.CompanyList').last().append(binding);
-               
-           
-                $('#Mobile').on("keypress", function (e) {
-                    if (e.keyCode == 13) {
-                        if ($('#Mobile').val().trim() != "") {
-                            $('#nocontacts').hide();
-                            $('#Conactrow').hide();
-                            var mobiletext = $('#Mobile').val();
-                            var bindrow = '<tr><td class="multimobile">' + mobiletext + '</td><td style="color: darkgray;font-size: smaller;">Mobile</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                            $('#Datails tbody').append(bindrow);
-                            $('#Mobile').val('');
-                        }
+                $('.CompanyList').last().append(binding);
+
+                //Adding multipal Mobile no into array
+
+                var idArrMobileTeam = [];
+                $('.rowMobileTeam').each(function (k, v) {
+                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                    var MobileType = 1;
+                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                    var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
+                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+                    if (MobileNo != "") {
+                        idArrMobileTeam.push(tdVals);
                     }
                 });
 
-                $('#Phone').on("keypress", function (e) {
-                    if (e.keyCode == 13) {
-                        if ($('#Phone').val().trim() != "")
-                        {
+                $('.rowEmailTeam').each(function (k, v) {
+                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                    var MobileType = 3;
+                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                    var MobileNoExtension = '';// $(this).closest("div").find("#MobileNoExtension").val();
+                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
 
-                        $('#nocontacts').hide();
-                        $('#Conactrow').hide();
-                        var Phonetext = $('#Phone').val();
-                        var bindrow = '<tr><td class="multiphone">' + Phonetext + '</td><td style="color: darkgray;font-size: smaller;">Phone</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                        $('#Datails tbody').append(bindrow);
-                        $('#Phone').val('');
-                        }
+                    if (MobileNo != "") {
+                        idArrMobileTeam.push(tdVals);
+                    }
+                });
+                var SaveMobileNoTeam = [];
+                for (var i = 0; i < idArrMobileTeam.length; i++) {
+                    var arrElement = idArrMobileTeam[i].split("~");
+                    var bindInternalTeam = '<tr><td class="AddInternalTeam" InternalTeamCountRow="' + InternalTeamCount + '" CompanyPhoneID="' + arrElement[0] + '" Value="' + arrElement[1] + '"  Type="' + arrElement[2] + '"  MobileWorkDepartmentID="' + arrElement[3] + '" MobileNoExtension="' + arrElement[4] + '"</td><td>' + arrElement[3] + '</td><td>' + arrElement[1] + '</td> <td>' + arrElement[2] + '</td><td>' + arrElement[3] + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                    $('.DivInternalTeam').last().append(bindInternalTeam);
+                }
+            }
+            else {
+                debugger;
+                var idArrMobileTeam = [];
+                $('.rowMobileTeam').each(function (k, v) {
+                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                    var MobileType = 1;
+                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                    var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
+                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+
+                    if (MobileNo != "") {
+                        idArrMobileTeam.push(tdVals);
                     }
                 });
 
-                $('#Office').on("keypress", function (e) {
-                    if (e.keyCode == 13) {
-                        if ($('#Office').val().trim() != "") {
-                            $('#nocontacts').hide();
-                            $('#Conactrow').hide();
-                            var Officetext = $('#Office').val();
-                            var bindrow = '<tr><td class="multioffice">' + Officetext + '</td><td style="color: darkgray;font-size: smaller;">Office</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                            $('#Datails tbody').append(bindrow);
-                            $('#Office').val('');
-                        }
+                $('.rowEmailTeam').each(function (k, v) {
+                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                    var MobileType = 3;
+                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                    var MobileNoExtension = '';// $(this).closest("div").find("#MobileNoExtension").val();
+                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+
+                    if (MobileNo != "") {
+                        idArrMobileTeam.push(tdVals);
                     }
                 });
+                var SaveMobileNoTeam1 = [];
+                var internalTeamid = $("#DbInternalTeamID").val();
+                for (var i = 0; i < idArrMobileTeam.length; i++) {
+                    var arrElement = idArrMobileTeam[i].split("~");
+                    item = {}
+                    item["CompanyPhoneID"] = arrElement[0];
+                    item["Value"] = arrElement[1];
+                    item["Type"] = arrElement[2];
+                    item["WorkDepartmentID"] = arrElement[3];
+                    item["Extension"] = arrElement[4];
+                    item["AddressID"] = internalTeamid;
+                    SaveMobileNoTeam1.push(item);
+                }
 
-                $('#Email').on("keypress", function (e) {
-                    if (e.keyCode == 13) {
-                        if ($('#Email').val().trim() != "") {
-                            $('#nocontacts').hide();
-                            $('#Conactrow').hide();
-                            var emailtext = $('#Email').val();
-                            var bindrow = '<tr><td class="multiemail">' + emailtext + '</td><td style="color: darkgray;font-size: smaller;">email</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                            $('#Datails tbody').append(bindrow);
-                            $('#Email').val('');
+                item["companyid"] = arrElement[0];
+                item["designationid1"] = arrElement[1];
+                item["subdesignationid1"] = arrElement[2];
+                item["subpartdesignationid1"] = arrElement[3];
+
+                var CompanyID = $("#CompanyID").val(); 
+                var DesignationId1 = $("#DesignationId1 option:selected").val();
+                var DesignationId1_text = $("#DesignationId1 option:selected").text();
+                var SubDesignationID1 = $("#SubDesignationID1 option:selected").val();
+                var SubDesignationID1_Text = $("#SubDesignationID1 option:selected").text();
+                var SubPartDesignationID1 = $("#SubPartDesignationID1 option:selected").val();
+                var SubPartDesignationID1_text = $("#SubPartDesignationID1 option:selected").text();
+                if (CompanyID == "") {
+                    return false;
+                }
+                if (DesignationId1 == "") {
+                    return false;
+                }
+                debugger;
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Master/SaveInternalTeam',
+                    data:
+                    {
+                        CompanyId: CompanyID
+                        , internalTeamid: internalTeamid
+                        , InternalPersonId: InternalPersonId
+                        , DesignationId1: DesignationId1
+                        , SubDesignationID1: SubDesignationID1
+                        , SubPartDesignationID1: SubPartDesignationID1
+                        , SaveInternalTeamMobile: SaveMobileNoTeam1
+                    },
+                    success: function (da) {
+                        if (da != "Success") {
+                            alert(da);
                         }
+                        $("select#InternalPersonId").prop('selectedIndex', 0);
+                        $("select#DesignationId1").prop('selectedIndex', 0);
+                        $("select#SubDesignationID1").prop('selectedIndex', 0);
+                        $("select#SubPartDesignationID1").prop('selectedIndex', 0);
+                        $("#MobileType").val(0);
+                        $(".MobileNo").val("");
+                        $("#MobileWorkDepartment").val(0);
+                        $("#MobileNoExtension").val("");
+
+                        if ($("#row1").length > 0) {
+                            $("#row1").remove();
+                        }
+                        if ($("#row2").length > 0) {
+                            $("#row2").remove();
+                        }
+                        if ($("#row3").length > 0) {
+                            $("#row3").remove();
+                        }
+                        if ($("#row4").length > 0) {
+                            $("#row4").remove();
+                        }
+                        if ($("#rowEmail1").length > 0) {
+                            $("#rowEmail1").remove();
+                        }
+                        if ($("#rowEmail2").length > 0) {
+                            $("#rowEmail2").remove();
+                        }
+                        if ($("#rowEmail3").length > 0) {
+                            $("#rowEmail3").remove();
+                        }
+                        if ($("#rowEmail4").length > 0) {
+                            $("#rowEmail4").remove();
+                        }
+                        $.ajax({
+                            type: 'GET',
+                            dataType: "text",
+                            url: '/Master/GetCompanyInfoLeftSide',
+                            data:
+                            {
+                                CompanyId: $('#CompanyID').val()
+                            },
+                            success: function (data) {
+                                $('#CompanyAddressOuterDiv').html(data);
+
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+
+                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
                     }
                 });
+            }
+            
+        }); 
 
-                $('#AdditionalField').on("keypress", function (e) {
-                    if (e.keyCode == 13) {
-                        if ($('#AdditionalField').val().trim() != "") {
-                            $('#nocontacts').hide();
-                            $('#Conactrow').hide();
-                            var AdditionalFieldtext = $('#AdditionalField').val();
-                            var bindrow = '<tr><td class="multiadditionalfield">' + AdditionalFieldtext + '</td><td style="color: darkgray;font-size: smaller;">Additional field</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                            $('#Datails tbody').append(bindrow);
-                            $('#AdditionalField').val('');
-                        }
-                    }
-                });
-
-                $('#Parameter').on("keypress", function (e) {
-                    if (e.keyCode == 13) {
-                        if ($('#Parameter').val().trim() != "") {
-                            $('#nocontacts').hide();
-                            $('#Conactrow').hide();
-                            var Parametertext = $('#Parameter').val();
-                            var bindrow = '<tr><td class="multiparameter">' + Parametertext + '</td><td style="color: darkgray;font-size: smaller;">Parameter</td><td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                            $('#Datails tbody').append(bindrow);
-                            $('#Parameter').val('');
-                        }
-                    }
-                });
-
-                $(document).on('click', 'i.deleterow', function (e) {
-                    e.preventDefault();
-                    $(this).parents('tr').remove();
-                });
-
+        $(document).on('click', 'i.deleterow', function (e) {
+            e.preventDefault();
+            $(this).parents('tr').remove();
+        }); 
 
         $('#RStateID').change(function ()
          {
             GetCity(); 
-        });
-          
+        }); 
 
         $('#btnsavePerson').on('click', function () {
-
+           
+            var DbAddressID = $('#DbAddressID').val();
             var idArrMobile = [];
-            $('.rowMobile').each(function (k, v) {
+            $('.rowMobile').each(function (k, v) { 
+                var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                var MobileType = 1;
+                var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
+                var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
 
-                var MobileNo = $(this).closest("div").find("#PMobile").val();
-                var MobileType = $(this).closest("div").find("#MobileType").val();
-                var Department = $(this).closest("div").find("#pDepartment option:selected").val();
-                var tdVals = MobileNo + "~" + MobileType + "~" + Department ;
-                // var tdVals = $(this).text();
-                idArrMobile.push(tdVals);
-
+                if (MobileNo != "") {
+                    idArrMobile.push(tdVals);
+                }
             });
 
-            
 
+            $('.rowEmail').each(function (k, v) {
 
-           // Adding multipal Contact No into array
-            var idArrContactPerson = [];
-            $('.multiperson').each(function (k, v) {
-                var tdVals = $(this).text();
-                idArrContactPerson.push(tdVals);
+                var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                var MobileType = 3;
+                var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                var MobileNoExtension = '';// $(this).closest("div").find("#MobileNoExtension").val();
+                var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+
+                if (MobileNo != "") {
+                    idArrMobile.push(tdVals);
+                }
             });
+           var SaveMobileNo = [];
 
-            var SaveMobilePerson = [];
             for (var i = 0; i < idArrMobile.length; i++) {
                 var arrElement = idArrMobile[i].split("~");
                 item = {}
-                item["Value"] = arrElement[0];
-                item["Type"] = arrElement[1];
-                item["DepartmentID"] = arrElement[2];
-                SaveMobilePerson.push(item);
+                item["CompanyPhoneID"] = arrElement[0];
+                item["Value"] = arrElement[1];
+                item["Type"] = arrElement[2];
+                item["WorkDepartmentID"] = arrElement[3];
+                item["Extension"] = arrElement[4];
+                item["AddressID"] = DbAddressID;
+                SaveMobileNo.push(item);
             }
 
+                 
+            
 
             
-            //Adding OfficeNo into array
-            var idArrOffice = [];
-            $('.multioffice').each(function (k, v) {
-                var tdVals = $(this).text();
-                idArrOffice.push(tdVals);
-            });
+            ////Adding OfficeNo into array
+            //var idArrOffice = [];
+            //$('.multioffice').each(function (k, v) {
+            //    var tdVals = $(this).text();
+            //    idArrOffice.push(tdVals);
+            //});
 
-            var SaveOfficeNo = [];
-            for (var i = 0; i < idArrOffice.length; i++) {
-                var arrElement = idArrOffice[i].split("~");
-                item = {}
-                item["OfficeNo"] = arrElement[0];
-                SaveOfficeNo.push(item);
-            }
+            //var SaveOfficeNo = [];
+            //for (var i = 0; i < idArrOffice.length; i++) {
+            //    var arrElement = idArrOffice[i].split("~");
+            //    item = {}
+            //    item["OfficeNo"] = arrElement[0];
+            //    SaveOfficeNo.push(item);
+            //}
 
 
-            //Adding Email into array
-            var idArrEmail = [];
-            $('.multiemail').each(function (k, v) {
-                var tdVals = $(this).text();
-                idArrEmail.push(tdVals);
-            });
-
-            var SaveEmail = [];
-            for (var i = 0; i < idArrEmail.length; i++) {
-                var arrElement = idArrEmail[i].split("~");
-                item = {}
-                item["Email"] = arrElement[0];
-                SaveEmail.push(item);
-            }
 
             //Adding AdditionFileds into array
             var idArrAdditionField = [];
@@ -819,35 +1005,11 @@
                 SaveParameter.push(item);
             }
 
-            //Adding Member into array
-            var idArrMember = [];
-            $('.multimember').each(function (k, v) {
-                var tdVals = $(this).text() + "~" + $(this).attr("id");
-                idArrMember.push(tdVals);
-            });
-
-            var SaveMemberPerson = [];
-            for (var i = 0; i < idArrMember.length; i++) {
-                var arrElement = idArrMember[i].split("~");
-                item = {}
-                item["PersonMemberID"] = arrElement[0];
-                item["DesignationId"] = arrElement[1];
-                SaveMemberPerson.push(item);
-            }
-
-            var TypeId = 0;
-
-            if ($("#memberid option:selected").val() == 2) {
-                TypeId = $("#ConsultantTypeID option:selected").val();
-            }
-            else if ($("#memberid option:selected").val() == 3) {
-                TypeId = $("#ContractorTypeId option:selected").val();
-            }
-
+            
             //Adding multipal Internal Team into array
             var idArrInternalTeam = [];
             $('.MultiInternalTeam').each(function (k, v) {
-                var tdVals = $(this).attr("companyid") + "~" + $(this).attr("designationid1") + "~" + $(this).attr("subdesignationid1") + "~" + $(this).attr("subpartdesignationid1");
+                var tdVals = $(this).attr("companyid") + "~" + $(this).attr("designationid1") + "~" + $(this).attr("subdesignationid1") + "~" + $(this).attr("subpartdesignationid1") + "~" + $(this).attr("InternalTeamCount");
                 idArrInternalTeam.push(tdVals);
             });
 
@@ -855,7 +1017,7 @@
             for (var i = 0; i < idArrInternalTeam.length; i++) {
                 var arrElement = idArrInternalTeam[i].split("~");
                 item = {} 
-                item["Listid"] = 0;
+                item["Listid"] = arrElement[4];
                 item["companyid"] = arrElement[0];
                 item["designationid1"] = arrElement[1];
                 item["subdesignationid1"] = arrElement[2];
@@ -880,6 +1042,28 @@
 
                 SaveCertification.push(item);
             }
+            //Adding multipal Internal Team into array
+            var idArrInternalTeamMobile = [];
+            $('.AddInternalTeam').each(function (k, v) {
+                var tdVals1 = $(this).attr("internalteamcountrow") + "~" + $(this).attr("companyphoneid") + "~" + $(this).attr("value") + "~" + $(this).attr("type") + "~" + $(this).attr("mobileworkdepartmentid") + "~" + $(this).attr("mobilenoextension");
+                idArrInternalTeamMobile.push(tdVals1);
+            });
+
+            var SaveInternalTeamMobile = [];
+            for (var i = 0; i < idArrInternalTeamMobile.length; i++) {
+                var arrElement = idArrInternalTeamMobile[i].split("~");
+                item = {}
+                item["Value"] = arrElement[2];
+                item["Type"] = arrElement[3];
+                item["MobileWorkDepartmentID"] = arrElement[4];
+                item["Extension"] = arrElement[5];
+                item["AddressID"] = arrElement[0];
+
+                SaveInternalTeamMobile.push(item);
+            }
+            //end internal team mobile
+            debugger;
+            
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -901,18 +1085,20 @@
                     ResidentialCityID    : $('#RCityID ').val(),
                     ResidentialZipCode   : $('#RZip').val(),
                     CreatedDate: $('#RequestDate').val(),
-                    SaveMobilePerson: SaveMobilePerson,
+                    SaveMobile: SaveMobileNo,
                     SaveAdditionalFiled: SaveAdditionalFiled,
                     SaveParameter: SaveParameter,
                     SaveCompanyList: SaveCompanyList,
-                    SaveCertification: SaveCertification
+                    SaveCertification: SaveCertification,
+                    SaveTeamMobile: SaveInternalTeamMobile 
                 },
                 success: function (da) {
                     if (da == "Success") {
-                        location.href = "PersonList";
+                      //  location.href = "PersonList";
                     }
                  },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  
                 }
             });
 
@@ -968,6 +1154,57 @@
             });
             return true;
         }
+        function GetSubDesignation() {
+          $.ajax({
+            url: "@Url.Action("BindTeamSubDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    DesignationID: $('#DesignationId1').val(),
+            }),
+            dataType: "text",
+              type: "POST",
+              async: false,
+                success: function (data) {
+                $('#SubDesignationID1').html(data);
+
+            },
+            error: function (data) {
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+        }
+        function GetSubPartDesignation() {
+
+            $.ajax({
+            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+            contentType: "application/json",
+                data: JSON.stringify({
+                    SubDesignationId: $('#SubDesignationID1').val(),
+            }),
+            dataType: "text",
+            type: "POST",
+            async: false,
+                success: function (data) {
+                $('#SubPartDesignationID1').html(data);
+
+            },
+            error: function (data) {
+
+
+            },
+            complete: function () {
+
+            }
+
+            });
+            return true;
+        }
+
     });
 
 

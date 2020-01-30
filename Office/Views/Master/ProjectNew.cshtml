@@ -38,25 +38,24 @@
 
                 <div class="ibox-content iboxCompanynfo">
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Request Date</label>
+                        <label class="col-lg-2 control-label">Enquiry Date</label>
                         <div class="col-lg-4" style="display: inline-flex;">
-                            <input type="date" id="Requestdate" placeholder="Request date" value="@Model.RequestDate" class="form-control">
+                            <input type="date" id="Enquirydate" placeholder="Enquiry date" value="@DateTime.Now" class="form-control">
                         </div>
 
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Project</label>
-                        <div class="col-lg-10">
+                        <div class="col-lg-4">
                             <input type="text" id="CompanyName" placeholder="Project Name" value="@Model.CompanyName" class="form-control">
                             @Html.HiddenFor(a => a.CompanyID, new { @id = "Project" })
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-lg-2 control-label">Short Name</label>
-                        <div class="col-lg-10">
+                        <div class="col-lg-4">
                             <input id="shortname" type="text" placeholder="Short Form" value="@Model.ShortName" class="form-control">
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Developers </label>
                         <div class="col-lg-4">
@@ -96,28 +95,28 @@
                 </div>
                 <div class="ibox-content iboxInternal">
                     <div class="Team">
-                        <div class="form-group">
-                            <div class="col-lg-12">
-                                <h3 class="help-block m-b-none">Add Team</h3>
-                                <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                       
+                        <div class="form-group entityField">
+                            <label class="col-lg-2 control-label">Company</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("internalCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "SupportCompanyID", Title = "CompanyID" })
+                            </div>
+                            <div class="col-lg-6" style="display:inline-flex;">
+                                @Html.ActionLink("Add New", "AddCompanyInfo", "Master", new { target = "_blank" })
                             </div>
                         </div>
                         <div class="form-group entityField">
-                            <label class="col-lg-2 control-label">Person</label>
-                            <input type="hidden" value="0" id="DbInternalTeamID" />
-                            <div class="col-lg-4">
-                                @Html.DropDownList("InternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "InternalPersonId", Title = "PersonId" })
-                            </div>
                             <label class="col-lg-2 control-label">Designation</label>
                             <div class="col-lg-4" style="display:inline-flex;">
                                 @Html.DropDownList("DesignationId1", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId1", Title = "DesignationID" })
                             </div>
-                        </div>
-                        <div class="form-group entityField">
                             <label class="col-lg-2 control-label">Sub Designation</label>
                             <div class="col-lg-4">
                                 @Html.DropDownList("SubdesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubDesignationID1", Title = "PersonId" })
                             </div>
+                        </div>
+                        <div class="form-group entityField">
+                           
                             <label class="col-lg-2 control-label">Sub Designation</label>
                             <div class="col-lg-4" style="display:inline-flex;">
                                 @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubPartDesignationID1", Title = "DesignationID" })

@@ -3,8 +3,8 @@
 
 @{
     Layout = null;
-} 
- 
+}
+
 <div class="row">
 
     <div class="col-lg-12">
@@ -30,143 +30,190 @@
         </table>
     </div>
 </div>
-<div class="row"> 
+<div class="row">
     <div class="col-lg-12">
         <hr style="margin-top: 11px; margin-bottom: 10px;">
-        <h5 class="help-block m-b-none">Office Address</h5> 
-    </div> 
+        <h5 class="help-block m-b-none">Office Address</h5>
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-12">
         <div class="divAddress">
-           
+
             @if (Model.CompanyID != 0)
             {
                 <hr style="margin-top: 11px; margin-bottom: 10px;">
                 <div>
                     @foreach (var item in Model.CompanyAddress)
                     {
-                        int k = 1,l=1;
-                    <div class="row">
-                        @foreach (var item1 in Model.SaveCompanyMobile)
-                        {
-                            if (item1.AddressID == item.AddressID)
+                        int k = 1, l = 1;
+                        <div class="row">
+                            @foreach (var item1 in Model.SaveCompanyMobile)
                             {
-                                if (item1.Type == 3)
+                                if (item1.AddressID == item.AddressID)
                                 {
-                                    <div>
-                                        <span class="col-lg-12 showEmailID showEmailID-@k" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
-                                            @item1.Value -
-                                            @item1.Extension - @item1.WorkDepartmentID
-                                        </span>
-                                    </div>
-                                    k++;
+                                    if (item1.Type == 3)
+                                    {
+                                        <div>
+                                            <span class="col-lg-12 showEmailID showEmailID-@k" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
+                                                @item1.Value -
+                                                @item1.Extension - @item1.WorkDepartmentID
+                                            </span>
+                                        </div>
+                                        k++;
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            <span class="col-lg-12 showMobileNo showMobileNo-@l" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
+                                                @item1.Value -
+                                                @item1.Extension - @item1.WorkDepartmentID
+                                            </span>
+                                        </div>
+                                        l++;
+                                    } 
                                 }
-                                else
-                                {
-                                    <div>
-                                        <span class="col-lg-12 showMobileNo showMobileNo-@l" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
-                                            @item1.Value -
-                                            @item1.Extension - @item1.WorkDepartmentID
-                                        </span>
-                                    </div>
-                                    l++;
-                                }
-                                 
-                            }
-                        }
+                            } 
+                            <div class=" MultiOfficeAddress" liveaddressID="@item.AddressID" ofcaddress1="@item.Address1" ofcaddress2="@item.Address2" stateid2val="@item.StateID" ofcdistrict="@item.District" cityid2val="@item.CityID" ofczip="@item.ZipCode">
+                                <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">
+                                    @item.Address1
+                                    &nbsp; &nbsp; &nbsp;
+                                    <i class="fa fa-pencil-square-o EditAddress" addressID="@item.AddressID" id="EditAddress-@item.AddressID" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;">@item.Address2</span>
+                            </div>
+                            <div>
+                                <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;">
+                                    @item.StateID
+                                    @item.District
+                                </span>
 
-                        <div class=" MultiOfficeAddress" liveaddressID="@item.AddressID" ofcaddress1="@item.Address1" ofcaddress2="@item.Address2" stateid2val="@item.StateID" ofcdistrict="@item.District" cityid2val="@item.CityID" ofczip="@item.ZipCode">
-                            <span id="showOfcaddress1" class="col-lg-12" style="overflow-wrap:break-word;">
-                                @item.Address1
-                                &nbsp; &nbsp; &nbsp;
-                                <i class="fa fa-pencil-square-o EditAddress" addressID="@item.AddressID" id="EditAddress-@item.AddressID" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-
-                            </span>
+                            </div>
+                            <div>
+                                <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;">
+                                    @item.CityID
+                                    @item.ZipCode
+                                </span> 
+                            </div>
                         </div>
-                        <div>
-                            <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;">@item.Address2</span>
-                        </div>
-                        <div>
-                            <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;">
-                                @item.StateID
-                                @item.District
-                            </span>
-
-                        </div>
-                        <div>
-                            <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;">
-                                @item.CityID
-                                @item.ZipCode
-                            </span>
-
-                        </div>
-                    </div>
                         <hr style="margin-top: 11px; margin-bottom: 10px;">
-                    }
-
-
+                    }  
                 </div>
             }
         </div>
     </div>
 </div>
-    <div class="row">
-
-        <div class="col-lg-12">
-            <h5 class="help-block m-b-none">Internal Team </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" /> 
+<div class="row"> 
+    <div class="col-lg-12">
+        <h5 class="help-block m-b-none">Internal Team </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+    </div>
+    <div class="DivInternalTeam">
+        <table id="tblInternalTeam" class="table tblInternalTeam">
+            <thead></thead>
+        </table>  
+        @foreach (var item4 in Model.SaveInternalTeam)
+        {
+            int k = 1, l = 1;
+             foreach (var item1 in Model.SaveCompanyMobile2)
+            {
+                if (item1.AddressID == item4.internalTeamid)
+                {
+                    if (item1.Type == 3)
+                    {
+                        <div>
+                            <span class="col-lg-12 showEmailID showEmailID-@k" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
+                                @item1.Value -
+                                @item1.Extension - @item1.WorkDepartmentID
+                            </span>
+                        </div>
+                        k++;
+                    }
+                    else
+                    {
+                        <div>
+                            <span class="col-lg-12 showMobileNo showMobileNo-@l" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
+                                @item1.Value -
+                                @item1.Extension - @item1.WorkDepartmentID
+                            </span>
+                        </div>
+                        l++;
+                    } 
+                }
+            } 
+        <div>
+            <span class="col-lg-12 showInternalTeam" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
+                @item4.InternalPersonName
+                @item4.DesignationidText
+                @item4.SubDesignationText
+                @item4.SubPartDesignationText
+                <i class="fa fa-pencil-square-o EditinternalTeam" internalTeamid="@item4.internalTeamid" id="EditInternalTeam-@item4.internalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+            </span>
         </div> 
-        <div class="DivInternalTeam ">
-            @foreach (var item4 in Model.SaveInternalTeam)
-            {
-                <div >
-                    <span class="col-lg-12 showInternalTeam" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
-                        @item4.InternalPersonName
-                        @item4.DesignationidText
-                        @item4.SubDesignationText
-                        @item4.SubPartDesignationText
-                        <i class="fa fa-pencil-square-o EditinternalTeam" internalTeamid="@item4.internalTeamid" id="EditInternalTeam-@item4.internalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                    </span>
-                </div>
-
-            }
-        </div>
+    }
     </div>
-    <div class="row">
-
-        <div class="col-lg-12">
-            <hr style="margin-top: 11px; margin-bottom: 10px;">
-            <h5 class="help-block m-b-none">Support Team </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-
-        </div>
-
-        <div class=" DivSupportTeam ">
-            @foreach (var item5 in Model.SaveExternalTeam)
-            {
-                <div>
-                    <span class="col-lg-12 showExternalTeam" RelationId="@item5.RelationId" CategoryId="@item5.CategoryId" SubCategoryId="@item5.SubCategoryId" ExternalPersonId="@item5.ExternalPersonId" DesignationId="@item5.DesignationId" SubDesignationId="@item5.SubDesignationId" SubpartDesignationId="@item5.SubpartDesignationId" ExternalTeamid="@item5.ExternalTeamid" style="overflow-wrap:break-word;">
-                        @item5.ExternalPersonName
-                        @item5.RelationName
-                        @item5.CategoryName
-                        @item5.SubCategoryName
-                        <br />
-                        @item5.DesignationidText
-                        @item5.SubDesignationText
-                        @item5.SubPartDesignationText
-                        <i class="fa fa-pencil-square-o EditExternalTeam" ExternalTeamid="@item5.ExternalTeamid" id="EditExternalTeam-@item5.ExternalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                    </span>
-                </div>
-
-            }
-        </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <hr style="margin-top: 11px; margin-bottom: 10px;">
+        <h5 class="help-block m-b-none">Support Team </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
     </div>
-
-    <script>
+    <div class="DivSupportTeam ">
+        <table id="tblSupportTeam" class="table tbSupportTeam">
+            <thead></thead>
+        </table>
+        @foreach (var item5 in Model.SaveExternalTeam)
+        {
+            int k = 1, l = 1;
+            foreach (var item1 in Model.SaveCompanyMobile3)
+            {
+                if (item1.AddressID == item5.ExternalTeamid)
+                {
+                    if (item1.Type == 3)
+                    {
+                        <div>
+                            <span class="col-lg-12 showEmailID showEmailID-@k" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
+                                @item1.Value -
+                                @item1.Extension - @item1.WorkDepartmentID
+                            </span>
+                        </div>
+                        k++;
+                    }
+                    else
+                    {
+                        <div>
+                            <span class="col-lg-12 showMobileNo showMobileNo-@l" MobileType="@item1.Type" MobileNo="@item1.Value" Extension="@item1.Extension" CompanyPhoneID="@item1.CompanyPhoneID" WorkDepartmentID="@item1.WorkDepartmentID" style="overflow-wrap:break-word;">
+                                @item1.Value -
+                                @item1.Extension - @item1.WorkDepartmentID
+                            </span>
+                        </div>
+                        l++;
+                    }
+                }
+            }
+            <div>
+                <span class="col-lg-12 showExternalTeam" RelationId="@item5.RelationId" CategoryId="@item5.CategoryId" SubCategoryId="@item5.SubCategoryId" ExternalPersonId="@item5.ExternalPersonId" DesignationId="@item5.DesignationId" SubDesignationId="@item5.SubDesignationId" SubpartDesignationId="@item5.SubpartDesignationId" ExternalTeamid="@item5.ExternalTeamid" ExternalCompanyID="@item5.ExternalCompanyId" style="overflow-wrap:break-word;">
+                    @item5.ExternalPersonName
+                    @item5.RelationName
+                    @item5.CategoryName
+                    @item5.SubCategoryName
+                     
+                    <br />
+                    @item5.DesignationidText
+                    @item5.SubDesignationText
+                    @item5.SubPartDesignationText
+                    <i class="fa fa-pencil-square-o EditExternalTeam" ExternalTeamid="@item5.ExternalTeamid" id="EditExternalTeam-@item5.ExternalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                </span>
+            </div>
+        }
+    </div>
+</div>
+<script>
         $(document).ready(function () {
           $('.removeMultiMobile').on("click", function (e) {
-               
               var MobileID = $(this).closest(".rowMobile").find("#CompanyPhoneIDValue").val();
               if (MobileID > 0) {
 
@@ -176,7 +223,6 @@
                   if (MobileLength > 1) {
                       $(this).closest(".rowMobile").remove();
                   }
-                 
               }
             });
             $('.removeMultiEmail').on("click", function (e) {
@@ -193,8 +239,34 @@
 
                 }
             });
+            $('.removeMultiMobileSupportTeam').on("click", function (e) {
+                var MobileID = $(this).closest(".rowMobileSupportTeam").find("#CompanyPhoneIDValue").val();
+                if (MobileID > 0) {
+
+                }
+                else {
+                    var MobileLength = $('.rowMobileSupportTeam').length;
+                    if (MobileLength > 1) {
+                        $(this).closest(".rowMobileSupportTeam").remove();
+                    }
+                }
+            });
+            $('.removeMultiEmailSupportTeam').on("click", function (e) {
+
+                var MobileID = $(this).closest(".rowEmailSupportTeam").find("#CompanyPhoneIDValue").val();
+                if (MobileID > 0) {
+
+                }
+                else {
+                    var MobileLength = $('.rowEmailSupportTeam').length;
+                    if (MobileLength > 1) {
+                        $(this).closest(".rowEmailSupportTeam").remove();
+                    }
+
+                }
+            });
         $('.EditAddress').on("click", function (e) {
-            
+
             $(".iboxOffice").show();
             $(".iboxCompanynfo").hide();
             $(".iboxInternal").hide();
@@ -238,14 +310,14 @@
                 $('#rowMobile')
                     .clone(true)
                     .attr('id', 'row' + i, 'name', 'rowMobilen')
-                    .insertAfter('[id^=rowMobile]:last').find("input[type='text']").val(""); 
-            } 
+                    .insertAfter('[id^=rowMobile]:last').find("input[type='text']").val("");
+            }
 
             var j = 1;
 
             if (MobileLength >= j) {
 
-                if (j == 1) {
+                if (j == 1 && MobileLength >= j) {
                     var MobileType = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("MobileType");
                     var MobileNo = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("MobileNo");
                     var extension = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("extension");
@@ -261,7 +333,7 @@
 
                     j++;
                 }
-                if (j == 2) {
+                if (j == 2 && MobileLength >= j) {
 
                     var MobileType = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-" + j).attr("MobileType");
                     var MobileNo = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-" + j).attr("MobileNo");
@@ -275,7 +347,7 @@
                     $("#row1").find("#MobileType").val(MobileType);
                     j++;
                 }
-                if (j == 3) {
+                if (j == 3 && MobileLength >= j) {
 
                     var MobileType = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-" + j).attr("MobileType");
                     var MobileNo = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-" + j).attr("MobileNo");
@@ -289,7 +361,7 @@
                     $("#row2").find("#MobileType").val(MobileType);
                     j++;
                 }
-                if (j == 4) {
+                if (j == 4 && MobileLength >= j) {
 
                     var MobileType = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-" + j).attr("MobileType");
                     var MobileNo = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-" + j).attr("MobileNo");
@@ -378,17 +450,17 @@
                 }
             }
         });
-        
+
         $('.EditCertification').on("click", function (e) {
             var certificationvalue = $(this).attr("certificationvalue");
             var certificationid = $(this).attr("certificationid");
             var CompanyCertificationsDetailID = $(this).attr("CompanyCertificationsDetailID");
-            
+
             $("#CertificationDetailID").val(CompanyCertificationsDetailID);
             $("#CertificationID").val(certificationid);
             $("#CertificationValue").val(certificationvalue);
         });
-        $('.EditinternalTeam').on("click", function (e) {
+            $('.EditinternalTeam').on("click", function (e) { 
             $(".iboxOffice").hide();
             $(".iboxCompanynfo").hide();
             $(".iboxInternal").show();
@@ -399,6 +471,23 @@
             $("select#SubPartDesignationID1").prop('selectedIndex', 0);
             var internalteamid = $(this).attr("internalteamid");
             $("#DbInternalTeamID").val(internalteamid);
+                $("#MobileType").val(0);
+                $("#MobileNo").val("");
+                $("#MobileWorkDepartment").val(0);
+                $("#MobileNoExtension").val("");
+
+                if ($("#row1").length > 0) {
+                    $("#row1").remove();
+                }
+                if ($("#row2").length > 0) {
+                    $("#row2").remove();
+                }
+                if ($("#row3").length > 0) {
+                    $("#row3").remove();
+                }
+                if ($("#row4").length > 0) {
+                    $("#row4").remove();
+                }
 
             var internalpersonid = $(this).closest(".showInternalTeam").attr("internalpersonid");
             var designationid1 = $(this).closest(".showInternalTeam").attr("designationid1");
@@ -414,9 +503,154 @@
             $("#SubPartDesignationID1").val(subpartdesignationid1);
 
 
+                var MobileLength = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo").length
+                for (var i = 1; i < MobileLength; i++) {
+
+                    $('#rowMobileTeam')
+                        .clone(true)
+                        .attr('id', 'row' + i, 'name', 'rowMobilen')
+                        .insertAfter('[id^=rowMobileTeam]:last').find("input[type='text']").val("");
+                }
+
+                var j = 1;
+
+                if (MobileLength >= j) {
+
+                    if (j == 1 && MobileLength >= j) {
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-1").attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-1").attr("MobileNo");
+                        var extension = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-1").attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-1").attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-1").attr("workdepartmentid");
+
+                        $("#rowMobileTeam").find("#MobileNo").val(MobileNo);
+                        $("#rowMobileTeam").find("#MobileNoExtension").val(extension);
+                        // $("#rowMobile").find("#companyphoneid").val(companyphoneid);
+                        $("#rowMobileTeam").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#rowMobileTeam").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowMobileTeam").find("#MobileType").val(MobileType);
+
+                        j++;
+                    }
+                    if (j == 2 && MobileLength >= j) {
+
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("MobileNo");
+                        var extension = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
+                        $("#row1").find("#MobileNo").val(MobileNo);
+                        $("#row1").find("#MobileNoExtension").val(extension);
+                        $("#row1").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#row1").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#row1").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 3 && MobileLength >= j) {
+
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("MobileNo");
+                        var extension = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
+                        $("#row2").find("#MobileNo").val(MobileNo);
+                        $("#row2").find("#MobileNoExtension").val(extension);
+                        $("#row2").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#row2").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#row2").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 4 && MobileLength >= j) {
+
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("MobileNo");
+                        var extension = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
+                        $("#row3").find("#MobileNo").val(MobileNo);
+                        $("#row3").find("#MobileNoExtension").val(extension);
+                        $("#row3").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#row3").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#row3").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                }
+
+                var EmailLength = $(this).closest(".DivInternalTeam").parent().find(".showEmailID").length
+                for (var i = 1; i < EmailLength; i++) {
+
+                    $('#rowEmailTeam')
+                        .clone(true)
+                        .attr('id', 'rowEmailTeam' + i, 'name', 'rowEmailn')
+                        .insertAfter('[id^=rowEmailTeam]:last').find("input[type='text']").val("");
+                }
+
+                var j = 1;
+
+                if (EmailLength >= j) {
+
+                    if (j == 1 && EmailLength >= j) {
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-1").attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-1").attr("MobileNo");
+                        var extension = '';// $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-1").attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-1").attr("workdepartmentid");
+
+                        $("#rowEmailTeam").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam").find("#MobileNoExtension").val(extension);
+                        // $("#rowMobile").find("#companyphoneid").val(companyphoneid);
+                        $("#rowEmailTeam").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#rowEmailTeam").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam").find("#MobileType").val(MobileType);
+
+                        j++;
+                    }
+                    if (j == 2 && EmailLength >= j) {
+
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("MobileNo");
+                        var extension = "";// $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                        $("#rowEmailTeam1").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam1").find("#MobileNoExtension").val(extension);
+                        $("#rowEmailTeam1").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam1").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 3 && EmailLength >= j) {
+
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("MobileNo");
+                        var extension = '';// $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                        $("#rowEmailTeam2").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam2").find("#MobileNoExtension").val(extension);
+                        $("#rowEmailTeam2").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#rowEmailTeam2").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam2").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 4 && EmailLength >= j) {
+
+                        var MobileType = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("MobileNo");
+                        var extension = "";// $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".DivInternalTeam").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                        $("#rowEmailTeam3").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam3").find("#MobileNoExtension").val(extension);
+                        $("#rowEmailTeam3").find("#companyphoneid").val(companyphoneid);
+                        $("#rowEmailTeam3").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam3").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                }
         });
 
-        $('.EditExternalTeam').on("click", function (e) {
+            $('.EditExternalTeam').on("click", function (e) {
+                debugger;
             $(".iboxOffice").hide();
             $(".iboxCompanynfo").hide();
             $(".iboxInternal").hide();
@@ -429,7 +663,36 @@
             $("select#DesignationId2").prop('selectedIndex', 0);
             $("select#SubDesignationID2").prop('selectedIndex', 0);
             $("select#SubPartDesignationID2").prop('selectedIndex', 0);
-            
+            $("#MobileType").val(0);
+            $("#MobileNo").val("");
+            $("#MobileWorkDepartment").val(0);
+            $("#MobileNoExtension").val("");
+
+            if ($("#rowMobileSupportTeam1").length > 0) {
+                $("#rowMobileSupportTeam1").remove();
+            }
+            if ($("#rowMobileSupportTeam2").length > 0) {
+                $("#rowMobileSupportTeam2").remove();
+            }
+            if ($("#rowMobileSupportTeam3").length > 0) {
+                $("#rowMobileSupportTeam3").remove();
+            }
+            if ($("#rowEmailSupportTeam4").length > 0) {
+                $("#rowEmailSupportTeam4").remove();
+            }
+            if ($("#rowEmailSupportTeam1").length > 0) {
+                $("#rowEmailSupportTeam1").remove();
+            }
+            if ($("#rowEmailSupportTeam2").length > 0) {
+                $("#rowEmailSupportTeam2").remove();
+            }
+            if ($("#rowEmailSupportTeam3").length > 0) {
+                $("#rowEmailSupportTeam3").remove();
+            }
+            if ($("#rowEmailSupportTeam4").length > 0) {
+                $("#rowEmailSupportTeam4").remove();
+            }
+
             var externalteamid = $(this).attr("externalteamid");
             $("#DbExternalTeamID").val(externalteamid);
 
@@ -441,21 +704,155 @@
             var designationid = $(this).closest(".showExternalTeam").attr("designationid");
             var subdesignationid = $(this).closest(".showExternalTeam").attr("subdesignationid");
             var subpartdesignationid = $(this).closest(".showExternalTeam").attr("subpartdesignationid");
-            
+            var ExternalCompanyID = $(this).closest(".showExternalTeam").attr("externalcompanyid");
+                
             $("#RelationID").val(relationid);
             $("#CategoryID2").val(categoryid);
             GetSupportTeamSubCategory();
             $("#SubCategoryID2").val(subcategoryid);
-          //  $("#SupportCompanyID").val(externalpersonid);
+                $("#SupportCompanyID").val(ExternalCompanyID);
             $("#SupportPersonId").val(externalpersonid);
             $("#DesignationId2").val(designationid);
             GetSupportTeamSubDesignation();
             $("#SubDesignationID2").val(subdesignationid);
             GetSupportTeamSubPartDesignation();
             $("#SubPartDesignationID2").val(subpartdesignationid);
+            
+          
+            
+            var MobileLength = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo").length
+            for (var i = 1; i < MobileLength; i++) {
+                $('#rowMobileSupportTeam')
+                    .clone(true)
+                    .attr('id', 'rowMobileSupportTeam' + i, 'name', 'rowMobilen')
+                    .insertAfter('[id=rowMobileSupportTeam]:last').find("input[type='text']").val("");
+            }
+
+            var j = 1; 
+            if (MobileLength >= j) { 
+                if (j == 1 && MobileLength >= j) {
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-1").attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-1").attr("MobileNo");
+                    var extension = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-1").attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-1").attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-1").attr("workdepartmentid");
+
+                    $("#rowMobileSupportTeam").find("#MobileNo").val(MobileNo);
+                    $("#rowMobileSupportTeam").find("#MobileNoExtension").val(extension); 
+                    $("#rowMobileSupportTeam").find("#CompanyPhoneIDValue").val(companyphoneid);
+                    $("#rowMobileSupportTeam").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowMobileSupportTeam").find("#MobileType").val(MobileType); 
+                    j++;
+                }
+                if (j == 2 && MobileLength >= j) { 
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("MobileNo");
+                    var extension = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
+                    $("#rowMobileSupportTeam1").find("#MobileNo").val(MobileNo);
+                    $("#rowMobileSupportTeam1").find("#MobileNoExtension").val(extension);
+                    $("#rowMobileSupportTeam1").find("#CompanyPhoneIDValue").val(companyphoneid);
+                    $("#rowMobileSupportTeam1").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowMobileSupportTeam1").find("#MobileType").val(MobileType);
+                    j++;
+                }
+                if (j == 3 && MobileLength >= j) { 
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("MobileNo");
+                    var extension = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
+                    $("#rowMobileSupportTeam2").find("#MobileNo").val(MobileNo);
+                    $("#rowMobileSupportTeam2").find("#MobileNoExtension").val(extension);
+                    $("#rowMobileSupportTeam2").find("#CompanyPhoneIDValue").val(companyphoneid);
+                    $("#rowMobileSupportTeam2").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowMobileSupportTeam2").find("#MobileType").val(MobileType);
+                    j++;
+                }
+                if (j == 4 && MobileLength >= j) {
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("MobileNo");
+                    var extension = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
+                    $("#rowMobileSupportTeam3").find("#MobileNo").val(MobileNo);
+                    $("#rowMobileSupportTeam3").find("#MobileNoExtension").val(extension);
+                    $("#rowMobileSupportTeam3").find("#CompanyPhoneIDValue").val(companyphoneid);
+                    $("#rowMobileSupportTeam3").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowMobileSupportTeam3").find("#MobileType").val(MobileType);
+                    j++;
+                }
+            } 
+            var EmailLength = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID").length
+            for (var i = 1; i < EmailLength; i++) {
+                $('#rowEmailSupportTeam')
+                    .clone(true)
+                    .attr('id', 'rowEmailSupportTeam' + i, 'name', 'rowEmailn')
+                    .insertAfter('[id^=rowEmailSupportTeam]:last').find("input[type='text']").val("");
+            } 
+            var j = 1; 
+            if (EmailLength >= j) {
+
+                if (j == 1 && EmailLength >= j) {
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-1").attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-1").attr("MobileNo");
+                    var extension = '';// $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo-1").attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-1").attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-1").attr("workdepartmentid");
+
+                    $("#rowEmailSupportTeam").find("#MobileNo").val(MobileNo);
+                    $("#rowEmailSupportTeam").find("#MobileNoExtension").val(extension);    
+                    $("#rowEmailSupportTeam").find("#CompanyPhoneIDValue").val(companyphoneid);
+                    $("#rowEmailSupportTeam").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowEmailSupportTeam").find("#MobileType").val(MobileType);
+                    j++;
+                }
+                if (j == 2 && EmailLength >= j) {
+
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("MobileNo");
+                    var extension = "";// $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                    $("#rowEmailSupportTeam1").find("#MobileNo").val(MobileNo);
+                    $("#rowEmailSupportTeam1").find("#MobileNoExtension").val(extension);
+                    $("#rowEmailSupportTeam1").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowEmailSupportTeam1").find("#MobileType").val(MobileType);
+                    j++;
+                }
+                if (j == 3 && EmailLength >= j) {
+
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("MobileNo");
+                    var extension = '';// $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                    $("#rowEmailSupportTeam2").find("#MobileNo").val(MobileNo);
+                    $("#rowEmailSupportTeam2").find("#MobileNoExtension").val(extension);
+                    $("#rowEmailSupportTeam2").find("#CompanyPhoneIDValue").val(companyphoneid);
+                    $("#rowEmailSupportTeam2").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowEmailSupportTeam2").find("#MobileType").val(MobileType);
+                    j++;
+                }
+                if (j == 4 && EmailLength >= j) {
+
+                    var MobileType = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("MobileType");
+                    var MobileNo = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("MobileNo");
+                    var extension = "";// $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("extension");
+                    var companyphoneid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                    var workdepartmentid = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                    $("#rowEmailSupportTeam3").find("#MobileNo").val(MobileNo);
+                    $("#rowEmailSupportTeam3").find("#MobileNoExtension").val(extension);
+                    $("#rowEmailSupportTeam3").find("#companyphoneid").val(companyphoneid);
+                    $("#rowEmailSupportTeam3").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowEmailSupportTeam3").find("#MobileType").val(MobileType);
+                    j++;
+                }
+            }
            });
     });
-        function GetSubDesignation() { 
+        function GetSubDesignation() {
           $.ajax({
             url: "@Url.Action("BindTeamSubDesignation", "Master")",
             contentType: "application/json",
@@ -469,8 +866,8 @@
                 $('#SubDesignationID1').html(data);
 
             },
-            error: function (data) { 
-                 
+            error: function (data) {
+
             },
             complete: function () {
 
@@ -518,7 +915,7 @@
                 type: "POST",
                 async: false,
                 success: function (data) {
-                
+
                     $('#SubCategoryID2').html(data);
                 },
                 error: function (data) {
@@ -584,4 +981,4 @@
         return true;
     }
 
-    </script>
+</script>

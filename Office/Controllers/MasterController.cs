@@ -1041,6 +1041,18 @@ namespace Calibration.Controllers
               ).ToList<SaveCompanyMobile>();
                 data.SaveCompanyMobile = result2;
 
+            IEnumerable<SaveCompanyMobile> resultPhone = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetTeamCompanyPhoneNo
+                @CompanyID",
+              new SqlParameter("@CompanyID", CompanyId)
+              ).ToList<SaveCompanyMobile>();
+            data.SaveCompanyMobile2 = resultPhone;
+
+            IEnumerable<SaveCompanyMobile> resultSupportTeamPhone = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetSupportTeamCompanyPhoneNo
+                @CompanyID",
+           new SqlParameter("@CompanyID", CompanyId)
+           ).ToList<SaveCompanyMobile>();
+            data.SaveCompanyMobile3 = resultSupportTeamPhone;
+
             IEnumerable<SaveCertification> result3 = _db.SaveCertification.SqlQuery(@"exec uspGetCompanyCertification
                 @CompanyID",
              new SqlParameter("@CompanyID", CompanyId)
@@ -1059,6 +1071,7 @@ namespace Calibration.Controllers
           ).ToList<SaveExternalTeam>();
             data.SaveExternalTeam = result5;
             data.CompanyID = CompanyId;
+
                 return Request.IsAjaxRequest()
                    ? (ActionResult)PartialView("PartialCompanyAddress", data)
                    : View("PartialCompanyAddress", data);
@@ -1079,9 +1092,15 @@ namespace Calibration.Controllers
 
                 IEnumerable<SaveCertificationPerson> result1 = _db.SaveCertificationPerson.SqlQuery(@"exec uspGetPersonCertification
                 @PersonID",
-           new SqlParameter("@PersonID", PersonID)
-           ).ToList<SaveCertificationPerson>();
+                   new SqlParameter("@PersonID", PersonID)
+                   ).ToList<SaveCertificationPerson>();
                 data.SaveCertificationPerson = result1;
+
+                IEnumerable<SaveCompanyMobile> resultPhone = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetTeamPersonCompanyPhoneNo
+                @PersonID",
+             new SqlParameter("@PersonID", PersonID)
+             ).ToList<SaveCompanyMobile>();
+                data.SaveCompanyMobile = resultPhone;
             }
             catch (Exception ee) { }
             return Request.IsAjaxRequest()
@@ -1178,8 +1197,14 @@ namespace Calibration.Controllers
                    @PersonID",
                 new SqlParameter("@PersonID", id)
                 ).ToList<PersonInfo>();
-                data = result.FirstOrDefault(); 
-                 
+                data = result.FirstOrDefault();
+
+                IEnumerable<SaveCompanyMobile> result2 = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetPersonPhoneNo
+                @PersonID",
+           new SqlParameter("@PersonID", id)
+           ).ToList<SaveCompanyMobile>();
+               
+                data.SaveCompanyMobile = result2;
             }
 
             return Request.IsAjaxRequest()
@@ -1316,11 +1341,45 @@ namespace Calibration.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SaveInternalTeam(int CompanyId, SaveInternalTeam InternalTeam) 
+        public ActionResult SaveInternalTeam(int CompanyId, SaveInternalTeam InternalTeam, List<SaveCompanyMobile> SaveInternalTeamMobile) 
         {
             try
             {
                 OfficeDbContext _db = new OfficeDbContext();
+
+                DataTable dtMobile = new DataTable();
+
+                dtMobile.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobile.Columns.Add("PhoneType", typeof(int));
+                dtMobile.Columns.Add("PhoneNumber", typeof(string));
+                dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobile.Columns.Add("Extension", typeof(string));
+                dtMobile.Columns.Add("AdressID", typeof(int));
+                // Adding Contact Person In DT
+                if (SaveInternalTeamMobile != null)
+                {
+                    if (SaveInternalTeamMobile.Count > 0)
+                    {
+                        foreach (var item in SaveInternalTeamMobile)
+                        {
+                            DataRow dr_Mobile = dtMobile.NewRow();
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+                            dr_Mobile["Extension"] = item.Extension;
+                            dr_Mobile["CompanyPhoneID"] = item.CompanyPhoneID == null ? 0 : item.CompanyPhoneID;
+                            dr_Mobile["AdressID"] = item.AddressID;
+                            dtMobile.Rows.Add(dr_Mobile);
+                        }
+                    }
+                } 
+
+                SqlParameter tvpParamMobile = new SqlParameter();
+                tvpParamMobile.ParameterName = "@CompanyMobileParam";
+                tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobile.Value = dtMobile;
+                tvpParamMobile.TypeName = "UTT_CompanyMobile";
+
                 var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdateInternalTeam
                  @CompanyId  
                 ,@internalTeamid   
@@ -1328,13 +1387,15 @@ namespace Calibration.Controllers
                 ,@designationid1
                 ,@subdesignationid1 
                 ,@subpartdesignationid1
+                ,@CompanyMobileParam
                 ",
                 new SqlParameter("@CompanyId", CompanyId),
                 new SqlParameter("@internalTeamid", InternalTeam.internalTeamid),
                 new SqlParameter("@internalpersonid", InternalTeam.internalpersonid),
                 new SqlParameter("@designationid1", InternalTeam.designationid1),
-                 new SqlParameter("@subdesignationid1", InternalTeam.subdesignationid1),
-                new SqlParameter("@subpartdesignationid1", InternalTeam.subpartdesignationid1));
+                new SqlParameter("@subdesignationid1", InternalTeam.subdesignationid1),
+                new SqlParameter("@subpartdesignationid1", InternalTeam.subpartdesignationid1),
+               tvpParamMobile);
 
                 return Json("Success");
 
@@ -1346,11 +1407,118 @@ namespace Calibration.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SaveCompanySupportTeam(int CompanyId, SaveExternalTeam ExternalTeam)
+        public ActionResult SavePersonCompanyTeam(int PersonId, SaveCompanyList SaveCompanyList, List<SaveCompanyMobile> SaveInternalTeamMobile)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext(); 
+                DataTable dtMobile = new DataTable();
+                DataTable dtCompanyList = new DataTable();
+                dtMobile.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobile.Columns.Add("PhoneType", typeof(int));
+                dtMobile.Columns.Add("PhoneNumber", typeof(string));
+                dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobile.Columns.Add("Extension", typeof(string));
+                dtMobile.Columns.Add("AdressID", typeof(int));
+                
+                dtCompanyList.Columns.Add("Listid", typeof(int));
+                dtCompanyList.Columns.Add("CompanyID", typeof(int));
+                dtCompanyList.Columns.Add("designationid1", typeof(int));
+                dtCompanyList.Columns.Add("subdesignationid1", typeof(int));
+                dtCompanyList.Columns.Add("subpartdesignationid1", typeof(int));
+                
+
+                // Adding Contact Person In DT
+                if (SaveInternalTeamMobile != null)
+                {
+                    if (SaveInternalTeamMobile.Count > 0)
+                    {
+                        foreach (var item in SaveInternalTeamMobile)
+                        {
+                            DataRow dr_Mobile = dtMobile.NewRow();
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+                            dr_Mobile["Extension"] = item.Extension;
+                            dr_Mobile["CompanyPhoneID"] = item.CompanyPhoneID == null ? 0 : item.CompanyPhoneID;
+                            dr_Mobile["AdressID"] = item.AddressID;
+                            dtMobile.Rows.Add(dr_Mobile);
+                        }
+                    }
+                }
+
+                SqlParameter tvpParamMobile = new SqlParameter();
+                tvpParamMobile.ParameterName = "@CompanyMobileParam";
+                tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobile.Value = dtMobile;
+                tvpParamMobile.TypeName = "UTT_CompanyMobile";
+
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdatePersonCompany
+                 @PersonID  
+                 @CompanyId  
+                ,@personCompanyid    
+                ,@designationid1
+                ,@subdesignationid1 
+                ,@subpartdesignationid1
+                ,@CompanyMobileParam
+                ",
+                new SqlParameter("@PersonID", PersonId),
+                new SqlParameter("@CompanyId", SaveCompanyList.CompanyID),
+                new SqlParameter("@personCompanyid", SaveCompanyList.Listid),
+                new SqlParameter("@designationid1", SaveCompanyList.designationid1),
+                new SqlParameter("@subdesignationid1", SaveCompanyList.subdesignationid1),
+                new SqlParameter("@subpartdesignationid1", SaveCompanyList.subpartdesignationid1),
+               tvpParamMobile);
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveCompanySupportTeam(int CompanyId, SaveExternalTeam ExternalTeam , List<SaveCompanyMobile> SaveSupportTeamMobile)
         {
             try
             {
                 OfficeDbContext _db = new OfficeDbContext();
+                DataTable dtMobile = new DataTable();
+
+                dtMobile.Columns.Add("CompanyPhoneID", typeof(string)); 
+                dtMobile.Columns.Add("PhoneType", typeof(int));
+                dtMobile.Columns.Add("PhoneNumber", typeof(string));
+                dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobile.Columns.Add("Extension", typeof(string));
+                dtMobile.Columns.Add("AdressID", typeof(int));
+                // Adding Contact Person In DT
+                if (SaveSupportTeamMobile != null)
+                {
+                    if (SaveSupportTeamMobile.Count > 0)
+                    {
+                        foreach (var item in SaveSupportTeamMobile)
+                        {
+                            DataRow dr_Mobile = dtMobile.NewRow();
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+                            dr_Mobile["Extension"] = item.Extension;
+                            dr_Mobile["CompanyPhoneID"] = item.CompanyPhoneID == null ? 0 : item.CompanyPhoneID;
+                            dr_Mobile["AdressID"] = item.AddressID;
+                            dtMobile.Rows.Add(dr_Mobile);
+                        }
+                    }
+                }
+
+                SqlParameter tvpParamMobile = new SqlParameter();
+                tvpParamMobile.ParameterName = "@CompanyMobileParam";
+                tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobile.Value = dtMobile;
+                tvpParamMobile.TypeName = "UTT_CompanyMobile";
+
                 var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdateExternalTeam
                  @CompanyId  
                 ,@CategoryID   
@@ -1361,7 +1529,8 @@ namespace Calibration.Controllers
                 ,@subpartDesignationId
                 ,@ExternalCompanyID 
                 ,@ExternalTeamID
-                ,@RelationID
+                ,@RelationID 
+                ,@CompanyMobileParam
                 ",
                 new SqlParameter("@CompanyId", CompanyId),
                 new SqlParameter("@CategoryID", ExternalTeam.CategoryId),
@@ -1372,10 +1541,9 @@ namespace Calibration.Controllers
                 new SqlParameter("@subpartDesignationId", ExternalTeam.SubpartDesignationId),
                 new SqlParameter("@ExternalCompanyID", ExternalTeam.ExternalCompanyId),
                 new SqlParameter("@ExternalTeamID", ExternalTeam.ExternalTeamid),
-                 new SqlParameter("@RelationID", ExternalTeam.RelationId)
-                
-                );
-
+                new SqlParameter("@RelationID", ExternalTeam.RelationId) ,
+                tvpParamMobile
+                ); 
                 return Json("Success");
 
             }
@@ -1386,12 +1554,14 @@ namespace Calibration.Controllers
             }
         }
         [HttpPost]
-        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile, List<SaveCompanyEmail> SaveEmail, List<CompanyAddress> SaveAddress , List<SaveInternalTeam> SaveInternalTeam, List<SaveExternalTeam> SaveExternalTeam , List<SaveCertification> SaveCertification)
+        public ActionResult SaveCompany(CompanyDetails Company,  List<SaveCompanyMobile> SaveMobile, List<SaveCompanyEmail> SaveEmail, List<CompanyAddress> SaveAddress , List<SaveInternalTeam> SaveInternalTeam, List<SaveCompanyMobile> SaveInternalTeamMobile, List<SaveExternalTeam> SaveExternalTeam , List<SaveCertification> SaveCertification ,  List<SaveCompanyMobile> SaveSupportTeamMobile)
         {
             try
             {
-                DataTable dtMobile = new DataTable();   
+                DataTable dtMobile = new DataTable();
+                DataTable dtMobileTeam = new DataTable();
                 DataTable dtEmail = new DataTable();
+                DataTable dtMobileSupportTeam = new DataTable();
                 DataTable dtAddress = new DataTable();
                 DataTable dtInternalTeam = new DataTable();
                 DataTable dtExternalTeam = new DataTable(); 
@@ -1403,12 +1573,20 @@ namespace Calibration.Controllers
                 dtMobile.Columns.Add("Extension", typeof(string));
                 dtMobile.Columns.Add("AdressID", typeof(int));
 
-                //dtEmail.Columns.Add("CompanyPhoneID", typeof(string));
-                //dtEmail.Columns.Add("PhoneType", typeof(int));
-                //dtEmail.Columns.Add("PhoneNumber", typeof(string));
-                //dtEmail.Columns.Add("WorkDepartmentID", typeof(int));
-                //dtEmail.Columns.Add("Extension", typeof(string));
-                //dtEmail.Columns.Add("AdressID", typeof(int));
+                dtMobileTeam.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobileTeam.Columns.Add("PhoneType", typeof(int));
+                dtMobileTeam.Columns.Add("PhoneNumber", typeof(string));
+                dtMobileTeam.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobileTeam.Columns.Add("Extension", typeof(string));
+                dtMobileTeam.Columns.Add("AdressID", typeof(int));
+
+                dtMobileSupportTeam.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobileSupportTeam.Columns.Add("PhoneType", typeof(int));
+                dtMobileSupportTeam.Columns.Add("PhoneNumber", typeof(string));
+                dtMobileSupportTeam.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobileSupportTeam.Columns.Add("Extension", typeof(string));
+                dtMobileSupportTeam.Columns.Add("AdressID", typeof(int));
+
 
                 dtAddress.Columns.Add("AddressID", typeof(int));
                 dtAddress.Columns.Add("AddressType", typeof(string));
@@ -1425,10 +1603,8 @@ namespace Calibration.Controllers
                 dtInternalTeam.Columns.Add("designationid1", typeof(int));
                 dtInternalTeam.Columns.Add("subdesignationid1", typeof(int));
                 dtInternalTeam.Columns.Add("subpartdesignationid1", typeof(int));
-
-              
+                 
                 dtExternalTeam.Columns.Add("ExternalTeamid", typeof(int));
-              
                 dtExternalTeam.Columns.Add("RelationId", typeof(int));
                 dtExternalTeam.Columns.Add("CategoryId", typeof(int));
                 dtExternalTeam.Columns.Add("SubCategoryId", typeof(int));
@@ -1455,8 +1631,7 @@ namespace Calibration.Controllers
                             dtCertificaton.Rows.Add(dr_Certification);
                         }
                     }
-                }
-                 
+                } 
                 // Adding Contact Person In DT
                 if (SaveMobile != null)
                 {
@@ -1484,24 +1659,57 @@ namespace Calibration.Controllers
                     }
                 }
 
-                // Adding Contact Person In DT
-                //if (SaveEmail != null)
-                //{
-                //    if (SaveEmail.Count > 0)
-                //    {
-                //        foreach (var item in SaveEmail)
-                //        {
-                //            DataRow dr_Email = dtEmail.NewRow();
-                //            dr_Email["PhoneNumber"] = item.Value;
-                //            dr_Email["PhoneType"] = item.Type;
-                //            dr_Email["WorkDepartmentID"] = item.WorkDepartmentID;
-                //            dr_Email["AdressID"] = item.AddressID;
-                //            dr_Email["Extension"] = "";
-                //            dtEmail.Rows.Add(dr_Email);
-                //        }
-                //    }
-                //}
+                if (SaveInternalTeamMobile != null)
+                {
+                    if (SaveInternalTeamMobile.Count > 0)
+                    {
+                        foreach (var item in SaveInternalTeamMobile)
+                        {
+                            DataRow dr_Mobile = dtMobileTeam.NewRow();
+                            if (item.Type == 3)
+                            {
+                                dr_Mobile["Extension"] = "";
+                            }
+                            else
+                            {
+                                dr_Mobile["Extension"] = item.Extension;
+                            }
 
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+
+                            dr_Mobile["AdressID"] = item.AddressID;
+                            dtMobileTeam.Rows.Add(dr_Mobile);
+                        }
+                    }
+                }
+
+                if (SaveSupportTeamMobile != null)
+                {
+                    if (SaveSupportTeamMobile.Count > 0)
+                    {
+                        foreach (var item in SaveSupportTeamMobile)
+                        {
+                            DataRow dr_Mobile = dtMobileSupportTeam.NewRow();
+                            if (item.Type == 3)
+                            {
+                                dr_Mobile["Extension"] = "";
+                            }
+                            else
+                            {
+                                dr_Mobile["Extension"] = item.Extension;
+                            }
+
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+
+                            dr_Mobile["AdressID"] = item.AddressID;
+                            dtMobileSupportTeam.Rows.Add(dr_Mobile);
+                        }
+                    }
+                }
                 if (SaveAddress != null)
                 {
                     if (SaveAddress.Count > 0)
@@ -1522,8 +1730,7 @@ namespace Calibration.Controllers
                             dtAddress.Rows.Add(dr_SaveAddress);
                         }
                     }
-                }
-
+                } 
                 if (SaveInternalTeam != null)
                 {
                     if (SaveInternalTeam.Count > 0)
@@ -1567,11 +1774,17 @@ namespace Calibration.Controllers
                 tvpParamMobile.Value = dtMobile;
                 tvpParamMobile.TypeName = "UTT_CompanyMobile";
 
-                //SqlParameter tvpParamEmail = new SqlParameter();
-                //tvpParamEmail.ParameterName = "@CompanyMobileParam";
-                //tvpParamEmail.SqlDbType = System.Data.SqlDbType.Structured;
-                //tvpParamEmail.Value = dtEmail;
-                //tvpParamEmail.TypeName = "UTT_CompanyMobile";
+                SqlParameter tvpParamMobileTeam = new SqlParameter();
+                tvpParamMobileTeam.ParameterName = "@CompanyMobileParamTeam";
+                tvpParamMobileTeam.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobileTeam.Value = dtMobileTeam;
+                tvpParamMobileTeam.TypeName = "UTT_CompanyMobile";
+
+                SqlParameter tvpParamMobileSupportTeam = new SqlParameter();
+                tvpParamMobileSupportTeam.ParameterName = "@CompanyMobileParamSupportTeam";
+                tvpParamMobileSupportTeam.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobileSupportTeam.Value = dtMobileSupportTeam;
+                tvpParamMobileSupportTeam.TypeName = "UTT_CompanyMobile";
 
                 SqlParameter tvpParamAddress = new SqlParameter();
                 tvpParamAddress.ParameterName = "@CompanyAddressParam";
@@ -1615,6 +1828,8 @@ namespace Calibration.Controllers
                 ,@InternalTeamParam
                 ,@ExternalTeamParam
                 ,@CompanyCertificationParam
+                ,@CompanyMobileParamTeam 
+                ,@CompanyMobileParamSupportTeam 
                 ",
                 new SqlParameter("@CompanyID", Company.CompanyID),
                 new SqlParameter("@CompanyName", Company.CompanyName), 
@@ -1630,12 +1845,12 @@ namespace Calibration.Controllers
                 , tvpParamMobile 
                 , tvpParamAddress 
                 , tvpParamInternalTeam
-                ,tvpParamExternalTeam,
-                tvpParamCertification
+                ,tvpParamExternalTeam
+                ,tvpParamCertification
+                , tvpParamMobileTeam
+                 , tvpParamMobileSupportTeam
                 );
-
                 return Json("Success");
-
             }
             catch (Exception ex)
             { 
@@ -1644,23 +1859,33 @@ namespace Calibration.Controllers
             }
         }
         
-            [HttpPost]
-        public ActionResult SavePersonInfo(PersonInfo Mem, List<SaveMobilePerson> SaveMobilePerson, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter, List<SaveCompanyList> SaveCompanyList, List<SaveCertificationPerson> SaveCertification)
+        [HttpPost]
+        public ActionResult SavePersonInfo(PersonInfo Mem, List<SaveCompanyMobile> SaveMobile, List<SaveAdditionalFiled> SaveAdditionalFiled, List<SaveParameter> SaveParameter, List<SaveCompanyList> SaveCompanyList, List<SaveCertificationPerson> SaveCertification , List<SaveCompanyMobile> SaveTeamMobile)
         {
             try
             { 
                  
                 DataTable dtMobile = new DataTable();
-                
+                DataTable dtMobileTeam = new DataTable();
                 DataTable dtAdditionalFiled = new DataTable();
                 DataTable dtParameter = new DataTable();
                 DataTable dtMemberPerson = new DataTable();
                 DataTable dtCompanyList = new DataTable();
                 DataTable dtCertificaton = new DataTable();
-                dtMobile.Columns.Add("id", typeof(int));
-                dtMobile.Columns.Add("Type", typeof(string));
-                dtMobile.Columns.Add("Value", typeof(string));
-                dtMobile.Columns.Add("DepartmentID", typeof(string));
+                dtMobile.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobile.Columns.Add("PhoneType", typeof(int));
+                dtMobile.Columns.Add("PhoneNumber", typeof(string));
+                dtMobile.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobile.Columns.Add("Extension", typeof(string));
+                dtMobile.Columns.Add("AdressID", typeof(int));
+
+                dtMobileTeam.Columns.Add("CompanyPhoneID", typeof(string));
+                dtMobileTeam.Columns.Add("PhoneType", typeof(int));
+                dtMobileTeam.Columns.Add("PhoneNumber", typeof(string));
+                dtMobileTeam.Columns.Add("WorkDepartmentID", typeof(int));
+                dtMobileTeam.Columns.Add("Extension", typeof(string));
+                dtMobileTeam.Columns.Add("AdressID", typeof(int));
+
                 dtAdditionalFiled.Columns.Add("AdditionlField", typeof(string));
                 dtParameter.Columns.Add("Parameter", typeof(string));
                 dtMemberPerson.Columns.Add("PersonMemberID", typeof(int));
@@ -1676,22 +1901,66 @@ namespace Calibration.Controllers
                 dtCertificaton.Columns.Add("PersonCertificationsDetailID", typeof(int));
                 dtCertificaton.Columns.Add("CertificationID", typeof(int));
                 dtCertificaton.Columns.Add("Value", typeof(string));
-                // Adding Contact Person In DT
-                if (SaveMobilePerson != null)
+
+
+                if (SaveMobile != null)
                 {
-                    if (SaveMobilePerson.Count > 0)
+                    if (SaveMobile.Count > 0)
                     {
-                        foreach (var item in SaveMobilePerson)
+                        foreach (var item in SaveMobile)
                         {
                             DataRow dr_Mobile = dtMobile.NewRow();
-                            dr_Mobile["id"] = 0;
-                            dr_Mobile["Type"] = item.Type;
-                            dr_Mobile["Value"] = item.Value;
-                            dr_Mobile["DepartmentID"] = item.DepartmentID;
+                            if (item.Type == 3)
+                            {
+                                dr_Mobile["Extension"] = "";
+                            }
+                            else
+                            {
+                                dr_Mobile["Extension"] = item.Extension;
+                            }
+                            if(item.CompanyPhoneID==null)
+                            {
+                                dr_Mobile["CompanyPhoneID"] = 0;
+                            }
+                            else
+                            {
+                                dr_Mobile["CompanyPhoneID"] = item.CompanyPhoneID;
+                            }
+                            
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+
+                            dr_Mobile["AdressID"] = item.AddressID;
                             dtMobile.Rows.Add(dr_Mobile);
                         }
                     }
-                } 
+                }
+                if (SaveTeamMobile != null)
+                {
+                    if (SaveTeamMobile.Count > 0)
+                    {
+                        foreach (var item in SaveTeamMobile)
+                        {
+                            DataRow dr_Mobile = dtMobileTeam.NewRow();
+                            if (item.Type == 3)
+                            {
+                                dr_Mobile["Extension"] = "";
+                            }
+                            else
+                            {
+                                dr_Mobile["Extension"] = item.Extension;
+                            }
+
+                            dr_Mobile["PhoneNumber"] = item.Value;
+                            dr_Mobile["PhoneType"] = item.Type;
+                            dr_Mobile["WorkDepartmentID"] = item.WorkDepartmentID;
+
+                            dr_Mobile["AdressID"] = item.AddressID;
+                            dtMobileTeam.Rows.Add(dr_Mobile);
+                        }
+                    }
+                }
 
                 // Adding Additional Field In DT
                 if (SaveAdditionalFiled != null)
@@ -1740,11 +2009,17 @@ namespace Calibration.Controllers
                 }
 
                 SqlParameter tvpParamMobile = new SqlParameter();
-                tvpParamMobile.ParameterName = "@MemberMobileParam";
+                tvpParamMobile.ParameterName = "@PersonMobileParam";
                 tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
                 tvpParamMobile.Value = dtMobile;
-                tvpParamMobile.TypeName = "UTT_PersonMobile";
-                  
+                tvpParamMobile.TypeName = "UTT_CompanyMobile";
+
+                SqlParameter tvpParamMobileTeam = new SqlParameter();
+                tvpParamMobileTeam.ParameterName = "@PersonMobileParamTeam";
+                tvpParamMobileTeam.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobileTeam.Value = dtMobileTeam;
+                tvpParamMobileTeam.TypeName = "UTT_CompanyMobile"; 
+
                 SqlParameter tvpParamAdditionalFeild = new SqlParameter();
                 tvpParamAdditionalFeild.ParameterName = "@MemberAdditionalFeildParam ";
                 tvpParamAdditionalFeild.SqlDbType = System.Data.SqlDbType.Structured;
@@ -1787,11 +2062,13 @@ namespace Calibration.Controllers
                 ,@BirthDate
                 ,@CreatedBy
                 ,@CreatedDate
-                ,@MemberMobileParam  
+                ,@PersonMobileParam  
                 ,@MemberAdditionalFeildParam
                 ,@MemberParameterParam
-                 ,@MemberParameterCompanyList
-                 ,@CompanyCertificationParam
+                ,@MemberParameterCompanyList
+                ,@CompanyCertificationParam
+                ,@PersonMobileParamTeam  
+
               ",
                 new SqlParameter("@PersonId", Mem.PersonID == null ? 0 : Mem.PersonID), 
                 new SqlParameter("@TitleID", Mem.TitleID),
@@ -1809,11 +2086,12 @@ namespace Calibration.Controllers
                 new SqlParameter("@BirthDate", Mem.BirthDate == null ? (object)DBNull.Value : Mem.BirthDate), 
                 new SqlParameter("@CreatedBy", 1),
                 new SqlParameter("@CreatedDate", Mem.CreatedDate == null ? (object)DBNull.Value : Mem.CreatedDate)
-                , tvpParamMobile 
+                , tvpParamMobile
                 , tvpParamAdditionalFeild
                 , tvpParamParameter
                , tvpParamCompanyList
                ,tvpParamCertification
+               , tvpParamMobileTeam
                 );
 
                 return Json("Success");
