@@ -88,6 +88,8 @@ namespace office.Models
         public DbSet<CompanyDetails> CompanyDetails { get; set; }
         public DbSet<CompanyAddress> CompanyAddress { get; set; }
         public DbSet<SaveCompanyMobile> SaveCompanyMobile { get; set; }
+        public DbSet<SaveSocialLink> SaveSocialLink { get; set; }
+        
         public DbSet<SaveMobile> SaveMobile { get; set; }
         public DbSet<SaveEmail> SaveEmail { get; set; }
         public DbSet<SaveCertification> SaveCertification { get; set; }
@@ -105,7 +107,10 @@ namespace office.Models
         public DbSet<TeamSubDesignationList> TeamSubDesignationList { get; set; }
         public DbSet<TeamSubSubDesignation> TeamSubSubDesignation { get; set; }
         public DbSet<TeamSubSubDesignationList> TeamSubSubDesignationList { get; set; }
-        public DbSet<SaveCompanyList> SaveCompanyList { get; set; }
+        public DbSet<SaveCompanyList> SaveCompanyList { get; set; } 
+        public DbSet<nProjectDetail> nProjectDetail { get; set; }
+        public DbSet<SaveProjectInternalTeam> SaveProjectInternalTeam { get; set; }
+        public DbSet<SaveProjectExternalTeam> SaveProjectExternalTeam { get; set; }
     }
      
 }

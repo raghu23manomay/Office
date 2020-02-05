@@ -1,11 +1,18 @@
 ﻿
 @{
+    /**/
+
 
     Layout = null;
 }
 @if (ViewBag.value == 1)
 {
     @Html.DropDownList("SubdesignationID", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Sub Designation ", new { @class = "form-control", @id = "SubDesignationID1", Title = "SubdesignationID" })
+
+}
+else if (ViewBag.value == 3)
+{
+    @Html.DropDownList("SubdesignationID", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Sub Designation ", new { @class = "form-control", @id = "SubDesignationID3", Title = "SubdesignationID" })
 
 }
 else

@@ -1,0 +1,10 @@
+﻿
+
+
+@{
+
+    Layout = null;
+}
+
+
+@Html.DropDownList("ExternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["ExternalTeamUnderCompany"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "ExternalPersonId", Title = "PersonId" })

@@ -23,15 +23,10 @@
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-down"></i>
-                        </a> 
-                         
+                        </a>  
                     </div>
-                </div>
-
-
-
-                <div class="ibox-content iboxCompanynfo">
-
+                </div> 
+                <div class="ibox-content iboxCompanynfo"> 
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Company</label>
                         <div class="col-lg-10">
@@ -73,7 +68,6 @@
                                 <button id="addMultiCertification" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
                                     Add <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </button>
-                                @*<i class="fa fa-plus-circle" id="addMultiCertification" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>*@
                             </div>
                         </div>
                     </div>
@@ -90,7 +84,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Request Date</label>
                         <div class="col-lg-4" style="display: inline-flex;">
@@ -100,10 +93,8 @@
                         <label class="col-lg-2 control-label">Inception Date</label>
                         <div class="col-lg-4">
                             @Html.TextBoxFor(m => m.InceptionDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "Date Of Inception", type = "date", id = "InceptionDate" })
-                           @* <input type="date" id="InceptionDate" value="@Model.InceptionDate" placeholder="Date Of Inception" class="form-control">*@
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="ibox float-e-margins" >
@@ -367,11 +358,20 @@
                             <div class="col-lg-4">
                                 @Html.DropDownList("SupportCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "SupportCompanyID", Title = "CompanyID" })
                             </div>
-                            <div class="col-lg-4" style="display:inline-flex;">
+                            <div class="col-lg-1" style="display:inline-flex;">
                                 <button id="ReloadCompany" class="btn btn-primary pull-left" type="button">
                                     Reload
-                                </button>   <a class="btn btn-primary" href="AddCompanyInfo?id=0&&i=1" target="_blank"> New</a>
+                                </button>
                             </div>
+                            <div class="col-lg-1" style="padding-left:40px;">
+                                <a class="btn btn-primary" href="AddCompanyInfo?id=0&&i=1" target="_blank"> New</a>
+                            </div>  
+                            <div class="col-lg-1" style="display:inline-flex;padding-left:45px;">
+                                <button id="AddSupportPartial" class="btn btn-primary pull-left" type="button">
+                                    Add  <i class="fa fa-plus-circle " aria-hidden="true" ></i>
+                                </button>
+                            </div>
+                           
                         </div>
                         <div class="form-group entityField">
                             <label class="col-lg-2 control-label">Person</label>
@@ -630,8 +630,8 @@
 
         });
         $('.addMultiMobile').on("click", function (e) {
-            debugger;
-            var cloneCount = 1; 
+            
+          var cloneCount = 1; 
         $('#rowMobile')
                 .clone(true)
             .attr('id', 'row' + cloneCount++, 'class', 'row rowMobilen')
@@ -930,193 +930,18 @@
                 });
             }
         });
+        
+        $('#AddSupportPartial').on("click", function (e) {
+            saveSupportTeam();
+           
+        });
         $('#AddSupportTeamCompany').on("click", function (e) {
-            $('.iboxexternal').show();               
-            var CompanyID = $('#CompanyID').val();
-            var SupportCompanyID = $("#SupportCompanyID").val();
-            var SupportPersonId = $("#SupportPersonId").val();
-            var SupportCompanyName = $("#SupportCompanyID option:selected").text();
-            var SupportPersonName = $("#SupportPersonId option:selected").text();
-            var DesignationId2 = $("#DesignationId2 option:selected").val();
-            var DesignationId2_text = $("#DesignationId2 option:selected").text();
-            var SubDesignationID2 = $("#SubDesignationID2 option:selected").val();
-            var SubDesignationID2_Text = $("#SubDesignationID2 option:selected").text();
-            var SubPartDesignationID2 = $("#SubPartDesignationID2 option:selected").val();
-            var SubPartDesignationID2_text = $("#SubPartDesignationID2 option:selected").text();
-            if (SubPartDesignationID2_text.trim() == "Select Sub Designation") {
-                SubPartDesignationID2_text = "";
-            }
-            if (SubDesignationID2_Text.trim() == "Select Sub Designation") {
-                SubDesignationID2_Text = "";
-            }
-
-            var RelationID = $("#RelationID").val();
-            var CategoryID2 = $("#CategoryID2").val();
-            var SubCategoryID2 = $("#SubCategoryID2").val();
-
-            var RelationName = $("#RelationID option:selected").text();
-            var CategoryID2Name = $("#CategoryID2 option:selected").text();
-            var SubCategoryID2Name = $("#SubCategoryID2 option:selected").text();
-            if (SubCategoryID2Name.trim() == "SubCategoryID") { SubCategoryID2Name = "";}
-            if (CompanyID == 0) {
-                if (RelationID == "") {
-                    return false;
-                }
-                var SupportTeamCount = 1;
-                $('.MultiSupportTeam').each(function (k, v) {
-                    SupportTeamCount++;
-                });
-
-               // var binding = '<div ><div  MultiExternalTeam" RelationID ="' + RelationID + '" CategoryID2 ="' + CategoryID2 + '" SubCategoryID2 ="' + SubCategoryID2 + '"SupportCompanyID ="' + SupportCompanyID + '"SupportPersonId="' + SupportPersonId + '" DesignationId2="' + DesignationId2 + '" SubDesignationID2="' + SubDesignationID2 + '" SubPartDesignationID2 =' + SubPartDesignationID2 + '> <span id= "ShowSupportPersonName" class="col-lg-12" style = "overflow-wrap:break-word;" >' + SupportPersonName + '</span>  </div><div ><span id="showRelationName" class="col-lg-12" style="overflow-wrap:break-word;">' + RelationName + '</span></div> <div><span id="showCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + CategoryID2Name + '</span></div><div><span id="showSubCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + SubCategoryID2Name + '</span></div><div><span id="showCompanyName" class="col-lg-12" style="overflow-wrap:break-word;">' + SupportCompanyName + '</span></div> <div><span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId2_text + '</span></div> <div ><span id="showSubDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID2_Text + '</span> </div> <div> <span id="showSubPartDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID2_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
-                var binding = '<div ><div  class="MultiExternalTeam" RelationID ="' + RelationID + '" CategoryID2 ="' + CategoryID2 + '" SubCategoryID2 ="' + SubCategoryID2 + '"SupportCompanyID ="' + SupportCompanyID + '"SupportPersonId="' + SupportPersonId + '" DesignationId2="' + DesignationId2 + '" SubDesignationID2="' + SubDesignationID2 + '" SubPartDesignationID2 ="' + SubPartDesignationID2 + '"  SupportTeamCount ="' + SupportTeamCount + '"> <span id= "ShowSupportPersonName" class="col-lg-12" style = "overflow-wrap:break-word;" >' + SupportPersonName + '</span>  </div><div ><span id="showRelationName" class="col-lg-12" style="overflow-wrap:break-word;">' + RelationName + '</span></div> <div><span id="showCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + CategoryID2Name + '</span></div><div><span id="showSubCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + SubCategoryID2Name + '</span></div><div><span id="showCompanyName" class="col-lg-12" style="overflow-wrap:break-word;">' + SupportCompanyName + '</span></div> <div><span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId2_text + '</span></div> <div ><span id="showSubDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID2_Text + '</span> </div> <div> <span id="showSubPartDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID2_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
-                $('.DivSupportTeam').last().append(binding);
-              
-                var idArrMobileSupportTeam = [];
-                $('.rowMobileSupportTeam').each(function (k, v) {
-                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
-                    var MobileType = 1;
-                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
-                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
-                    var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
-                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
-                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
-
-                    if (MobileNo != "") {
-                        idArrMobileSupportTeam.push(tdVals);
-                    }
-                });
-
-                $('.rowEmailSupportTeam').each(function (k, v) {
-                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
-                    var MobileType = 3;
-                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
-                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
-                    var MobileNoExtension = '';// $(this).closest("div").find("#MobileNoExtension").val();
-                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
-                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
-
-                    if (MobileNo != "") {
-                        idArrMobileSupportTeam.push(tdVals);
-                    }
-                });
-                var SaveMobileNoTeam = [];
-
-                for (var i = 0; i < idArrMobileSupportTeam.length; i++) {
-                    var arrElement = idArrMobileSupportTeam[i].split("~");
-                    var bindInternalTeam = '<tr><td class="AddSupportTeam" InternalTeamCountRow="' + SupportTeamCount + '" CompanyPhoneID="' + arrElement[0] + '" Value="' + arrElement[1] + '"  Type="' + arrElement[2] + '"  MobileWorkDepartmentID="' + arrElement[3] + '" MobileNoExtension="' + arrElement[4] + '"</td><td>' + arrElement[3] + '</td><td>' + arrElement[1] + '</td> <td>' + arrElement[2] + '</td><td>' + arrElement[3] + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                    $('.DivSupportTeam').last().append(bindInternalTeam);
-
-                }
-
-            }
-            else {
-                var idArrMobileTeam = [];
-                $('.rowMobileSupportTeam').each(function (k, v) {
-                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
-                    var MobileType = 1;
-                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
-                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
-                    var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
-                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
-                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
-
-                    if (MobileNo != "") {
-                        idArrMobileTeam.push(tdVals);
-                    }
-                });
-
-                $('.rowEmailSupportTeam').each(function (k, v) {
-                    var MobileNo = $(this).closest("div").find("#MobileNo").val();
-                    var MobileType = 3;
-                    var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
-                    var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
-                    var MobileNoExtension = '';// $(this).closest("div").find("#MobileNoExtension").val();
-                    var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
-                    var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
-
-                    if (MobileNo != "") {
-                        idArrMobileTeam.push(tdVals);
-                    }
-                });
-                var SaveMobileNoTeam1 = [];
-                var ExternalTeamID = $("#DbExternalTeamID").val();
-                for (var i = 0; i < idArrMobileTeam.length; i++) {
-                    var arrElement = idArrMobileTeam[i].split("~");
-                    item = {}
-                    item["CompanyPhoneID"] = arrElement[0];
-                    item["Value"] = arrElement[1];
-                    item["Type"] = arrElement[2];
-                    item["WorkDepartmentID"] = arrElement[3];
-                    item["Extension"] = arrElement[4];
-                    item["AddressID"] = ExternalTeamID;
-                    SaveMobileNoTeam1.push(item);
-                }
-
-                if (RelationID == "") {
-                    return false;
-                }
-                if (SupportPersonId == "") {
-                    return false;
-                }
-                
-                var ExternalTeamID = $("#DbExternalTeamID").val();
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'json',
-                    url: '/Master/SaveCompanySupportTeam',
-                    data:
-                    {
-                          CompanyId: CompanyID
-                        , ExternalPersonId: SupportPersonId
-                        , ExternalTeamid: ExternalTeamID
-                        , RelationId: RelationID
-                        , CategoryId: CategoryID2
-                        , SubCategoryId: SubCategoryID2
-                        , ExternalCompanyId: SupportCompanyID
-                        , DesignationId: DesignationId2
-                        , SubDesignationId: SubDesignationID2
-                        , SubpartDesignationId: SubPartDesignationID2
-                        , SaveSupportTeamMobile: SaveMobileNoTeam1
-                       },
-                    success: function (da) {
-                        if (da != "Success") {
-                            alert(da);
-                        }
-                        $("select#RelationID").prop('selectedIndex', 0);
-                        $("select#CategoryID2").prop('selectedIndex', 0);
-                        $("select#SubCategoryID").prop('selectedIndex', 0);
-                        $("select#SubCategoryID2").prop('selectedIndex', 0);
-                        $("select#SupportCompanyID").prop('selectedIndex', 0);
-                        $("select#SupportPersonId").prop('selectedIndex', 0);
-                        $("select#DesignationId2").prop('selectedIndex', 0);
-                        $("select#SubDesignationID2").prop('selectedIndex', 0);
-                        $("select#SubPartDesignationID2").prop('selectedIndex', 0);
-
-                        $("#MobileType").val(0);
-                        $(".MobileNo").val("");
-                        $(".MobileWorkDepartment").prop('selectedIndex', 0);
-                        $(".MobileNoExtension").val("");
-
-                        $.ajax({
-                            type: 'GET',
-                            dataType: "text",
-                            url: '/Master/GetCompanyInfoLeftSide',
-                            data:
-                            {
-                                CompanyId: $('#CompanyID').val()
-                            },
-                            success: function (data) { 
-                                $('#CompanyAddressOuterDiv').html(data);  
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            }
-                        });
-
-                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    }
-
-                });
-            }
+            saveSupportTeam();
+            $("select#RelationID").prop('selectedIndex', 0);
+            $("select#CategoryID2").prop('selectedIndex', 0);
+            $("select#SubCategoryID").prop('selectedIndex', 0);
+            $("select#SubCategoryID2").prop('selectedIndex', 0);
+            $("select#SupportCompanyID").prop('selectedIndex', 0);
         });
 
         $('.EditAddress').on("click", function (e) {
@@ -1874,7 +1699,7 @@
                 success: function (da) {
                     
                     if (da == "Success") {
-                   //     location.href = "CompanyList";
+                       location.href = "CompanyList";
                     }
                  },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1960,5 +1785,199 @@
 
             });
             return true;
+    }
+    function saveSupportTeam() {
+        $('.iboxexternal').show();
+        var CompanyID = $('#CompanyID').val();
+        var SupportCompanyID = $("#SupportCompanyID").val();
+        var SupportPersonId = $("#SupportPersonId").val();
+        var SupportCompanyName = $("#SupportCompanyID option:selected").text();
+        var SupportPersonName = $("#SupportPersonId option:selected").text();
+        var DesignationId2 = $("#DesignationId2 option:selected").val();
+        var DesignationId2_text = $("#DesignationId2 option:selected").text();
+        var SubDesignationID2 = $("#SubDesignationID2 option:selected").val();
+        var SubDesignationID2_Text = $("#SubDesignationID2 option:selected").text();
+        var SubPartDesignationID2 = $("#SubPartDesignationID2 option:selected").val();
+        var SubPartDesignationID2_text = $("#SubPartDesignationID2 option:selected").text();
+        if (SubPartDesignationID2_text.trim() == "Select Sub Designation") {
+            SubPartDesignationID2_text = "";
         }
+        if (SubDesignationID2_Text.trim() == "Select Sub Designation") {
+            SubDesignationID2_Text = "";
+        }
+
+        var RelationID = $("#RelationID").val();
+        var CategoryID2 = $("#CategoryID2").val();
+        var SubCategoryID2 = $("#SubCategoryID2").val();
+
+        var RelationName = $("#RelationID option:selected").text();
+        var CategoryID2Name = $("#CategoryID2 option:selected").text();
+        var SubCategoryID2Name = $("#SubCategoryID2 option:selected").text();
+        if (SubCategoryID2Name.trim() == "SubCategoryID") { SubCategoryID2Name = ""; }
+        if (CompanyID == 0) {
+            if (RelationID == "") {
+                return false;
+            }
+            var SupportTeamCount = 1;
+            $('.MultiSupportTeam').each(function (k, v) {
+                SupportTeamCount++;
+            });
+
+            // var binding = '<div ><div  MultiExternalTeam" RelationID ="' + RelationID + '" CategoryID2 ="' + CategoryID2 + '" SubCategoryID2 ="' + SubCategoryID2 + '"SupportCompanyID ="' + SupportCompanyID + '"SupportPersonId="' + SupportPersonId + '" DesignationId2="' + DesignationId2 + '" SubDesignationID2="' + SubDesignationID2 + '" SubPartDesignationID2 =' + SubPartDesignationID2 + '> <span id= "ShowSupportPersonName" class="col-lg-12" style = "overflow-wrap:break-word;" >' + SupportPersonName + '</span>  </div><div ><span id="showRelationName" class="col-lg-12" style="overflow-wrap:break-word;">' + RelationName + '</span></div> <div><span id="showCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + CategoryID2Name + '</span></div><div><span id="showSubCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + SubCategoryID2Name + '</span></div><div><span id="showCompanyName" class="col-lg-12" style="overflow-wrap:break-word;">' + SupportCompanyName + '</span></div> <div><span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId2_text + '</span></div> <div ><span id="showSubDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID2_Text + '</span> </div> <div> <span id="showSubPartDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID2_text + '</span></div></div><hr style="margin-top: 11px; margin-bottom: 10px;">';
+            var binding = '<div class="row" ><div  class="MultiExternalTeam" RelationID ="' + RelationID + '" CategoryID2 ="' + CategoryID2 + '" SubCategoryID2 ="' + SubCategoryID2 + '"SupportCompanyID ="' + SupportCompanyID + '"SupportPersonId="' + SupportPersonId + '" DesignationId2="' + DesignationId2 + '" SubDesignationID2="' + SubDesignationID2 + '" SubPartDesignationID2 ="' + SubPartDesignationID2 + '"  SupportTeamCount ="' + SupportTeamCount + '"> <span id= "ShowSupportPersonName" class="col-lg-12" style = "overflow-wrap:break-word;" >' + SupportPersonName + '</span>  </div><div ><span id="showRelationName" class="col-lg-12" style="overflow-wrap:break-word;">' + RelationName + '</span></div> <div><span id="showCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + CategoryID2Name + '</span></div><div><span id="showSubCategoryID2Name" class="col-lg-12" style="overflow-wrap:break-word;">' + SubCategoryID2Name + '</span></div><div><span id="showCompanyName" class="col-lg-12" style="overflow-wrap:break-word;">' + SupportCompanyName + '</span></div> <div><span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId2_text + '</span></div> <div ><span id="showSubDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID2_Text + '</span> </div> <div> <span id="showSubPartDesignationID2" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID2_text + '</span></div></div>';
+            $('.DivSupportTeam').last().append(binding);
+
+            var idArrMobileSupportTeam = [];
+            $('.rowMobileSupportTeam').each(function (k, v) {
+                var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                var MobileType = 1;
+                var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
+                var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+
+                if (MobileNo != "") {
+                    idArrMobileSupportTeam.push(tdVals);
+                }
+            });
+
+            $('.rowEmailSupportTeam').each(function (k, v) {
+                var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                var MobileType = 3;
+                var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                var MobileNoExtension = '';// $(this).closest("div").find("#MobileNoExtension").val();
+                var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+
+                if (MobileNo != "") {
+                    idArrMobileSupportTeam.push(tdVals);
+                }
+            });
+            var SaveMobileNoTeam = [];
+
+            for (var i = 0; i < idArrMobileSupportTeam.length; i++) {
+                var arrElement = idArrMobileSupportTeam[i].split("~");
+                var bindInternalTeam = '<tr><td class="AddSupportTeam" InternalTeamCountRow="' + SupportTeamCount + '" CompanyPhoneID="' + arrElement[0] + '" Value="' + arrElement[1] + '"  Type="' + arrElement[2] + '"  MobileWorkDepartmentID="' + arrElement[3] + '" MobileNoExtension="' + arrElement[4] + '"</td><td>' + arrElement[3] + '</td><td>' + arrElement[1] + '</td> <td>' + arrElement[2] + '</td><td>' + arrElement[3] + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                $('.DivSupportTeam').last().append(bindInternalTeam);
+                
+            }
+            $('.DivSupportTeam').last().append("<hr style='margin-top:11px;margin-bottom:10px;'>");
+           
+            $("select#SupportPersonId").prop('selectedIndex', 0);
+            $("select#DesignationId2").prop('selectedIndex', 0);
+            $("select#SubDesignationID2").prop('selectedIndex', 0);
+            $("select#SubPartDesignationID2").prop('selectedIndex', 0);
+
+            $("#MobileType").val(0);
+            $(".MobileNo").val("");
+            $(".MobileWorkDepartment").prop('selectedIndex', 0);
+            $(".MobileNoExtension").val("");
+        }
+        else {
+            var idArrMobileTeam = [];
+            $('.rowMobileSupportTeam').each(function (k, v) {
+                var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                var MobileType = 1;
+                var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                var MobileNoExtension = $(this).closest("div").find("#MobileNoExtension").val();
+                var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+
+                if (MobileNo != "") {
+                    idArrMobileTeam.push(tdVals);
+                }
+            });
+
+            $('.rowEmailSupportTeam').each(function (k, v) {
+                var MobileNo = $(this).closest("div").find("#MobileNo").val();
+                var MobileType = 3;
+                var MobileWorkDepartment = $(this).closest("div").find("#MobileWorkDepartment option:selected").text();
+                var MobileWorkDepartmentID = $(this).closest("div").find("#MobileWorkDepartment option:selected").val();
+                var MobileNoExtension = '';// $(this).closest("div").find("#MobileNoExtension").val();
+                var CompanyPhoneIDValue = $(this).closest("div").find("#CompanyPhoneIDValue").val();
+                var tdVals = CompanyPhoneIDValue + "~" + MobileNo + "~" + MobileType + "~" + MobileWorkDepartmentID + "~" + MobileNoExtension;
+
+                if (MobileNo != "") {
+                    idArrMobileTeam.push(tdVals);
+                }
+            });
+            var SaveMobileNoTeam1 = [];
+            var ExternalTeamID = $("#DbExternalTeamID").val();
+            for (var i = 0; i < idArrMobileTeam.length; i++) {
+                var arrElement = idArrMobileTeam[i].split("~");
+                item = {}
+                item["CompanyPhoneID"] = arrElement[0];
+                item["Value"] = arrElement[1];
+                item["Type"] = arrElement[2];
+                item["WorkDepartmentID"] = arrElement[3];
+                item["Extension"] = arrElement[4];
+                item["AddressID"] = ExternalTeamID;
+                SaveMobileNoTeam1.push(item);
+            }
+
+            if (RelationID == "") {
+                return false;
+            }
+            if (SupportPersonId == "") {
+                return false;
+            }
+
+            var ExternalTeamID = $("#DbExternalTeamID").val();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Master/SaveCompanySupportTeam',
+                data:
+                {
+                    CompanyId: CompanyID
+                    , ExternalPersonId: SupportPersonId
+                    , ExternalTeamid: ExternalTeamID
+                    , RelationId: RelationID
+                    , CategoryId: CategoryID2
+                    , SubCategoryId: SubCategoryID2
+                    , ExternalCompanyId: SupportCompanyID
+                    , DesignationId: DesignationId2
+                    , SubDesignationId: SubDesignationID2
+                    , SubpartDesignationId: SubPartDesignationID2
+                    , SaveSupportTeamMobile: SaveMobileNoTeam1
+                },
+                success: function (da) {
+                    if (da != "Success") {
+                        alert(da);
+                    }
+                    
+                    $("select#SupportPersonId").prop('selectedIndex', 0);
+                    $("select#DesignationId2").prop('selectedIndex', 0);
+                    $("select#SubDesignationID2").prop('selectedIndex', 0);
+                    $("select#SubPartDesignationID2").prop('selectedIndex', 0);
+
+                    $("#MobileType").val(0);
+                    $(".MobileNo").val("");
+                    $(".MobileWorkDepartment").prop('selectedIndex', 0);
+                    $(".MobileNoExtension").val("");
+
+                    $.ajax({
+                        type: 'GET',
+                        dataType: "text",
+                        url: '/Master/GetCompanyInfoLeftSide',
+                        data:
+                        {
+                            CompanyId: $('#CompanyID').val()
+                        },
+                        success: function (data) {
+                            $('#CompanyAddressOuterDiv').html(data);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+
+            });
+        }
+    }
 </script>

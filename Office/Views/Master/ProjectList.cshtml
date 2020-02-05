@@ -1,25 +1,18 @@
-﻿
-@model IEnumerable<office.Models.SaveProject>
-
+﻿@model IEnumerable<office.Models.SaveProject> 
 @{
-    ViewBag.Title = "ProjectList";
-
-}
-
+    ViewBag.Title = "ProjectList"; 
+} 
 <div class="row">
-    <script src="~/js/jquery-2.1.1.js"></script>
-
-
+    <script src="~/js/jquery-2.1.1.js"></script> 
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Projects </h5>
-
+                <h5>Projects </h5> 
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-sm-9 m-b-xs"> 
-                        @Html.ActionLink("Add New", "ProjectNew", "Master", null, new { @class = "btn btn-sm btn-primary pull-left" }) 
+                    <div class="col-sm-9 m-b-xs">
+                        @Html.ActionLink("Add New", "ProjectNew", "Master", null, new { @class = "btn btn-sm btn-primary pull-left" })
                     </div>
                     <div class="col-sm-3">
                         <div class="input-group">
@@ -28,8 +21,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
-
+                </div> 
                 <div class="bindGrid">
                     <div id="mgrid">
                         @Html.Partial("ProjectGrid")
@@ -38,11 +30,8 @@
 
             </div>
         </div>
-    </div>
-
-</div>
-
-
+    </div> 
+</div> 
 <script>
     $('#ProjectFilter').keyup(function () {
         $.ajax({
@@ -63,6 +52,5 @@
                 complete: function () {
                 }
             });
-    });
-
+    }); 
 </script>

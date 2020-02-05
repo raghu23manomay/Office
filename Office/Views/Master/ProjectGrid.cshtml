@@ -17,9 +17,6 @@
                     <th>Goan </th>
                     <th>Taluka </th>
                     <th>District </th>
-                    <th>Duration </th>
-                    <th>Start Date </th>
-                    <th>End Date   </th>
                     <th>Status  </th>
                     <th>Action</th>
                 </tr>
@@ -27,32 +24,32 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@item.ProjectName </td>
-                    <td style="width: 85px;"> @item.EnquiryDate.ToString("yyyy-MM-dd")   </td>
-                    <td> @item.ProjectStatus </td>
-                    <td> @item.ProjectType   </td>
-                    <td> @item.Road </td>
-                    <td> @item.Goan </td>
-                    <td> @item.Taluka </td>
-                    <td> @item.District </td>
-                    @*<td> @item.Duration </td>*@
-                    @*<td style="width: 85px;"> @item.StartDate.ToString("yyyy-MM-dd") </td>
-                    <td style="width: 85px;"> @item.EndDate.ToString("yyyy-MM-dd")   </td>*@
-                    <td> @item.IsActive  </td>
-                    <td>
-                        <a class="l" href="../Template/DocTemplateList?ProjectID=@item.ProjectID" name="@item.ProjectID" id="linkProject">
-                            <i class="fa fa-mail-forward" style="color: darkgrey;" aria-hidden="true"></i>
-                        </a>
-                        <a class="edit" href="EditProject?id=@item.ProjectID" id="EditMember">
-                            <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
-                        </a>
-                        <a class="Delete" name="@item.ProjectID" id="DeleteProject">
-                            <i class="fa fa-trash" style="color: darkgrey;display:none" aria-hidden="true"></i>
-                        </a>
+                    <tr>
+                        <td>@item.ProjectName </td>
+                        <td style="width: 85px;"> @item.EnquiryDate.ToString("yyyy-MM-dd")   </td>
+                        <td> @item.ProjectStatus </td>
+                        <td> @item.ProjectType   </td>
+                        <td> @item.Road </td>
+                        <td> @item.Goan </td>
+                        <td> @item.Taluka </td>
+                        <td> @item.District </td>
+                        @*@*<td> @item.Duration </td>*@
+                        @*<td style="width: 85px;"> @item.StartDate.ToString("yyyy-MM-dd") </td>
+                        <td style="width: 85px;"> @item.EndDate.ToString("yyyy-MM-dd")   </td>*@
+                        <td> @item.IsActive  </td>
+                        <td>
+                            <a class="l" href="../Template/DocTemplateList?ProjectID=@item.ProjectID" name="@item.ProjectID" id="linkProject">
+                                <i class="fa fa-mail-forward" style="color: darkgrey;" aria-hidden="true"></i>
+                            </a>
+                            <a class="edit" href="ProjectNew?id=@item.ProjectID" id="EditMember">
+                                <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                            </a>
+                            @*<a class="Delete" name="@item.ProjectID" id="DeleteProject">
+                                <i class="fa fa-trash" style="color: darkgrey;display:none" aria-hidden="true"></i>
+                            </a>*@
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -104,24 +101,8 @@
 
         });
 
-        @*$('.Delete').click(function () {
-            if (confirm("Are you sure want to deleted!"))
-            {
-            var Id = $(this).attr('name');
-            $.ajax({
-                url: "@Url.Action("DeleteMaster", "Master")",
-                data: { Id: Id, MasterName: 'City' },
-                dataType: "text",
-                type: "POST",
-                async: false,
-                success: function (data) {
-                    var mgs = data.replace(/"/g, "");
-                    alert(mgs);
-                   }
-            });
-            }
-
-        });*@
+         
     });
 
 </script>
+

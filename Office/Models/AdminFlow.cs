@@ -14,9 +14,9 @@ namespace office.Models
     {
         [Key]
         public int ProjectID { get; set; }
-        public string Name     { get; set; }
+        public string ProjectName { get; set; }
         public DateTime EnquiryDate     { get; set; }
-        public string ShortName       { get; set; }
+        public string ProjectShortName { get; set; }
         public int StatusId        { get; set; }
         public int ProjectTypeId   { get; set; }
         public string CustomerFileNo  { get; set; }
@@ -25,10 +25,10 @@ namespace office.Models
         public string Goan  { get; set; }
         public string Taluka { get; set; }
         public string District { get; set; }
-        public string Duration { get; set; }
-        public decimal Cost { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate  { get; set; }
+        //public string Duration { get; set; }
+        //public decimal Cost { get; set; }
+        //public DateTime StartDate { get; set; }
+        //public DateTime EndDate  { get; set; }
         public bool IsActive       { get; set; }
         public int CreatedBy       { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -10,6 +10,11 @@
     @Html.DropDownList("SubPartdesignationID", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation ", new { @class = "form-control", @id = "SubPartdesignationID1", Title = "SubPartdesignationID" })
 
 }
+else if (ViewBag.value == 3)
+{
+    @Html.DropDownList("SubPartdesignationID", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation ", new { @class = "form-control", @id = "SubPartdesignationID3", Title = "SubPartdesignationID" })
+
+}
 else
 {
     @Html.DropDownList("SubPartdesignationID", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation ", new { @class = "form-control", @id = "SubPartdesignationID2", Title = "SubPartdesignationID" })

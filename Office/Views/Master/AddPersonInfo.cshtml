@@ -6,8 +6,8 @@
 <style>
     .ibox.fullscreen .collapse-link {
         display: none;
-    } 
-    .ibox-other, .ibox-residential, .ibox-NewCompany {
+    }
+    .ibox-other, .ibox-residential, .ibox-NewCompany, .iboxInternal {
         display: none;
     } 
     .ibox-content1, .iboxCompanyInfo {
@@ -97,7 +97,7 @@
                             {
                                 if (item2.Type != 3)
                                 {
-                                    
+
                                     mobilecount = mobilecount + 1;
                                     <div class="form-group rowMobile" id="rowMobile">
                                         <input type="hidden" value="@item2.CompanyPhoneID" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
@@ -212,7 +212,7 @@
                     </div>
 
 
-                     
+
 
 
                     <div class="form-group">
@@ -255,11 +255,8 @@
                     <h5>Residential Address</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-
-
-
+                            <i class="fa fa-chevron-down"></i>
+                        </a> 
                     </div>
                 </div>
                 <div class="ibox-content ibox-residential">
@@ -310,6 +307,8 @@
             </div>
             @if (ViewData["redirect"].ToString() == "0")
             {
+                <input type="hidden" value="0" id="DbInternalTeamID" />
+
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
@@ -326,7 +325,7 @@
                                 Reload <i class="fa fa-refresh" aria-hidden="true"></i>
                             </button>
                             <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
+                                <i class="fa fa-chevron-down"></i>
                             </a>
                         </div>
                     </div>
@@ -375,7 +374,7 @@
                                 <div class="col-lg-1" style="display: inline-flex;">
                                     <i class="fa fa-plus-circle addMultiMobileTeam" aria-hidden="true" id="addMultiMobileTeam" style="margin-left: 8px; margin-top: 9px;"></i>
                                     <i class="fa fa-minus-circle removeMultiMobileTeam" id="removeMultiMobileTeam" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                                    
+
                                 </div>
                             </div>
                             <div class="form-group rowEmailTeam" id="rowEmailTeam">
@@ -407,7 +406,7 @@
                         <h5>Other</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
+                                <i class="fa fa-chevron-down"></i>
                             </a>
                         </div>
                     </div>
@@ -420,6 +419,19 @@
                             </div>
                         </div>
 
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Social Link</label>
+
+                            <div class="col-lg-10" style="display:inline-flex;">
+                                <input type="hidden" id="SocialLinkID" placeholder="Media link" class="form-control">
+                                <input type="text" id="SocialLinkText" placeholder="Media link" class="form-control">
+                                <button id="addMultiSocialLink" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;" type="button">
+                                    Add <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                            </div>
+
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Note</label>
                             <div class="col-lg-10">
@@ -429,18 +441,18 @@
                     </div>
                 </div>
             }
-                <div class="hr-line-dashed"></div>
-                <div class="row form-group">
-                    <div class="col-md-3">
-                    </div>
-                    <div class="col-md-8 pull-right">
-                        <div class="pull-right">
-                            @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
-                            <button class="btn btn-primary" id="btnsavePerson" type="button">Save changes</button>
-                        </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row form-group">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-8 pull-right">
+                    <div class="pull-right">
+                        @Html.ActionLink("Cancel", "MemberList", "Master", null, new { @class = "btn btn-white" })
+                        <button class="btn btn-primary" id="btnsavePerson" type="button">Save changes</button>
                     </div>
                 </div>
             </div>
+        </div>
         <div class="col-lg-4">
             <div class="ibox float-e-margins">               
                 <div class="ibox-content ibox-content1">
@@ -493,6 +505,66 @@
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }
         });
+        
+        $('#addMultiSocialLink').on("click", function (e) {
+            debugger;
+            var PersonID = $('#PersonID').val();
+            if (PersonID == 0) {
+                var SocialLinkID= $("#SocialLinkID").val();
+                var SocialLinkText = $("#SocialLinkText").val();
+                
+                if (SocialLinkText != "") {
+                    var bindCertification = '<tr><td class=" MultiSocialLnk" SocialLinkID="' + SocialLinkID + '" SocialLinkText="' + SocialLinkText + '"   </td><td>' + SocialLinkText + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                    $('#tblSocialLink').last().append(bindCertification);
+                    $("#SocialLinkID").val(0);
+                    $("#SocialLinkText").val("");
+                }
+            }
+            else {
+                var SocialLinkID = $("#SocialLinkID").val();
+                if (SocialLinkID == "") {
+                    SocialLinkID = 0;
+                }
+              
+                var SocialLinkText = $("#SocialLinkText").val();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/Master/SaveSocialLink',
+                    data:
+                    {
+                        PersonID: PersonID
+                        , SocialLinkID: SocialLinkID
+                        , SocialLinkText: SocialLinkText
+                        
+                    },
+                    success: function (da) {
+                        $("#SocialLinkID").val(0);
+                        $("#SocialLinkText").val("");
+                        $.ajax({
+                            type: 'GET',
+                            dataType: "text",
+                            url: '/Master/GetLeftSideForPerson',
+                            data:
+                            {
+                                PersonID: $('#PersonID').val()
+                            },
+                            success: function (data) {
+                                $('.CompanyList').html(data);
+                                $("#CertificationDetailID").val(0);
+                                $("select#CertificationID").prop('selectedIndex', 0);
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            }
+                        });
+
+                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+
+                });
+            }
+        });
+
         $('#addMultiCertification').on("click", function (e) {
 
             var PersonID = $('#PersonID').val();
@@ -697,7 +769,7 @@
         }); 
         
         $('#addCompany').on("click", function (e) {
-            debugger;
+           
             var PersonID = $('#PersonID').val();
             if (PersonID == 0) {
 
@@ -760,7 +832,7 @@
                 }
             }
             else {
-                debugger;
+               
                 var idArrMobileTeam = [];
                 $('.rowMobileTeam').each(function (k, v) {
                     var MobileNo = $(this).closest("div").find("#MobileNo").val();
@@ -821,16 +893,20 @@
                 if (DesignationId1 == "") {
                     return false;
                 }
-                debugger;
+                if (SubPartDesignationID1 == "") {
+                    SubPartDesignationID = 0;
+                }                
+                if (SubDesignationID1 == "") {
+                    SubDesignationID1 = 0;
+                }  
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
-                    url: '/Master/SaveInternalTeam',
+                    url: '/Master/SavePersonCompanyTeam',
                     data:
-                    {
-                        CompanyId: CompanyID
-                        , internalTeamid: internalTeamid
-                        , InternalPersonId: InternalPersonId
+                    {    PersonID :PersonID
+                        ,CompanyId: CompanyID
+                        , personCompanyid: internalTeamid 
                         , DesignationId1: DesignationId1
                         , SubDesignationID1: SubDesignationID1
                         , SubPartDesignationID1: SubPartDesignationID1
@@ -883,7 +959,6 @@
                             },
                             success: function (data) {
                                 $('#CompanyAddressOuterDiv').html(data);
-
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                             }
@@ -893,7 +968,6 @@
                     }
                 });
             }
-            
         }); 
 
         $(document).on('click', 'i.deleterow', function (e) {
@@ -951,28 +1025,7 @@
                 item["Extension"] = arrElement[4];
                 item["AddressID"] = DbAddressID;
                 SaveMobileNo.push(item);
-            }
-
-                 
-            
-
-            
-            ////Adding OfficeNo into array
-            //var idArrOffice = [];
-            //$('.multioffice').each(function (k, v) {
-            //    var tdVals = $(this).text();
-            //    idArrOffice.push(tdVals);
-            //});
-
-            //var SaveOfficeNo = [];
-            //for (var i = 0; i < idArrOffice.length; i++) {
-            //    var arrElement = idArrOffice[i].split("~");
-            //    item = {}
-            //    item["OfficeNo"] = arrElement[0];
-            //    SaveOfficeNo.push(item);
-            //}
-
-
+            } 
 
             //Adding AdditionFileds into array
             var idArrAdditionField = [];
@@ -1062,7 +1115,23 @@
                 SaveInternalTeamMobile.push(item);
             }
             //end internal team mobile
-            debugger;
+
+            //Adding multipal certification into array
+            var idArrSocialLink = [];
+            $('.MultiSocialLnk').each(function (k, v) {
+                var tdVals = $(this).attr("sociallinkid") + "~" + $(this).attr("sociallinktext");
+                idArrSocialLink.push(tdVals);
+            });
+
+            var SaveSocialLink = [];
+            for (var i = 0; i < idArrSocialLink.length; i++) {
+                var arrElement = idArrSocialLink[i].split("~");
+                item = {}
+                item["sociallinkid"] = arrElement[0];
+                item["sociallinktext"] = arrElement[1];
+                 
+                SaveSocialLink.push(item);
+            }
             
             $.ajax({
                 type: 'POST',
@@ -1090,11 +1159,12 @@
                     SaveParameter: SaveParameter,
                     SaveCompanyList: SaveCompanyList,
                     SaveCertification: SaveCertification,
-                    SaveTeamMobile: SaveInternalTeamMobile 
+                    SaveTeamMobile: SaveInternalTeamMobile,
+                    SaveSocialLink: SaveSocialLink 
                 },
                 success: function (da) {
                     if (da == "Success") {
-                      //  location.href = "PersonList";
+                       location.href = "PersonList";
                     }
                  },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
