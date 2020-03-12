@@ -1,41 +1,36 @@
-﻿
-
-@model IEnumerable<office.Models.PersonList>
+﻿@model IEnumerable<office.Models.CertificationList>
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
 <script src="~/js/jquery-2.1.1.js"></script>
-
 <div class="row">
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
 
-                    <th>FullName </th>
-                    <th> ShortName</th>
-                    <th>Address </th>
+                    <th>#</th>
+                    <th>Name </th>
+                    <th>Status </th>
                     <th>Action</th>
-
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.FirstName  @item.LastName </td>
-                        <td>@item.ShortName</td>
-
-                        <td style="max-width: 137px;overflow-wrap: break-word;">@item.Address1</td>
-                        @*<td style="max-width: 137px;overflow-wrap: break-word;">@item.Address2</td>*@
-
+                        <td>@item.BusinessCategoryID</td>
+                        <td>@item.BusinessCategoryName</td>
+                        <td>@item.IsActive</td>
                         <td>
-                            <a class="edit" href="AddPersonInfo?id=@item.PersonID" id="EditContactPerson">
+
+                            <span class="edit" v="@item.BusinessCategoryID">
                                 <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
-                            </a>
-                            <a class="Delete" name="@item.PersonID" id="DeleteContactPerson">
-                                <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
-                            </a>
+                            </span>
+                            @*<a class="Delete" v="@item.BusinessCategoryID" id="DeleteMember">
+                                    <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                                </a>*@
+
 
                         </td>
                     </tr>
@@ -60,20 +55,22 @@
 
 <script>
     $(document).ready(function () {
+
         $('#mgrid .pagination li a').on('click', function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();
             $('.loader').show();
             var temp = $(this).attr('href');
 
+
             var pageid = temp.replace('/?page=', '');
 
             $.ajax({
-                url: "@Url.Action("LoadPersonGrid", "Master")",
+                url: "@Url.Action("LoadBussinessCategoryGrid", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     page: pageid,
-                    Name: $('#PersonFilter').val(),
+                    CName: $('#CustomerFilter').val(),
                 }),
                 dataType: "text",
                 type: "POST",
@@ -89,25 +86,33 @@
             });
 
         });
-
-        $('.Delete').click(function () {
-            if (confirm("Are you sure want to deleted!"))
-            {
-            var Id = $(this).attr('name');
-            $.ajax({
-                url: "@Url.Action("DeleteMaster", "Master")",
-                data: { Id: Id, MasterName: 'PersonalInfo' },
+        $('.edit').on('click', function () {
+            debugger;
+            var CategoryID = $(this).attr("v");
+          $.ajax({
+                url: "@Url.Action("AddBussinessCategory", "Master")",
+                contentType: "application/json",
                 dataType: "text",
-                type: "POST",
-                async: false,
-                success: function (data) {
-                    var mgs = data.replace(/"/g, "");
-                    alert(mgs);
-                   }
-            });
-            }
+                type: "GET",
+                async: true,
+                  data:
+                  {
+                      id: CategoryID
 
+                  },
+                success: function (data) {
+                    $('#AddNew').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
         });
+
+
+
     });
 
 </script>

@@ -1,0 +1,6 @@
+﻿@{ 
+    Layout = null;
+}
+
+@Html.DropDownList("OwnerSurveyNo", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoListByTypeId"], "Value", "Text"), "Select Survey No", new { @class = "form-control", @id = "OwnerSurveyNo", Title = "OwnerSurveyNo" })
+  

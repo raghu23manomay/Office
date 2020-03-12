@@ -1,0 +1,140 @@
+﻿@model  office.Models.ProjectOwnerDetailSurveyWiseAll
+@{
+    Layout = null;
+}
+<style>
+    .displays{
+        display:block!important;
+    }
+    .hides {
+        display: none;
+    }
+    .show-grid {
+        margin: 0!important;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content1">
+                <div class="row show-grid">
+                    <div class="col-md-2"> Survey No</div>
+                    <div class="col-md-2"> Gat No</div>
+                    <div class="col-md-2"> CTS No</div>
+                    <div class="col-md-2"> Final Plot No</div>
+                    <div class="col-md-2"> Owner Name</div>
+                    <div class="col-md-2">Area</div>
+                </div>
+                    <div class="divOwner">
+                        @foreach (var item2 in Model.ProjectOwnerDetailSurveyWise)
+                        {
+                              <div class="row show-grid">
+                                  <div class="col-md-2">
+                                      <i class="fa fa-plus ViewSurveyDetail" id="ViewSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px; "></i>
+                                      <i class="fa fa-minus hideSurveyDetail" id="hideSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px;display:none; " ></i>
+                                      @item2.SurvayNo  - @item2.SHissaNo
+                                  </div>
+                                <div class="col-md-2">
+                                    @item2.GatNo - @item2.GatHissaNo
+                                </div>
+                                <div class="col-md-2">
+                                    @item2.CTSNo - @item2.CTSHissaNo
+                                </div>
+                                <div class="col-md-2">
+                                    @item2.FInalPlotNo
+                                </div>
+                                <div class="col-md-2">
+                                     -  @item2.OwnerName
+                                </div>
+                                <div class="col-md-2">
+                                    @item2.Area
+                                </div>
+                            </div>
+
+                            <div class="row" id="row-@item2.SurvayDetailId" style="display:none;">
+                               
+                                <div   style="padding-left: 30px;padding-right: 30px;">
+                                    <div id="OwnersData2-@item2.SurvayDetailId"></div>
+                                </div>
+                            </div>
+                        }
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.ViewSurveyDetail').on("click", function (e) {
+         var SurvayDetailId = $(this).attr("SurvayDetailId");
+        $.ajax({
+            type: 'GET',
+            dataType: "text",
+            url: '/Master/GetOwnersPropertyCardSubList',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                SurvayDetailId: SurvayDetailId
+            },
+            success: function (data) {
+                $('#row-' + SurvayDetailId).addClass("displays");
+                $('#OwnersData2-' + SurvayDetailId).html(data);
+                $('#hideSurveyDetail-' + SurvayDetailId).show();
+                $('#ViewSurveyDetail-' + SurvayDetailId).hide(); 
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+    $('.hideSurveyDetail').on("click", function (e) {
+        var SurvayDetailId = $(this).attr("SurvayDetailId");
+        $('#hideSurveyDetail-' + SurvayDetailId).hide();
+        $('#ViewSurveyDetail-' + SurvayDetailId).show(); 
+        $('#row-' + SurvayDetailId).removeClass("displays");
+    });
+    $('.EditOwner').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/GetProjectOwnerSurvey',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                SurvayTypeID: $('#SurveyNoTypeID').val(),
+                OwnerSurveyNo: $('#OwnerSurveyNo').val(),
+                OwnerID: $(this).attr("OwnerID")
+
+            },
+            success: function (data) {
+                $('#myModal').show();
+
+                $('#OwnerPopup').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+    $('.EditOwner2').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/GetProjectOwnerSurvey2',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                SurvayTypeID: $('#SurveyNoTypeID').val(),
+                OwnerSurveyNo: $('#OwnerSurveyNo').val(),
+                OwnerID: $(this).attr("OwnerID")
+
+            },
+            success: function (data) {
+                $('#myModalUndevided').show();
+
+                $('#OwnerPopup2').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

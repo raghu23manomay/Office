@@ -51,7 +51,7 @@
     </div>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Developer Details</h5>
+        <h5>Company</h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
@@ -66,7 +66,7 @@
                 <div class="table table-hover margin bottom">  
                     @foreach (var item in Model)
                     {
-                        if (item.TableName == "DeveloperInfo")
+                        if (item.TableName == "Company")
                         {
                             <div>
 
@@ -90,7 +90,7 @@
 </div>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Consultant Details </h5>
+        <h5>Company Support Team   </h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
@@ -107,7 +107,7 @@
                      
                     @foreach (var item in Model)
                     {
-                        if (item.TableName == "ConsultantInfo")
+                        if (item.TableName == "CompanyST")
                         {
                             <div>
 
@@ -131,7 +131,7 @@
 </div>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
-        <h5>Contractor Details</h5>
+        <h5>Company Internal Team  </h5>
         <div class="ibox-tools">
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
@@ -148,7 +148,7 @@
 
                     @foreach (var item in Model)
                     {
-                        if (item.TableName == "ContractorInfo")
+                        if (item.TableName == "CompanyIT")
                         {
                             <div>
 

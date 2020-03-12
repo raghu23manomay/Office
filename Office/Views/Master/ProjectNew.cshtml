@@ -1,81 +1,101 @@
 ﻿
 @model office.Models.nProjectDetail
 <style>
-    .control-label
+    .requiredfield
     {
-        font-size:12px!important;
+        border:solid 1px red;
     }
+    .control-label {
+        font-size: 12px !important;
+    }
+    /*.RowOwnerArea  :nth-child(2) {
+        background: red;
+    }*/
     .disp {
         display: block;
     }
-    #row1 , #row2 {
-        display: block!important;
+
+    #row1, #row2 {
+        display: block !important;
     }
+
     .ibox.fullscreen .collapse-link {
         display: none;
     }
 
-    .ibox-content1,  .iboxSurveyNo {
+    .iboxProjectinfo {
         display: block;
     }
 
-    .iboxexternal, .iboxOffice, .iboxInternal ,.iboxProjDetails {
+    .iboxexternal, .iboxOffice, .iboxInternal, .iboxProjDetails, .iboxOfficeSide, .iboxAuthority, .iboxProposaldataentryView, .iboxCumulativedataView, .iboxSurveyNo {
         display: none;
     }
 
     .ibox {
         margin-bottom: 15px !important;
     }
+
+    .disabledDiv {
+        pointer-events: none;
+        opacity: 0.4;
+    }
 </style>
 <script src="~/js/jquery-2.1.1.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<link href="~/css/select2.css" rel="stylesheet" />
+
 <form class="form-horizontal">
     <div class="row">
-
         <div class="col-lg-8">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Project Info</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
+                            <i class="fa fa-chevron-up"></i>
                         </a>
                     </div>
                 </div>
-                <div class="ibox-content iboxCompanynfo">
+                <div class="ibox-content iboxProjectinfo">
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Enquiry Date</label>
                         <div class="col-lg-4" style="display: inline-flex;">
                             <input type="date" id="EnquiryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="EnquiryDate" class="form-control">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-lg-2 control-label">Project</label>
                         <div class="col-lg-4">
                             <input type="text" id="ProjectName" placeholder="ProjectName" value="@Model.ProjectName" class="form-control">
                             @Html.HiddenFor(a => a.ProjectID, new { @id = "ProjectID" })
                         </div>
+                    </div>
+                    <div class="form-group">
+
                         <label class="col-lg-2 control-label">Short Name</label>
                         <div class="col-lg-4">
                             <input id="ProjectShortName" type="text" placeholder="Short Form" value="@Model.ProjectShortName" class="form-control">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-lg-2 control-label">Developers </label>
                         <div class="col-lg-4">
-                            @Html.DropDownList("internalCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "DeveloperCompanyID", Title = "CompanyID" })
-                        </div>
-
-                        <div>
-                            <label class="col-lg-2 control-label">Type</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("CompanyOwnershipTypeID", new SelectList((System.Collections.IEnumerable)ViewData["OwnershipTypeList"], "Value", "Text"), "Select", new { @class = "form-control", @id = "CompanyOwnershipTypeID", Title = "OwnershipTypeID" })
-                            </div>
-
+                            @Html.DropDownList("Developers", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "DeveloperCompanyID", Title = "Developer" , @Placeholder= "Select Developer" })
+                            <input type="hidden" id="DevelopersId" value="@Model.Developers" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Type</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("DeveloperTypeID", new SelectList((System.Collections.IEnumerable)ViewData["OwnershipTypeList"], "Value", "Text"), "Select", new { @class = "form-control", @id = "CompanyOwnershipTypeID", Title = "OwnershipTypeID" })
+                        </div>
+                        <div class="col-lg-4">
+                            @if (Model.ProjectID == 0)
+                            {
+                            <button class="btn btn-primary" type="button" id="btnSaveInitial">Save</button>
+                            }
+                        </div>
+                    </div> 
                 </div>
-            </div>
-
+            </div> 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>
@@ -86,14 +106,14 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                         <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
+                            <i class="fa fa-chevron-down"></i>
                         </a>
                     </div>
                 </div>
                 <div class="ibox-content iboxInternal">
                     <div class="Team">
                         <div class="form-group entityField">
-                            <input type="hidden" value="0"  id="internalTeamid"/>
+                            <input type="hidden" value="0" id="internalTeamid" />
                             <label class="col-lg-2 control-label">Parent Company</label>
                             <div class="col-lg-4">
                                 @Html.DropDownList("ParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ParentCompanyID", Title = "CompanyID" })
@@ -133,12 +153,13 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                         <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
+                            <i class="fa fa-chevron-down"></i>
                         </a>
                     </div>
                 </div>
                 <div class="ibox-content iboxexternal">
                     <div class="Team">
+                        <input type="hidden" value="0" id="ExternalTeamid" />
                         <div class="form-group entityField">
                             <label class="col-lg-2 control-label">Company</label>
                             <div class="col-lg-4">
@@ -171,19 +192,20 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>
-                        Office Side  
+                        Office Side
                     </h5>
                     <div class="ibox-tools">
                         <button id="addMultiOfficeSideTeam" class="btn btn-white pull-left" type="button" style="padding: 0px 12px;">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                         <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
+                            <i class="fa fa-chevron-down"></i>
                         </a>
                     </div>
                 </div>
                 <div class="ibox-content iboxOfficeSide">
                     <div class="form-group entityField">
+                        <input type="hidden" id="OfficeTeamid" value="0" />
                         <label class="col-lg-2 control-label">Person</label>
                         <div class="col-lg-4">
                             @Html.DropDownList("OfficePersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "OfficePersonId", Title = "PersonId" })
@@ -205,395 +227,1208 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        Project Details
+                    </h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content iboxProjDetails">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Project Type</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("ProjectTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "ProjectTypeId", Title = "ProjectTypeId" })
+                        </div>
+                        <label class="col-lg-2 control-label">Project Status</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("StatusId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectStatusList"], "Value", "Text"), "Select Status", new { @class = "form-control", @id = "ProjectStatusId", Title = "ProjectStatusId" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Customer File No</label>
+                        <div class="col-lg-4">
+                            <input id="CustomerFileNo" value="@Model.CustomerFileNo" type="text" placeholder="Customer File No" class="form-control">
+                        </div>
+                        <label class="col-lg-2 control-label">File Location++</label>
+                        <div class="col-lg-4">
+                            <input id="FileLocation" type="text" placeholder="File Location" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Physical Path</label>
+                        <div class="col-lg-4">
+                            <input id="PhysicalPath" type="text" placeholder="Physical Path" value="@Model.PhysicalPath" class="form-control">
+                        </div>
+                        <label class="col-lg-2 control-label">State</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("StateID", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID", Title = "StateID" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Default Taluka</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID", Title = "CityID" })
+                        </div>
+                        <label class="col-lg-2 control-label">Default District</label>
+                        <div class="col-lg-4">
+                            <input id="District" type="text" placeholder="District" value="@Model.District" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Road / Landmark</label>
+                        <div class="col-lg-4">
+                            <input id="Road" type="text" placeholder="Road" value="@Model.Road" class="form-control">
+                        </div>
+                        <label class="col-lg-2 control-label">Default Goan</label>
+                        <div class="col-lg-4">
+                            <input id="Goan" type="text" placeholder="Goan" value="@Model.Goan" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        Pre proposal Details
+                    </h5> 
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content iboxSurveyNo">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">S.No,Gat No,CTS No.</label>
+                        <div class="col-lg-4">
+                            @Html.DropDownList("SurveyNoType", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoType", Title = "SurveyNoType" })
+                        </div>
+                        <label class="col-lg-2 control-label"> Value</label>
+                        <div class="col-lg-4">
+                            <input id="SurveyNoValue" type="text" placeholder="Survey Value" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Hissa No</label>
+                        <div class="col-lg-4">
+                            <input id="SurveyHissaNo" type="text" placeholder="Hissa No" class="form-control">
+                        </div>
+
+                        <div class="col-lg-3">
+                            <input id="SurveyArea" type="text" placeholder="Area" class="form-control">
+                        </div>
+                        <div class="col-lg-2">
+                            @Html.DropDownList("SurveyNoUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "SurveyNoUnitId", Title = "SurveyNoUnitId" })
+                        </div>
+                        <div class="col-lg-1">
+                            <i class="fa fa-plus" id="addSurvay" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Cost  </label>
+                        <div class="col-lg-4">
+                            <input id="Cost" type="text" placeholder="Cost" value="@Model.Cost" class="form-control">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Start Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "Start date", type = "date", id = "StartDate" })
+                        </div>
+                        <label class="col-lg-2 control-label">End Date</label>
+                        <div class="col-lg-4">
+                            @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "End date", type = "date", id = "EndDate" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        Proposal detail 7/12 entry
+                    </h5>
+                    <div class="ibox-tools">
+
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content  iboxOwnership">
+
+                    <div class="" style="height:auto;">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">  Add Survey Number </a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">  Surve No data</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="ibox-content">
+                                    <div class="full-height-scroll">
+                                        <div class="bindGrid">
+                                            <div class="form-group">
+                                                <div class="col-lg-3">
+                                                    <span class="IsultiOwner">
+                                                        @Html.CheckBox("Propertycard1", new { @class = "", title = "Is 7/12 ", @id = "Propertycard1" })
+                                                        <label for="checkbox5">
+                                                            7-12
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <span class="IsultiOwner">
+                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                        <label for="checkbox5">
+                                                            PropertyCard
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group disabledDiv" id="SurveyNo">
+                                                <div class="col-lg-3">
+                                                    <input id="Ow_SurveyNoValue" type="text" placeholder="Survey No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <input id="Ow_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <input id="Ow_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <input id="Ow_OldNo" type="text" placeholder="Old Survey.No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <span class="IsultiOwner">
+                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                        <label for="checkbox5">
+                                                            primary
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group disabledDiv " id="GatNo">
+                                                <div class="col-lg-3">
+                                                    <input id="G_SurveyNoValue" type="text" placeholder="Gat No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <input id="G_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <input id="G_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <input id="G_OldNo" type="text" placeholder="Old Gat.No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <span class="IsultiOwner">
+                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                        <label for="checkbox5">
+                                                            primary
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group disabledDiv " id="CTSNo">
+                                                <div class="col-lg-3">
+                                                    <input id="CTS_SurveyNoValue" type="text" placeholder="CTS No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <input id="CTS_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <input id="CTS_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <input id="CTS_OldNo" type="text" placeholder="Old CTS.No." class="form-control">
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <span class="IsultiOwner">
+                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                        <label for="checkbox5">
+                                                            primary
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                                <div class="form-group disabledDiv" id="FinalPlot">
+                                                    <div class="col-lg-3">
+                                                        <input id="FP_SurveyNoValue" type="text" placeholder="Final Plot No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-1">
+                                                        <button id="AddOwnerDoc" class="btn btn-primary pull-left" type="button">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-1">
+                                                        <button id="AddOwnerDocNext" class="btn btn-primary pull-left" type="button">
+                                                            Save & Next
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-2" class="tab-pane">
+                                <div class="ibox-content">
+                                    <div id="AddNew2">
+                                        
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <select id="PropertyCardTypeID" class="form-control">
+                                                    <option value="1">7/12</option>
+                                                    <option value="2">Property Card</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                @Html.DropDownList("SurveyNoTypeID", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoTypeID", Title = "SurveyNoTypeID" })
+                                            </div>
+                                            <div class="col-lg-3">
+                                                @Html.DropDownList("OwnerSurveyNo", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoProperyCardList"], "Value", "Text"), "Select Survey No", new { @class = "form-control", @id = "OwnerSurveyNo", Title = "OwnerSurveyNo" })
+                                            </div>
+                                            <div class="col-md-2"> <button type="button" id="AddOwner" class="btn btn-default">Add Owner</button></div>
+                                            <div class="col-md-3"> <button type="button" id="AddOwnerUndevided" class="btn btn-default">Add Undevided shares</button></div>
+                                        </div>
+                                    </div>
+                                    <div class="full-height-scroll">
+                                        <div class="full-height-scroll">
+                                            <div class="ibox-content">
+                                                <div class="bindGrid">
+                                                    
+                                                    
+                                                    <div   id="OwnersData">
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
-                            Project Details
+                            Proposal detail entry
                         </h5>
                         <div class="ibox-tools">
+
                             <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
+                                <i class="fa fa-chevron-down"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content iboxProjDetails">
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Project Type</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("ProjectTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "ProjectTypeId", Title = "ProjectTypeId" })
+                    <div class="ibox-content iboxProposaldataentryView">
+                         
+                            <div id="OwnersDataAll">
+
                             </div>
-                            <label class="col-lg-2 control-label">Project Status</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("ProjectStatusId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectStatusList"], "Value", "Text"), "Select Status", new { @class = "form-control", @id = "ProjectStatusId", Title = "ProjectStatusId" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Customer File No</label>
-                            <div class="col-lg-4">
-                                <input id="CustomerFileNo" value="@Model.CustomerFileNo" type="text" placeholder="Customer File No" class="form-control">
-                            </div>
-                            <label class="col-lg-2 control-label">File Location++</label>
-                            <div class="col-lg-4">
-                                <input id="PhysicalPath" type="text" placeholder="File Location"  class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Physical Path</label>
-                            <div class="col-lg-4">
-                                <input id="PhysicalPath" type="text" placeholder="Physical Path"  value="@Model.PhysicalPath" class="form-control">
-                            </div>
-                            <label class="col-lg-2 control-label">State</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("StateID", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID", Title = "StateID" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Default Taluka</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID", Title = "CityID" })
-                            </div>
-                            <label class="col-lg-2 control-label">Default District</label>
-                            <div class="col-lg-4">
-                                <input id="District" type="text" placeholder="District" value="@Model.District" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group"> 
-                            <label class="col-lg-2 control-label">Road / Landmark</label>
-                            <div class="col-lg-4">
-                                <input id="Road" type="text" placeholder="Road" value="@Model.Road" class="form-control">
-                            </div>
-                            <label class="col-lg-2 control-label">Default Goan</label>
-                            <div class="col-lg-4">
-                                <input id="Goan" type="text" placeholder="Goan" value="@Model.Goan" class="form-control">
-                            </div>
-                        </div> 
+                         
                     </div>
                 </div>
-
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
-                            Pre proposal Details
-                        </h5>
-
-                        <div class="ibox-tools">
-
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-
-
-                        </div>
-                    </div>
-
-
-                    <div class="ibox-content iboxSurveyNo">
-
-
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">S.No,Gat No,CTS No.</label>
-
-                            <div class="col-lg-4">
-                                @Html.DropDownList("SurveyNoType", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoType", Title = "SurveyNoType" })
-                            </div>
-
-                            <label class="col-lg-2 control-label"> Value</label>
-                            <div class="col-lg-4">
-                                <input id="SurveyNoValue" type="text" placeholder="Survey Value" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Hissa No</label>
-                            <div class="col-lg-4">
-                                <input id="SurveyHissaNo" type="text" placeholder="Hissa No" class="form-control">
-                            </div>
-
-                            <div class="col-lg-3">
-                                <input id="SurveyArea" type="text" placeholder="Area" class="form-control">
-                            </div>
-                            <div class="col-lg-2">
-                                @Html.DropDownList("SurveyNoUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "SurveyNoUnitId", Title = "SurveyNoUnitId" })
-                            </div>
-                            <div class="col-lg-1">
-                                <i class="fa fa-plus" id="addSurvay" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Cost  </label>
-                            <div class="col-lg-4">
-                                <input id="Cost" type="text" placeholder="Cost" value="@Model.Cost" class="form-control">
-
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Start Date</label>
-                            <div class="col-lg-4">
-                                <input id="StartDate" type="date" placeholder="StartDate" value="@Model.StartDate"  class="form-control">
-                            </div>
-                            <label class="col-lg-2 control-label">End Date</label>
-                            <div class="col-lg-4">
-                                <input id="Enddate" type="date" placeholder="EndDate"  value="@Model.EndDate"  class="form-control">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="ibox float-e-margins">
-
-
-                    <div class="ibox-title">
-                        <h5>
-                            Proposal detail entry 
+                            Authority Signatory
                         </h5>
                         <div class="ibox-tools">
-                            <button id="addMultiOwnerBlock" class="btn btn-white pull-left" style="padding:0px 12px;" type="button">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
                             <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
+                                <i class="fa fa-chevron-down"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content  iboxOwnership">
+                    <div class="ibox-content iboxAuthority">
                         <div class="form-group">
-                            <div class="col-lg-3">
-                                <input id="Ow_SurveyNoValue" type="text" placeholder="Survey No." class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="Ow_HissaNo" type="text" placeholder="Hissa No" class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="Ow_PlotNo" type="text" placeholder="Plot No." class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="Ow_OldNo" type="text" placeholder="Old Survey.No." class="form-control">
+                            <label class="col-lg-2 control-label">Current Developing rights with</label>
+                            <div class="col-lg-4">
+                                <select id="ownerid" class="form-control">
+                                    <option value="1">Owners</option>
+                                    <option value="2">1212</option>
+                                    <option value="3">545</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-lg-3">
-                                <input id="G_SurveyNoValue" type="text" placeholder="Gat No." class="form-control">
+                        <div class="form-group RowAddSignature" id="RowAddSignature">
+                            <label class="col-lg-2 control-label">Authority Signatory</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("SignatoryPersonId1", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId1", Title = "PersonId", Placeholder = "Signature " })
                             </div>
                             <div class="col-lg-3">
-                                <input id="G_HissaNo" type="text" placeholder="Hissa No" class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="G_PlotNo" type="text" placeholder="Plot No." class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="G_OldNo" type="text" placeholder="Old Gat.No." class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-3">
-                                <input id="CTS_SurveyNoValue" type="text" placeholder="CTS No." class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="CTS_HissaNo" type="text" placeholder="Hissa No" class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="CTS_PlotNo" type="text" placeholder="Plot No." class="form-control">
-                            </div>
-                            <div class="col-lg-3">
-                                <input id="CTS_OldNo" type="text" placeholder="Old CTS.No." class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-3">
-                                <input id="FP_SurveyNoValue" type="text" placeholder="Final Plot No." class="form-control">
-                            </div>
-                            <div class="col-lg-3">
+                                @Html.DropDownList("either1", new SelectList((System.Collections.IEnumerable)ViewData["Either1"], "Value", "Text"), "Select ", new { @class = "form-control ", @id = "either1", Title = "PersonId", Placeholder = "  " })
 
                             </div>
-                            <div class="col-lg-3">
-
+                            <div class="col-lg-3"><button type="button" class="btn btn-primary pull-right AddSignature" id="btnAddSignature">Add Condition AND</button></div>
+                        </div>
+                        <div class="form-group RowAddSignature" id="RowAddSignature1" style="display:none;">
+                            <label class="col-lg-2 control-label">Authority Signatory</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("OfficePersonId2", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId2", Title = "PersonId", Placeholder = "Signature " })
                             </div>
                             <div class="col-lg-3">
-
+                                <select id="either2" class="form-control">
+                                    <option value="0">select</option>
+                                    <option value="1">Either1</option>
+                                    <option value="2">Either2</option>
+                                    <option value="3">Either3</option>
+                                </select>
                             </div>
                         </div>
+                        <div class="form-group RowAddSignature" id="RowAddSignature2" style="display:none;">
+                            <label class="col-lg-2 control-label">Authority Signatory</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("OfficePersonId3", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId3", Title = "PersonId", Placeholder = "Signature " })
+                            </div>
+                            <div class="col-lg-3">
+                                <select id="either3" class="form-control">
+                                    <option value="0">select</option>
+                                    <option value="1">Either1</option>
+                                    <option value="2">Either2</option>
+                                    <option value="3">Either3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group RowAddSignature" id="RowAddSignature3" style="display:none;">
+                            <label class="col-lg-2 control-label">Authority Signatory</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("OfficePersonId4", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId4", Title = "PersonId", Placeholder = "Signature " })
+                            </div>
+                            <div class="col-lg-3">
+                                <select id="either4" class="form-control">
+                                    <option value="0">select</option>
+                                    <option value="1">Either1</option>
+                                    <option value="2">Either2</option>
+                                    <option value="3">Either3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group RowAddSignature" id="RowAddSignature3" style="display:none;">
+                            <label class="col-lg-2 control-label">Authority Signatory</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("OfficePersonId4", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId5", Title = "PersonId", Placeholder = "Signature " })
+                            </div>
+                            <div class="col-lg-3">
+                                <select id="either5" class="form-control">
+                                    <option value="0">select</option>
+                                    <option value="1">Either1</option>
+                                    <option value="2">Either2</option>
+                                    <option value="3">Either3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="AuthorityDetails"></div>
 
                         <div>
-                            <div>
-                                <div class="hr-line-dashed" ></div>
-                                <h5>
-                                    Owner as per Ownership Document (7/12, Property Card)
-                                </h5>
-                                <div class="hr-line-dashed" ></div>
-                            </div>
-                           
-                            <div>
-                                <div class="form-group RowOwner" id="RowOwner" style="display:none;">
-                                    <div class=" ">
-                                        <label class="col-lg-2 control-label">Owner</label>
-                                        <div class="col-lg-4">
-                                            <input id="OwnerNameID" type="hidden" value="">
-                                            <input id="OwnerName" type="text" placeholder="Owner Name" class="form-control">
-                                        </div>
-                                        <div class="col-lg-2">
-                                        </div>
-                                        <div class="col-lg-4">
+                            <div class="form-group">
 
-                                        </div>
-                                    </div>
-
+                                <label class="col-lg-2 control-label">
+                                    Sub-registrar office
+                                </label>
+                                <div class="col-lg-4">
+                                    <input id="SubRegistrar" type="text" placeholder="Sub-registrar Office" class="form-control">
                                 </div>
-                                <div class="form-group" id="RowOwner2">
-                                    <div class=" ">
-                                        <label class="col-lg-2 control-label">Owner</label>
-                                        <div class="col-lg-4">
-                                            <input id="OwnerNameID1" type="hidden" value="">
-                                            <input id="OwnerName1" type="text" placeholder="Owner Name" class="form-control">
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <i class="fa fa-plus addMultiOwner" id="addMultiOwner" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                                        </div>
-                                        <div class="col-lg-4" style="margin-left: 0!important">
-                                            <span class="IsultiOwner">
-                                                @Html.CheckBox("s", new { @class = "", title = "Is Multiple Owner", @id = "IsultiOwner" })
-                                                <label for="checkbox5">
-                                                    Is Multiple Owner
-                                                </label>
-                                            </span>
-                                        </div>
-                                    </div>
+                                <div class="col-lg-4">
 
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">Area under proposal</label>
-                                    <div class="col-lg-4">
-                                        <input id="AreaUnderProposal" type="text" placeholder="Area" class="form-control">
-                                    </div>
-                                    <label class="col-lg-2 control-label">Units</label>
-                                    <div class="col-lg-4">
-                                        @Html.DropDownList("AreaUnderProposalUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "AreaUnderProposalUnitId", Title = "AreaUnderProposalUnitId" })
-                                    </div>
+
+                                    <input id="SaveAuthority" type="button" class="btn btn-primary" value="Save">
                                 </div>
                             </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            S. No+Hissa
+                                        </th>
+                                        <th>
+                                            Owners
+                                        </th>
+                                        <th>
+                                            Owner Area
+                                        </th>
+                                        <th colspan="2">
+                                            Doc Area
+                                        </th>
+
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+
+                                            @Html.CheckBox("s", new { @class = "", title = "Is Multiple Owner", @id = "IsultiOwner1" })
+
+                                            if total area
+
+                                        </td>
+                                        <td>
+
+                                            <input id="Area_on_doc1" type="text" placeholder=" Area on doc" class="form-control">
+                                        </td>
+                                        <td><input id="Area_on_doc_remark1" type="text" placeholder="Remark" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <select id="DropSurvey" class="form-control">
+                                                <option value="Exemplo1">Surve No.</option>
+                                                <option value="Exemplo2">1212</option>
+                                                <option value="Exemplo3">545</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select id="Dropownerid" class="form-control">
+                                                <option value="Exemplo1">Owners</option>
+                                                <option value="Exemplo2">1212</option>
+                                                <option value="Exemplo3">545</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input id="Area_on_doc_remark" type="text" placeholder="total Area Entry Not done" class="form-control">
+
+
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <input id="total Area" type="text" placeholder="total Area" class="form-control">
+
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            total Area
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            Display total area
+                                        </td>
+                                        <td> </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Total Ownership Area</label>
-                            <div class="col-lg-4">
-                                <input id="TotalOwnershipArea" type="text" placeholder="Area" class="form-control">
-                            </div>
-                            <label class="col-lg-2 control-label">Units</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("TotalOwnershipAreaUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "TotalOwnershipAreaUnitId", Title = "TotalOwnershipAreaUnitId" })
-                            </div>
+
+                    </div>
+                </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                            Proposal detail entry
+                        </h5>
+                        <div class="ibox-tools">
+
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
                         </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Area under proposal (Cumulative)  </label>
-                            <div class="col-lg-4">
-                                <input id="TotalCumulativeAreaUnderProposal" type="text" placeholder="Area" class="form-control">
-                            </div>
-                            <label class="col-lg-2 control-label">Units</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("TotalOwnershipAreaUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "TotalOwnershipAreaUnitId", Title = "TotalOwnershipAreaUnitId" })
-                            </div>
+                    </div>
+                    <div class="ibox-content iboxCumulativedataView">
+                        <div class="">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            S. No, Gat No, CTS No
+                                        </th>
+                                        <th>
+                                            Currnet owner name
+                                        </th>
+                                        <th>
+                                            Area
+                                        </th>
+                                        <th>Units</th>
+                                        <th>Doc number</th>
+                                        <th>Date</th>
+                                        <th>Registrar</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            S. No, Gat No, CTS No
+                                        </td>
+                                        <td>
+                                            Currnet owner name
+                                        </td>
+                                        <td>
+                                            Area
+                                        </td>
+                                        <td>Units</td>
+                                        <td>Doc number</td>
+                                        <td>Date</td>
+                                        <td>Registrar</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="hr-line-dashed"></div>
+
                 <div class="row form-group">
                     <div class="col-md-3">
                     </div>
                     <div class="col-md-8 pull-right">
                         <div class="pull-right">
-                            @Html.ActionLink("Cancel", "CompanyList", "Master", null, new { @class = "btn btn-white" })
+                            @Html.ActionLink("Cancel", "ProjectList", "Master", null, new { @class = "btn btn-white" })
                             <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
                         </div>
                     </div>
                 </div>
 
             </div>
+        </div>
 
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
 
-            <div class="col-lg-4">
-                <div class="ibox float-e-margins">
-
-                    <div class="ibox-content ibox-content1 ">
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Survay</h5>
-                                    <hr class="nosurvay" style="margin-top: 0px; margin-bottom: 5px;" />
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <table class="table" id="survaylist">
-                                    <thead>
-                                        <tr>
-                                            <th>Survay Type</th>
-
-                                            <th>No</th>
-                                            <th>Hissa No</th>
-                                            <th>Area</th>
-                                            <th>Unit</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                <div class="ibox-content ibox-content1 ">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Survay</h5>
+                                <hr class="nosurvay" style="margin-top: 0px; margin-bottom: 5px;" />
                             </div>
                         </div>
 
-                        <div class="divCertification">
-                            <table class="table" id="tblCertification">
+                        <div class="col-sm-12">
+                            <table class="table" id="survaylist">
                                 <thead>
+                                    <tr>
+                                        <th>Survay Type</th>
 
+                                        <th>No</th>
+                                        <th>Hissa No</th>
+                                        <th>Area</th>
+                                        <th>Unit</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>
                         </div>
+                    </div>
 
-                        <div>
+                    <div class="divCertification">
+                        <table class="table" id="tblCertification">
+                            <thead>
 
-                            <div class="CompanyAddressOuterDiv" id="CompanyAddressOuterDiv">
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
 
-                            </div>
+                    <div>
 
+                        <div class="CompanyAddressOuterDiv" id="CompanyAddressOuterDiv">
 
-                            <div>
-                                <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                            </div>
-                            <div>
-                                <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                            </div>
-                            <div>
-                                <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                            </div>
-                            <div>
-                                <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                            </div>
-
-                            <div>
-                                <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
-                            </div>
                         </div>
 
 
+                        <div>
+                            <span id="showOfcaddress2" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showOfccity" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+                        <div>
+                            <span id="showOfcdistrict" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
+
+                        <div>
+                            <span id="showOfczip" class="col-lg-12" style="overflow-wrap:break-word;"></span>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
+    </div>
 </form>
+
+<!-- Modal -->
+<input type="hidden" id="isUndevidedValue" value="0" />
+<div id="myModal" class="modal fade in" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close closeModal" id="closeModal">&times;</button>
+                <h4 class="modal-title">Add Owner  </h4>
+                <span class="IsultiOwner">
+                    @*@Html.CheckBox("UndevidedShares", new { @class = "", title = "Is Multiple Owner", @id = "IsUndevidedShares" })*@
+                   
+                </span>
+            </div>
+            <div class="modal-body">
+                <div id="OwnerPopup">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closeModal">Close</button>
+                <button type="button" id="SaveModal" class="btn btn-default">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="myModalUndevided" class="modal fade in" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close closeModal" id="closeModal2">&times;</button>
+                <h4 class="modal-title">Add Owner for Undevided share</h4>
+                 
+            </div>
+            <div class="modal-body">
+                <div id="OwnerPopup2">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closeModal">Close</button>
+                <button type="button" id="SaveModal2" class="btn btn-default">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         
+        getAllOwners();
+        var v = $("#DevelopersId").val();
+        var selectedValues2 = new Array();
+        var selected = v.split(',');
+        var len1 = selected.length;
+        for (i = 0; i < len1; i++) {
+            selectedValues2[i] = selected[i].trim().toString();
+        }
+        $("#DeveloperCompanyID").val(selectedValues2);
+        $('.closeModal').on("click", function (e) {
+            $('#myModal').hide();
+            $('#myModalUndevided').hide();
+        });
+        
+        $('#AddOwnerUndevided').on("click", function (e) {
+             
+            $('#isUndevidedValue').val(1);
+            var SurveyNoTypeID = $('#SurveyNoTypeID').val();
+            var OwnerSurveyNo = $('#OwnerSurveyNo').val();
+            if (SurveyNoTypeID == "") {
+                alert("Please select Survey type");
+                return false;
+            }
+            if (OwnerSurveyNo == "") {
+                alert("Please select Survey Number"); return false;
+            }
+           
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/GetProjectOwnerSurvey2',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(),
+                    SurvayTypeID: SurveyNoTypeID,
+                    OwnerSurveyNo: OwnerSurveyNo ,
+                    isdevideshares :1
+
+                },
+                success: function (data) {
+                    $('#myModalUndevided').show();
+                    //document.getElementById("IsUndevidedShares").checked == true;
+                    
+                    $('#OwnerPopup2').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+
+        $('#AddOwner').on("click", function (e) {
+            $('#isUndevidedValue').val(0);
+            var SurveyNoTypeID = $('#SurveyNoTypeID').val();
+            var OwnerSurveyNo = $('#OwnerSurveyNo').val();
+            if (SurveyNoTypeID == "") {
+                alert("Please select Survey type");
+                return false;
+            }
+            if (OwnerSurveyNo == "") {
+                alert("Please select Survey Number"); return false;
+            }
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/GetProjectOwnerSurvey',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val() ,
+                    SurvayTypeID: SurveyNoTypeID ,
+                    OwnerSurveyNo: OwnerSurveyNo ,
+                     isdevideshares: 0
+                     
+                },
+                success: function (data) {
+                   
+                    $('#myModal').show();
+
+                   // $('#l1').text = "Add Undevided Shares";
+                    $('#OwnerPopup').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+        
+    
+        
+        $('#SaveModal').on("click", function (e) {
+            debugger;
+            var OwnerAreaUnderProposal1 = $("#OwnerAreaUnderProposal").val();
+            var OwnerNames1 = $("#OwnerName1").val();
+           
+            if (OwnerAreaUnderProposal1 == 0) {
+                $("#OwnerAreaUnderProposal").addClass("requiredfield");
+                return false;
+            }
+            else {
+                $("#OwnerAreaUnderProposal").removeClass("requiredfield");
+            }
+            if (OwnerNames1 == "") {
+                $("#OwnerName1").addClass("requiredfield");
+                return false;
+            }
+            else {
+                $("#OwnerName1").removeClass("requiredfield");
+            }
+            var idArrOwner = [];
+            $('.RowOwnerArea').each(function (k, v) {
+                var OwnerName = $(this).closest("div").find("#OwnerName1").val();
+                var OwnerID = 0;
+                OwnerID = $(this).closest("div").find("#HdnOwnerIDPopup").val();
+                if (OwnerID != null && OwnerID > 0) {
+                   
+                }
+                var OwnerAreaUnderProposal = $(this).closest("div").find("#OwnerAreaUnderProposal").val();
+                var OwnerAreaUnderProposalUnitId = $(this).closest("div").find("#OwnerAreaUnderProposalUnitId option:selected").val();
+               
+                var tdVals = OwnerID + "~" + OwnerName + "~" + OwnerAreaUnderProposal + "~" + OwnerAreaUnderProposalUnitId ;
+
+                if (OwnerName != "") {
+                    idArrOwner.push(tdVals);
+                }
+            });
+            var SaveidArrOwner = [];
+           
+            for (var i = 0; i < idArrOwner.length; i++) {
+                var arrElement = idArrOwner[i].split("~");
+                item = {}
+                item["OwnerID"] = arrElement[0];
+                item["OwnerName"] = arrElement[1];
+                item["Area"] = arrElement[2];
+                item["AreaUnitID"] = arrElement[3];
+               
+                SaveidArrOwner.push(item);
+            }
+             
+            var Share = 0;
+            
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/SaveProjectOwnerDetails',
+                data:
+                {
+                    PropertCardTypeId: $('#PropertyCardTypeID').val(),
+                    SurvayDetailId: $('#OwnerSurveyNo').val(),
+                    ProjectID: $('#ProjectID').val(),
+                    IsUndevidedShares: 0,
+                    ProjectOwnerDetails: SaveidArrOwner
+                },
+                success: function (data) {
+                    $("#myModal").hide();
+                    $.ajax({
+                        type: 'GET',
+                        dataType: "text",
+                        url: '/Master/GetOwnersPropertyCardList',
+                        data:
+                        {
+                            ProjectID: $('#ProjectID').val(),
+                            SurvayDetailId: $('#OwnerSurveyNo').val()
+                        },
+                        success: function (data) {
+
+                            $('#OwnersData').html(data);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+          
+        });
+        $('#SaveModal2').on("click", function (e) {
+            var OwnerAreaUnderProposal1 = $("#OwnerAreaUnderProposal2").val();
+             
+            if (OwnerAreaUnderProposal1 == 0) {
+                $("#OwnerAreaUnderProposal2").addClass("requiredfield");
+                return false;
+            }
+            else {
+                $("#OwnerAreaUnderProposal2").removeClass("requiredfield");
+            }
+            var OwnerName11 = $("#OwnerName1").val();
+
+            if (OwnerName11 == 0) {
+                $("#OwnerName1").addClass("requiredfield");
+                return false;
+            }
+            else {
+                $("#OwnerName1").removeClass("requiredfield");
+            }
+            
+            var idArrOwner = [];
+            $('.RowOwnerArea2').each(function (k, v) {
+                var OwnerName = $(this).closest("div").find("#OwnerName1").val();
+                var OwnerID = 0;
+                OwnerID = $(this).closest("div").find("#HdnOwnerIDPopup").val();
+                if (OwnerID != null && OwnerID > 0) {
+
+                }
+                var OwnerAreaUnderProposal = $("#OwnerAreaUnderProposal2").val();
+                var OwnerAreaUnderProposalUnitId = $("#OwnerAreaUnderProposalUnitId2 option:selected").val();
+
+                var tdVals = OwnerID + "~" + OwnerName + "~" + OwnerAreaUnderProposal + "~" + OwnerAreaUnderProposalUnitId;
+
+                if (OwnerName != "") {
+                    idArrOwner.push(tdVals);
+                }
+            });
+            var SaveidArrOwner = [];
+
+            for (var i = 0; i < idArrOwner.length; i++) {
+                var arrElement = idArrOwner[i].split("~");
+                item = {}
+                item["OwnerID"] = arrElement[0];
+                item["OwnerName"] = arrElement[1];
+                item["Area"] = arrElement[2];
+                item["AreaUnitID"] = arrElement[3];
+
+                SaveidArrOwner.push(item);
+            }
+
+            var Share = 0;
+             
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/SaveProjectOwnerDetails',
+                data:
+                {
+                    PropertCardTypeId: $('#PropertyCardTypeID').val(),
+                    SurvayDetailId: $('#OwnerSurveyNo').val(),
+                    ProjectID: $('#ProjectID').val(),
+                    IsUndevidedShares: 1,
+                    ProjectOwnerDetails: SaveidArrOwner
+                },
+                success: function (data) {
+                    $("#myModalUndevided").hide();
+                    $.ajax({
+                        type: 'GET',
+                        dataType: "text",
+                        url: '/Master/GetOwnersPropertyCardList',
+                        data:
+                        {
+                            ProjectID: $('#ProjectID').val(),
+                            SurvayDetailId: $('#OwnerSurveyNo').val()
+                        },
+                        success: function (data) {
+
+                            $('#OwnersData').html(data);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+
+
+
+        
+        function getAllOwners() {
+
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/GetOwnersPropertyCardListAll',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val()
+                },
+                success: function (data) {
+
+                    $('#OwnersDataAll').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        function getOwners() {
+
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/GetOwnersPropertyCardList',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val()
+                },
+                success: function (data) {
+
+                    $('#OwnersData').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        function SaveSurveyNo()
+        {
+             
+            var Ow_SurveyNoValue = $('#Ow_SurveyNoValue').val();
+            var Ow_HissaNo = $('#Ow_HissaNo').val();
+            var Ow_PlotNo = $('#Ow_PlotNo').val();
+            var Ow_OldNo = $('#Ow_OldNo').val(); 
+            if (Ow_SurveyNoValue == "") {
+                if (Ow_HissaNo != "" || Ow_PlotNo != "" || Ow_OldNo != "") {
+                    $('#Ow_SurveyNoValue').addClass("requiredfield");
+                }
+                else {
+                    $('#Ow_SurveyNoValue').removeClass("requiredfield");
+                }
+            }
+
+            var G_SurveyNoValue = $('#G_SurveyNoValue').val();
+            var G_HissaNo = $('#G_HissaNo').val();
+            var G_PlotNo = $('#G_PlotNo').val();
+            var G_OldNo = $('#G_OldNo').val();
+            if (G_SurveyNoValue == "") {
+                if (G_HissaNo != "" || G_PlotNo != "" || G_OldNo != "") {
+                    $('#G_SurveyNoValue').addClass("requiredfield");
+                } else {
+                    $('#G_SurveyNoValue').removeClass("requiredfield");
+                }
+            }
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/SaveProjectOwnerSurveyNo',
+                async: false,
+                data:
+                {
+                    SurvayDetailId: 0,
+                    ProjectID: $('#ProjectID').val(),
+                    S_SurveyNo: $('#Ow_SurveyNoValue').val(),
+                    S_OwnerID: $('#ownerid').val(),
+                    S_HissaNo: $('#Ow_HissaNo').val(),
+                    S_PlotNo: $('#Ow_PlotNo').val(),
+                    S_OldNo: $('#Ow_OldNo').val(),
+                    G_SurveyNo: $('#G_SurveyNoValue').val(),
+                    G_HissaNo: $('#G_HissaNo').val(),
+                    G_PlotNo: $('#G_PlotNo').val(),
+                    G_OldNo: $('#G_OldNo').val(),
+                    CTS_SurveyNo: $('#CTS_SurveyNoValue').val(),
+                    CTS_HissaNo: $('#CTS_HissaNo').val(),
+                    CTS_PlotNo: $('#CTS_PlotNo').val(),
+                    CTS_OldNo: $('#CTS_OldNo').val(),
+                    FP_SurveyNo: $('#FP_SurveyNoValue').val()
+                },
+                success: function (data) {
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        }
+        $('#AddOwnerDoc').on("click", function (e) { 
+            SaveSurveyNo();          
+        });
+       
+        
+        $('#AddOwnerDocNext').on("click", function (e) {
+            SaveSurveyNo();
+            $("#tab-2").addClass("active");
+            $("#tab-1").removeClass("active");
+             
+            $("#SurveyNoTypeID").val(1);
+            changeSurveyNo();
+            var t = $("#Ow_SurveyNoValue").val();
+           
+            $("#OwnerSurveyNo option:contains("+t+")").attr('selected', 'selected');
+        });
+
+
+        $('#OwnerSurveyNo').change(function () {
+            //
+            $.ajax({
+                type: 'GET',
+                dataType: "text",
+                url: '/Master/GetOwnersPropertyCardList',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(),
+                    SurvayDetailId: $('#OwnerSurveyNo').val()
+                },
+                success: function (data) {
+
+                    $('#OwnersData').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+        });
+        function changeSurveyNo() {
+             
+             $.ajax({
+                url: "@Url.Action("GetSurveyNoByTypeID", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                    SurveyNoTypeID: $('#SurveyNoTypeID').val()
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                     
+                    $('#OwnerSurveyNo').html(data);
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+                }
+            });
+        }
+        $('#SurveyNoTypeID').change(function () {
+            changeSurveyNo();
+            return true;
+        });
+            $('#ownerid').change(function () {
+            var ownerid = $('#ownerid').val();
+            $.ajax({
+                type: 'GET',
+                dataType: "text",
+                url: '/Master/GetProjectInfoAuthority',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(),
+                    OwnerID: $('#ownerid').val()
+                },
+                success: function (data) {
+
+                    $('#AuthorityDetails').html(data);
+                    var v = $("#selectedVal1").val();
+                    var selectedValues = new Array();
+                    var selected = v.split(',');
+                   var len = selected.length;
+                    for (i = 0; i < len; i++) {
+                        selectedValues[i] = selected[i].trim().toString();
+                    }
+
+                    $("#SignatoryPersonId1").val(selectedValues);//.trigger('change.select2');;//.trigger("change");
+                   // $('#SignatoryPersonId1').trigger('change')
+                    $("#SubRegistrar").val($('#hdnSubRegistarOffice').val());
+                    $("#either1").val($('#hdneither1').val());
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        });
+        $('.AddSignature').on("click", function (e) {
+
+            var x = document.getElementById("RowAddSignature1");
+            if (window.getComputedStyle(x).display === "none") {
+                $("#RowAddSignature1").show();
+                return;
+            }
+
+            var x = document.getElementById("RowAddSignature2");
+            if (window.getComputedStyle(x).display === "none") {
+                $("#RowAddSignature2").show();
+                return;
+            }
+
+            var x = document.getElementById("RowAddSignature3");
+            if (window.getComputedStyle(x).display === "none") {
+                $("#RowAddSignature3").show();
+                return;
+            }
+            var x = document.getElementById("RowAddSignature4");
+            if (window.getComputedStyle(x).display === "none") {
+                $("#RowAddSignature4").show();
+                return;
+            }
+            var x = document.getElementById("RowAddSignature5");
+            if (window.getComputedStyle(x).display === "none") {
+                $("#RowAddSignature5").show();
+                return;
+            }
+            return false;
+        });
+        $("body").addClass("mini-navbar");
+
+
         $('#addMultiInternalTeam').on("click", function (e) {
-           $(".iboxInternal").show();
+            $(".iboxInternal").show();
             var ProjectID = $('#ProjectID').val();
-            if (ProjectID == 0) {  
+            if (ProjectID == 0) {
                 var ParentCompanyID = $("#ParentCompanyID").val();
                 var ParentCompanyID_text = $("#ParentCompanyID option:selected").text();
-                
                 var InternalPersonId_Text = $("#InternalPersonId option:selected").text();
                 var InternalPersonId = $("#InternalPersonId").val();
                 var DesignationId1 = $("#DesignationId1 option:selected").val();
@@ -612,18 +1447,15 @@
                 $('.MultiInternalTeam').each(function (k, v) {
                     InternalTeamCount++;
                 });
-                var binding = '<div class="col-md-12"><div class="MultiInternalTeam" InternalTeamCount= "' + InternalTeamCount + '" ParentCompanyID="' + ParentCompanyID + '" InternalPersonId="' +InternalPersonId + '" DesignationId1="' + DesignationId1 + '" SubDesignationID1="' + SubDesignationID1 + '" SubPartDesignationID1 ="' + SubPartDesignationID1 + '"> <span id= "ShowInternalPersonId" class="col-lg-12" style = "overflow-wrap:break-word;" >' + ParentCompanyID_text + '</span>  </div> <div ><span id="showDesignationId1" class="col-lg-12" style="overflow-wrap:break-word;">' + InternalPersonId_Text + '</span></div><div ><span id="showDesignationId1" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId1_text + '</span></div><div > <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div ><span id="showSubDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID1_Text + '</span> </div> <div > <span id="showSubPartDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID1_text + '</span></div></div> <div class="col-lg-12"> <hr style = "margin-top: 11px; margin-bottom: 10px;"/></div> ';
+                var binding = '<div class="col-md-12"><div class="MultiInternalTeam" InternalTeamCount= "' + InternalTeamCount + '" ParentCompanyID="' + ParentCompanyID + '" InternalPersonId="' + InternalPersonId + '" DesignationId1="' + DesignationId1 + '" SubDesignationID1="' + SubDesignationID1 + '" SubPartDesignationID1 ="' + SubPartDesignationID1 + '"> <span id= "ShowInternalPersonId" class="col-lg-12" style = "overflow-wrap:break-word;" >' + ParentCompanyID_text + '</span>  </div> <div ><span id="showDesignationId1" class="col-lg-12" style="overflow-wrap:break-word;">' + InternalPersonId_Text + '</span></div><div ><span id="showDesignationId1" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId1_text + '</span></div><div > <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div ><span id="showSubDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID1_Text + '</span> </div> <div > <span id="showSubPartDesignationID1" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID1_text + '</span></div></div> <div class="col-lg-12"> <hr style = "margin-top: 11px; margin-bottom: 10px;"/></div> ';
 
                 if (InternalPersonId != "" && DesignationId1 != "") {
                     $('.DivInternalTeam').last().append(binding);
                 }
-               
-                 
-
             }
             else {
-                debugger;
-                  
+
+
                 var ParentCompanyID = $("#ParentCompanyID").val();
                 var InternalPersonId = $("#InternalPersonId").val();
                 var internalTeamid = $("#internalTeamid").val();
@@ -639,7 +1471,7 @@
                 if (DesignationId1 == "") {
                     return false;
                 }
-                debugger;
+
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
@@ -647,13 +1479,13 @@
                     data:
                     {
                         ProjectID: ProjectID
-                        ,ParentCompanyID : ParentCompanyID
+                        , ParentCompanyID: ParentCompanyID
                         , internalTeamid: internalTeamid
                         , InternalPersonId: InternalPersonId
                         , DesignationId1: DesignationId1
                         , SubDesignationID1: SubDesignationID1
                         , SubPartDesignationID1: SubPartDesignationID1
-                        
+
                     },
                     success: function (da) {
                         if (da != "Success") {
@@ -662,7 +1494,7 @@
                         $("select#InternalPersonId").prop('selectedIndex', 0);
                         $("select#DesignationId1").prop('selectedIndex', 0);
                         $("select#SubDesignationID1").prop('selectedIndex', 0);
-                        $("select#SubPartDesignationID1").prop('selectedIndex', 0); 
+                        $("select#SubPartDesignationID1").prop('selectedIndex', 0);
                         $("select#ParentCompanyID").prop('selectedIndex', 0);
                         $.ajax({
                             type: 'GET',
@@ -717,60 +1549,57 @@
                 if (InternalPersonId != "" && DesignationId2 != "") {
                     $('.DivExternalTeam').last().append(binding);
                 }
-
-
-
             }
             else {
-                debugger;
-
-
-                var InternalPersonId = $("#InternalPersonId").val();
-
-                var DesignationId1 = $("#DesignationId1 option:selected").val();
-                var DesignationId1_text = $("#DesignationId1 option:selected").text();
-                var SubDesignationID1 = $("#SubDesignationID1 option:selected").val();
-                var SubDesignationID1_Text = $("#SubDesignationID1 option:selected").text();
-                var SubPartDesignationID1 = $("#SubPartDesignationID1 option:selected").val();
-                var SubPartDesignationID1_text = $("#SubPartDesignationID1 option:selected").text();
-                if (InternalPersonId == "") {
-                    return false;
+                var ExternalTeamid = $("#ExternalTeamid").val();
+                var ExtTeamParentCompanyID = $("#ExtTeamParentCompanyID").val();
+                var ExtTeamParentCompanyID_text = $("#ExtTeamParentCompanyID option:selected").text();
+                var ExternalPersonId_Text = $("#ExternalPersonId option:selected").text();
+                var ExternalPersonId = $("#ExternalPersonId").val();
+                var DesignationId2 = $("#DesignationId2 option:selected").val();
+                var DesignationId2_text = $("#DesignationId2 option:selected").text();
+                var SubDesignationID2 = $("#SubDesignationID2 option:selected").val();
+                var SubDesignationID2_Text = $("#SubDesignationID2 option:selected").text();
+                var SubPartDesignationID2 = $("#SubPartDesignationID2 option:selected").val();
+                var SubPartDesignationID2_text = $("#SubPartDesignationID2 option:selected").text();
+                if (SubDesignationID2_Text.trim() == "Select Sub Designation") {
+                    SubDesignationID2_Text = "";
                 }
-                if (DesignationId1 == "") {
-                    return false;
+                if (SubPartDesignationID2_text.trim() == "Select Sub Designation") {
+                    SubPartDesignationID2_text = "";
                 }
-                debugger;
+
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
-                    url: '/Master/SaveInternalTeam',
+                    url: '/Master/SaveProjectExternalTeam',
                     data:
                     {
-                        CompanyId: CompanyID
-                        , internalTeamid: internalTeamid
-                        , InternalPersonId: InternalPersonId
-                        , DesignationId1: DesignationId1
-                        , SubDesignationID1: SubDesignationID1
-                        , SubPartDesignationID1: SubPartDesignationID1
-                        , SaveInternalTeamMobile: SaveMobileNoTeam1
+                        ProjectID: ProjectID
+                        , ParentCompanyID: ExtTeamParentCompanyID
+                        , internalTeamid: ExternalTeamid
+                        , InternalPersonId: ExternalPersonId
+                        , DesignationId1: DesignationId2
+                        , SubDesignationID1: SubDesignationID2
+                        , SubPartDesignationID1: SubPartDesignationID2
+
                     },
                     success: function (da) {
                         if (da != "Success") {
                             alert(da);
                         }
-                        $("select#InternalPersonId").prop('selectedIndex', 0);
-                        $("select#DesignationId1").prop('selectedIndex', 0);
-                        $("select#SubDesignationID1").prop('selectedIndex', 0);
-                        $("select#SubPartDesignationID1").prop('selectedIndex', 0);
-
-
+                        $("select#ExternalPersonId").prop('selectedIndex', 0);
+                        $("select#DesignationId2").prop('selectedIndex', 0);
+                        $("select#SubDesignationID2").prop('selectedIndex', 0);
+                        $("select#SubPartDesignationID2").prop('selectedIndex', 0);
+                        $("select#ExtTeamParentCompanyID").prop('selectedIndex', 0);
                         $.ajax({
                             type: 'GET',
                             dataType: "text",
-                            url: '/Master/GetCompanyInfoLeftSide',
+                            url: '/Master/GetProjectInfoLeftSide',
                             data:
                             {
-                                CompanyId: $('#CompanyID').val()
+                                ProjectID: $('#ProjectID').val()
                             },
                             success: function (data) {
                                 $('#CompanyAddressOuterDiv').html(data);
@@ -779,26 +1608,27 @@
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                             }
                         });
-
-                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
                     }
                 });
             }
         });
+
+
+
         $('#addMultiOwnerBlock').on("click", function (e) {
-           
+
             $('.iboxOwnership').show();
             var DbAddressID = 0;// $('#DbAddressID').val();
-            
-            var AreaUnderProposal = $("#AreaUnderProposal").val(); 
+
+            var AreaUnderProposal = $("#AreaUnderProposal").val();
             var TotalOwnershipArea = $("#TotalOwnershipArea").val();
-            var AreaUnderProposalUnitId = $("#AreaUnderProposalUnitId option:selected").val(); 
+            var AreaUnderProposalUnitId = $("#AreaUnderProposalUnitId option:selected").val();
             var AreaUnderProposalUnitText = $("#AreaUnderProposalUnitId option:selected").text();
             var TotalOwnershipAreaUnitId = $("#TotalOwnershipAreaUnitId option:selected").val();
             var TotalOwnershipAreaUnitText = $("#TotalOwnershipAreaUnitId option:selected").text();
-              
+
             //Adding multipal Mobile no into array
-           
+
 
             if (DbAddressID > 0) {
                 $.ajax({
@@ -904,11 +1734,11 @@
 
                     if (OwnerName != "") {
                         idArrOwner.push(tdVals);
-                        var bindrow1 = '<tr><td class="MultiMobileNo" AddressID="' + count + '" OwnerName="' + OwnerName + '" OwnerNameID="' + OwnerNameID + '">'+OwnerName+'</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
-                         $('.DivAddressInner').last().append(bindrow1);
+                        var bindrow1 = '<tr><td class="MultiMobileNo" AddressID="' + count + '" OwnerName="' + OwnerName + '" OwnerNameID="' + OwnerNameID + '">' + OwnerName + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
+                        $('.DivAddressInner').last().append(bindrow1);
                     }
                 });
-               
+
 
                 var SaveOwner = [];
 
@@ -920,8 +1750,8 @@
 
                     SaveOwner.push(item);
                 }
-               
-                
+
+
             }
 
         });
@@ -930,113 +1760,98 @@
             $(".iboxOfficeSide").show();
 
             var ProjectID = $('#ProjectID').val();
-            if (ProjectID == 0) {
-                
-
-                var OfficePersonId_text = $("#OfficePersonId option:selected").text();
-                var OfficePersonId = $("#OfficePersonId").val();
-                var DesignationId3 = $("#DesignationId3 option:selected").val();
-                var DesignationId3_text = $("#DesignationId3 option:selected").text();
-                var SubDesignationID3 = $("#SubDesignationID3 option:selected").val();
-                var SubDesignationID3_Text = $("#SubDesignationID3 option:selected").text();
-                var SubPartDesignationID3 = $("#SubPartDesignationID3 option:selected").val();
-                var SubPartDesignationID3_text = $("#SubPartDesignationID3 option:selected").text();
-                if (SubDesignationID3_Text.trim() == "Select Sub Designation") {
-                    SubDesignationID3_Text = "";
-                }
-                if (SubPartDesignationID3_text.trim() == "Select Sub Designation") {
-                    SubPartDesignationID3_text = "";
-                }
-                var OfficeSideTeamCount = 1;
-                $('.MultiOfficeSideTeam').each(function (k, v) {
-                    OfficeSideTeamCount++;
-                });
-                var binding = '<div class="col-md-12"><div class="MultiOfficeSideTeam" OfficeSideTeamCount= "' + OfficeSideTeamCount + '" OfficePersonId="' + OfficePersonId + '" DesignationId3="' + DesignationId3 + '" SubDesignationID3="' + SubDesignationID3 + '" SubPartDesignationID3 ="' + SubPartDesignationID3 + '">   <span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + OfficePersonId_text + '</span></div><div ><span id="showDesignationId3" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId3_text + '</span></div><div > <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div ><span id="showSubDesignationID3" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID3_Text + '</span> </div> <div > <span id="showSubPartDesignationID3" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID3_text + '</span></div></div> <div class="col-lg-12"> <hr style = "margin-top: 11px; margin-bottom: 10px;"/></div> ';
-
-                if (OfficePersonId != "" && DesignationId3 != "") {
-                    $('.DivOfficeSideTeam').last().append(binding);
-                }
-
-
-
-            }
-            else {
-                debugger;
-
-
-                var InternalPersonId = $("#InternalPersonId").val();
-
-                var DesignationId1 = $("#DesignationId1 option:selected").val();
-                var DesignationId1_text = $("#DesignationId1 option:selected").text();
-                var SubDesignationID1 = $("#SubDesignationID1 option:selected").val();
-                var SubDesignationID1_Text = $("#SubDesignationID1 option:selected").text();
-                var SubPartDesignationID1 = $("#SubPartDesignationID1 option:selected").val();
-                var SubPartDesignationID1_text = $("#SubPartDesignationID1 option:selected").text();
-                if (InternalPersonId == "") {
-                    return false;
-                }
-                if (DesignationId1 == "") {
-                    return false;
-                }
-                debugger;
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'json',
-                    url: '/Master/SaveInternalTeam',
-                    data:
-                    {
-                        CompanyId: CompanyID
-                        , internalTeamid: internalTeamid
-                        , InternalPersonId: InternalPersonId
-                        , DesignationId1: DesignationId1
-                        , SubDesignationID1: SubDesignationID1
-                        , SubPartDesignationID1: SubPartDesignationID1
-                        , SaveInternalTeamMobile: SaveMobileNoTeam1
-                    },
-                    success: function (da) {
-                        if (da != "Success") {
-                            alert(da);
-                        }
-                        $("select#InternalPersonId").prop('selectedIndex', 0);
-                        $("select#DesignationId1").prop('selectedIndex', 0);
-                        $("select#SubDesignationID1").prop('selectedIndex', 0);
-                        $("select#SubPartDesignationID1").prop('selectedIndex', 0);
-
-
-                        $.ajax({
-                            type: 'GET',
-                            dataType: "text",
-                            url: '/Master/GetCompanyInfoLeftSide',
-                            data:
-                            {
-                                CompanyId: $('#CompanyID').val()
-                            },
-                            success: function (data) {
-                                $('#CompanyAddressOuterDiv').html(data);
-
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            }
-                        });
-
-                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+            var OfficePersonId = $("#OfficePersonId").val();
+            var DesignationId3 = $("#DesignationId3 option:selected").val();
+            if (OfficePersonId != "" && DesignationId3!="") {
+                if (ProjectID == 0) {
+                    var OfficePersonId_text = $("#OfficePersonId option:selected").text();
+                    var DesignationId3_text = $("#DesignationId3 option:selected").text();
+                    var SubDesignationID3 = $("#SubDesignationID3 option:selected").val();
+                    var SubDesignationID3_Text = $("#SubDesignationID3 option:selected").text();
+                    var SubPartDesignationID3 = $("#SubPartDesignationID3 option:selected").val();
+                    var SubPartDesignationID3_text = $("#SubPartDesignationID3 option:selected").text();
+                    if (SubDesignationID3_Text.trim() == "Select Sub Designation") {
+                        SubDesignationID3_Text = "";
                     }
-                });
+                    if (SubPartDesignationID3_text.trim() == "Select Sub Designation") {
+                        SubPartDesignationID3_text = "";
+                    }
+                    var OfficeSideTeamCount = 1;
+                    $('.MultiOfficeSideTeam').each(function (k, v) {
+                        OfficeSideTeamCount++;
+                    });
+                    var binding = '<div class="col-md-12"><div class="MultiOfficeSideTeam" OfficeSideTeamCount= "' + OfficeSideTeamCount + '" OfficePersonId="' + OfficePersonId + '" DesignationId3="' + DesignationId3 + '" SubDesignationID3="' + SubDesignationID3 + '" SubPartDesignationID3 ="' + SubPartDesignationID3 + '">   <span id="showDesignationId2" class="col-lg-12" style="overflow-wrap:break-word;">' + OfficePersonId_text + '</span></div><div ><span id="showDesignationId3" class="col-lg-12" style="overflow-wrap:break-word;">' + DesignationId3_text + '</span></div><div > <span id="showOfcstate" class="col-lg-12" style="overflow-wrap:break-word;"></span></div><div ><span id="showSubDesignationID3" class="col-lg-12" style="overflow-wrap:break-word;">' + SubDesignationID3_Text + '</span> </div> <div > <span id="showSubPartDesignationID3" class="col-lg-12" style="overflow-wrap:break-word;">' + SubPartDesignationID3_text + '</span></div></div> <div class="col-lg-12"> <hr style = "margin-top: 11px; margin-bottom: 10px;"/></div> ';
+
+                    if (OfficePersonId != "" && DesignationId3 != "") {
+                        $('.DivOfficeSideTeam').last().append(binding);
+                    }
+                }
+                else {
+
+                    var Teamid = $('#OfficeTeamid').val();
+                    var OfficePersonId_text = $("#OfficePersonId option:selected").text();
+                    //var OfficePersonId = $("#OfficePersonId").val();
+                    //var DesignationId3 = $("#DesignationId3 option:selected").val();
+                    var DesignationId3_text = $("#DesignationId3 option:selected").text();
+                    var SubDesignationID3 = $("#SubDesignationID3 option:selected").val();
+                    var SubDesignationID3_Text = $("#SubDesignationID3 option:selected").text();
+                    var SubPartDesignationID3 = $("#SubPartDesignationID3 option:selected").val();
+                    var SubPartDesignationID3_text = $("#SubPartDesignationID3 option:selected").text();
+                    if (SubDesignationID3_Text.trim() == "Select Sub Designation") {
+                        SubDesignationID3_Text = "";
+                    }
+                    if (SubPartDesignationID3_text.trim() == "Select Sub Designation") {
+                        SubPartDesignationID3_text = "";
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '/Master/SaveProjectOfficeTeam',
+                        data:
+                        {
+                            ProjectID: ProjectID
+                            , Teamid: Teamid
+                            , personid: OfficePersonId
+                            , DesignationId1: DesignationId3
+                            , SubDesignationID1: SubDesignationID3
+                            , SubPartDesignationID1: SubPartDesignationID3
+
+                        },
+                        success: function (da) {
+                            if (da != "Success") {
+                                alert(da);
+                            }
+                            $("select#InternalPersonId").prop('selectedIndex', 0);
+                            $("select#DesignationId1").prop('selectedIndex', 0);
+                            $("select#SubDesignationID1").prop('selectedIndex', 0);
+                            $("select#SubPartDesignationID1").prop('selectedIndex', 0);
+
+                            $.ajax({
+                                type: 'GET',
+                                dataType: "text",
+                                url: '/Master/GetProjectInfoLeftSide',
+                                data:
+                                {
+                                    ProjectID: $('#ProjectID').val()
+                                },
+                                success: function (data) {
+                                    $('#CompanyAddressOuterDiv').html(data);
+
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                }
+                            });
+
+                        }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+                }
             }
         });
-        
-        $('.addMultiOwner').on("click", function (e) {
-           
-            var cloneCount = 1;
-            $('#RowOwner')
-                .clone(true)
-                .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
-                .insertAfter('[id=RowOwner2]:last').find("input").val("").find('#IsultiOwner').remove();
- 
-            
-            return false;
-        });
-         
+
+       
+
         $.ajax({
             type: 'GET',
             dataType: "text",
@@ -1044,34 +1859,30 @@
             data:
             {
                 ProjectID: $('#ProjectID').val()
-
             },
             success: function (data) {
-
-
                 $('#CompanyAddressOuterDiv').html(data);
-
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }
         });
         $('#addSurvay').on("click", function (e) {
-            
+
             var SurveyNoType = $("#SurveyNoType option:selected").text();
             var SurveyNoTypeID = $("#SurveyNoType option:selected").val();
             var SurveyNoValue = $("#SurveyNoValue").val();
             var SurveyArea = $("#SurveyArea").val();
             var SurveyHissaNo = $("#SurveyHissaNo").val();
-            
+
             var SurvayUnittext = $("#SurveyNoUnitId option:selected").text();
             var SurvayUnitId = $("#SurveyNoUnitId option:selected").val();
             var bindrow = '<tr><td>' + SurveyNoType + '</td><td class="hidden" >' + SurveyNoTypeID + '</td><td >' + SurveyNoValue + '</td><td>' + SurveyHissaNo + '</td> </td> <td>' + SurveyArea + '</td><td>' + SurvayUnittext + '</td><td class="hidden">' + SurvayUnitId + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td></tr>'
             $('#survaylist tbody').append(bindrow);
         });
 
-        
+
         $('#ExtTeamParentCompanyID').change(function () {
-             $.ajax({
+            $.ajax({
                 url: "@Url.Action("GetExternalTeamUnderCompany", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -1079,7 +1890,7 @@
                 }),
                 dataType: "text",
                 type: "POST",
-                async: true,
+                async: false,
                 success: function (data) {
                     $('#ExternalPersonId').html(data);
                 },
@@ -1092,7 +1903,7 @@
             return true;
         });
         $('#ParentCompanyID').change(function () {
-             $.ajax({
+            $.ajax({
                 url: "@Url.Action("GetInternalTeamUnderCompany", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -1100,7 +1911,7 @@
                 }),
                 dataType: "text",
                 type: "POST",
-                async: true,
+                async: false,
                 success: function (data) {
                     $('#InternalPersonId').html(data);
                 },
@@ -1122,7 +1933,7 @@
                 }),
                 dataType: "text",
                 type: "POST",
-                async: true,
+                async: false,
                 success: function (data) {
                     $('#SubCategoryID1').html(data);
                 },
@@ -1142,11 +1953,11 @@
                 contentType: "application/json",
                 data: JSON.stringify({
                     CategoryID: $('#CategoryID2').val(),
-                    val:2
+                    val: 2
                 }),
                 dataType: "text",
                 type: "POST",
-                async: true,
+                async: false,
                 success: function (data) {
                     $('#SubCategoryID2').html(data);
                 },
@@ -1158,13 +1969,51 @@
             });
             return true;
         });
-            
+
         $(document).on('click', 'i.deleterow', function (e) {
             e.preventDefault();
             $(this).parents('tr').remove();
         });
-
         
+        $('#IsUndevidedShares').on('click', function () {
+            var val = document.getElementById("IsUndevidedShares").checked;
+            if (val == true) {
+                $("#OwnerPopup").addClass("HideArea");
+            }
+            else {
+                $("#OwnerPopup").removeClass("HideArea");
+            }
+        });
+        $('#Propertycard1').on('click', function () {
+
+            var val = document.getElementById("Propertycard1").checked;
+            if (val == true) {
+
+                $("#SurveyNo").removeClass("disabledDiv")
+                $("#GatNo").removeClass("disabledDiv")
+              //  $("#CTSNo").addClass("disabledDiv")
+                $("#FinalPlot").removeClass("disabledDiv")
+            }
+            else {
+                $("#SurveyNo").addClass("disabledDiv")
+                $("#GatNo").addClass("disabledDiv")
+               // $("#CTSNo").removeClass("disabledDiv")
+              //  $("#FinalPlot").addClass("disabledDiv")
+            }
+        });
+        $('#Propertycard2').on('click', function () {
+
+            var val = document.getElementById("Propertycard2").checked;
+            if (val == true) {
+                $("#CTSNo").removeClass("disabledDiv");
+                $("#FinalPlot").removeClass("disabledDiv");
+            }
+            else {
+                $("#CTSNo").addClass("disabledDiv");
+            }
+            
+            
+        });
         $('#IsultiOwner').on('click', function () {
             var val = document.getElementById("IsultiOwner").checked;
             if (val == true) {
@@ -1174,13 +2023,78 @@
                 $('#addMultiOwner').hide();
             }
         });
-        $('#StateID').change(function ()
-        {
+        $('#StateID').change(function () {
             GetCity();
         });
-                  
+        $('#SaveAuthority').on('click', function () {
+
+            var signatorId = $('#signatorId').val();
+            var ownerid = $('#ownerid').val();
+            var s=  $("#SignatoryPersonId1").val().toString()
+            var selectedVal1 = s;
+            var selectedVal2 = $("#SignatoryPersonId2").val();
+            var selectedVal3 = $("#SignatoryPersonId3").val();
+            var selectedVal4 = $("#SignatoryPersonId4").val();
+            var selectedVal5 = $("#SignatoryPersonId5").val();
+            //var selectedVal5 = $("#SignatoryPersonId6").val();
+
+            var AreaUnderDevelopment = $("#Areaunderdeveloping").val();
+            var AreaUnitID = $("#AreaUnderProposalUnitId").val();
+            var AgreementNo = $("#AgreementNo").val();
+            var AgreementDate = $("#AgreementDate").val();
+            var SubRegistarOffice = $("#SubRegistrar").val();
+            var MDocumentID = $("#MDocumentID").val();
+            var either1 = $("#either1").val();
+            var either2 = $("#either2").val();
+            var either3 = $("#either3").val();
+            var either4 = $("#either4").val();
+            var either5= $("#either5").val();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Master/SaveAuthoritySignature',
+                data:
+                {
+                     ProjectID: $('#ProjectID').val()
+                    , OwnerID: ownerid
+                    , AreaUnderDevelopment: AreaUnderDevelopment
+                    , AreaUnitID: AreaUnitID
+                    , AgreementNo: AgreementNo
+                    , AgreementDate: AgreementDate
+                    , SubRegistarOffice: SubRegistarOffice
+                    , DocumentID: MDocumentID
+                    , signatorId: signatorId
+
+                    , selectedVal1: selectedVal1
+                    , selectedVal2: selectedVal2
+                    , selectedVal3: selectedVal3
+                    , selectedVal4: selectedVal4
+                    , selectedVal5: selectedVal5
+                    , either1: either1
+                    , either2: either2
+                    , either3: either3
+                    , either4: either4
+                    , either5: either5
+
+                },
+                success: function (da) {
+                    if (da != "Success") {
+                        alert(da);
+                    }
+                }
+            });
+        });
+        $('#btnSaveInitial').on('click', function () {
+
+            saveproject();
+
+        });
         $('#btnsave').on('click', function () {
-            
+
+            saveproject();
+
+        });
+        function saveproject() {
             var idArrsurvay = [];
             $('#survaylist tbody tr').each(function (k, v) {
                 var trElement = $(this);
@@ -1198,7 +2112,7 @@
             for (var i = 0; i < idArrsurvay.length; i++) {
                 var arrElement = idArrsurvay[i].split("~");
                 item = {}
-              
+
                 item["SurvayDetailId"] = 0;
                 item["SurvayTypeID"] = arrElement[1];
                 item["SurvayNo"] = arrElement[2];
@@ -1207,7 +2121,7 @@
                 item["UnitID"] = arrElement[6];
                 SaveSurvayDetails.push(item);
             }
-            debugger;
+
             //Adding multipal Internal Team into array
             var idArrInternalTeam = [];
             $('.MultiInternalTeam').each(function (k, v) {
@@ -1219,7 +2133,7 @@
             for (var i = 0; i < idArrInternalTeam.length; i++) {
                 var arrElement = idArrInternalTeam[i].split("~");
                 item = {}
-               
+
                 item["parentcompanyid"] = arrElement[0];
                 item["internalpersonid"] = arrElement[1];
                 item["designationid1"] = arrElement[2];
@@ -1253,15 +2167,15 @@
             //Adding multipal Offie side Team into array
             var idArrOfficeSideTeam = [];
             $('.MultiOfficeSideTeam').each(function (k, v) {
-                var tdVals =   $(this).attr("officepersonid") + "~" + $(this).attr("designationid3") + "~" + $(this).attr("subdesignationid3") + "~" + $(this).attr("subpartdesignationid3") + "~" + $(this).attr("officesideteamcount");
+                var tdVals = $(this).attr("officepersonid") + "~" + $(this).attr("designationid3") + "~" + $(this).attr("subdesignationid3") + "~" + $(this).attr("subpartdesignationid3") + "~" + $(this).attr("officesideteamcount");
                 idArrOfficeSideTeam.push(tdVals);
             });
 
             var SaveOfficeSideTeam = [];
             for (var i = 0; i < idArrExternalTeam.length; i++) {
                 var arrElement = idArrExternalTeam[i].split("~");
-                item = {} 
-                
+                item = {}
+
                 item["personid"] = arrElement[1];
                 item["designationid1"] = arrElement[2];
                 item["subdesignationid1"] = arrElement[3];
@@ -1270,13 +2184,17 @@
                 SaveOfficeSideTeam.push(item);
             }
 
+            var selectedDeveloper = $("#DeveloperCompanyID").val().toString();
+             
+            var ProjectID = $('#ProjectID').val();
+            var DeveloperTypeID = $("#CompanyOwnershipTypeID").val();
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
                 url: '/Master/SaveProjectNew',
                 data:
                 {
-                    ProjectID: 0,
+                    ProjectID: ProjectID,
                     ProjectName: $('#ProjectName').val(),
                     EnquiryDate: $('#EnquiryDate').val(),
                     ProjectShortName: $('#ProjectShortName').val(),
@@ -1288,124 +2206,134 @@
                     District: $('#District').val(),
                     TalukaID: $('#CityID').val(),
                     Goan: $(' #Goan').val(),
-                    Road: $('#Road').val(),   
+                    Road: $('#Road').val(),
                     Cost: $('#Cost').val(),
                     StartDate: $('#StartDate').val(),
-                    EndDate: $(' #Enddate').val(),
+                    EndDate: $('#EndDate').val(),
+                    Developers: selectedDeveloper,
+                    DeveloperTypeID: DeveloperTypeID,
                     SaveSurvayDetails: SaveSurvayDetails,
                     SaveProjectInternalTeam: SaveInternalTeam,
                     SaveProjectExternalTeam: SaveExternalTeam,
-                    
+
                 },
                 success: function (da) {
-                    alert(da);
+
+                    if (ProjectID > 0) {
+                        location.href = "ProjectList";
+                    }
+                    else {
+                        var n = 0;
+                        n = da.search("uccess");
+                        if (n > 0) {
+                            var res = da.replace("Success", "");
+                            location.href = "ProjectNew?id=" + res;
+
+                        }
+
+                    }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                 }
             });
 
-          
-        }); 
-         $('#DesignationId1').change(function ()
-        {
+        }
+        $('#DesignationId1').change(function () {
             $.ajax({
-            url: "@Url.Action("BindTeamSubDesignation", "Master")",
-            contentType: "application/json",
+                url: "@Url.Action("BindTeamSubDesignation", "Master")",
+                contentType: "application/json",
                 data: JSON.stringify({
                     DesignationID: $('#DesignationId1').val(),
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
                 success: function (data) {
-                $('#SubDesignationID1').html(data);
+                    $('#SubDesignationID1').html(data);
 
-            },
-            error: function (data) {  
-            },
-            complete: function () { 
-            }
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
 
             });
             return true;
 
         });
-         $('#DesignationId2').change(function ()
-        {
+        $('#DesignationId2').change(function () {
 
             $.ajax({
-            url: "@Url.Action("BindTeamSubDesignation", "Master")",
-            contentType: "application/json",
+                url: "@Url.Action("BindTeamSubDesignation", "Master")",
+                contentType: "application/json",
                 data: JSON.stringify({
                     DesignationID: $('#DesignationId2').val(),
-                    Val : 2
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
+                    Val: 2
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
                 success: function (data) {
-                $('#SubDesignationID2').html(data);
-            },
-            error: function (data) {
+                    $('#SubDesignationID2').html(data);
+                },
+                error: function (data) {
 
 
-            },
-            complete: function () {
+                },
+                complete: function () {
 
-            }
+                }
 
             });
             return true;
 
         });
-            $('#DesignationId3').change(function ()
-        {
+        $('#DesignationId3').change(function () {
             $.ajax({
-            url: "@Url.Action("BindTeamSubDesignation", "Master")",
-            contentType: "application/json",
+                url: "@Url.Action("BindTeamSubDesignation", "Master")",
+                contentType: "application/json",
                 data: JSON.stringify({
                     DesignationID: $('#DesignationId3').val(),
-                    val : 3
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
+                    val: 3
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
                 success: function (data) {
-                $('#SubDesignationID3').html(data);
+                    $('#SubDesignationID3').html(data);
 
-            },
-            error: function (data) {  
-            },
-            complete: function () { 
-            }
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
 
             });
             return true;
 
         });
-        $('#SubDesignationID1').change(function ()
-        {
+        $('#SubDesignationID1').change(function () {
 
             $.ajax({
-            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
-            contentType: "application/json",
+                url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+                contentType: "application/json",
                 data: JSON.stringify({
                     SubDesignationId: $('#SubDesignationID1').val(),
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
                 success: function (data) {
-                $('#SubPartDesignationID1').html(data);
+                    $('#SubPartDesignationID1').html(data);
 
-            },
-            error: function (data) {
+                },
+                error: function (data) {
 
 
-            },
-            complete: function () {
+                },
+                complete: function () {
 
-            }
+                }
 
             });
             return true;
@@ -1414,84 +2342,114 @@
         $('#SubDesignationID2').change(function () {
 
             $.ajax({
-            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
-            contentType: "application/json",
+                url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+                contentType: "application/json",
                 data: JSON.stringify({
                     SubDesignationId: $('#SubDesignationID2').val(),
                     Val: 2
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
                 success: function (data) {
-                $('#SubPartDesignationID2').html(data);
+                    $('#SubPartDesignationID2').html(data);
 
-            },
-            error: function (data) {
+                },
+                error: function (data) {
 
 
-            },
-            complete: function () {
+                },
+                complete: function () {
 
-            }
+                }
 
             });
             return true;
 
         });
-         $('#SubDesignationID3').change(function () {
+        $('#SubDesignationID3').change(function () {
 
             $.ajax({
-            url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
-            contentType: "application/json",
+                url: "@Url.Action("BindTeamSubPartDesignation", "Master")",
+                contentType: "application/json",
                 data: JSON.stringify({
                     SubDesignationId: $('#SubDesignationID3').val(),
                     Val: 3
-            }),
-            dataType: "text",
-            type: "POST",
-            async: true,
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
                 success: function (data) {
-                $('#SubPartDesignationID3').html(data);
+                    $('#SubPartDesignationID3').html(data);
 
-            },
-            error: function (data) {
+                },
+                error: function (data) {
 
 
-            },
-            complete: function () {
+                },
+                complete: function () {
 
-            }
+                }
 
             });
             return true;
 
         });
-    function GetCity() {
+        function GetCity() {
 
-         $.ajax({
-            url: "@Url.Action("FliterStateWiseCity", "Master")",
-            contentType: "application/json",
+            $.ajax({
+                url: "@Url.Action("FliterStateWiseCity", "Master")",
+                contentType: "application/json",
                 data: JSON.stringify({
-                StateID: $('#StateID').val(),
-            }),
-            dataType: "text",
-             type: "POST",
-             async: false,
-            success: function (data) {
-                $('#CityID2').html(data);
+                    StateID: $('#StateID').val(),
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    $('#CityID2').html(data);
 
-            },
-            error: function (data) {
+                },
+                error: function (data) {
 
 
-            },
-            complete: function () {
+                },
+                complete: function () {
 
-            }
+                }
 
             });
             return true;
         }
     });
+
+</script>
+<script>
+
+
+
+    $(".js-select2").select2({
+        closeOnSelect: false,
+        allowHtml: true,
+        allowClear: true,
+        tags: true // создает новые опции на лету
+    });
+
+    $('.icons_select2').select2({
+        width: "100%",
+        templateSelection: iformat,
+        templateResult: iformat,
+        allowHtml: true,
+        dropdownParent: $('.select-icon'),//обавили класс
+        allowClear: true,
+        multiple: false
+    });
+
+
+    function iformat(icon, badge, ) {
+        var originalOption = icon.element;
+        var originalOptionBadge = $(originalOption).data('badge');
+        return $('<span><i class="fa ' + $(originalOption).data('icon') + '"></i> ' + icon.text + '<span class="badge">' + originalOptionBadge + '</span></span>');
+    }
+
 </script>

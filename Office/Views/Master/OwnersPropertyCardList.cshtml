@@ -1,0 +1,198 @@
+﻿@model IEnumerable<office.Models.ProjectOwnerDetailList> 
+@{
+    Layout = null;
+} 
+<div class="row">
+    <div class="divOwner">
+        <table class="table table-bordered" id="tblCertification">
+            <thead>
+                <tr>
+                   
+                    <th>
+                        OwnerName
+                    </th>
+                    <th>
+                        Area
+                    </th>
+                    <th>
+                        Unit
+                    </th>
+                    <th class="hides"> 
+                         
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item2 in Model.Where(m => m.isUndevidedShare == 0))
+                {
+                <tr>
+                     
+                    <td>
+                        @item2.OwnerName
+                    </td>
+                    <td>
+                        @item2.Area
+                    </td>
+                    <td>
+                        @item2.UnitName
+                    </td>
+                    <td class="hides">
+                        <i class="fa fa-pencil EditOwner" OwnerID="@item2.OwnerID" id="EditOwner" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        <i class="fa fa-close DeleteOwner" OwnerID="@item2.OwnerID" id="EditOwner2" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                    </td>
+                </tr>
+                } 
+            
+                @foreach (var item2 in Model.Where(m => m.isUndevidedShare == 1))
+                {
+                    <tr>
+                         
+                        <td>
+                            @{
+                                string[] times = item2.OwnerName.Split(',');
+                                int len = times.Length;
+                                for (int i = 0; i < len; i++)
+                                {
+                                    <span>@times[i]</span>
+                                    <br />
+                                    }
+
+                                }
+                        </td>
+                        <td  >
+                            @item2.Area
+                        </td>
+                        <td>
+                            @item2.UnitName
+                        </td>
+                        <td class="hides">
+                            <i class="fa fa-pencil EditOwner2" OwnerID="@item2.OwnerID" id="EditOwner2" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            <i class="fa fa-close DeleteOwner2" OwnerID="@item2.OwnerID" id="EditOwner2" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $('.DeleteOwner').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/DeleteProjectOwnerSurvey',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),  
+                OwnerID: $(this).attr("OwnerID"),
+                isdevideshares : 0
+
+            },
+            success: function (data) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: "text",
+                    url: '/Master/GetOwnersPropertyCardList',
+                    data:
+                    {
+                        ProjectID: $('#ProjectID').val(),
+                        SurvayDetailId: $('#OwnerSurveyNo').val()
+                    },
+                    success: function (data) {
+
+                        $('#OwnersData').html(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+    $('.DeleteOwner2').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/DeleteProjectOwnerSurvey',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                OwnerID: $(this).attr("OwnerID"),
+                isdevideshares: 1
+
+            },
+            success: function (data) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: "text",
+                    url: '/Master/GetOwnersPropertyCardList',
+                    data:
+                    {
+                        ProjectID: $('#ProjectID').val(),
+                        SurvayDetailId: $('#OwnerSurveyNo').val()
+                    },
+                    success: function (data) {
+
+                        $('#OwnersData').html(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+        $('.EditOwner').on("click", function (e) {
+            
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/GetProjectOwnerSurvey',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(), 
+                    SurvayTypeID: $('#SurveyNoTypeID').val(),
+                    OwnerSurveyNo: $('#OwnerSurveyNo').val(),                 
+                    OwnerID: $(this).attr("OwnerID")  
+
+                },
+                success: function (data) {
+                    $('#myModal').show();
+                     
+                    $('#OwnerPopup').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+    });
+
+    $('.EditOwner2').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/GetProjectOwnerSurvey2',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                SurvayTypeID: $('#SurveyNoTypeID').val(),
+                OwnerSurveyNo: $('#OwnerSurveyNo').val(),
+                OwnerID: $(this).attr("OwnerID")
+
+            },
+            success: function (data) {
+                $('#myModalUndevided').show();
+
+                $('#OwnerPopup2').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

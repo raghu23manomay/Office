@@ -1,0 +1,156 @@
+﻿@model IEnumerable<office.Models.ProjectOwnerDetailList>
+@{
+    Layout = null;
+}
+ 
+        
+                <div class="divOwner">
+                    @foreach (var item2 in Model)
+                    {
+                        <div class="row show-grid">
+                            <div class="col-md-2">
+                                
+                            </div>
+                            <div class="col-md-2">
+                                
+                            </div>
+                            <div class="col-md-2">
+                               
+                            </div>
+                            <div class="col-md-2">
+                                
+                            </div>
+                            <div class="col-md-2">
+                                   @item2.OwnerName
+                            </div>
+                            <div class="col-md-2">
+                                @item2.Area 
+                            </div>
+                        </div>
+
+                        
+                    }
+                </div>
+            
+
+ 
+
+<script>
+    $('.DeleteOwner').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/DeleteProjectOwnerSurvey',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                OwnerID: $(this).attr("OwnerID"),
+                isdevideshares : 0
+
+            },
+            success: function (data) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: "text",
+                    url: '/Master/GetOwnersPropertyCardList',
+                    data:
+                    {
+                        ProjectID: $('#ProjectID').val(),
+                        SurvayDetailId: $('#OwnerSurveyNo').val()
+                    },
+                    success: function (data) {
+
+                        $('#OwnersData').html(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+    $('.DeleteOwner2').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/DeleteProjectOwnerSurvey',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                OwnerID: $(this).attr("OwnerID"),
+                isdevideshares: 1
+
+            },
+            success: function (data) {
+                $.ajax({
+                    type: 'GET',
+                    dataType: "text",
+                    url: '/Master/GetOwnersPropertyCardList',
+                    data:
+                    {
+                        ProjectID: $('#ProjectID').val(),
+                        SurvayDetailId: $('#OwnerSurveyNo').val()
+                    },
+                    success: function (data) {
+
+                        $('#OwnersData').html(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+        $('.EditOwner').on("click", function (e) {
+
+            $.ajax({
+                type: 'Post',
+                dataType: "text",
+                url: '/Master/GetProjectOwnerSurvey',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(),
+                    SurvayTypeID: $('#SurveyNoTypeID').val(),
+                    OwnerSurveyNo: $('#OwnerSurveyNo').val(),
+                    OwnerID: $(this).attr("OwnerID")
+
+                },
+                success: function (data) {
+                    $('#myModal').show();
+
+                    $('#OwnerPopup').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+    });
+
+    $('.EditOwner2').on("click", function (e) {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/GetProjectOwnerSurvey2',
+            data:
+            {
+                ProjectID: $('#ProjectID').val(),
+                SurvayTypeID: $('#SurveyNoTypeID').val(),
+                OwnerSurveyNo: $('#OwnerSurveyNo').val(),
+                OwnerID: $(this).attr("OwnerID")
+
+            },
+            success: function (data) {
+                $('#myModalUndevided').show();
+
+                $('#OwnerPopup2').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

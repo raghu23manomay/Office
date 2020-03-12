@@ -1092,12 +1092,54 @@ namespace Calibration.Controllers
                 @ProjectID",
           new SqlParameter("@ProjectID", ProjectID)
           ).ToList<SaveProjectExternalTeam>();
+
+            IEnumerable<SaveProjectOfficeSideTeam> result3 = _db.SaveProjectOfficeSideTeam.SqlQuery(@"exec uspGetProjectOfficeSideTeam
+                @ProjectID",
+        new SqlParameter("@ProjectID", ProjectID)
+        ).ToList<SaveProjectOfficeSideTeam>();
+
+            IEnumerable<AuthoritySignatory> result4 = _db.AuthoritySignatory.SqlQuery(@"exec GetProjectSignatory
+                @ProjectID",
+        new SqlParameter("@ProjectID", ProjectID)
+        ).ToList<AuthoritySignatory>();
+
+            IEnumerable<AuthoritySignatoryDetail> result5 = _db.AuthoritySignatoryDetail.SqlQuery(@"exec GetProjectSignatoryDetail
+                @ProjectID",
+        new SqlParameter("@ProjectID", ProjectID)
+        ).ToList<AuthoritySignatoryDetail>();
+            
             data.SaveProjectExternalTeam = result2;
+            data.SaveProjectOfficeSideTeam = result3;
             data.ProjectID = ProjectID;
+            data.AuthoritySignatory = result4;
+            data.AuthoritySignatoryDetail = result5;
 
             return Request.IsAjaxRequest()
                ? (ActionResult)PartialView("ProjectInfoLeftSide",data)
                : View("ProjectInfoLeftSide",data);
+        }
+        public ActionResult GetProjectInfoAuthority(int ProjectID = 0 ,int OwnerID=0)
+        {
+            AuthoritySignatory s = new AuthoritySignatory();
+            OfficeDbContext _db = new OfficeDbContext();
+            ViewData["InternalTeamUnderProject"] = binddropdown("InternalTeamUnderProject", ProjectID);
+            ViewData["MDocumentList"] = binddropdown("MDocumentList", 0);
+            ViewData["UnitList"] = binddropdown("UnitList", 0);
+            s.signatorId = 0;
+            AuthoritySignatory s1 = _db.AuthoritySignatory.SqlQuery(@"exec GetProjectSignatory
+                @ProjectID,@signatorId",
+        new SqlParameter("@ProjectID", ProjectID),
+        new SqlParameter("@signatorId", OwnerID)
+        ).FirstOrDefault();
+
+           if(s1!=null)
+            {
+                s = s1;
+            }
+            
+            return Request.IsAjaxRequest()
+               ? (ActionResult)PartialView("ProjectInfoAuthority", s)
+               : View("ProjectInfoAuthority", s);
         }
         public ActionResult GetLeftSideForPerson(int PersonID = 0)
         {
@@ -1294,11 +1336,11 @@ namespace Calibration.Controllers
                 ",
                 new SqlParameter("@CompanyId", CompanyId),
                 new SqlParameter("@AddressID", Address.AddressID), 
-                new SqlParameter("@Address1", Address.Address1),
-                new SqlParameter("@Address2", Address.Address2),
-                new SqlParameter("@StateID", Address.StateID),
-                new SqlParameter("@District", Address.District),
-                new SqlParameter("@CityID", Address.CityID),
+                new SqlParameter("@Address1", Address.Address1 == null ? (object)DBNull.Value : Address.Address1),
+                new SqlParameter("@Address2", Address.Address2 == null ? (object)DBNull.Value : Address.Address2),
+                new SqlParameter("@StateID", Address.StateID == null ? (object)DBNull.Value : Address.StateID),
+                new SqlParameter("@District", Address.District == null ? (object)DBNull.Value : Address.District),
+                new SqlParameter("@CityID", Address.CityID == null ? (object)DBNull.Value : Address.CityID),
                 new SqlParameter("@ZipCode", Address.ZipCode == null ? (object)DBNull.Value : Address.ZipCode),
                 new SqlParameter("@Website", Address.Website == null ? (object)DBNull.Value : Address.Website)
                 , tvpParamMobile
@@ -1307,6 +1349,96 @@ namespace Calibration.Controllers
 
                 return Json("Success");
 
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCompanyOfficeAddress(int CompanyId, int AddressID)
+        {
+            try
+            {
+               
+
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspdeleteCompanyAddress
+                 @CompanyId  
+                ,@AddressID  
+                ",
+                new SqlParameter("@CompanyId", CompanyId),
+                new SqlParameter("@AddressID", AddressID)  
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCompanyInternalTeam(int CompanyId, int InternalTeamId)
+        {
+            try
+            { 
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspdeleteCompanyInternalTeam
+                 @CompanyId  
+                ,@InternalTeamId  
+                ",
+                new SqlParameter("@CompanyId", CompanyId),
+                new SqlParameter("@InternalTeamId", InternalTeamId)
+                ); 
+                return Json("Success"); 
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult DeleteCompanyExternalTeam(int CompanyId, int ExternalTeamId)
+        {
+            try
+            { 
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspdeleteCompanyExternalTeam
+                 @CompanyId  
+                ,@ExternalTeamId  
+                ",
+                new SqlParameter("@CompanyId", CompanyId),
+                new SqlParameter("@ExternalTeamId", ExternalTeamId)
+                ); 
+                return Json("Success"); 
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult DeletePersonInternalTeam(int PersonId, int InternalTeamId)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspdeletePersonInternalTeam
+                 @PersonId  
+                ,@InternalTeamId  
+                ",
+                new SqlParameter("@PersonId", PersonId),
+                new SqlParameter("@InternalTeamId", InternalTeamId)
+                );
+                return Json("Success");
             }
             catch (Exception ex)
             {
@@ -1496,7 +1628,74 @@ namespace Calibration.Controllers
                 return Json(message);
             }
         }
+        [HttpPost]
+        public ActionResult SaveProjectExternalTeam(int ProjectID, SaveProjectInternalTeam InternalTeam)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                DataTable dtMobile = new DataTable();
 
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdateProjectExternalTeam
+                 @ProjectID  
+                , @ParentCompanyID
+                ,@internalTeamid   
+                ,@internalpersonid  
+                ,@designationid1
+                ,@subdesignationid1 
+                ,@subpartdesignationid1
+                ",
+                new SqlParameter("@ProjectID", ProjectID),
+                 new SqlParameter("@ParentCompanyID", InternalTeam.parentcompanyid),
+                new SqlParameter("@internalTeamid", InternalTeam.internalTeamid),
+                new SqlParameter("@internalpersonid", InternalTeam.internalpersonid),
+                new SqlParameter("@designationid1", InternalTeam.designationid1),
+                new SqlParameter("@subdesignationid1", InternalTeam.subdesignationid1),
+                new SqlParameter("@subpartdesignationid1", InternalTeam.subpartdesignationid1)
+              );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult SaveProjectOfficeTeam(int ProjectID, SaveProjectOfficeSideTeam OfficeSideTeam)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                DataTable dtMobile = new DataTable();
+
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertUpdateProjectofficeTeam
+                 @ProjectID   
+                ,@Teamid   
+                ,@PersonId  
+                ,@designationid1
+                ,@subdesignationid1 
+                ,@subpartdesignationid1
+                ",
+                new SqlParameter("@ProjectID", ProjectID), 
+                new SqlParameter("@Teamid", OfficeSideTeam.Teamid),
+                new SqlParameter("@PersonId", OfficeSideTeam.personid),
+                new SqlParameter("@designationid1", OfficeSideTeam.designationid1),
+                new SqlParameter("@subdesignationid1", OfficeSideTeam.subdesignationid1),
+                new SqlParameter("@subpartdesignationid1", OfficeSideTeam.subpartdesignationid1)
+              );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
         [HttpPost]
         public ActionResult SavePersonCompanyTeam(int PersonId, int CompanyId, int personCompanyid, int DesignationId1, int SubDesignationID1, int SubPartDesignationID1, List<SaveCompanyMobile> SaveInternalTeamMobile)
         {
@@ -1812,11 +2011,11 @@ namespace Calibration.Controllers
                             dr_SaveAddress["AddressID"] = item.AddressID;
                             dr_SaveAddress["AddressType"] = 1;
                             dr_SaveAddress["Address1"] = item.Address1;
-                            dr_SaveAddress["Address2"] = item.Address2;
-                            dr_SaveAddress["StateID"] = item.StateID;
-                            dr_SaveAddress["District"] = item.District;
-                            dr_SaveAddress["CityID"] = item.CityID;
-                            dr_SaveAddress["ZipCode"] = item.ZipCode;
+                            dr_SaveAddress["Address2"] = item.Address2 == null ? (object)DBNull.Value : item.Address2;
+                            dr_SaveAddress["StateID"] = item.StateID == null ? (object)DBNull.Value : item.StateID;
+                            dr_SaveAddress["District"] = item.District == null ? (object)DBNull.Value : item.District;
+                            dr_SaveAddress["CityID"] = item.CityID == null ? (object)DBNull.Value : item.CityID;
+                            dr_SaveAddress["ZipCode"] = item.ZipCode == null ? (object)DBNull.Value : item.ZipCode;
                             dr_SaveAddress["Website"] = "";
 
                             dtAddress.Rows.Add(dr_SaveAddress);
@@ -1931,8 +2130,8 @@ namespace Calibration.Controllers
                 new SqlParameter("@CertificationID", Company.CertificationID),
                 new SqlParameter("@CompanyOwnershipTypeID", Company.CompanyOwnershipTypeID),
                 new SqlParameter("@Isclient", Company.Isclient),
-                new SqlParameter("@RequestDate", Company.RequestDate),
-                new SqlParameter("@InceptionDate", Company.InceptionDate),
+                new SqlParameter("@RequestDate", Company.RequestDate == null ? (object)DBNull.Value : Company.RequestDate),
+                new SqlParameter("@InceptionDate", Company.InceptionDate == null ? (object)DBNull.Value : Company.InceptionDate),
                 new SqlParameter("@CreatedBy", 1)  
                 , tvpParamMobile 
                 , tvpParamAddress 
@@ -2162,6 +2361,17 @@ namespace Calibration.Controllers
                 tvpParamSocialLink.SqlDbType = System.Data.SqlDbType.Structured;
                 tvpParamSocialLink.Value = dtSociallink; 
                 tvpParamSocialLink.TypeName = "UTT_PersonSocialLink";
+
+                //DateTime? dBirthDate = Mem.BirthDate.Value;
+                //if(dBirthDate.Value.Year==1)
+                //{
+                //    Mem.BirthDate = null;
+                //}
+                //DateTime? DCreatedDate = Mem.CreatedDate.Value;
+                //if (DCreatedDate.Value.Year == 1)
+                //{
+                //    Mem.CreatedDate = null;
+                //}
 
                 OfficeDbContext _db = new OfficeDbContext();
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_SavePersonInfo
@@ -2535,18 +2745,25 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("_SubCategory")
                     : View("_SubCategory");
         }
-
+        public ActionResult GetSurveyNoByTypeID(int ProjectID=0 ,int SurveyNoTypeID = 0) 
+        {
+            ViewData["SurveyNoListByTypeId"] = binddropdown("SurveyNoListByTypeId", ProjectID,SurveyNoTypeID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("SurveyNoByTypeId")
+                    : View("SurveyNoByTypeId");
+        }
         public ActionResult BindTeamSubDesignation(int DesignationID = 0,int val=0)
         {
-            if(val==0)
+            if (val == 0)
             {
-                ViewBag.value = 1;
-;            }
+                ViewBag.value = 1; 
+            }
             if (val == 3)
             {
                 ViewBag.value = 3;
             }
-           else {
+            else
+            {
                 ViewBag.value = 2;
             }
             ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", DesignationID);
@@ -3045,6 +3262,7 @@ namespace Calibration.Controllers
             else
             {
                 data.BusinessCategoryID = 0;
+                data.IsActive = true;
             }
 
             return Request.IsAjaxRequest()
@@ -3171,6 +3389,7 @@ namespace Calibration.Controllers
             else
             {
                 data.BusinessCategoryID = 0;
+                data.IsActive = true;
             }
 
             return Request.IsAjaxRequest()
@@ -3503,6 +3722,12 @@ namespace Calibration.Controllers
             ViewData["ProjectStatusList"] = binddropdown("ProjectStatusList", 0);
             ViewData["UnitList"] = binddropdown("UnitList", 0);
             ViewData["SurveyNoTypeList"] = binddropdown("SurveyNoTypeList", 0);
+            ViewData["InternalTeamUnderProject"] = binddropdown("InternalTeamUnderProject", id);
+            ViewData["MDocumentList"] = binddropdown("MDocumentList", 0);
+            ViewData["Either1"] = binddropdown("Either1", 0);
+            
+                ViewData["SurveyNoList"] = binddropdown("SurveyNoList", id);
+            ViewData["SurveyNoProperyCardList"] = binddropdown("SurveyNoProperyCardList", id);
             
             if (Request.IsAjaxRequest())
             {
@@ -3643,34 +3868,56 @@ namespace Calibration.Controllers
                 tvpParamExternalTeam.Value = dtExternalTeam;
                 tvpParamExternalTeam.TypeName = "UTT_ProjectInternalTeam";
 
+                var outParam = new SqlParameter();
+                outParam.ParameterName = "pOut";
+                outParam.SqlDbType = System.Data.SqlDbType.Int;//DataType Of OutPut Parameter
+                outParam.Direction = System.Data.ParameterDirection.Output;
+                outParam.Value = 0;
+
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveProjectNew 
                 @ProjectID,@ProjectName,@EnquiryDate,@ProjectShortName,@StatusId,@ProjectTypeId,@CustomerFileNo,@PhysicalPath,@StateID,@District,@TalukaID,
-                 @Goan,@Road,@IsActive,@CreatedBy,@Cost,@StartDate,@EndDate
-                ,@ProjectSurvay,@ProjectInternalTeam,@ProjectExternalTeam",
+                 @Goan,@Road,@IsActive,@CreatedBy,@Cost,@StartDate,@EndDate,@Developers,@DeveloperTypeID
+                ,@ProjectSurvay,@ProjectInternalTeam,@ProjectExternalTeam ,@pOut out",
                 new SqlParameter("@ProjectID", proj.ProjectID),
                 new SqlParameter("@ProjectName", proj.ProjectName),
                 new SqlParameter("@EnquiryDate", proj.EnquiryDate),
                 new SqlParameter("@ProjectShortName", proj.ProjectShortName),
                 new SqlParameter("@StatusId", proj.StatusId),
                 new SqlParameter("@ProjectTypeId", proj.ProjectTypeId),
-                new SqlParameter("@CustomerFileNo", proj.CustomerFileNo),
-                new SqlParameter("@PhysicalPath", proj.PhysicalPath),
-                new SqlParameter("@StateID", proj.StateID), 
-                new SqlParameter("@District", proj.District),
+                new SqlParameter("@CustomerFileNo", proj.CustomerFileNo == null ? (object)DBNull.Value : proj.CustomerFileNo),
+                new SqlParameter("@PhysicalPath", proj.PhysicalPath == null ? (object)DBNull.Value : proj.PhysicalPath),
+                new SqlParameter("@StateID", proj.StateID  ), 
+                new SqlParameter("@District", proj.District == null ? (object)DBNull.Value : proj.District),
                 new SqlParameter("@TalukaID", proj.TalukaID),
-                new SqlParameter("@Goan", proj.Goan),
-                new SqlParameter("@Road", proj.Road), 
+                new SqlParameter("@Goan", proj.Goan == null ? (object)DBNull.Value : proj.Goan),
+                new SqlParameter("@Road", proj.Road == null ? (object)DBNull.Value : proj.Road), 
                 new SqlParameter("@IsActive", Active),
                 new SqlParameter("@CreatedBy", 1),
                 new SqlParameter("@Cost", proj.Cost),
-                new SqlParameter("@StartDate", proj.StartDate),
-                new SqlParameter("@EndDate", proj.EndDate),
+                new SqlParameter("@StartDate", proj.StartDate == null ? (object)DBNull.Value : proj.StartDate),
+                new SqlParameter("@EndDate", proj.EndDate == null ? (object)DBNull.Value : proj.EndDate),
+                new SqlParameter("@Developers", proj.Developers),
+                new SqlParameter("@DeveloperTypeID", proj.DeveloperTypeID),
+                
                 tvpParamSurvayDetails
                 , tvpParamInternalTeam
                 ,tvpParamExternalTeam
+                , outParam
             );
-
-                return Json("Success");
+                int outval = 0;
+                if (outParam.Value != DBNull.Value)
+                {
+                    outval = Convert.ToInt32(outParam.Value);
+                }
+                if (outval != 0)
+                {
+                    return Json("Success" + outval);  
+                }
+                else
+                {
+                    return Json("error" );
+                }
+                
 
             }
             catch (Exception ex)
@@ -3725,8 +3972,7 @@ namespace Calibration.Controllers
             return Request.IsAjaxRequest()
                     ? (ActionResult)PartialView("ProjectList", itemsAsIPagedList)
                     : View("ProjectList", itemsAsIPagedList);
-        }
-
+        } 
         public ActionResult LoadProjectList(int? page, String Name = null)
         {
             StaticPagedList<SaveProject> itemsAsIPagedList;
@@ -3760,5 +4006,474 @@ namespace Calibration.Controllers
             return itemsAsIPagedList;
 
         }
+        public ActionResult ProformaSetting(int GroupId = 0)
+        {
+          
+            OfficeDbContext _db = new OfficeDbContext();
+            IEnumerable<ProformaSetting> result3 = _db.ProformaSetting.SqlQuery(@"exec GetProformaSetting
+                @GroupId", new SqlParameter("@GroupId", GroupId)
+         ).ToList<ProformaSetting>();
+            
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("ProformaSetting", result3)
+                    : View("ProformaSetting", result3);
+        }
+        
+        [HttpPost]
+        public ActionResult SaveProformaSetting(SaveProformaSetting SaveProformaSetting)
+        {
+            try
+            { 
+                OfficeDbContext _db = new OfficeDbContext();
+               if(SaveProformaSetting.UnSelectedField==null)
+                {
+                    SaveProformaSetting.UnSelectedField = "";
+                }
+                if (SaveProformaSetting.SelectedField == null)
+                {
+                    SaveProformaSetting.SelectedField = "";
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveProformaSetting 
+               @SelectedField, @UnSelectedField",
+                new SqlParameter("@SelectedField", SaveProformaSetting.SelectedField),
+                new SqlParameter("@UnSelectedField", SaveProformaSetting.UnSelectedField)
+                 
+            );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+
+            }
+        }
+        [HttpPost] 
+        public ActionResult SaveProjectOwnerSurveyNo(ProjectOwnerSurveyNo ProjectOwnerSurveyNo)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext(); 
+                DataTable dtMobile = new DataTable(); 
+                var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveProjectProposalSurvayDetails
+                 @SurvayDetailId
+                ,@ProjectID     
+                ,@SurvayNo   	
+                ,@SHissaNo  	
+                ,@SPlotNo    	
+                ,@OldSurvayNo   
+                ,@GatNo    		
+                ,@GatHissaNo    
+                ,@GatPlotNo   	
+                ,@OldGatNo    	
+                ,@CTSNo     	
+                ,@CTSHissaNo  	
+                ,@CTSPlotNo   	
+                ,@OldCTSNo    	
+                ,@FInalPlotNo   ",
+                new SqlParameter("@SurvayDetailId", ProjectOwnerSurveyNo.SurvayDetailId),
+                new SqlParameter("@ProjectID", ProjectOwnerSurveyNo.ProjectID), 
+                new SqlParameter("@SurvayNo", ProjectOwnerSurveyNo.S_SurveyNo),
+                new SqlParameter("@SHissaNo", ProjectOwnerSurveyNo.S_HissaNo),
+                new SqlParameter("@SPlotNo", ProjectOwnerSurveyNo.S_PlotNo),
+                new SqlParameter("@OldSurvayNo", ProjectOwnerSurveyNo.S_OldNo),
+                new SqlParameter("@GatNo", ProjectOwnerSurveyNo.G_SurveyNo),
+                new SqlParameter("@GatHissaNo", ProjectOwnerSurveyNo.G_HissaNo  ),
+                new SqlParameter("@GatPlotNo", ProjectOwnerSurveyNo.G_PlotNo ),
+                new SqlParameter("@OldGatNo", ProjectOwnerSurveyNo.G_OldNo ),
+                new SqlParameter("@CTSNo", ProjectOwnerSurveyNo.CTS_SurveyNo ),
+                new SqlParameter("@CTSHissaNo", ProjectOwnerSurveyNo.CTS_HissaNo  ),
+                new SqlParameter("@CTSPlotNo", ProjectOwnerSurveyNo.CTS_PlotNo),
+                new SqlParameter("@OldCTSNo", ProjectOwnerSurveyNo.CTS_OldNo),
+                new SqlParameter("@FinalPlotNo", ProjectOwnerSurveyNo.FP_SurveyNo)  
+                ); 
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            } 
+        }
+        [HttpPost]
+        public ActionResult SaveProjectOwnerDetails(int PropertCardTypeId , int SurvayDetailId, int ProjectID, int IsUndevidedShares, List<ProjectOwnerDetails> ProjectOwnerDetails)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext(); 
+
+                DataTable dtOwner = new DataTable();
+                dtOwner.Columns.Add("OwnerID", typeof(int));
+                dtOwner.Columns.Add("OwnerName", typeof(string));
+                
+                dtOwner.Columns.Add("isUndevidedShare", typeof(int));
+                dtOwner.Columns.Add("Area", typeof(int));
+                dtOwner.Columns.Add("AreaUnitID", typeof(int));
+                if (ProjectOwnerDetails != null)
+                {
+                    if (ProjectOwnerDetails.Count > 0)
+                    {
+                        foreach (var item in ProjectOwnerDetails)
+                        {
+                            DataRow dr_Owner = dtOwner.NewRow();
+                            dr_Owner["OwnerID"] = item.OwnerID;
+                            dr_Owner["OwnerName"] = item.OwnerName;
+                            dr_Owner["isUndevidedShare"] = IsUndevidedShares;
+                            dr_Owner["Area"] = item.Area;
+                            dr_Owner["AreaUnitID"] = item.AreaUnitID; 
+                            dtOwner.Rows.Add(dr_Owner);
+                        }
+                    }
+                }
+                SqlParameter tvpParamOwner = new SqlParameter();
+                tvpParamOwner.ParameterName = "@nProjectOwners";
+                tvpParamOwner.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamOwner.Value = dtOwner;
+                tvpParamOwner.TypeName = "UTT_nProjectOwners";
+                var result = _db.Database.ExecuteSqlCommand(@"exec uspInsertOwner
+                 @SurveyTypeId
+                ,@SurvayDetailId     
+                ,@ProjectID
+
+                ,@nProjectOwners",
+                new SqlParameter("@SurveyTypeId", PropertCardTypeId),
+                new SqlParameter("@SurvayDetailId", SurvayDetailId),
+                new SqlParameter("@ProjectID", ProjectID),
+                tvpParamOwner 
+                );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        [HttpPost]
+        public ActionResult SaveAuthoritySignature(  AuthoritySignatory AuthoritySignatory)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+
+                DataTable dtMobile = new DataTable();
+
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveProjectSignatory
+                 @ProjectID  
+                ,@OwnerID   
+                ,@AreaUnderDevelopment  
+                ,@AreaUnitID
+                ,@AgreemetNo 
+                ,@AgreementDate
+                ,@SubRegistarOffice
+                ,@DocumentID 
+                ,@selectedVal1
+                ,@selectedVal2
+                ,@selectedVal3
+                ,@selectedVal4
+                ,@selectedVal5
+               ,@either1 ,@either2 ,@either3, @either4,@either5 ,@SignatorID
+                ",
+                new SqlParameter("@ProjectID", AuthoritySignatory.ProjectID),
+                new SqlParameter("@OwnerID", AuthoritySignatory.OwnerID),
+                new SqlParameter("@AreaUnderDevelopment", AuthoritySignatory.AreaUnderDevelopment),
+                new SqlParameter("@AreaUnitID", AuthoritySignatory.AreaUnitID),
+                new SqlParameter("@AgreemetNo", AuthoritySignatory.AgreementNo),
+                new SqlParameter("@AgreementDate", AuthoritySignatory.AgreementDate),
+                new SqlParameter("@SubRegistarOffice", AuthoritySignatory.SubRegistarOffice),
+                new SqlParameter("@DocumentID", AuthoritySignatory.DocumentID) , 
+                new SqlParameter("@selectedVal1", AuthoritySignatory.selectedVal1 == null ? "" : AuthoritySignatory.selectedVal1),
+                new SqlParameter("@selectedVal2", AuthoritySignatory.selectedVal2 ==null? "": AuthoritySignatory.selectedVal2),
+                new SqlParameter("@selectedVal3", AuthoritySignatory.selectedVal3 == null ? "" : AuthoritySignatory.selectedVal3),
+                new SqlParameter("@selectedVal4", AuthoritySignatory.selectedVal4 == null ? "" : AuthoritySignatory.selectedVal4),
+                new SqlParameter("@selectedVal5", AuthoritySignatory.selectedVal5 == null ? "" : AuthoritySignatory.selectedVal5),
+                new SqlParameter("@either1", AuthoritySignatory.either1),
+                new SqlParameter("@either2", AuthoritySignatory.either2),
+                new SqlParameter("@either3", AuthoritySignatory.either3),
+                new SqlParameter("@either4", AuthoritySignatory.either4),
+                new SqlParameter("@either5", AuthoritySignatory.either5) ,
+                new SqlParameter("@SignatorID", AuthoritySignatory.signatorId)
+                );
+
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+        }
+        public ActionResult test(int id=0) 
+        {
+            CompanyFields data = new CompanyFields();
+               CompanyDetails data1 = new CompanyDetails();
+            OfficeDbContext _db = new OfficeDbContext();
+            IEnumerable<ProformaSetting> result3 = _db.ProformaSetting.SqlQuery(@"exec GetProformaSetting
+                @GroupId", new SqlParameter("@GroupId", 2)
+        ).ToList<ProformaSetting>();
+            ViewData["DesignationList"] = binddropdown("DesignationList", 0);
+            ViewData["CityList"] = binddropdown("CityList", 0);
+            ViewData["StateList"] = binddropdown("StateList", 0);
+            ViewData["PersonList"] = binddropdown("PersonList", 0);
+            ViewData["ConsultantTypeList"] = binddropdown("ConsultantTypeList", 0);
+            ViewData["ContractorTypeList"] = binddropdown("ContractorTypeList", 0);
+            ViewData["OwnershipTypeList"] = binddropdown("OwnershipTypeList", 0);
+            ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
+            ViewData["BusinessSubCategoryList"] = binddropdown("BusinessSubCategoryList", 0);
+            ViewData["CertificationList"] = binddropdown("CertificationList", 0);
+            ViewData["CompanyRelationList"] = binddropdown("CompanyRelationList", 0);
+            ViewData["CompanyList"] = binddropdown("CompanyList", 0);
+
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+            ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", 0);
+            ViewData["TeamSubPartDesignationList"] = binddropdown("TeamSubPartDesignationList", 0);
+            data.ProformaSetting = result3;
+            
+            return View("Test", data);
+        }
+
+
+        #region CertificationMaster
+        public ActionResult LoadCertificationGrid(int? page, String Name = null)
+        {
+            StaticPagedList<CertificationList> itemsAsIPagedList;
+            itemsAsIPagedList = CertificationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("CertificationGrid", itemsAsIPagedList)
+                    : View("CertificationGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult CertificationList(int? page, String Name = null)
+        {
+            StaticPagedList<CertificationList> itemsAsIPagedList;
+            itemsAsIPagedList = CertificationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("CertificationList", itemsAsIPagedList)
+                    : View("CertificationList", itemsAsIPagedList);
+        }
+        public StaticPagedList<CertificationList> CertificationGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            CertificationList clist = new CertificationList();
+
+            IEnumerable<CertificationList> result = _db.CertificationList.SqlQuery(@"exec GetBusinessCategoryList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<CertificationList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<CertificationList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+
+        
+        public ActionResult GetOwnersPropertyCardList(int ProjectID ,int SurvayDetailId=0)
+        {
+            Certification data = new Certification();
+            OfficeDbContext _db = new OfficeDbContext(); 
+
+            IEnumerable<ProjectOwnerDetailList> result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersUnderProperty
+                @projectID,@SurvayDetailId",
+          new SqlParameter("@projectID", ProjectID),
+           new SqlParameter("@SurvayDetailId", SurvayDetailId)
+          
+          ).ToList<ProjectOwnerDetailList>(); 
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("OwnersPropertyCardList", result2)
+                  : View("OwnersPropertyCardList", result2);
+        }
+        public ActionResult GetOwnersPropertyCardSubList(int ProjectID, int SurvayDetailId = 0)
+        {
+            Certification data = new Certification();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<ProjectOwnerDetailList> result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersUnderProperty
+                @projectID,@SurvayDetailId",
+          new SqlParameter("@projectID", ProjectID),
+           new SqlParameter("@SurvayDetailId", SurvayDetailId)
+
+          ).ToList<ProjectOwnerDetailList>();
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("OwnersPropertyCardSubList", result2)
+                  : View("OwnersPropertyCardList", result2);
+        }
+        public ActionResult GetOwnersPropertyCardListAll(int ProjectID, int SurvayDetailId = 0)
+        {
+             
+            OfficeDbContext _db = new OfficeDbContext();
+            ProjectOwnerDetailSurveyWiseAll Data = new ProjectOwnerDetailSurveyWiseAll();
+           
+            IEnumerable<ProjectOwnerDetailList> result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersUnderProperty
+                @projectID,@SurvayDetailId",
+          new SqlParameter("@projectID", ProjectID),
+          new SqlParameter("@SurvayDetailId", SurvayDetailId)
+          ).ToList<ProjectOwnerDetailList>();
+
+            IEnumerable<ProjectOwnerDetailSurveyWise> result3 = _db.ProjectOwnerDetailSurveyWise.SqlQuery(@"exec GetallProjectOwners
+                @projectID ",
+         new SqlParameter("@projectID", ProjectID) 
+          
+         ).ToList<ProjectOwnerDetailSurveyWise>();
+
+
+            Data.ProjectOwnerDetailList = result2;
+            Data.ProjectOwnerDetailSurveyWise = result3;
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("OwnersPropertyCardListAll", Data)
+                  : View("OwnersPropertyCardListAll", Data);
+        }
+        public ActionResult GetOwnersPropertyCardListByid(int ProjectID,int OwnerID)
+        {
+            Certification data = new Certification();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<ProjectOwnerDetailList> result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersByOwnerID
+                @projectID,@OwnerID",
+          new SqlParameter("@projectID", ProjectID),
+          new SqlParameter("@OwnerID", OwnerID)
+          ).ToList<ProjectOwnerDetailList>();
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("OwnersPropertyCardList", result2)
+                  : View("OwnersPropertyCardList", result2);
+        }
+        public ActionResult DeleteProjectOwnerSurvey(int ProjectID,   int OwnerID = 0, int isdevideshares = 0)
+        {
+            try
+            {
+                Certification data = new Certification();
+                OfficeDbContext _db = new OfficeDbContext();
+                IEnumerable<ProjectOwnerDetailList> result2 = Enumerable.Empty<ProjectOwnerDetailList>();
+
+                var result = _db.Database.ExecuteSqlCommand(@"exec DeleteProjectOwnerDetails 
+                 @projectID,@OwnerID ",
+                new SqlParameter("@projectID", ProjectID),
+                new SqlParameter("@OwnerID", OwnerID));
+
+                return Json("Success");
+
+            }
+            catch
+            {
+                return Json("Error");
+            }
+
+        }
+        public ActionResult GetProjectOwnerSurvey(int ProjectID, int SurvayTypeID = 0, int OwnerSurveyNo = 0, int OwnerID=0 , int isdevideshares=0)
+        {
+            Certification data = new Certification();
+            OfficeDbContext _db = new OfficeDbContext();
+            IEnumerable<ProjectOwnerDetailList> result2 = Enumerable.Empty<ProjectOwnerDetailList>();
+               
+
+            ViewData["UnitList"] = binddropdown("UnitList", 0);
+            if (OwnerID > 0)
+            {
+
+                 result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersByOwnerID
+                @projectID,@OwnerID",
+              new SqlParameter("@projectID", ProjectID),
+              new SqlParameter("@OwnerID", OwnerID)
+              ).ToList<ProjectOwnerDetailList>();
+                
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("ProjectOwnerSurvey", result2)
+                  : View("ProjectOwnerSurvey", result2); 
+
+            
+        }
+        public ActionResult GetProjectOwnerSurvey2(int ProjectID, int SurvayTypeID = 0, int OwnerSurveyNo = 0, int OwnerID = 0, int isdevideshares = 0)
+        {
+            Certification data = new Certification();
+            OfficeDbContext _db = new OfficeDbContext();
+            IEnumerable<ProjectOwnerDetailList> result2 = Enumerable.Empty<ProjectOwnerDetailList>();
+
+
+            ViewData["UnitList"] = binddropdown("UnitList", 0);
+            if (OwnerID > 0)
+            {
+
+                result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersByOwnerID
+                @projectID,@OwnerID",
+             new SqlParameter("@projectID", ProjectID),
+             new SqlParameter("@OwnerID", OwnerID)
+             ).ToList<ProjectOwnerDetailList>();
+
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("ProjectOwnerSurvey2", result2)
+                  : View("ProjectOwnerSurvey2", result2);
+
+
+        }
+        public ActionResult AddCertification(int id = 0)
+        {
+            Certification data = new Certification();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.Certification.SqlQuery(@"exec GetCertificationDetails 
+                @CertificationID",
+                 new SqlParameter("@CertificationID", id)).ToList<Certification>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.CertificationID = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddCertification", data)
+                  : View("AddCertification", data);
+        }
+        [HttpPost]
+        public ActionResult SaveCertification(int CertificationID = 0, String CertificationName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveBusinessCategory 
+               @BusinessCategoryID, @BusinessCategoryName,@CreatedBy,@IsActive",
+                new SqlParameter("@BusinessCategoryID", CertificationID),
+                new SqlParameter("@BusinessCategoryName", CertificationName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
     }
 }

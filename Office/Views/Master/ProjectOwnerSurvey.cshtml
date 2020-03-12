@@ -1,0 +1,112 @@
+﻿@model IEnumerable<office.Models.ProjectOwnerDetailList>
+
+@{ 
+   Layout = null;
+}
+ 
+@if (Model.Count()==0)
+{
+<div class="row RowOwnerArea" id="RowonerArea">
+    <div class="col-lg-3">
+        <input id="HdnOwnerIDPopup" type="hidden" value="0">
+        <input id="OwnerName1" type="text" placeholder="Owner Name" value="" class="form-control">
+    </div>
+    <label class="col-lg-2 control-label"> proposal Area</label>
+    <div class="col-lg-3">
+        <input id="OwnerAreaUnderProposal" type="text" placeholder="Area" value="" class="form-control">
+    </div>
+    <div class="col-lg-2">
+        @Html.DropDownList("AreaUnitID", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control dlist", @id = "OwnerAreaUnderProposalUnitId", Title = "AreaUnderProposalUnitId" })
+    </div>
+
+    <div class="col-lg-2">
+        <i class="fa fa-plus addMultiOwner" id="addMultiOwner" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+    
+        <i class="fa fa-minus removeMultiOwner" id="removeMultiOwner" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+    </div>
+    <hr />
+</div>
+}
+@foreach (var item2 in Model)
+{
+<div class="row RowOwnerArea" id="RowonerArea">
+    <div class="col-lg-3">
+        <input id="HdnOwnerIDPopup" type="hidden" value="@item2.OwnerID">
+        <input id="OwnerName1" type="text" placeholder="Owner Name" value="@item2.OwnerName" class="form-control">
+    </div>
+    <label class="col-lg-2 control-label"> proposal Area</label>
+    <div class="col-lg-3">
+        <input id="OwnerAreaUnderProposal" type="text" placeholder="Area" value="@item2.Area" class="form-control">
+    </div>
+    <div class="col-lg-2">
+        @{
+            var uid = item2.AreaUnitID;
+        }
+        @Html.DropDownList(uid.ToString(), new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control dlist", @id = "OwnerAreaUnderProposalUnitId", @v = uid.ToString(), Title = "AreaUnderProposalUnitId" })
+    </div>
+    <div class="col-lg-2">
+        <i class="fa fa-plus addMultiOwner" id="addMultiOwner" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+     
+    </div>
+    <hr />
+</div>
+}
+<script>
+    $('.removeMultiOwner').on("click", function (e) {
+        var l = $(".RowOwnerArea").length;
+        
+        if (l > 1) {
+            $(this).closest(".RowOwnerArea").remove();
+        }
+         
+    });
+    $('.addMultiOwner').on("click", function (e) {
+        
+        var len = 0, rowLen = 0
+        len = $("#row1").length;
+        rowLen = $("#RowonerArea").length;
+        var cloneCount = 1;
+        if (len == 0) {
+            if (rowLen > 0) {
+                $('#RowonerArea')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=RowonerArea]:last').find("input").val("");
+            }
+            else {
+                $('#row1')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=RowonerArea]:last').find("input").val("");
+            }
+        }
+        else {
+            if (rowLen > 0) {
+                $('#RowonerArea')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=row1]:last').find("input").val("");
+            } else {
+                $('#row1')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=row1]:last').find("input").val("");
+            }
+        }
+        
+        return false;
+    });
+
+
+    $('.dlist').each(function (k, v) {
+         
+        var Unitids = 0;
+        Unitids = $(this).attr("v");
+        if (Unitids != null && Unitids > 0) {
+            $(this).val(Unitids);
+        }
+        else {
+            $(this).val(1);
+        }
+    });
+</script>

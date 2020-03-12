@@ -1,9 +1,9 @@
 ﻿
-
 @{
 
     Layout = null;
 }
 
  
-@Html.DropDownList("InternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "InternalPersonId", Title = "PersonId" })
+    @Html.DropDownList("InternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "InternalPersonId", Title = "PersonId" });
+   

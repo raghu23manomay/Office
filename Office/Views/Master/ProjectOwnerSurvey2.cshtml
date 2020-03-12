@@ -1,0 +1,127 @@
+﻿@model IEnumerable<office.Models.ProjectOwnerDetailList>
+
+@{
+
+    Layout = null;
+}
+
+@if (Model.Count() == 0)
+{
+        <div class="row col-md-12">
+
+            <label class="col-lg-2 control-label"> proposal Area</label>
+            <div class="col-lg-4">
+                <input id="OwnerAreaUnderProposal2" type="text" placeholder="Area" value="" class="form-control">
+            </div>
+            <div class="col-lg-4">
+                @Html.DropDownList("AreaUnitID", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "OwnerAreaUnderProposalUnitId2", Title = "AreaUnderProposalUnitId" })
+            </div>
+        </div>
+       <div  class="row col-md-12">
+           <hr />
+       </div>
+        <div class="row RowOwnerArea2" id="RowonerArea2">
+            <div class="col-lg-4">
+                <input id="HdnOwnerIDPopup" type="hidden" value="0">
+                <input id="OwnerName1" type="text" placeholder="Owner Name" value="" class="form-control">
+            </div>
+
+            <div class="col-lg-2">
+                <i class="fa fa-plus addMultiOwner2" id="addMultiOwner2" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                <i class="fa fa-minus removeMultiOwner" id="removeMultiOwner" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+
+            </div>
+ 
+        </div>
+}
+else
+{
+        <div class="row">
+
+            <label class="col-lg-2 control-label"> proposal Area</label>
+            <div class="col-lg-3">
+                <input id="OwnerAreaUnderProposal2" type="text" placeholder="Area" value="@Model.First().Area" class="form-control">
+            </div>
+           
+            <div class="col-lg-3">
+                @{
+                    var uid = Model.First().AreaUnitID;
+                }
+                @Html.DropDownList("AreaUnitID", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control dlist", @id = "OwnerAreaUnderProposalUnitId2", @v = uid.ToString(), Title = "AreaUnderProposalUnitId" })
+            </div>
+        </div>
+
+
+foreach (var item2 in Model)
+{
+
+    <div class="row RowOwnerArea2" id="RowonerArea2">
+        <div class="col-lg-3">
+            <input id="HdnOwnerIDPopup" type="hidden" value="@item2.OwnerID">
+            <input id="OwnerName1" type="text" placeholder="Owner Name" value="@item2.OwnerName" class="form-control">
+        </div>
+        <div class="col-lg-1">
+            <i class="fa fa-plus addMultiOwner2" id="addMultiOwner2" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+        </div>
+    </div>
+}
+}
+<script>
+    $('.removeMultiOwner').on("click", function (e) {
+        var l = $(".RowOwnerArea2").length;
+
+        if (l > 1) {
+            $(this).closest(".RowOwnerArea2").remove();
+        }
+
+    });
+    $('.addMultiOwner2').on("click", function (e) { 
+        debugger;
+
+        var len = 0, rowLen = 0
+        len = $("#row1").length;
+        rowLen = $("#RowonerArea2").length;
+        var cloneCount = 1;
+        if (len == 0) {
+            if (rowLen > 0) {
+                $('#RowonerArea2')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=RowonerArea2]:last').find("input").val("");
+            }
+            else {
+                $('#row1')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=RowonerArea2]:last').find("input").val("");
+            }
+        }
+        else {
+            if (rowLen > 0) {
+                $('#RowonerArea2')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=row1]:last').find("input").val("");
+            } else {
+                $('#row1')
+                    .clone(true)
+                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                    .insertAfter('[id=row1]:last').find("input").val("");
+            }
+        }
+
+        return false;
+    });
+
+    $('.dlist').each(function (k, v) {
+
+        var Unitids = 0;
+        Unitids = $(this).attr("v");
+        if (Unitids != null && Unitids > 0) {
+            $(this).val(Unitids);
+        }
+        else {
+            $(this).val(1);
+        }
+    });
+</script>

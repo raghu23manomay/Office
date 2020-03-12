@@ -80,7 +80,7 @@
             var pageid = temp.replace('/?page=', '');
 
             $.ajax({
-                url: "@Url.Action("LoadCityGrid", "Master")",
+                url: "@Url.Action("LoadProjectList", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     page: pageid,

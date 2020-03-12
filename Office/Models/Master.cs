@@ -8,7 +8,7 @@ namespace office.Models
 {
 
 
-   
+
     public class DesignationList
     {
         [Key]
@@ -182,11 +182,11 @@ namespace office.Models
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public int? DesignationId { get; set; }
-        
+
         public string DesignationName { get; set; }
         public int? TotalRows { get; set; }
         public bool IsActive { get; set; }
@@ -219,7 +219,7 @@ namespace office.Models
     }
     public class SaveMobilePerson
     {
-        [Key] 
+        [Key]
         public string Value { get; set; }
         public int Type { get; set; }
         public int DepartmentID { get; set; }
@@ -270,10 +270,10 @@ namespace office.Models
 
     public class Member
     {
-        [Key]        
+        [Key]
         public int? MemberID { get; set; }
         public int MemberType { get; set; }
-        public int? TypeId { get; set; }        
+        public int? TypeId { get; set; }
         public int TitleID { get; set; }
         public string Name { get; set; }
         public string ShortName { get; set; }
@@ -290,29 +290,29 @@ namespace office.Models
         public string ShippingAddress { get; set; }
         public string PowerofAttorny { get; set; }
         public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }        
+        public DateTime CreatedDate { get; set; }
         public string ResidentialAddress1 { get; set; }
         public string ResidentialAddress2 { get; set; }
         public int? ResidentialStateID { get; set; }
         public string ResidentialDistrict { get; set; }
         public int? ResidentialCityID { get; set; }
         public string ResidentialZipCode { get; set; }
-       
+
     }
 
     public class PersonInfo
     {
         [Key]
-        public int? PersonID { get; set; }   
+        public int? PersonID { get; set; }
         public int TitleID { get; set; }
         public string fName { get; set; }
-        public string mName { get; set; } 
+        public string mName { get; set; }
         public string lName { get; set; }
-        public string ShortName { get; set; } 
+        public string ShortName { get; set; }
         public string Website { get; set; }
-        public string SocialMedia { get; set; }
-        public DateTime BirthDate { get; set; } 
-        public int CertificationID { get; set; } 
+        public string SocialMedia { get; set; } 
+        public Nullable<System.DateTime> BirthDate { get; set; } 
+        public int CertificationID { get; set; }
         public string ResidentialAddress1 { get; set; }
         public string ResidentialAddress2 { get; set; }
         public int? ResidentialStateID { get; set; }
@@ -320,28 +320,29 @@ namespace office.Models
         public int? ResidentialCityID { get; set; }
         public string ResidentialZipCode { get; set; }
         public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+         
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
     }
 
     public class MemberList
     {
-       [Key]
-       public int MemberID       { get; set; }
-       public string CompanyName    { get; set; }
-       public string ShortName      { get; set; }
-       public int TitleID        { get; set; }
-       public string Name           { get; set; }
-       public int MemberType     { get; set; }
-       public string MemberTypeName { get; set; }
-       public string PowerofAttorny { get; set; }
-       public int MemberPersonCount { get; set; }
-       public int ContactPersonCount { get; set; }
-       public string CreatedDate { get; set; }
-       public string CreatedBy { get; set; }
+        [Key]
+        public int MemberID { get; set; }
+        public string CompanyName { get; set; }
+        public string ShortName { get; set; }
+        public int TitleID { get; set; }
+        public string Name { get; set; }
+        public int MemberType { get; set; }
+        public string MemberTypeName { get; set; }
+        public string PowerofAttorny { get; set; }
+        public int MemberPersonCount { get; set; }
+        public int ContactPersonCount { get; set; }
+        public string CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
 
         public int? TotalRows { get; set; }
-        
+
     }
 
 
@@ -349,9 +350,9 @@ namespace office.Models
     {
         [Key]
         public int MemberPersonDetailId { get; set; }
-        public int MemberID             { get; set; }
+        public int MemberID { get; set; }
         public string PersonName { get; set; }
-        public int DesignationID   { get; set; }
+        public int DesignationID { get; set; }
         public string DesignationName { get; set; }
 
     }
@@ -359,11 +360,11 @@ namespace office.Models
 
     public class ContactPersonListByMember
     {
-       [Key]
-       public int MembeConactPersonDetailId { get; set; }
-       public int MemberID                  { get; set; }
-       public int ContactPersonId           { get; set; }
-       public string FullName { get; set; }
+        [Key]
+        public int MembeConactPersonDetailId { get; set; }
+        public int MemberID { get; set; }
+        public int ContactPersonId { get; set; }
+        public string FullName { get; set; }
 
     }
 
@@ -379,7 +380,7 @@ namespace office.Models
     {
         [Key]
         public int PMobileDetailId { get; set; }
-        public int PersonalInfoID  { get; set; }
+        public int PersonalInfoID { get; set; }
         public string Mobile { get; set; }
     }
 
@@ -400,7 +401,7 @@ namespace office.Models
         public string IsActive { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int? TotalRows { get; set; }       
+        public int? TotalRows { get; set; }
 
     }
 
@@ -410,7 +411,7 @@ namespace office.Models
         public int? DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedBy { get; set; }        
+        public int CreatedBy { get; set; }
 
     }
     public class ConsultantTypeMaster
@@ -425,47 +426,50 @@ namespace office.Models
         [Key]
         public int? ConsultantTypeID { get; set; }
         public string ConsultantType { get; set; }
-        public string IsActive { get; set; } 
+        public string IsActive { get; set; }
         public int? TotalRows { get; set; }
 
     }
 
     public class CompanyDetails
     {
-        [Key] 
-       public int CompanyID                 { get; set; }
-       public string CompanyName            { get; set; }
-       public string ShortName              { get; set; }
-       public int CategoryID1               { get; set; }
-       public int SubCategoryID1            { get; set; }
-       public int CertificationID           { get; set; }
-       public int CompanyOwnershipTypeID    { get; set; }
-       public int Isclient                  { get; set; }
-       public Nullable<DateTime>            RequestDate          { get; set; }
-       public Nullable<DateTime>            InceptionDate        { get; set; }
-       public int CreatedBy                 { get; set; }
-       public DateTime CreatedDate          { get; set; }
+        [Key]
+        public int CompanyID { get; set; }
+        public string CompanyName { get; set; }
+        public string ShortName { get; set; }
+        public int CategoryID1 { get; set; }
+        public int SubCategoryID1 { get; set; }
+        public int CertificationID { get; set; }
+        public int CompanyOwnershipTypeID { get; set; }
+        public int Isclient { get; set; }
+        public Nullable<DateTime> RequestDate { get; set; }
+        public Nullable<DateTime> InceptionDate { get; set; }
+        public int CreatedBy { get; set; }
+        public Nullable<DateTime>   CreatedDate { get; set; }
     }
     public class ProjectDetailsLeftSide
     {
-        public int ProjectID { get; set; } 
+        public int ProjectID { get; set; }
         public IEnumerable<SaveProjectInternalTeam> SaveProjectInternalTeam { get; set; }
         public IEnumerable<SaveProjectExternalTeam> SaveProjectExternalTeam { get; set; }
+        public IEnumerable<SaveProjectOfficeSideTeam> SaveProjectOfficeSideTeam { get; set; }
+        public IEnumerable<AuthoritySignatory> AuthoritySignatory { get; set; }
+        public IEnumerable<AuthoritySignatoryDetail> AuthoritySignatoryDetail { get; set; }
     }
-    public class CompanyDetailsLeftSide
+    public class CompanyDetailsLeftSide 
     {
         public int CompanyID { get; set; }
         public IEnumerable<CompanyAddress> CompanyAddress { get; set; }
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
         public IEnumerable<SaveCertification> SaveCertification { get; set; }
-        public IEnumerable<SaveInternalTeam> SaveInternalTeam { get; set; } 
+        public IEnumerable<SaveInternalTeam> SaveInternalTeam { get; set; }
         public IEnumerable<SaveExternalTeam> SaveExternalTeam { get; set; }
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile2 { get; set; }
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile3 { get; set; }
     }
     public class CompanyDetailsforPerson
     {
-        public int PersonID { get; set; } 
+        public int PersonID { get; set; }
         public IEnumerable<SaveCompanyList> SaveCompanyList { get; set; }
         public IEnumerable<SaveCertificationPerson> SaveCertificationPerson { get; set; }
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
@@ -479,36 +483,35 @@ namespace office.Models
         public string ShortName { get; set; }
         public int BusinessCategoryID { get; set; }
         public int BusinessSubCategoryID { get; set; }
-        public string BusinessCategoryName { get; set; } 
+        public string BusinessCategoryName { get; set; }
         public string BusinessSubCategoryName { get; set; }
         public int CertificationID { get; set; }
         public int CompanyOwnershipTypeID { get; set; }
         public int Isclient { get; set; }
-        public DateTime RequestDate { get; set; }
-        public DateTime InceptionDate { get; set; }
+        public Nullable<DateTime>   RequestDate { get; set; }
+        public Nullable<DateTime>   InceptionDate { get; set; }
         public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int? TotalRows { get; set; }
-
+        public string   CreatedDate { get; set; }
+        public int? TotalRows { get; set; } 
     }
-  
+
     public class SaveCompanyMobile
     {
         [Key]
-        public string Value { get; set; }
-        public int? CompanyPhoneID { get; set; }  
-        public int Type                { get; set; } 
-        public int WorkDepartmentID   { get; set; } 
-        public string Extension       { get; set; }
+        public int? CompanyPhoneID { get; set; }
+        public string Value { get; set; } 
+        public int Type { get; set; }
+        public int WorkDepartmentID { get; set; }
+        public string Extension { get; set; }
         public int AddressID { get; set; }
-        
+
     }
 
     public class SaveSocialLink
     {
         [Key]
-        public string SocialLinkText  { get; set; }
-        public int? SocialLinkId { get; set; }   
+        public string SocialLinkText { get; set; }
+        public int? SocialLinkId { get; set; }
     }
     public class SavePersonMobile
     {
@@ -525,9 +528,9 @@ namespace office.Models
     {
         [Key]
         public string Value { get; set; }
-        public int? CompanyPhoneID { get; set; } 
+        public int? CompanyPhoneID { get; set; }
         public int Type { get; set; }
-        public int WorkDepartmentID { get; set; } 
+        public int WorkDepartmentID { get; set; }
         public int AddressID { get; set; }
         public string Extension { get; set; }
     }
@@ -547,7 +550,7 @@ namespace office.Models
     {
         [Key]
         public int internalpersonid { get; set; }
-        public int internalTeamid { get; set; } 
+        public int internalTeamid { get; set; }
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
@@ -587,7 +590,7 @@ namespace office.Models
     public class SaveProjectOfficeSideTeam
     {
         [Key]
-        public int personid { get; set; } 
+        public int personid { get; set; }
         public int Teamid { get; set; }
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
@@ -600,8 +603,9 @@ namespace office.Models
     public class SaveCompanyList
     {
         [Key]
-        public int CompanyID { get; set; }
         public int? Listid { get; set; }
+        public int CompanyID { get; set; }
+        
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
@@ -613,13 +617,14 @@ namespace office.Models
     public class SaveExternalTeam
     {
         [Key]
-        public int ExternalPersonId { get; set; }
+      
         public int ExternalTeamid { get; set; }
+        public int ExternalPersonId { get; set; }
         public int RelationId { get; set; }
         public int CategoryId { get; set; }
         public int SubCategoryId { get; set; }
         public int ExternalCompanyId { get; set; }
-        public int DesignationId { get; set; } 
+        public int DesignationId { get; set; }
         public int SubDesignationId { get; set; }
         public int SubpartDesignationId { get; set; }
         public string RelationName { get; set; }
@@ -634,9 +639,9 @@ namespace office.Models
     {
         [Key]
         public int CompanyCertificationsDetailID { get; set; }
-        public int CertificationID { get; set; } 
-        public String CertificationText { get; set; } 
-        public String Value { get; set; } 
+        public int CertificationID { get; set; }
+        public String CertificationText { get; set; }
+        public String Value { get; set; }
     }
     public class SaveCertificationPerson
     {
@@ -658,8 +663,8 @@ namespace office.Models
         public string OfcZip { get; set; }
         public string Website { get; set; }
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
-         
-        }
+
+    }
     public class BussinessCategoryList
     {
         [Key]
@@ -679,12 +684,12 @@ namespace office.Models
         public string BusinessCategoryName { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
-      
+
     }
     public class BussinessSubCategoryList
     {
         [Key]
-        
+
         public int? BusinessSubCategoryID { get; set; }
         public int? BusinessCategoryID { get; set; }
         public string BusinessCategoryName { get; set; }
@@ -709,7 +714,7 @@ namespace office.Models
     public class TeamDesignation
     {
         [Key]
-        public int? TeamDesignationID { get; set; } 
+        public int? TeamDesignationID { get; set; }
         public string TeamDesignationName { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
@@ -757,7 +762,7 @@ namespace office.Models
         public int? TeamDesignationID { get; set; }
         public string TeamSubSubDesignationName { get; set; }
         public bool IsActive { get; set; }
-        public int CreatedBy { get; set; } 
+        public int CreatedBy { get; set; }
     }
     public class TeamSubSubDesignationList
     {
@@ -787,7 +792,7 @@ namespace office.Models
         public string Road { get; set; }
         public string Goan { get; set; }
         public string Taluka { get; set; }
-        public string District { get; set; } 
+        public string District { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -807,16 +812,18 @@ namespace office.Models
         public int ProjectTypeId { get; set; }
         public string CustomerFileNo { get; set; }
         public string PhysicalPath { get; set; }
-        public int StateID { get; set; }
-         public int TalukaID { get; set; }
+        public int StateID { get; set; } 
+        public int TalukaID { get; set; }
         public string District { get; set; }
         public string Road { get; set; }
         public string Goan { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
         public decimal Cost { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public Nullable<DateTime> StartDate { get; set; }
+        public Nullable<DateTime> EndDate { get; set; } 
+        public string Developers { get; set; }
+        public int DeveloperTypeID { get; set; }
     }
 
     public class nSaveSurvayDetails
@@ -824,20 +831,180 @@ namespace office.Models
         [Key]
         public int SurvayNo { get; set; }
         public int SurvayDetailId { get; set; }
-        public int SurvayTypeID { get; set; } 
+        public int SurvayTypeID { get; set; }
         public int HissaNo { get; set; }
         public decimal Area { get; set; }
         public int UnitID { get; set; }
     }
+    public class SaveProformaSetting
+    {
+        [Key]
+
+        public string SelectedField { get; set; }
+        public string UnSelectedField { get; set; }
+
+    }
+    public class ProformaSetting
+    {
+        [Key]
+        public int FieldID { get; set; }
+        public int GroupId { get; set; }
+        public string GroupName { get; set; }
+        public string FieldName { get; set; }
+        public string TableName { get; set; }
+        public bool isApplicable { get; set; }
+    }
+
+    public class AuthoritySignatory
+    {
+        [Key]
+        public int signatorId { get; set; }
+        public int ProjectID { get; set; }
+        public int OwnerID { get; set; }
+        public decimal AreaUnderDevelopment { get; set; }
+        public int AreaUnitID { get; set; }
+        public string AgreementNo { get; set; }
+        public DateTime AgreementDate { get; set; }
+        public string SubRegistarOffice { get; set; }
+        public int DocumentID { get; set; } 
+        public string selectedVal1 { get; set; }
+        public string selectedVal2 { get; set; }
+        public string selectedVal3 { get; set; }
+        public string selectedVal4 { get; set; }
+        public string selectedVal5 { get; }
+        public int either1 { get; set; }
+        public int either2 { get; set; }
+        public int either3 { get; set; }
+        public int either4 { get; set; }
+        public int either5 { get; set; }
+    }
+    public class AuthoritySignatoryDetail
+    {
+        [Key] 
+        public int SignatoryDetailID { get; set; }
+        public int SignatoryID { get; set; }
+        public int ProjectID { get; set; }
+        public int OwnerID { get; set; } 
+        public int PersonId { get; set; }
+        public int GroupId { get; set; }
+        public string PName { get; set; } 
+    }
+    public class CompanyFields 
+    {
+
+        [Key]
+        public int CompanyID { get; set; }
+        public string CompanyName { get; set; }
+        public string ShortName { get; set; }
+        public int CategoryID1 { get; set; }
+        public int SubCategoryID1 { get; set; }
+        public int CertificationID { get; set; }
+        public int CompanyOwnershipTypeID { get; set; }
+        public int Isclient { get; set; }
+        public Nullable<DateTime> RequestDate { get; set; }
+        public Nullable<DateTime> InceptionDate { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public IEnumerable<ProformaSetting> ProformaSetting { get; set; }
+    }
+    public class ProjectOwnerSurveyNo
+    { 
+        [Key]
+        public int SurvayDetailId { get; set; }
+        public int ProjectID { get; set; }
+        public string  S_SurveyNo  { get; set; }
+        public int  S_OwnerID         { get; set; }
+        public int  S_HissaNo         { get; set; }
+        public int  S_PlotNo          { get; set; }
+        public int  S_OldNo           { get; set; }
+        public int  G_SurveyNo    { get; set; }
+        public int  G_HissaNo         { get; set; }
+        public int  G_PlotNo          { get; set; }
+        public int  G_OldNo           { get; set; }        
+        public int  CTS_SurveyNo  { get; set; }
+        public int  CTS_HissaNo       { get; set; }
+        public int  CTS_PlotNo        { get; set; }
+        public int  CTS_OldNo         { get; set; }
+        public int  FP_SurveyNo  { get; set; }
+    }
+    public class ProjectOwnerDetails
+    {
+        [Key]
+        public int OwnerID { get; set; }
+        public String OwnerName { get; set; }
+        
+        public int PropertCardTypeId { get; set; }
+        public int SurvayDetailId { get; set; }  
+        public int isUndevidedShare { get; set; }
+        public int Area { get; set; }
+        public int AreaUnitID { get; set; }
+        public String UnitName { get; set; }
+        
+    }
+    public class ProjectOwnerDetailList
+    {
+        [Key]
+        public int OwnerID { get; set; }
+        public String OwnerName { get; set; } 
+        public int PropertCardTypeId { get; set; }
+        public int SurvayDetailId { get; set; }
+        public int isUndevidedShare { get; set; }
+        public int Area { get; set; }
+        public int AreaUnitID { get; set; }
+        public String UnitName { get; set; }
+        public String SurvayNo { get; set; } 
+        public int SHissaNo { get; set; }
+        public int GatNo { get; set; } 
+        public int GatHissaNo { get; set; } 
+        public int CTSNo { get; set; }
+        public int CTSHissaNo { get; set; } 
+        public int FInalPlotNo { get; set; } 
+    }
+    public class ProjectOwnerDetailSurveyWise 
+    {
+        [Key]
+        public int SurvayDetailId { get; set; }
+        public String SurvayNo { get; set; }
+        public String OwnerName { get; set; } 
+        public int Area { get; set; }  
+        public String UnitName { get; set; } 
+        public int SHissaNo { get; set; }
+        public int GatNo { get; set; }
+        public int GatHissaNo { get; set; }
+        public int CTSNo { get; set; }
+        public int CTSHissaNo { get; set; }
+        public int FInalPlotNo { get; set; }
+    }
+    public class Certification
+    {
+        [Key]
+        public int CertificationID { get; set; }
+        public string CertificationName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; } 
+    }
+    public class CertificationList
+    {
+        [Key]
+        public int CertificationID { get; set; }
+        public string CertificationName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+
+    }
+
+    public class ProjectOwnerDetailSurveyWiseAll
+    {
+
+        public int ProjectID { get; set; }
+        public IEnumerable<ProjectOwnerDetailList> ProjectOwnerDetailList { get; set; }
+        public IEnumerable<ProjectOwnerDetailSurveyWise> ProjectOwnerDetailSurveyWise { get; set; }
+        
+    }
 }
-
-
-
-
-
-
-
-
 
 
 
