@@ -1,10 +1,10 @@
 ﻿
 @model office.Models.nProjectDetail
 <style>
-    .requiredfield
-    {
-        border:solid 1px red;
+    .requiredfield {
+        border: solid 1px red;
     }
+
     .control-label {
         font-size: 12px !important;
     }
@@ -78,7 +78,7 @@
                         </div>
                         <label class="col-lg-2 control-label">Developers </label>
                         <div class="col-lg-4">
-                            @Html.DropDownList("Developers", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "DeveloperCompanyID", Title = "Developer" , @Placeholder= "Select Developer" })
+                            @Html.DropDownList("Developers", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "DeveloperCompanyID", Title = "Developer", @Placeholder = "Select Developer" })
                             <input type="hidden" id="DevelopersId" value="@Model.Developers" />
                         </div>
                     </div>
@@ -90,20 +90,21 @@
                         <div class="col-lg-4">
                             @if (Model.ProjectID == 0)
                             {
-                            <button class="btn btn-primary" type="button" id="btnSaveInitial">Save</button>
+                                <button class="btn btn-primary" type="button" id="btnSaveInitial">Save</button>
                             }
                         </div>
-                    </div> 
+                    </div>
                 </div>
-            </div> 
+            </div>
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>
                         Internal Team
                     </h5>
                     <div class="ibox-tools">
-                        <button id="addMultiInternalTeam" class="btn btn-white pull-left" style="padding: 0px 12px;" type="button">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
+
+                        <button id="addMultiInternalTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
+                            Add <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-down"></i>
@@ -116,7 +117,7 @@
                             <input type="hidden" value="0" id="internalTeamid" />
                             <label class="col-lg-2 control-label">Parent Company</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("ParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ParentCompanyID", Title = "CompanyID" })
+                                @Html.DropDownList("ParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyListByProjectID"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ParentCompanyID", Title = "CompanyID" })
                             </div>
                             <label class="col-lg-2 control-label">Person</label>
                             <div class="col-lg-4" style="display:inline-flex;">
@@ -149,9 +150,10 @@
                         External Team
                     </h5>
                     <div class="ibox-tools">
-                        <button id="addMultiExternalTeam" class="btn btn-white pull-left" type="button" style="padding: 0px 12px;">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        <button id="addMultiExternalTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
+                            Add <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
+                        
                         <a class="collapse-link">
                             <i class="fa fa-chevron-down"></i>
                         </a>
@@ -163,7 +165,7 @@
                         <div class="form-group entityField">
                             <label class="col-lg-2 control-label">Company</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("ExtTeamParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ExtTeamParentCompanyID", Title = "CompanyID" })
+                                @Html.DropDownList("ExtTeamParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyListByProjectID"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ExtTeamParentCompanyID", Title = "CompanyID" })
                             </div>
                             <label class="col-lg-2 control-label">Person</label>
                             <div class="col-lg-4" style="display:inline-flex;">
@@ -195,9 +197,10 @@
                         Office Side
                     </h5>
                     <div class="ibox-tools">
-                        <button id="addMultiOfficeSideTeam" class="btn btn-white pull-left" type="button" style="padding: 0px 12px;">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        <button id="addMultiOfficeSideTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
+                            Add <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
+                        
                         <a class="collapse-link">
                             <i class="fa fa-chevron-down"></i>
                         </a>
@@ -297,7 +300,7 @@
                 <div class="ibox-title">
                     <h5>
                         Pre proposal Details
-                    </h5> 
+                    </h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-down"></i>
@@ -382,6 +385,7 @@
                                             <div class="form-group">
                                                 <div class="col-lg-3">
                                                     <span class="IsultiOwner">
+
                                                         @Html.CheckBox("Propertycard1", new { @class = "", title = "Is 7/12 ", @id = "Propertycard1" })
                                                         <label for="checkbox5">
                                                             7-12
@@ -412,7 +416,8 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <span class="IsultiOwner">
-                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                        <input type="radio" name="isPrimarySurvey" value="1">
+
                                                         <label for="checkbox5">
                                                             primary
                                                         </label>
@@ -434,7 +439,8 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <span class="IsultiOwner">
-                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                        <input type="radio" name="isPrimarySurvey" value="2">
+
                                                         <label for="checkbox5">
                                                             primary
                                                         </label>
@@ -456,40 +462,48 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <span class="IsultiOwner">
-                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                        <input type="radio" name="isPrimarySurvey" value="3">
                                                         <label for="checkbox5">
                                                             primary
                                                         </label>
                                                     </span>
                                                 </div>
                                             </div>
-                                                <div class="form-group disabledDiv" id="FinalPlot">
-                                                    <div class="col-lg-3">
-                                                        <input id="FP_SurveyNoValue" type="text" placeholder="Final Plot No." class="form-control">
-                                                    </div>
-                                                    <div class="col-lg-1">
-                                                        <button id="AddOwnerDoc" class="btn btn-primary pull-left" type="button">
-                                                            Save
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-lg-1">
-                                                        <button id="AddOwnerDocNext" class="btn btn-primary pull-left" type="button">
-                                                            Save & Next
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-lg-3">
-
-                                                    </div>
+                                            <div class="form-group disabledDiv" id="FinalPlot">
+                                                <div class="col-lg-3">
+                                                    <input id="FP_SurveyNoValue" type="text" placeholder="Final Plot No." class="form-control">
                                                 </div>
+                                                <div class="col-lg-2">
+                                                    <span class="IsultiOwner">
+                                                        <input type="radio" name="isPrimarySurvey" value="5">
+                                                        <label for="checkbox5">
+                                                            primary
+                                                        </label>
+                                                    </span>
+                                                </div> <div class="col-lg-1"></div>
+                                                <div class="col-lg-1">
+                                                    <button id="AddOwnerDoc" class="btn btn-primary pull-left" type="button">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-1">
+                                                    <button id="AddOwnerDocNext" class="btn btn-primary pull-left" type="button">
+                                                        Save & Next
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-3">
 
+                                                </div>
                                             </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div id="tab-2" class="tab-pane">
                                 <div class="ibox-content">
                                     <div id="AddNew2">
-                                        
+
                                         <div class="form-group">
                                             <div class="col-md-2">
                                                 <select id="PropertyCardTypeID" class="form-control">
@@ -511,10 +525,10 @@
                                         <div class="full-height-scroll">
                                             <div class="ibox-content">
                                                 <div class="bindGrid">
-                                                    
-                                                    
-                                                    <div   id="OwnersData">
-                                                       
+
+
+                                                    <div id="OwnersData">
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -540,11 +554,11 @@
                         </div>
                     </div>
                     <div class="ibox-content iboxProposaldataentryView">
-                         
-                            <div id="OwnersDataAll">
 
-                            </div>
-                         
+                        <div id="OwnersDataAll">
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="ibox float-e-margins">
@@ -560,20 +574,17 @@
                     </div>
                     <div class="ibox-content iboxAuthority">
                         <div class="form-group">
+
                             <label class="col-lg-2 control-label">Current Developing rights with</label>
                             <div class="col-lg-4">
-                                <select id="ownerid" class="form-control">
-                                    <option value="1">Owners</option>
-                                    <option value="2">1212</option>
-                                    <option value="3">545</option>
-                                </select>
+                                @Html.DropDownList("RightwithID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyListByProjectID"], "Value", "Text"), "Select", new { @class = "form-control", @id = "ARightID", Title = "CompanyID", Placeholder = "Select rights with" })
                             </div>
-                        </div>
-
+                        </div>  
+                      
                         <div class="form-group RowAddSignature" id="RowAddSignature">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("SignatoryPersonId1", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId1", Title = "PersonId", Placeholder = "Signature " })
+                                @Html.DropDownList("SignatoryPersonId1", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId1", Title = "PersonId", Placeholder = "Signature " })
                             </div>
                             <div class="col-lg-3">
                                 @Html.DropDownList("either1", new SelectList((System.Collections.IEnumerable)ViewData["Either1"], "Value", "Text"), "Select ", new { @class = "form-control ", @id = "either1", Title = "PersonId", Placeholder = "  " })
@@ -584,7 +595,7 @@
                         <div class="form-group RowAddSignature" id="RowAddSignature1" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("OfficePersonId2", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId2", Title = "PersonId", Placeholder = "Signature " })
+                                @Html.DropDownList("OfficePersonId2", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"),   new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId2", Title = "PersonId", Placeholder = "Signature " })
                             </div>
                             <div class="col-lg-3">
                                 <select id="either2" class="form-control">
@@ -594,11 +605,14 @@
                                     <option value="3">Either3</option>
                                 </select>
                             </div>
+                            <div class="col-lg-1">
+                                <i class="fa fa-minus-circle removeMultiAuthority" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            </div>
                         </div>
                         <div class="form-group RowAddSignature" id="RowAddSignature2" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("OfficePersonId3", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId3", Title = "PersonId", Placeholder = "Signature " })
+                                @Html.DropDownList("OfficePersonId3", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"),  new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId3", Title = "PersonId", Placeholder = "Signature " })
                             </div>
                             <div class="col-lg-3">
                                 <select id="either3" class="form-control">
@@ -608,11 +622,14 @@
                                     <option value="3">Either3</option>
                                 </select>
                             </div>
+                            <div class="col-lg-1">
+                                <i class="fa fa-minus-circle removeMultiAuthority" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            </div> 
                         </div>
                         <div class="form-group RowAddSignature" id="RowAddSignature3" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("OfficePersonId4", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId4", Title = "PersonId", Placeholder = "Signature " })
+                                @Html.DropDownList("OfficePersonId4", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"),  new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId4", Title = "PersonId", Placeholder = "Signature " })
                             </div>
                             <div class="col-lg-3">
                                 <select id="either4" class="form-control">
@@ -622,11 +639,14 @@
                                     <option value="3">Either3</option>
                                 </select>
                             </div>
+                            <div class="col-lg-1">
+                                <i class="fa fa-minus-circle removeMultiAuthority" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            </div>
                         </div>
                         <div class="form-group RowAddSignature" id="RowAddSignature3" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
-                                @Html.DropDownList("OfficePersonId4", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), "Select Person", new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId5", Title = "PersonId", Placeholder = "Signature " })
+                                @Html.DropDownList("OfficePersonId5", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"),  new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId5", Title = "PersonId", Placeholder = "Signature " })
                             </div>
                             <div class="col-lg-3">
                                 <select id="either5" class="form-control">
@@ -636,12 +656,14 @@
                                     <option value="3">Either3</option>
                                 </select>
                             </div>
+                            <div class="col-lg-1">
+                                <i class="fa fa-minus-circle removeMultiAuthority" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                            </div>
                         </div>
-                        <div id="AuthorityDetails"></div>
-
+                        <div id="AuthorityDetails"> 
+                        </div> 
                         <div>
                             <div class="form-group">
-
                                 <label class="col-lg-2 control-label">
                                     Sub-registrar office
                                 </label>
@@ -649,92 +671,15 @@
                                     <input id="SubRegistrar" type="text" placeholder="Sub-registrar Office" class="form-control">
                                 </div>
                                 <div class="col-lg-4">
-
-
                                     <input id="SaveAuthority" type="button" class="btn btn-primary" value="Save">
                                 </div>
                             </div>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            S. No+Hissa
-                                        </th>
-                                        <th>
-                                            Owners
-                                        </th>
-                                        <th>
-                                            Owner Area
-                                        </th>
-                                        <th colspan="2">
-                                            Doc Area
-                                        </th>
+                            <div id="AuthorityListDetails">
 
-                                        <th>Remark</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
+                            </div>
+                            
 
-                                            @Html.CheckBox("s", new { @class = "", title = "Is Multiple Owner", @id = "IsultiOwner1" })
-
-                                            if total area
-
-                                        </td>
-                                        <td>
-
-                                            <input id="Area_on_doc1" type="text" placeholder=" Area on doc" class="form-control">
-                                        </td>
-                                        <td><input id="Area_on_doc_remark1" type="text" placeholder="Remark" class="form-control"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <select id="DropSurvey" class="form-control">
-                                                <option value="Exemplo1">Surve No.</option>
-                                                <option value="Exemplo2">1212</option>
-                                                <option value="Exemplo3">545</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select id="Dropownerid" class="form-control">
-                                                <option value="Exemplo1">Owners</option>
-                                                <option value="Exemplo2">1212</option>
-                                                <option value="Exemplo3">545</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input id="Area_on_doc_remark" type="text" placeholder="total Area Entry Not done" class="form-control">
-
-
-                                        </td>
-                                        <td></td>
-                                        <td>
-                                            <input id="total Area" type="text" placeholder="total Area" class="form-control">
-
-                                        </td>
-                                        <td> </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            total Area
-                                        </td>
-                                        <td></td>
-                                        <td>
-                                            Display total area
-                                        </td>
-                                        <td> </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
                         </div>
-
                     </div>
                 </div>
                 <div class="ibox float-e-margins">
@@ -742,8 +687,7 @@
                         <h5>
                             Proposal detail entry
                         </h5>
-                        <div class="ibox-tools">
-
+                        <div class="ibox-tools"> 
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-down"></i>
                             </a>
@@ -766,8 +710,7 @@
                                         <th>Units</th>
                                         <th>Doc number</th>
                                         <th>Date</th>
-                                        <th>Registrar</th>
-
+                                        <th>Registrar</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -786,13 +729,11 @@
                                         <td>Date</td>
                                         <td>Registrar</td>
                                     </tr>
-                                </tbody>
-
+                                </tbody> 
                             </table>
                         </div>
                     </div>
-                </div>
-
+                </div> 
                 <div class="row form-group">
                     <div class="col-md-3">
                     </div>
@@ -805,8 +746,7 @@
                 </div>
 
             </div>
-        </div>
-
+        </div> 
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
 
@@ -890,7 +830,7 @@
                 <h4 class="modal-title">Add Owner  </h4>
                 <span class="IsultiOwner">
                     @*@Html.CheckBox("UndevidedShares", new { @class = "", title = "Is Multiple Owner", @id = "IsUndevidedShares" })*@
-                   
+
                 </span>
             </div>
             <div class="modal-body">
@@ -914,7 +854,7 @@
             <div class="modal-header">
                 <button type="button" class="close closeModal" id="closeModal2">&times;</button>
                 <h4 class="modal-title">Add Owner for Undevided share</h4>
-                 
+
             </div>
             <div class="modal-body">
                 <div id="OwnerPopup2">
@@ -931,8 +871,9 @@
 </div>
 <script>
     $(document).ready(function () {
-        
+
         getAllOwners();
+        getownerauthority();
         var v = $("#DevelopersId").val();
         var selectedValues2 = new Array();
         var selected = v.split(',');
@@ -945,9 +886,9 @@
             $('#myModal').hide();
             $('#myModalUndevided').hide();
         });
-        
+
         $('#AddOwnerUndevided').on("click", function (e) {
-             
+
             $('#isUndevidedValue').val(1);
             var SurveyNoTypeID = $('#SurveyNoTypeID').val();
             var OwnerSurveyNo = $('#OwnerSurveyNo').val();
@@ -958,7 +899,7 @@
             if (OwnerSurveyNo == "") {
                 alert("Please select Survey Number"); return false;
             }
-           
+
             $.ajax({
                 type: 'Post',
                 dataType: "text",
@@ -974,7 +915,7 @@
                 success: function (data) {
                     $('#myModalUndevided').show();
                     //document.getElementById("IsUndevidedShares").checked == true;
-                    
+
                     $('#OwnerPopup2').html(data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1003,10 +944,10 @@
                     SurvayTypeID: SurveyNoTypeID ,
                     OwnerSurveyNo: OwnerSurveyNo ,
                      isdevideshares: 0
-                     
+
                 },
                 success: function (data) {
-                   
+
                     $('#myModal').show();
 
                    // $('#l1').text = "Add Undevided Shares";
@@ -1016,14 +957,14 @@
                 }
             });
         });
-        
-    
-        
+
+
+
         $('#SaveModal').on("click", function (e) {
-            debugger;
+
             var OwnerAreaUnderProposal1 = $("#OwnerAreaUnderProposal").val();
             var OwnerNames1 = $("#OwnerName1").val();
-           
+
             if (OwnerAreaUnderProposal1 == 0) {
                 $("#OwnerAreaUnderProposal").addClass("requiredfield");
                 return false;
@@ -1044,11 +985,11 @@
                 var OwnerID = 0;
                 OwnerID = $(this).closest("div").find("#HdnOwnerIDPopup").val();
                 if (OwnerID != null && OwnerID > 0) {
-                   
+
                 }
                 var OwnerAreaUnderProposal = $(this).closest("div").find("#OwnerAreaUnderProposal").val();
                 var OwnerAreaUnderProposalUnitId = $(this).closest("div").find("#OwnerAreaUnderProposalUnitId option:selected").val();
-               
+
                 var tdVals = OwnerID + "~" + OwnerName + "~" + OwnerAreaUnderProposal + "~" + OwnerAreaUnderProposalUnitId ;
 
                 if (OwnerName != "") {
@@ -1056,7 +997,7 @@
                 }
             });
             var SaveidArrOwner = [];
-           
+
             for (var i = 0; i < idArrOwner.length; i++) {
                 var arrElement = idArrOwner[i].split("~");
                 item = {}
@@ -1064,12 +1005,12 @@
                 item["OwnerName"] = arrElement[1];
                 item["Area"] = arrElement[2];
                 item["AreaUnitID"] = arrElement[3];
-               
+
                 SaveidArrOwner.push(item);
             }
-             
+
             var Share = 0;
-            
+
             $.ajax({
                 type: 'Post',
                 dataType: "text",
@@ -1103,13 +1044,14 @@
 
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(errorThrown);
                 }
             });
-          
+
         });
         $('#SaveModal2').on("click", function (e) {
             var OwnerAreaUnderProposal1 = $("#OwnerAreaUnderProposal2").val();
-             
+
             if (OwnerAreaUnderProposal1 == 0) {
                 $("#OwnerAreaUnderProposal2").addClass("requiredfield");
                 return false;
@@ -1126,7 +1068,7 @@
             else {
                 $("#OwnerName1").removeClass("requiredfield");
             }
-            
+
             var idArrOwner = [];
             $('.RowOwnerArea2').each(function (k, v) {
                 var OwnerName = $(this).closest("div").find("#OwnerName1").val();
@@ -1158,7 +1100,7 @@
             }
 
             var Share = 0;
-             
+
             $.ajax({
                 type: 'Post',
                 dataType: "text",
@@ -1199,7 +1141,7 @@
 
 
 
-        
+
         function getAllOwners() {
 
             $.ajax({
@@ -1238,11 +1180,11 @@
         }
         function SaveSurveyNo()
         {
-             
+            var isPrimarySurvey = $("input[name='isPrimarySurvey']:checked").val();
             var Ow_SurveyNoValue = $('#Ow_SurveyNoValue').val();
             var Ow_HissaNo = $('#Ow_HissaNo').val();
             var Ow_PlotNo = $('#Ow_PlotNo').val();
-            var Ow_OldNo = $('#Ow_OldNo').val(); 
+            var Ow_OldNo = $('#Ow_OldNo').val();
             if (Ow_SurveyNoValue == "") {
                 if (Ow_HissaNo != "" || Ow_PlotNo != "" || Ow_OldNo != "") {
                     $('#Ow_SurveyNoValue').addClass("requiredfield");
@@ -1285,7 +1227,8 @@
                     CTS_HissaNo: $('#CTS_HissaNo').val(),
                     CTS_PlotNo: $('#CTS_PlotNo').val(),
                     CTS_OldNo: $('#CTS_OldNo').val(),
-                    FP_SurveyNo: $('#FP_SurveyNoValue').val()
+                    FP_SurveyNo: $('#FP_SurveyNoValue').val(),
+                    PrimarySurvey: isPrimarySurvey
                 },
                 success: function (data) {
                 },
@@ -1293,21 +1236,60 @@
                 }
             });
         }
-        $('#AddOwnerDoc').on("click", function (e) { 
-            SaveSurveyNo();          
+        $('#AddOwnerDoc').on("click", function (e) {
+            SaveSurveyNo();
         });
-       
-        
+
+
         $('#AddOwnerDocNext').on("click", function (e) {
             SaveSurveyNo();
             $("#tab-2").addClass("active");
             $("#tab-1").removeClass("active");
-             
-            $("#SurveyNoTypeID").val(1);
-            changeSurveyNo();
-            var t = $("#Ow_SurveyNoValue").val();
-           
-            $("#OwnerSurveyNo option:contains("+t+")").attr('selected', 'selected');
+            debugger;
+            var isPrimarySurvey = $("input[name='isPrimarySurvey']:checked").val();
+
+            $("#SurveyNoTypeID").val(isPrimarySurvey);
+
+            $.ajax({
+                url: "@Url.Action("GetSurveyNoByTypeID", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: $('#ProjectID').val(),
+                    SurveyNoTypeID: isPrimarySurvey
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+
+                    $('#OwnerSurveyNo').html(data);
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+                }
+            });
+            var t1 = $("#Ow_SurveyNoValue").val();
+
+            if (isPrimarySurvey == 1) {
+             //   var t1 = $("#Ow_SurveyNoValue").val();
+                $("#OwnerSurveyNo option:contains(" + t1 + ")").attr('selected', 'selected');
+            }
+            else if (isPrimarySurvey == 2) {
+                var t2 = $("#G_SurveyNoValue").val();
+                $("#OwnerSurveyNo option:contains(" + t2 + ")").attr('selected', 'selected');
+            }
+            else if (isPrimarySurvey == 3) {
+                var t3 = $("#CTS_SurveyNoValue").val();
+                $("#OwnerSurveyNo option:contains(" + t3 + ")").attr('selected', 'selected');
+            } else if (isPrimarySurvey == 5) {
+                var t4 = $("#FP_SurveyNoValue").val();
+                $("#OwnerSurveyNo option:contains(" + t4 + ")").attr('selected', 'selected');
+            }
+            else {
+                $("#OwnerSurveyNo option:contains(" + t1 + ")").attr('selected', 'selected');}
+
         });
 
 
@@ -1331,7 +1313,7 @@
             });
         });
         function changeSurveyNo() {
-             
+
              $.ajax({
                 url: "@Url.Action("GetSurveyNoByTypeID", "Master")",
                 contentType: "application/json",
@@ -1343,7 +1325,7 @@
                 type: "POST",
                 async: false,
                 success: function (data) {
-                     
+
                     $('#OwnerSurveyNo').html(data);
                 },
                 error: function (data) {
@@ -1357,8 +1339,8 @@
             changeSurveyNo();
             return true;
         });
-            $('#ownerid').change(function () {
-            var ownerid = $('#ownerid').val();
+        function getownerauthority() {
+            var ownerid = $('#ARightID').val();
             $.ajax({
                 type: 'GET',
                 dataType: "text",
@@ -1366,29 +1348,93 @@
                 data:
                 {
                     ProjectID: $('#ProjectID').val(),
-                    OwnerID: $('#ownerid').val()
+                    OwnerID: $('#ARightID').val()
                 },
                 success: function (data) {
-
+                    debugger;
                     $('#AuthorityDetails').html(data);
                     var v = $("#selectedVal1").val();
                     var selectedValues = new Array();
                     var selected = v.split(',');
-                   var len = selected.length;
+                    var len = selected.length;
                     for (i = 0; i < len; i++) {
                         selectedValues[i] = selected[i].trim().toString();
                     }
 
                     $("#SignatoryPersonId1").val(selectedValues);//.trigger('change.select2');;//.trigger("change");
-                   // $('#SignatoryPersonId1').trigger('change')
+                    // $('#SignatoryPersonId1').trigger('change')
                     $("#SubRegistrar").val($('#hdnSubRegistarOffice').val());
                     $("#either1").val($('#hdneither1').val());
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                 }
             });
+        }
+        $('#ARightID').change(function () {
+            AuthorityListDetails();
+            getownerauthority();
+            getAuthoritiesList(1);
+            getAuthoritiesList(2); getAuthoritiesList(3);
+            getAuthoritiesList(4); getAuthoritiesList(5);
 
         });
+        function AuthorityListDetails() {
+               $.ajax({
+            type: 'GET',
+            dataType: "text",
+                   url: '/Master/GetOwnersAuthorityList',
+            data:
+            {
+                ProjectID: $('#ProjectID').val() 
+                
+            },
+            success: function (data) {
+               
+                $("#AuthorityListDetails").html(data);
+               
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+            return true; 
+        }
+        function getAuthoritiesList(val1) {
+            
+           $.ajax({
+                url: "@Url.Action("GetInternalTeamUnderCompanyForSignatory", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    CompanyID: $('#ARightID').val(),
+                    val: val1
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+               success: function (data) {
+                   if (val1 == 1) {
+                       $('#SignatoryPersonId1').html(data);
+                   }
+                   else if (val1 == 2) {
+                       $('#SignatoryPersonId2').html(data);
+                   }
+                   else if (val1 == 3) {
+                       $('#SignatoryPersonId3').html(data);
+                   }
+                   else if (val1 == 4) {
+                       $('#SignatoryPersonId4').html(data);
+                   }
+                   else if (val1 == 5) {
+                       $('#SignatoryPersonId5').html(data);
+                   }
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+                }
+            });
+            return true; 
+        }
         $('.AddSignature').on("click", function (e) {
 
             var x = document.getElementById("RowAddSignature1");
@@ -1850,7 +1896,7 @@
             }
         });
 
-       
+
 
         $.ajax({
             type: 'GET',
@@ -1974,7 +2020,7 @@
             e.preventDefault();
             $(this).parents('tr').remove();
         });
-        
+
         $('#IsUndevidedShares').on('click', function () {
             var val = document.getElementById("IsUndevidedShares").checked;
             if (val == true) {
@@ -2011,8 +2057,8 @@
             else {
                 $("#CTSNo").addClass("disabledDiv");
             }
-            
-            
+
+
         });
         $('#IsultiOwner').on('click', function () {
             var val = document.getElementById("IsultiOwner").checked;
@@ -2029,7 +2075,7 @@
         $('#SaveAuthority').on('click', function () {
 
             var signatorId = $('#signatorId').val();
-            var ownerid = $('#ownerid').val();
+            var ownerid = $('#ARightID').val();
             var s=  $("#SignatoryPersonId1").val().toString()
             var selectedVal1 = s;
             var selectedVal2 = $("#SignatoryPersonId2").val();
@@ -2083,6 +2129,94 @@
                     }
                 }
             });
+        });
+
+        function saveAuthorityChart() {
+            var idArrAuthoritytble = [];
+            $('#tblAuthorityList tbody tr').each(function (k, v) {
+                var trElement = $(this);
+                var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+                    trElement.find('td:eq(1)').text().trim() + "~" +
+                    trElement.find('td:eq(2)').text().trim() + "~" +
+                    trElement.find('td:eq(3)').text().trim() + "~" +
+                    trElement.find('td:eq(4)').text().trim() + "~" +
+                    trElement.find('td:eq(5)').text().trim() + "~" +
+                    trElement.find('td:eq(6)').text().trim()
+                    idArrAuthoritytble.push(tdVals);
+            });
+
+            var SaveAuthoritytble = [];
+            for (var i = 0; i < idArrAuthoritytble.length; i++) {
+                var arrElement = idArrAuthoritytble[i].split("~");
+                item = {}
+
+                item["SurvayDetailId"] = arrElement[7] ;
+                item["DeveloperID"] = $("#ARightID").val() ;
+                item["OwnerID"] = 0;
+                item["OwnerArea"] = 0;
+                item["OwnerAreaUnitID"] = 0;
+                item["DocArea"] = arrElement[4];
+                item["DocAreaUnitID"] = arrElement[9];
+                item["Remark"]  =arrElement[6];
+                SaveAuthoritytble.push(item);
+            }
+     
+             
+          
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Master/SaveProjectNew',
+                data:
+                {
+                    ProjectID: ProjectID,
+                    ProjectName: $('#ProjectName').val(),
+                    EnquiryDate: $('#EnquiryDate').val(),
+                    ProjectShortName: $('#ProjectShortName').val(),
+                    StatusId: $('#ProjectStatusId option:selected').val(),
+                    ProjectTypeId: $('#ProjectTypeId option:selected').val(),
+                    CustomerFileNo: $('#CustomerFileNo').val(),
+                    PhysicalPath: $('#PhysicalPath').val(),
+                    StateID: $('#StateID').val(),
+                    District: $('#District').val(),
+                    TalukaID: $('#CityID').val(),
+                    Goan: $(' #Goan').val(),
+                    Road: $('#Road').val(),
+                    Cost: $('#Cost').val(),
+                    StartDate: $('#StartDate').val(),
+                    EndDate: $('#EndDate').val(),
+                    Developers: selectedDeveloper,
+                    DeveloperTypeID: DeveloperTypeID,
+                    SaveSurvayDetails: SaveSurvayDetails,
+                    SaveProjectInternalTeam: SaveInternalTeam,
+                    SaveProjectExternalTeam: SaveExternalTeam,
+
+                },
+                success: function (da) {
+
+                    if (ProjectID > 0) {
+                        location.href = "ProjectList";
+                    }
+                    else {
+                        var n = 0;
+                        n = da.search("uccess");
+                        if (n > 0) {
+                            var res = da.replace("Success", "");
+                            location.href = "ProjectNew?id=" + res;
+
+                        }
+
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+
+        }
+        $('#btnSaveChart').on('click', function () {
+
+             
+
         });
         $('#btnSaveInitial').on('click', function () {
 
@@ -2185,7 +2319,7 @@
             }
 
             var selectedDeveloper = $("#DeveloperCompanyID").val().toString();
-             
+
             var ProjectID = $('#ProjectID').val();
             var DeveloperTypeID = $("#CompanyOwnershipTypeID").val();
             $.ajax({

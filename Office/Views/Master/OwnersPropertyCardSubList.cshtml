@@ -1,31 +1,33 @@
 ﻿@model IEnumerable<office.Models.ProjectOwnerDetailList>
 @{
     Layout = null;
-}
- 
+} 
         
                 <div class="divOwner">
                     @foreach (var item2 in Model)
                     {
-                        <div class="row show-grid">
-                            <div class="col-md-2">
-                                
-                            </div>
-                            <div class="col-md-2">
-                                
-                            </div>
-                            <div class="col-md-2">
-                               
-                            </div>
-                            <div class="col-md-2">
-                                
-                            </div>
-                            <div class="col-md-2">
-                                   @item2.OwnerName
-                            </div>
-                            <div class="col-md-2">
-                                @item2.Area 
-                            </div>
+                    <div class="row show-grid">
+                        <div class="col-md-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-2">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-1">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-2">
+                            @item2.OwnerName
+                        </div>
+                        <div class="col-md-2">
+                            @item2.Area 
+                        </div>
+                        <div class="col-md-1">
+                          @item2.UnitName
+                    </div>
                         </div>
 
                         

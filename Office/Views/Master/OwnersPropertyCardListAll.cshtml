@@ -12,6 +12,17 @@
     .show-grid {
         margin: 0!important;
     }
+    .show-grid1 {
+        margin: 0 !important;
+    }
+        .show-grid1 [class^="col-"] {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border: 1px solid #ddd;
+            background-color: white !important;
+        }
+
+     
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -20,45 +31,58 @@
                 <div class="row show-grid">
                     <div class="col-md-2"> Survey No</div>
                     <div class="col-md-2"> Gat No</div>
-                    <div class="col-md-2"> CTS No</div>
-                    <div class="col-md-2"> Final Plot No</div>
+                    <div class="col-md-2">CTS No</div>
+                    <div class="col-md-1">F_Plot</div>
                     <div class="col-md-2"> Owner Name</div>
                     <div class="col-md-2">Area</div>
+                    <div class="col-md-1">Unit</div>
                 </div>
-                    <div class="divOwner">
-                        @foreach (var item2 in Model.ProjectOwnerDetailSurveyWise)
-                        {
-                              <div class="row show-grid">
-                                  <div class="col-md-2">
-                                      <i class="fa fa-plus ViewSurveyDetail" id="ViewSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px; "></i>
-                                      <i class="fa fa-minus hideSurveyDetail" id="hideSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px;display:none; " ></i>
-                                      @item2.SurvayNo  - @item2.SHissaNo
-                                  </div>
-                                <div class="col-md-2">
-                                    @item2.GatNo - @item2.GatHissaNo
-                                </div>
-                                <div class="col-md-2">
-                                    @item2.CTSNo - @item2.CTSHissaNo
-                                </div>
-                                <div class="col-md-2">
-                                    @item2.FInalPlotNo
-                                </div>
-                                <div class="col-md-2">
-                                     -  @item2.OwnerName
-                                </div>
-                                <div class="col-md-2">
-                                    @item2.Area
-                                </div>
+                <div class="divOwner">
+                    @foreach (var item2 in Model.ProjectOwnerDetailSurveyWise)
+                    {
+                        <div class="row show-grid">
+                            <div class="col-md-2">
+                                <i class="fa fa-plus ViewSurveyDetail" id="ViewSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px; "></i>
+                                <i class="fa fa-minus hideSurveyDetail" id="hideSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px;display:none; "></i>
+                                @item2.SurvayNo  - @item2.SHissaNo
                             </div>
-
-                            <div class="row" id="row-@item2.SurvayDetailId" style="display:none;">
-                               
-                                <div   style="padding-left: 30px;padding-right: 30px;">
-                                    <div id="OwnersData2-@item2.SurvayDetailId"></div>
-                                </div>
+                            <div class="col-md-2">
+                                @item2.GatNo - @item2.GatHissaNo
                             </div>
-                        }
+                            <div class="col-md-2">
+                                @item2.CTSNo - @item2.CTSHissaNo
+                            </div>
+                            <div class="col-md-1">
+                                @item2.FInalPlotNo &nbsp;
+                            </div>
+                            <div class="col-md-2">
+                                @item2.OwnerName &nbsp;
+                            </div>
+                            <div class="col-md-2">
+                                @item2.Area &nbsp;
+                            </div>
+                            <div class="col-md-1">
+                                SqrMtr
+                            </div>
                         </div>
+
+                        <div class="row show-grid1" id="row-@item2.SurvayDetailId" style="display:none;">
+
+                            <div>
+                                <div id="OwnersData2-@item2.SurvayDetailId"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row show-grid">
+                    <div class="col-md-2">&nbsp;  </div>
+                    <div class="col-md-2">&nbsp; </div>
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-2">&nbsp; </div>
+                    <div class="col-md-2">@Model.ProjectOwnerDetailSurveyWise.Sum(m => m.Area)</div>
+                    <div class="col-md-1">SqrMtr</div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,65 @@
+﻿
+
+@model IEnumerable<office.Models.ProjectAuthorityOwnerList>
+
+<table class="table table-bordered" id="tblAuthorityList">
+    <thead>
+        <tr>
+            <th>
+                Surve No + Hissa +Gat
+            </th>
+            <th>
+                Owners
+            </th>
+            <th>
+                Owner Area
+            </th>
+            <th colspan="2">
+                Doc Area
+            </th>
+            <th>Remark</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ decimal Counts =0; }
+            @foreach (var item2 in Model)
+            {
+        <tr>
+            <td>
+                @{ Counts = Counts + item2.Area;}
+
+                @item2.SurvayNo , @item2.CTSHissaNo
+                @*@Html.DropDownList("ProjectSurveyNoList", new SelectList((System.Collections.IEnumerable)ViewData["ProjectSurveyNoList"], "Value", "Text"), "Select", new { @class = "form-control", @id = "ProjectSurveyNoID", Title = "ProjectSurveyNo" })*@
+            </td>
+            <td>
+                @item2.OwnerName
+            </td>
+            <td>
+                @item2.Area <span class="small"> @item2.UnitName</span>
+            </td>
+            <td>
+                <input id="total Area" type="text" placeholder="total Area" value="@item2.Area" class="form-control">
+
+            </td>
+            <td> @item2.UnitName </td>
+            <td>
+                <input id="Remark" type="text" value="@item2.Remark" placeholder="Remark" class="form-control">
+            </td>
+            <td style="display:none;"> @item2.SurvayDetailId</td>
+            <td style="display:none;"> @item2.OwnerID</td>
+            <td style="display:none;"> @item2.AreaUnitID</td>
+        </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                Total Area -   @Model.Sum(m => m.Area)
+            </td>
+            <td> <span class="small"> Modified Total area -</span> @Counts</td>
+            <td></td>
+            <td> <button class="btn btn-primary" type="button" id="btnSaveChart">Save</button></td>
+            <td> </td>
+        </tr>
+        </tbody>
+</table>

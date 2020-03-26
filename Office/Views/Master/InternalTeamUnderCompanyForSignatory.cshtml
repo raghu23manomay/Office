@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+@if (ViewBag.value == 1)
+{
+    @Html.DropDownList("SignatoryPersonId1", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId1", Title = "PersonId", Placeholder = "Signature " })
+}
+@if (ViewBag.value == 2)
+{
+    @Html.DropDownList("InternalPersonId2", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"),   new { @class = "form-control", @id = "SignatoryPersonId2", Title = "PersonId" });
+}
+@if (ViewBag.value == 3)
+{
+    @Html.DropDownList("InternalPersonId3", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"),  new { @class = "form-control", @id = "SignatoryPersonId3", Title = "PersonId" });
+}
+@if (ViewBag.value == 4)
+{
+    @Html.DropDownList("InternalPersonId4", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"),  new { @class = "form-control", @id = "SignatoryPersonId4", Title = "PersonId" });
+}
+@if (ViewBag.value == 5)
+{
+    @Html.DropDownList("InternalPersonId5", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"),   new { @class = "form-control", @id = "SignatoryPersonId5", Title = "PersonId" });
+}

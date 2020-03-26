@@ -92,8 +92,8 @@ namespace office.Models
         public DbSet<ProjectOwnerDetailList> ProjectOwnerDetailList { get; set; }
         public DbSet<SaveSocialLink> SaveSocialLink { get; set; }
         public DbSet<ProjectOwnerDetailSurveyWise> ProjectOwnerDetailSurveyWise { get; set; }
-
         
+              public DbSet<ProjectAuthorityOwnerList> ProjectAuthorityOwnerList { get; set; }
         public DbSet<SaveMobile> SaveMobile { get; set; }
         public DbSet<SaveEmail> SaveEmail { get; set; }
         public DbSet<SaveCertification> SaveCertification { get; set; }

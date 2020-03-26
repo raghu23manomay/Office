@@ -2714,6 +2714,15 @@ namespace Calibration.Controllers
                     ? (ActionResult)PartialView("InternalTeamUnderCompany")
                     : View("InternalTeamUnderCompany");
         }
+        public ActionResult GetInternalTeamUnderCompanyForSignatory(int CompanyID = 0, int val = 0)
+        {
+            ViewBag.value = val; 
+
+            ViewData["InternalTeamUnderCompany"] = binddropdown("InternalTeamUnderCompany", CompanyID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("InternalTeamUnderCompanyForSignatory")
+                    : View("InternalTeamUnderCompanyForSignatory");
+        } 
         public ActionResult GetExternalTeamUnderCompany(int CompanyID = 0)
         {
             ViewData["ExternalTeamUnderCompany"] = binddropdown("ExternalTeamUnderCompany", CompanyID);
@@ -2733,7 +2742,7 @@ namespace Calibration.Controllers
             if (val == 0)
             {
                 ViewBag.value = 1;
-                ;
+                 
             }
             else
             {
@@ -3728,7 +3737,8 @@ namespace Calibration.Controllers
             
                 ViewData["SurveyNoList"] = binddropdown("SurveyNoList", id);
             ViewData["SurveyNoProperyCardList"] = binddropdown("SurveyNoProperyCardList", id);
-            
+
+            ViewData["CompanyListByProjectID"] = binddropdown("CompanyListByProjectID", id);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.layout = "0";
@@ -4073,22 +4083,24 @@ namespace Calibration.Controllers
                 ,@CTSHissaNo  	
                 ,@CTSPlotNo   	
                 ,@OldCTSNo    	
-                ,@FInalPlotNo   ",
+                ,@FInalPlotNo
+                ,@PrimarySurvey",
                 new SqlParameter("@SurvayDetailId", ProjectOwnerSurveyNo.SurvayDetailId),
                 new SqlParameter("@ProjectID", ProjectOwnerSurveyNo.ProjectID), 
-                new SqlParameter("@SurvayNo", ProjectOwnerSurveyNo.S_SurveyNo),
-                new SqlParameter("@SHissaNo", ProjectOwnerSurveyNo.S_HissaNo),
-                new SqlParameter("@SPlotNo", ProjectOwnerSurveyNo.S_PlotNo),
-                new SqlParameter("@OldSurvayNo", ProjectOwnerSurveyNo.S_OldNo),
-                new SqlParameter("@GatNo", ProjectOwnerSurveyNo.G_SurveyNo),
-                new SqlParameter("@GatHissaNo", ProjectOwnerSurveyNo.G_HissaNo  ),
-                new SqlParameter("@GatPlotNo", ProjectOwnerSurveyNo.G_PlotNo ),
-                new SqlParameter("@OldGatNo", ProjectOwnerSurveyNo.G_OldNo ),
-                new SqlParameter("@CTSNo", ProjectOwnerSurveyNo.CTS_SurveyNo ),
-                new SqlParameter("@CTSHissaNo", ProjectOwnerSurveyNo.CTS_HissaNo  ),
-                new SqlParameter("@CTSPlotNo", ProjectOwnerSurveyNo.CTS_PlotNo),
-                new SqlParameter("@OldCTSNo", ProjectOwnerSurveyNo.CTS_OldNo),
-                new SqlParameter("@FinalPlotNo", ProjectOwnerSurveyNo.FP_SurveyNo)  
+                new SqlParameter("@SurvayNo", ProjectOwnerSurveyNo.S_SurveyNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.S_SurveyNo),
+                new SqlParameter("@SHissaNo", ProjectOwnerSurveyNo.S_HissaNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.S_SurveyNo),
+                new SqlParameter("@SPlotNo", ProjectOwnerSurveyNo.S_PlotNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.S_SurveyNo),
+                new SqlParameter("@OldSurvayNo", ProjectOwnerSurveyNo.S_OldNo== null ? (object)DBNull.Value : ProjectOwnerSurveyNo.S_OldNo),
+                new SqlParameter("@GatNo", ProjectOwnerSurveyNo.G_SurveyNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.G_SurveyNo),
+                new SqlParameter("@GatHissaNo", ProjectOwnerSurveyNo.G_HissaNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.G_HissaNo),
+                new SqlParameter("@GatPlotNo", ProjectOwnerSurveyNo.G_PlotNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.G_PlotNo),
+                new SqlParameter("@OldGatNo", ProjectOwnerSurveyNo.G_OldNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.G_OldNo),
+                new SqlParameter("@CTSNo", ProjectOwnerSurveyNo.CTS_SurveyNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.CTS_SurveyNo),
+                new SqlParameter("@CTSHissaNo", ProjectOwnerSurveyNo.CTS_HissaNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.CTS_HissaNo),
+                new SqlParameter("@CTSPlotNo", ProjectOwnerSurveyNo.CTS_PlotNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.CTS_PlotNo),
+                new SqlParameter("@OldCTSNo", ProjectOwnerSurveyNo.CTS_OldNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.CTS_OldNo),
+                new SqlParameter("@FinalPlotNo", ProjectOwnerSurveyNo.FP_SurveyNo == null ? (object)DBNull.Value : ProjectOwnerSurveyNo.FP_SurveyNo),
+                new SqlParameter("@PrimarySurvey", ProjectOwnerSurveyNo.PrimarySurvey )
                 ); 
                 return Json("Success");
             }
@@ -4110,7 +4122,7 @@ namespace Calibration.Controllers
                 dtOwner.Columns.Add("OwnerName", typeof(string));
                 
                 dtOwner.Columns.Add("isUndevidedShare", typeof(int));
-                dtOwner.Columns.Add("Area", typeof(int));
+                dtOwner.Columns.Add("Area", typeof(Decimal));
                 dtOwner.Columns.Add("AreaUnitID", typeof(int));
                 if (ProjectOwnerDetails != null)
                 {
@@ -4313,28 +4325,48 @@ namespace Calibration.Controllers
                   ? (ActionResult)PartialView("OwnersPropertyCardSubList", result2)
                   : View("OwnersPropertyCardList", result2);
         }
+        public ActionResult GetOwnersAuthorityList(int ProjectID)
+        {
+             
+            OfficeDbContext _db = new OfficeDbContext();
+            ViewData["ProjectSurveyNoList"] = binddropdown("ProjectSurveyNoList", ProjectID);
+            ViewData["ProjectOwerList"] = binddropdown("ProjectOwerList", ProjectID);
+            IEnumerable<ProjectAuthorityOwnerList> result2 = _db.ProjectAuthorityOwnerList.SqlQuery(@"exec GetProjectOwnersArea
+                @projectID",
+          new SqlParameter("@projectID", ProjectID) 
+            
+
+          ).ToList<ProjectAuthorityOwnerList>();
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AuthorityListGrid", result2)
+                  : View("AuthorityListGrid", result2);
+        }
         public ActionResult GetOwnersPropertyCardListAll(int ProjectID, int SurvayDetailId = 0)
         {
              
             OfficeDbContext _db = new OfficeDbContext();
             ProjectOwnerDetailSurveyWiseAll Data = new ProjectOwnerDetailSurveyWiseAll();
-           
-            IEnumerable<ProjectOwnerDetailList> result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersUnderProperty
+            try
+            {
+                IEnumerable<ProjectOwnerDetailList> result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersUnderProperty
                 @projectID,@SurvayDetailId",
-          new SqlParameter("@projectID", ProjectID),
-          new SqlParameter("@SurvayDetailId", SurvayDetailId)
-          ).ToList<ProjectOwnerDetailList>();
+              new SqlParameter("@projectID", ProjectID),
+              new SqlParameter("@SurvayDetailId", SurvayDetailId)
+              ).ToList<ProjectOwnerDetailList>();
 
-            IEnumerable<ProjectOwnerDetailSurveyWise> result3 = _db.ProjectOwnerDetailSurveyWise.SqlQuery(@"exec GetallProjectOwners
+                IEnumerable<ProjectOwnerDetailSurveyWise> result3 = _db.ProjectOwnerDetailSurveyWise.SqlQuery(@"exec GetallProjectOwners
                 @projectID ",
-         new SqlParameter("@projectID", ProjectID) 
-          
-         ).ToList<ProjectOwnerDetailSurveyWise>();
+             new SqlParameter("@projectID", ProjectID)
+
+             ).ToList<ProjectOwnerDetailSurveyWise>();
 
 
-            Data.ProjectOwnerDetailList = result2;
-            Data.ProjectOwnerDetailSurveyWise = result3;
 
+                Data.ProjectOwnerDetailList = result2;
+                Data.ProjectOwnerDetailSurveyWise = result3;
+            }
+            catch(Exception s) { }
             return Request.IsAjaxRequest()
                   ? (ActionResult)PartialView("OwnersPropertyCardListAll", Data)
                   : View("OwnersPropertyCardListAll", Data);
@@ -4475,5 +4507,47 @@ namespace Calibration.Controllers
             }
         }
         #endregion
+        public ActionResult BindinternalTeamunderCompany(int DesignationID = 0, int val = 0)
+        {
+            if (val == 0)
+            {
+                ViewBag.value = 1;
+            }
+            if (val == 3)
+            {
+                ViewBag.value = 3;
+            }
+            else
+            {
+                ViewBag.value = 2;
+            }
+            ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", DesignationID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("SubDesignationList")
+                    : View("SubDesignationList");
+        }
+
+        public ActionResult GetAuthorityListGrid(int PersonID = 0) 
+        {
+            CompanyDetailsforPerson data = new CompanyDetailsforPerson();
+            OfficeDbContext _db = new OfficeDbContext();
+            try
+            {
+                IEnumerable<SaveCompanyList> result = _db.SaveCompanyList.SqlQuery(@"exec uspGetCompanyListForPerson
+                @PersonID",
+              new SqlParameter("@PersonID", PersonID)
+              ).ToList<SaveCompanyList>();
+                data.SaveCompanyList = result;
+                data.PersonID = PersonID;
+
+                 
+ 
+            }
+            catch (Exception ee) { }
+            return Request.IsAjaxRequest()
+               ? (ActionResult)PartialView("PersonLeftSide", data)
+               : View("PersonLeftSide", data);
+
+        }
     }
 }

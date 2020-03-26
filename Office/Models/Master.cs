@@ -914,18 +914,19 @@ namespace office.Models
         public int ProjectID { get; set; }
         public string  S_SurveyNo  { get; set; }
         public int  S_OwnerID         { get; set; }
-        public int  S_HissaNo         { get; set; }
-        public int  S_PlotNo          { get; set; }
-        public int  S_OldNo           { get; set; }
-        public int  G_SurveyNo    { get; set; }
-        public int  G_HissaNo         { get; set; }
-        public int  G_PlotNo          { get; set; }
-        public int  G_OldNo           { get; set; }        
-        public int  CTS_SurveyNo  { get; set; }
-        public int  CTS_HissaNo       { get; set; }
-        public int  CTS_PlotNo        { get; set; }
-        public int  CTS_OldNo         { get; set; }
-        public int  FP_SurveyNo  { get; set; }
+        public string  S_HissaNo         { get; set; }
+        public string  S_PlotNo          { get; set; }
+        public string  S_OldNo           { get; set; }
+        public string  G_SurveyNo    { get; set; }
+        public string  G_HissaNo         { get; set; }
+        public string  G_PlotNo          { get; set; }
+        public string  G_OldNo           { get; set; }        
+        public string  CTS_SurveyNo  { get; set; }
+        public string  CTS_HissaNo       { get; set; }
+        public string CTS_PlotNo        { get; set; }
+        public string CTS_OldNo         { get; set; }
+        public string FP_SurveyNo  { get; set; }
+        public int PrimarySurvey { get; set; }
     }
     public class ProjectOwnerDetails
     {
@@ -936,7 +937,7 @@ namespace office.Models
         public int PropertCardTypeId { get; set; }
         public int SurvayDetailId { get; set; }  
         public int isUndevidedShare { get; set; }
-        public int Area { get; set; }
+        public Decimal Area { get; set; }
         public int AreaUnitID { get; set; }
         public String UnitName { get; set; }
         
@@ -949,16 +950,36 @@ namespace office.Models
         public int PropertCardTypeId { get; set; }
         public int SurvayDetailId { get; set; }
         public int isUndevidedShare { get; set; }
-        public int Area { get; set; }
+        public decimal Area { get; set; }
         public int AreaUnitID { get; set; }
         public String UnitName { get; set; }
         public String SurvayNo { get; set; } 
-        public int SHissaNo { get; set; }
-        public int GatNo { get; set; } 
-        public int GatHissaNo { get; set; } 
-        public int CTSNo { get; set; }
-        public int CTSHissaNo { get; set; } 
-        public int FInalPlotNo { get; set; } 
+        public String SHissaNo { get; set; }
+        public String GatNo { get; set; } 
+        public String GatHissaNo { get; set; } 
+        public String CTSNo { get; set; }
+        public String CTSHissaNo { get; set; } 
+        public String FInalPlotNo { get; set; } 
+    }
+    public class ProjectAuthorityOwnerList
+    {
+        [Key]
+        public int OwnerID { get; set; }
+        public String OwnerName { get; set; }
+        public int PropertCardTypeId { get; set; }
+        public int SurvayDetailId { get; set; }
+        public int isUndevidedShare { get; set; }
+        public decimal Area { get; set; }
+        public int AreaUnitID { get; set; }
+        public String UnitName { get; set; }
+        public String SurvayNo { get; set; }
+        public String SHissaNo { get; set; }
+        public String GatNo { get; set; }
+        public String GatHissaNo { get; set; }
+        public String CTSNo { get; set; }
+        public String CTSHissaNo { get; set; }
+        public String FInalPlotNo { get; set; }
+        public String Remark { get; set; } 
     }
     public class ProjectOwnerDetailSurveyWise 
     {
@@ -966,14 +987,14 @@ namespace office.Models
         public int SurvayDetailId { get; set; }
         public String SurvayNo { get; set; }
         public String OwnerName { get; set; } 
-        public int Area { get; set; }  
+        public Decimal Area { get; set; }  
         public String UnitName { get; set; } 
-        public int SHissaNo { get; set; }
-        public int GatNo { get; set; }
-        public int GatHissaNo { get; set; }
-        public int CTSNo { get; set; }
-        public int CTSHissaNo { get; set; }
-        public int FInalPlotNo { get; set; }
+        public String SHissaNo { get; set; }
+        public String GatNo { get; set; }
+        public String GatHissaNo { get; set; }
+        public String CTSNo { get; set; }
+        public String CTSHissaNo { get; set; }
+        public String FInalPlotNo { get; set; }
     }
     public class Certification
     {
