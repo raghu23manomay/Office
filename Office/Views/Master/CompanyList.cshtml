@@ -39,7 +39,7 @@
 <script>
     $('#ProjectFilter').keyup(function () {
         $.ajax({
-                url: "@Url.Action("CompanyList", "Home")",
+                url: "@Url.Action("LoadCompanyGrid", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     Name: $('#ProjectFilter').val(),

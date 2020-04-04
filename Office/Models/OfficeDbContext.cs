@@ -93,7 +93,8 @@ namespace office.Models
         public DbSet<SaveSocialLink> SaveSocialLink { get; set; }
         public DbSet<ProjectOwnerDetailSurveyWise> ProjectOwnerDetailSurveyWise { get; set; }
         
-              public DbSet<ProjectAuthorityOwnerList> ProjectAuthorityOwnerList { get; set; }
+        public DbSet<ProjectDetailAfterSanction> ProjectDetailAfterSanction { get; set; }
+        public DbSet<ProjectAuthorityOwnerList> ProjectAuthorityOwnerList { get; set; }
         public DbSet<SaveMobile> SaveMobile { get; set; }
         public DbSet<SaveEmail> SaveEmail { get; set; }
         public DbSet<SaveCertification> SaveCertification { get; set; }
@@ -122,6 +123,8 @@ namespace office.Models
         public DbSet<AuthoritySignatoryDetail> AuthoritySignatoryDetail { get; set; }
         public DbSet<CertificationList> CertificationList { get; set; }
         public DbSet<Certification> Certification { get; set; }
-
+        public DbSet<nSaveSurvayDetails> nSaveSurvayDetails { get; set; }
+        public DbSet<ProjectDeveloper> ProjectDeveloper { get; set; }
+         
     }
 }

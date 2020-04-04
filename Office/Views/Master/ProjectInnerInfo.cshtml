@@ -1,228 +1,192 @@
-﻿
-
-@model office.Models.ProjectDetailsLeftSide
-
+﻿@model office.Models.ProjectDetailsLeftSide
 @{
     Layout = null;
 }
 
+ 
+
 <div class="row">
     <div class="col-lg-12">
-        <h5 class="help-block m-b-none">Project : @Model.nProjectDetail.ProjectName <small> @Model.nProjectDetail.ProjectShortName</small></h5>
-
+        <h5 class="help-block m-b-none">Internal Team </h5>
         <hr style="margin-top: 11px; margin-bottom: 10px;" />
+    </div>
+    <div>
+        <div class="DivInternalTeam">
+            @foreach (var item4 in Model.SaveProjectInternalTeam)
+            {
+            <div>
+                <div class="col-md-2">
+                    <input type="checkbox" class="i-checks chkInternalTeam" divName="checkboxDiv_@item4.internalTeamid" checked="checked">
+                </div>
+                <div class="col-md-10">
+                    <span class=" showInternalTeam" parentcompanyid="@item4.parentcompanyid" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
+
+                        @item4.InternalPersonName
+                        @item4.DesignationidText
+                        @item4.SubDesignationText
+                        @item4.SubPartDesignationText
+                    </span>
+                </div>
+            </div>
+                }
+            </div>
     </div>
 </div>
 
-<div class="row" id="developerList">
+<div class="row">
+
+    <div class="col-lg-12">
+        <h5 class="help-block m-b-none">External Team </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
     </div>
+    <div >
+        <div class="DivExternalTeam">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h5 class="help-block m-b-none">Internal Team </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-        </div>
-        <div>
-            <div class="DivInternalTeam">
-                @foreach (var item4 in Model.SaveProjectInternalTeam)
-                {
-                    <div>
-                        <span class="col-lg-12 showInternalTeam" parentcompanyid="@item4.parentcompanyid" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
-
+            @foreach (var item4 in Model.SaveProjectExternalTeam)
+            {
+                <div class="col-md-2">
+                    <input type="checkbox" class="i-checks chkInternalTeam" divName="checkboxDiv_@item4.Externalpersonid"  />
+                </div>
+                <div class="col-md-10">
+                     
+                        <span class=" showExternalTeam" Externalpersonid="@item4.Externalpersonid" designationid2="@item4.designationid1" subdesignationid2="@item4.subdesignationid1" subpartdesignationid2="@item4.subpartdesignationid1" ExternalTeamid="@item4.ExternalTeamid" parentcompanyid="@item4.parentcompanyid" style="overflow-wrap:break-word;">
                             @item4.InternalPersonName
                             @item4.DesignationidText
                             @item4.SubDesignationText
                             @item4.SubPartDesignationText
-                            <i class="fa fa-pencil-square-o EditinternalTeam" internalTeamid="@item4.internalTeamid" id="EditInternalTeam-@item4.internalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                         </span>
                     </div>
-                }
+                    
+            }
+                </div>
             </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+        <h5 class="help-block m-b-none">Office Team </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+    </div>
+    <div>
+        <div class="DivOfficeSideTeam">
+            @foreach (var item4 in Model.SaveProjectOfficeSideTeam)
+            {
+            <div class="col-md-12">
+                <div class="col-md-2">
+                    <input type="checkbox" class="i-checks chkInternalTeam" />
+                </div>
+                <div class="col-md-10">
+                    <span class="showOfficeTeam" personid="@item4.personid" designationid3="@item4.designationid1" subdesignationid3="@item4.subdesignationid1" subpartdesignationid3="@item4.subpartdesignationid1" Officeteamid="@item4.Teamid" style="overflow-wrap:break-word;">
+                        @item4.InternalPersonName
+                        @item4.DesignationidText
+                        @item4.SubDesignationText
+                        @item4.SubPartDesignationText
+                    </span>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div>
+        <div class="col-lg-12">
+            <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Survay</h5>
+            <hr class="nosurvay" style="margin-top: 0px; margin-bottom: 5px;" />
         </div>
     </div>
 
-    <div class="row">
+    <div class="col-sm-12">
+        <table class="table" id="survaylist" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Survay Type</th>
 
-        <div class="col-lg-12">
-            <h5 class="help-block m-b-none">External Team </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
+                    <th>No</th>
+                    <th>Hissa No</th>
+                    <th>Area</th>
+                    <th>Unit</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h5 class="help-block m-b-none">Owners </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="divAddress">
+
         </div>
-        <div class="row col-md-12">
-            <div class="DivExternalTeam">
+    </div>
+</div>
 
-                @foreach (var item4 in Model.SaveProjectExternalTeam)
-                {
+<div class="row">
+    <div class="col-lg-12">
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+        <h5 class="help-block m-b-none">Signature   </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+    </div>
+    <div>
+        <div class="DivOfficeSideTeam">
+            @foreach (var item in Model.AuthoritySignatory)
+            {
+                int k = 1;
+                <div>
                     <div>
-                        <span class="col-lg-12 showExternalTeam" Externalpersonid="@item4.Externalpersonid" designationid2="@item4.designationid1" subdesignationid2="@item4.subdesignationid1" subpartdesignationid2="@item4.subpartdesignationid1" ExternalTeamid="@item4.ExternalTeamid" parentcompanyid="@item4.parentcompanyid" style="overflow-wrap:break-word;">
-                            @item4.InternalPersonName
-                            @item4.DesignationidText
-                            @item4.SubDesignationText
-                            @item4.SubPartDesignationText
-                            <i class="fa fa-pencil-square-o EditExternalTeam" ExternalTeamid="@item4.ExternalTeamid" id="EditExternalTeam-@item4.ExternalTeamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                        </span>
-                    </div>
-                }
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-            <h5 class="help-block m-b-none">Office Team </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-        </div>
-        <div>
-            <div class="DivOfficeSideTeam">
-                @foreach (var item4 in Model.SaveProjectOfficeSideTeam)
-                {
-                    <div>
-                        <span class="col-lg-12 showOfficeTeam" personid="@item4.personid" designationid3="@item4.designationid1" subdesignationid3="@item4.subdesignationid1" subpartdesignationid3="@item4.subpartdesignationid1" Officeteamid="@item4.Teamid" style="overflow-wrap:break-word;">
-                            @item4.InternalPersonName
-                            @item4.DesignationidText
-                            @item4.SubDesignationText
-                            @item4.SubPartDesignationText
-                            <i class="fa fa-pencil-square-o EditOfficeTeam" Officeteamid="@item4.Teamid" id="EditOfficeTeam-@item4.Teamid" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                        </span>
-                    </div>
-
-                }
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div>
-            <div class="col-lg-12">
-                <h5 class="help-block m-b-none" style="margin-bottom: 11px;">Survay</h5>
-                <hr class="nosurvay" style="margin-top: 0px; margin-bottom: 5px;" />
-            </div>
-        </div>
-
-        <div class="col-sm-12">
-            <table class="table" id="survaylist" style="display:block;">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-
-                        <th>No</th>
-                        <th>Hissa </th>
-                        <th>Area</th>
-                        <th>Unit</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                @{ decimal area = 0;
-                }
-                <tbody>
-
-                    @foreach (var item4 in Model.nSaveSurvayDetails)
-                    {
-                        <tr>
-                            <td>@item4.SurveyName</td>
-                            <td class="hidden">@item4.SurvayTypeID</td>
-                            <td>@item4.SurvayNo</td>
-                            <td>@item4.HissaNo</td>
-                            <td>@item4.Area</td>
-                            <td>@item4.UnitName</td>
-                            <td class="hidden">@item4.UnitID</td>
-
-                            <td class="hidden">@item4.SurvayDetailId</td>
-                        </tr>
-
-                        area = area + item4.Area;
-
-                    }
-
-                </tbody>
-                <tfoot>
-                    <tr>
-
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>@area </td>
-                        <td>@Model.nSaveSurvayDetails.First().UnitName</td>
-                    </tr>
-                </tfoot>
-            </table>
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <h5 class="help-block m-b-none">Owners </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="divAddress">
-
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-            <h5 class="help-block m-b-none">Signature   </h5>
-            <hr style="margin-top: 11px; margin-bottom: 10px;" />
-        </div>
-        <div>
-            <div class="DivOfficeSideTeam">
-                @foreach (var item in Model.AuthoritySignatory)
-                {
-                    int k = 1;
-                    <div>
-                        <div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Person </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item1 in Model.AuthoritySignatoryDetail)
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Person </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item1 in Model.AuthoritySignatoryDetail)
+                                {
+                                    if (item.signatorId == item1.SignatoryID)
                                     {
-                                        if (item.signatorId == item1.SignatoryID)
-                                        {
 
-                                            <tr>
-                                                <td>@item1.PName </td>
-                                            </tr>
+                                        <tr>
+                                            <td>@item1.PName </td>
+                                        </tr>
 
-                                            k++;
+                                        k++;
 
-                                        }
                                     }
-                                </tbody>
-                            </table>
-                        </div>
-                        <span class="col-lg-12 showOfficeTeam" personid="@item.signatorId" designationid1="@item.AreaUnitID" subdesignationid1="@item.AreaUnderDevelopment" subpartdesignationid1="@item.DocumentID" Teamid="@item.signatorId" style="overflow-wrap:break-word;">
-                            @item.AreaUnderDevelopment
-                            @item.AreaUnitID
-                            @item.OwnerID
-                            @item.SubRegistarOffice
-                            <i class="fa fa-pencil-square-o EditinternalTeam" Teamid="@item.signatorId" id="EditInternalTeam-@item.signatorId" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                        </span>
-
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                }
+                    <span class="col-lg-12 showOfficeTeam" personid="@item.signatorId" designationid1="@item.AreaUnitID" subdesignationid1="@item.AreaUnderDevelopment" subpartdesignationid1="@item.DocumentID" Teamid="@item.signatorId" style="overflow-wrap:break-word;">
+                        @item.AreaUnderDevelopment
+                        @item.AreaUnitID
+                        @item.OwnerID
+                        @item.SubRegistarOffice
+                        <i class="fa fa-pencil-square-o EditinternalTeam" Teamid="@item.signatorId" id="EditInternalTeam-@item.signatorId" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
+                    </span>
 
-            </div>
+                </div>
+            }
+
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-
-            getDeveloper();
+</div>
+<script>
+            $(document).ready(function () {
                 $('.EditOfficeTeam').on("click", function (e) {
                     $(".iboxOfficeSide").show();
                     $(".iboxCompanynfo").hide();
                     $(".iboxInternal").hide();
                     $(".iboxexternal").hide();
-                     
+                    debugger;
 
                     $("select#OfficePersonId").prop('selectedIndex', 0);
                     $("select#DesignationId3").prop('selectedIndex', 0);
@@ -551,24 +515,6 @@
             });
             return true;
         }
-        function getDeveloper() {
-            $.ajax({
-                type: 'GET',
-                dataType: "text",
-                url: '/Master/ProjectDeveloper',
-                data:
-                {
-                    ProjectID: $('#ProjectID').val(),
-
-                },
-                success: function (data) {
-
-                    $('#developerList').html(data);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                }
-            });
-        }
          function GetExternalTeamUnderProject() {
              $.ajax({
                  url: "@Url.Action("GetExternalTeamUnderCompany", "Master")",
@@ -589,4 +535,5 @@
                  }
              });
         }
-    </script>
+</script>
+

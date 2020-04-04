@@ -1108,11 +1108,23 @@ namespace Calibration.Controllers
         new SqlParameter("@ProjectID", ProjectID)
         ).ToList<AuthoritySignatoryDetail>();
             
-            data.SaveProjectExternalTeam = result2;
             data.SaveProjectOfficeSideTeam = result3;
+            data.SaveProjectExternalTeam = result2;
             data.ProjectID = ProjectID;
             data.AuthoritySignatory = result4;
             data.AuthoritySignatoryDetail = result5;
+
+            var result8 = _db.nProjectDetail.SqlQuery(@"exec uspGetnProjectDetails
+                   @ProjectID",
+                  new SqlParameter("@ProjectID", ProjectID)
+                  ).ToList<nProjectDetail>();
+            data.nProjectDetail = result8.FirstOrDefault();
+
+            var result10 = _db.nSaveSurvayDetails.SqlQuery(@"exec uspGetnProjectSurveyDetails
+                   @ProjectID",
+                 new SqlParameter("@ProjectID", ProjectID)
+                 ).ToList<nSaveSurvayDetails>();
+            data.nSaveSurvayDetails = result10;
 
             return Request.IsAjaxRequest()
                ? (ActionResult)PartialView("ProjectInfoLeftSide",data)
@@ -3305,6 +3317,16 @@ namespace Calibration.Controllers
             }
         }
         #endregion
+        public ActionResult LoadCompanyGrid(int? page, String Name = null)
+        {
+            StaticPagedList<CompanyDetailsList> itemsAsIPagedList;
+            itemsAsIPagedList = CompanyGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("CompanyGrid", itemsAsIPagedList)
+                    : View("CompanyGrid", itemsAsIPagedList);
+        }
+
         public ActionResult CompanyList(int? page, String Name = null)
         {
             StaticPagedList<CompanyDetailsList> itemsAsIPagedList;
@@ -3785,8 +3807,8 @@ namespace Calibration.Controllers
                 DataTable dtSurvayDetails = new DataTable(); 
                 dtSurvayDetails.Columns.Add("SurvayDetailId", typeof(int));
                 dtSurvayDetails.Columns.Add("SurvayTypeID", typeof(int));
-                dtSurvayDetails.Columns.Add("SurvayNo", typeof(int));
-                dtSurvayDetails.Columns.Add("HissaNo", typeof(int));
+                dtSurvayDetails.Columns.Add("SurvayNo", typeof(string));
+                dtSurvayDetails.Columns.Add("HissaNo", typeof(string));
                 dtSurvayDetails.Columns.Add("Area", typeof(decimal));
                 dtSurvayDetails.Columns.Add("UnitID", typeof(int));
 
@@ -3850,7 +3872,15 @@ namespace Calibration.Controllers
                         foreach (var item in SaveSurvayDetails)
                         {
                             DataRow dr_SurvayDetails = dtSurvayDetails.NewRow();
-                            dr_SurvayDetails["SurvayDetailId"] =0;
+                            if(item.SurvayDetailId>0)
+                            {
+                                dr_SurvayDetails["SurvayDetailId"] = item.SurvayDetailId;
+                            }
+                            else
+                            {
+                                dr_SurvayDetails["SurvayDetailId"] = 0;
+                            }
+                            
                             dr_SurvayDetails["SurvayTypeID"] = item.SurvayTypeID;
                             dr_SurvayDetails["SurvayNo"] = item.SurvayNo;
                             dr_SurvayDetails["HissaNo"] = item.HissaNo;
@@ -4325,16 +4355,17 @@ namespace Calibration.Controllers
                   ? (ActionResult)PartialView("OwnersPropertyCardSubList", result2)
                   : View("OwnersPropertyCardList", result2);
         }
-        public ActionResult GetOwnersAuthorityList(int ProjectID)
+        public ActionResult GetOwnersAuthorityList(int ProjectID, int developerid)
         {
              
             OfficeDbContext _db = new OfficeDbContext();
             ViewData["ProjectSurveyNoList"] = binddropdown("ProjectSurveyNoList", ProjectID);
             ViewData["ProjectOwerList"] = binddropdown("ProjectOwerList", ProjectID);
             IEnumerable<ProjectAuthorityOwnerList> result2 = _db.ProjectAuthorityOwnerList.SqlQuery(@"exec GetProjectOwnersArea
-                @projectID",
-          new SqlParameter("@projectID", ProjectID) 
-            
+                @projectID,@developerid",
+          new SqlParameter("@projectID", ProjectID) ,
+           new SqlParameter("@developerid", developerid)
+
 
           ).ToList<ProjectAuthorityOwnerList>();
 
@@ -4418,18 +4449,39 @@ namespace Calibration.Controllers
             ViewData["UnitList"] = binddropdown("UnitList", 0);
             if (OwnerID > 0)
             {
+                try
+                {
 
-                 result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersByOwnerID
+                    result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersByOwnerID
                 @projectID,@OwnerID",
-              new SqlParameter("@projectID", ProjectID),
-              new SqlParameter("@OwnerID", OwnerID)
-              ).ToList<ProjectOwnerDetailList>();
-                
+                 new SqlParameter("@projectID", ProjectID),
+                 new SqlParameter("@OwnerID", OwnerID)
+                 ).ToList<ProjectOwnerDetailList>();
+
+                    return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("ProjectOwnerSurvey", result2)
+                  : View("ProjectOwnerSurvey", result2);
+                }
+                catch (Exception rre) { }
+            }
+            else
+            {
+                result2 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersByOwnerID
+                @projectID,@OwnerID",
+                 new SqlParameter("@projectID", ProjectID),
+                 new SqlParameter("@OwnerID", OwnerID)
+                 ).ToList<ProjectOwnerDetailList>();
+
+               
+                return Request.IsAjaxRequest()
+              ? (ActionResult)PartialView("ProjectOwnerSurvey", result2)
+              : View("ProjectOwnerSurvey", result2);
+
             }
 
             return Request.IsAjaxRequest()
-                  ? (ActionResult)PartialView("ProjectOwnerSurvey", result2)
-                  : View("ProjectOwnerSurvey", result2); 
+                  ? (ActionResult)PartialView("ProjectOwnerSurvey")
+                  : View("ProjectOwnerSurvey"); 
 
             
         }
@@ -4548,6 +4600,284 @@ namespace Calibration.Controllers
                ? (ActionResult)PartialView("PersonLeftSide", data)
                : View("PersonLeftSide", data);
 
+        }
+
+        [HttpPost]
+        public ActionResult SaveAuthorityTable(int ProjectID, List<ProjectAuthorityTable> ProjectAuthorityTable )
+        {
+            try
+            {
+                DataTable dtrow = new DataTable();
+
+                dtrow.Columns.Add("SurvayDetailId", typeof(string));
+                dtrow.Columns.Add("DeveloperID", typeof(int));
+                dtrow.Columns.Add("OwnerID", typeof(string));
+                dtrow.Columns.Add("OwnerArea", typeof(decimal));
+                dtrow.Columns.Add("OwnerAreaUnitID", typeof(int));
+                dtrow.Columns.Add("DocArea", typeof(decimal));
+                dtrow.Columns.Add("DocAreaUnitID", typeof(int));
+                dtrow.Columns.Add("Remark", typeof(string));
+                dtrow.Columns.Add("isTotalArea", typeof(Boolean));
+
+                // Adding Contact Person In DT
+                if (ProjectAuthorityTable != null)
+                {
+                    if (ProjectAuthorityTable.Count > 0)
+                    {
+                        foreach (var item in ProjectAuthorityTable)
+                        {
+                            DataRow dr_row = dtrow.NewRow();
+                            dr_row["SurvayDetailId"] = item.SurvayDetailId;
+                            dr_row["DeveloperID"] = item.DeveloperID;
+                            dr_row["OwnerID"] = item.OwnerID;
+                            dr_row["OwnerArea"] = 0;
+                            dr_row["OwnerAreaUnitID"] = 1;
+                            dr_row["DocArea"] = item.DocArea;
+                            dr_row["DocAreaUnitID"] = item.DocAreaUnitID;
+                            dr_row["Remark"] = item.Remark;
+                            dr_row["isTotalArea"] = item.isTotalArea;
+                            dtrow.Rows.Add(dr_row);
+                        }
+                    }
+                }
+
+
+                SqlParameter tvpParamMobile = new SqlParameter();
+                tvpParamMobile.ParameterName = "@ProjectAuthority";
+                tvpParamMobile.SqlDbType = System.Data.SqlDbType.Structured;
+                tvpParamMobile.Value = dtrow;
+                tvpParamMobile.TypeName = "UTT_AuthorityChartTable";
+
+
+                OfficeDbContext _db = new OfficeDbContext();
+                var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveAuthorityTable
+                 
+                @ProjectID  
+                ,@ProjectAuthority
+                ",
+                new SqlParameter("@ProjectID", ProjectID)
+                , tvpParamMobile
+
+                );
+
+                return Json("Success");
+
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return Json(message);
+            }
+
+        }
+
+        public ActionResult GetPropertyDetailsAfterSaction(int ProjectID, int SurvayDetailId)
+        {
+            
+            OfficeDbContext _db = new OfficeDbContext();
+            try
+            {
+
+                IEnumerable<ProjectDetailAfterSanction> result2 = _db.ProjectDetailAfterSanction.SqlQuery(@"exec GetPropertyDetailsAfterSanction
+                @projectID,@SurvayDetailId",
+              new SqlParameter("@projectID", ProjectID),
+              new SqlParameter("@SurvayDetailId", SurvayDetailId)
+              ).ToList<ProjectDetailAfterSanction>();
+                ViewData["UnitList"] = binddropdown("UnitList", 0);
+                ProjectDetailAfterSanction s = new ProjectDetailAfterSanction();
+                s = result2.FirstOrDefault();
+                return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("PropertyDetailsAfterSaction", s)
+                  : View("PropertyDetailsAfterSaction", s);
+            }
+
+            catch (Exception ex)
+            {
+
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+
+            } 
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("PropertyDetailsAfterSaction")
+                  : View("PropertyDetailsAfterSaction");
+        }
+
+        [HttpPost]
+        public ActionResult SaveSanctionDetails( ProjectDetailAfterSanction p)
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                
+                
+                var result = _db.Database.ExecuteSqlCommand(@"exec InsertSanctionDetails
+                 @SurvayDetailId 
+               , @ProjectID   	
+               , @SurvayNo    	
+               , @SHissaNo    	
+               , @SPlotNo     	
+               , @GatNo     		
+               , @GatHissaNo  	
+               , @GatPlotNo   	
+               , @CTSNo    	 	
+               , @CTSHissaNo  	
+               , @CTSPlotNo   	
+               , @FInalPlotNo   	
+               , @Nomenclature  	
+               , @Area         	
+               , @AreaUnitID   	
+               , @isTobeHandover 
+               , @isHandOver 	
+               , @OwnershipName  
+               , @HandOverDate   
+               , @Documentnumber 
+               , @RegistrarOffice 
+                ",
+                 
+                 new SqlParameter("@SurvayDetailId"  , p.SurvayDetailId )
+               , new SqlParameter("@ProjectID     "  , p.ProjectID      )
+               , new SqlParameter("@SurvayNo      "  , p.SurvayNo == null ? (object)DBNull.Value :p.SurvayNo    )
+               , new SqlParameter("@SHissaNo      "  , p.SHissaNo == null ? (object)DBNull.Value :p.SHissaNo      )
+               , new SqlParameter("@SPlotNo       "  , p.SPlotNo == null ? (object)DBNull.Value :p.SPlotNo     )
+               , new SqlParameter("@GatNo         "  , p.GatNo == null ? (object)DBNull.Value : p.GatNo)
+               , new SqlParameter("@GatHissaNo    "  , p.GatHissaNo == null ? (object)DBNull.Value : p.GatHissaNo)
+               , new SqlParameter("@GatPlotNo     "  , p.GatPlotNo == null ? (object)DBNull.Value : p.GatPlotNo)
+               , new SqlParameter("@CTSNo         "  , p.CTSNo == null ? (object)DBNull.Value : p.CTSNo)
+               , new SqlParameter("@CTSHissaNo    "  , p.CTSHissaNo == null ? (object)DBNull.Value : p.CTSHissaNo)
+               , new SqlParameter("@CTSPlotNo     "  , p.CTSPlotNo == null ? (object)DBNull.Value :p.CTSPlotNo     )
+               , new SqlParameter("@FInalPlotNo   "  , p.FInalPlotNo == null ? (object)DBNull.Value :p.FInalPlotNo   )
+               , new SqlParameter("@Nomenclature  "  , p.Nomenclature == null ? (object)DBNull.Value :p.Nomenclature  )
+               , new SqlParameter("@Area          "  , p.Area        )
+               , new SqlParameter("@AreaUnitID    "  , p.AreaUnitID     )
+               , new SqlParameter("@isTobeHandover"  , p.isTobeHandover )
+               , new SqlParameter("@isHandOver    "  , p.isHandOver     )
+               , new SqlParameter("@OwnershipName "  , p.OwnershipName  )
+               , new SqlParameter("@HandOverDate  "  , p.HandOverDate == null ? (object)DBNull.Value :p.HandOverDate  )
+               , new SqlParameter("@Documentnumber"  , p.Documentnumber == null ? (object)DBNull.Value :p.Documentnumber )
+               , new SqlParameter("@RegistrarOffice" , p.RegistrarOffice == null ? (object)DBNull.Value :p.RegistrarOffice)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+
+
+        public ActionResult GetCompanyInfoForCompare(int CompanyId = 0)
+        {
+            CompanyDetailsLeftSide data = new CompanyDetailsLeftSide();
+            OfficeDbContext _db = new OfficeDbContext();
+
+
+            IEnumerable<CompanyAddress> result1 = _db.CompanyAddress.SqlQuery(@"exec uspGetCompanyAddress
+                @CompanyID",
+            new SqlParameter("@CompanyID", CompanyId)
+            ).ToList<CompanyAddress>();
+            data.CompanyAddress = result1;
+
+            IEnumerable<SaveCompanyMobile> result2 = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetCompanyPhoneNo
+                @CompanyID",
+          new SqlParameter("@CompanyID", CompanyId)
+          ).ToList<SaveCompanyMobile>();
+            data.SaveCompanyMobile = result2;
+
+            IEnumerable<SaveCompanyMobile> resultPhone = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetTeamCompanyPhoneNo
+                @CompanyID",
+              new SqlParameter("@CompanyID", CompanyId)
+              ).ToList<SaveCompanyMobile>();
+            data.SaveCompanyMobile2 = resultPhone;
+
+            IEnumerable<SaveCompanyMobile> resultSupportTeamPhone = _db.SaveCompanyMobile.SqlQuery(@"exec uspGetSupportTeamCompanyPhoneNo
+                @CompanyID",
+           new SqlParameter("@CompanyID", CompanyId)
+           ).ToList<SaveCompanyMobile>();
+            data.SaveCompanyMobile3 = resultSupportTeamPhone;
+
+            IEnumerable<SaveCertification> result3 = _db.SaveCertification.SqlQuery(@"exec uspGetCompanyCertification
+                @CompanyID",
+             new SqlParameter("@CompanyID", CompanyId)
+             ).ToList<SaveCertification>();
+            data.SaveCertification = result3;
+
+            IEnumerable<SaveInternalTeam> result4 = _db.SaveInternalTeam.SqlQuery(@"exec uspGetInternalTeam
+                @CompanyID",
+           new SqlParameter("@CompanyID", CompanyId)
+           ).ToList<SaveInternalTeam>();
+            data.SaveInternalTeam = result4;
+
+            IEnumerable<SaveExternalTeam> result5 = _db.SaveExternalTeam.SqlQuery(@"exec uspGetExternalTeam
+                @CompanyID",
+          new SqlParameter("@CompanyID", CompanyId)
+          ).ToList<SaveExternalTeam>();
+            data.SaveExternalTeam = result5;
+            data.CompanyID = CompanyId;
+
+            return Request.IsAjaxRequest()
+               ? (ActionResult)PartialView("PartialCompanyAddress", data)
+               : View("PartialCompanyAddress", data);
+
+        }
+        public ActionResult GetProjectInnerInfo(int ProjectID = 0)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            ProjectDetailsLeftSide data = new ProjectDetailsLeftSide();
+
+            IEnumerable<SaveProjectInternalTeam> result = _db.SaveProjectInternalTeam.SqlQuery(@"exec uspGetProjectInternalTeam
+                @ProjectID",
+           new SqlParameter("@ProjectID", ProjectID)
+           ).ToList<SaveProjectInternalTeam>();
+            data.SaveProjectInternalTeam = result;
+
+            IEnumerable<SaveProjectExternalTeam> result2 = _db.SaveProjectExternalTeam.SqlQuery(@"exec uspGetProjectExternalTeam
+                @ProjectID",
+          new SqlParameter("@ProjectID", ProjectID)
+          ).ToList<SaveProjectExternalTeam>();
+
+            IEnumerable<SaveProjectOfficeSideTeam> result3 = _db.SaveProjectOfficeSideTeam.SqlQuery(@"exec uspGetProjectOfficeSideTeam
+                @ProjectID",
+        new SqlParameter("@ProjectID", ProjectID)
+        ).ToList<SaveProjectOfficeSideTeam>();
+
+            IEnumerable<AuthoritySignatory> result4 = _db.AuthoritySignatory.SqlQuery(@"exec GetProjectSignatory
+                @ProjectID",
+        new SqlParameter("@ProjectID", ProjectID)
+        ).ToList<AuthoritySignatory>();
+
+            IEnumerable<AuthoritySignatoryDetail> result5 = _db.AuthoritySignatoryDetail.SqlQuery(@"exec GetProjectSignatoryDetail
+                @ProjectID",
+        new SqlParameter("@ProjectID", ProjectID)
+        ).ToList<AuthoritySignatoryDetail>();
+
+            data.SaveProjectOfficeSideTeam = result3;
+            data.SaveProjectExternalTeam = result2;
+            data.ProjectID = ProjectID;
+            data.AuthoritySignatory = result4;
+            data.AuthoritySignatoryDetail = result5;
+
+            var result8 = _db.nProjectDetail.SqlQuery(@"exec uspGetnProjectDetails
+                   @ProjectID",
+                  new SqlParameter("@ProjectID", ProjectID)
+                  ).ToList<nProjectDetail>();
+            data.nProjectDetail = result8.FirstOrDefault();
+
+            return Request.IsAjaxRequest()
+               ? (ActionResult)PartialView("ProjectInnerInfo", data)
+               : View("ProjectInnerInfo", data);
+        }
+
+        public ActionResult ProjectDeveloper(int ProjectID )
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+             
+            IEnumerable<ProjectDeveloper> result = _db.ProjectDeveloper.SqlQuery(@"exec GetProjectDeveloper").ToList<ProjectDeveloper>();
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("ProjectDeveloper", result)
+                    : View("ProjectDeveloper", result);
         }
     }
 }

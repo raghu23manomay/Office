@@ -1,0 +1,21 @@
+﻿@model IEnumerable<office.Models.ProjectDeveloper>
+
+<div class=" ">
+    <div class="col-lg-12">
+        <h5 class="help-block m-b-none">Developer </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+    </div>
+    <div>
+        <div >
+            @foreach (var item4 in Model)
+            {
+                <div>
+                    <span class="col-lg-12 showInternalTeam"   style="overflow-wrap:break-word;">
+
+                        @item4.Name
+                      </span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

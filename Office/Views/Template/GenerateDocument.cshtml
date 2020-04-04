@@ -43,18 +43,36 @@
         </div>
         <div class="col-md-2">
             <div class="timeline-row post-even ">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
 
+                        <div class="" id="ProjectGrid">
+                            <div class="table-responsive">
+                            </div>
+                        </div>
 
-                <div class="" id="ProjectGrid">
-                    <div class="table-responsive">
+                        <div class="row">
+                            <div class="" id="ProjectInnerInfo">
+                                <div class="table-responsive">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="pull-right">
+                                <button class="btn btn-primary" id="btnGenerateDataTemplate" type="button">Save Data Templare</button>
+                                <button class="btn btn-primary" id="btnGenerateDocument" type="button" style="display:none;">Generate Document</button>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-8" id="CompareTemplateDiv">
             </div>
+                <div class="col-md-8" id="CompareTemplateDiv">
+                </div>
 
-        </div>
+            </div>
     </div>
             <div class="loader"></div>
             <input type="text" id="saveuserid" value="" class="hidden" />
@@ -118,6 +136,28 @@
             error: function (error) {
                 eval(error);
             }
+        });
+
+
+
+
+          $.ajax({
+                url: "@Url.Action("GetProjectInnerInfo", "Master")",
+                data:
+                {
+                    
+                    ProjectID: ProjectID
+
+                },
+                dataType: "text",
+
+                success: function (data) {
+                    $('#ProjectInnerInfo').html(data);
+                    
+                },
+                error: function (error) {
+                    eval(error);
+                }
         });
 
 

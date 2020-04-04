@@ -310,8 +310,8 @@ namespace office.Models
         public string lName { get; set; }
         public string ShortName { get; set; }
         public string Website { get; set; }
-        public string SocialMedia { get; set; } 
-        public Nullable<System.DateTime> BirthDate { get; set; } 
+        public string SocialMedia { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
         public int CertificationID { get; set; }
         public string ResidentialAddress1 { get; set; }
         public string ResidentialAddress2 { get; set; }
@@ -321,7 +321,7 @@ namespace office.Models
         public string ResidentialZipCode { get; set; }
         public int CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-         
+
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
     }
 
@@ -445,7 +445,7 @@ namespace office.Models
         public Nullable<DateTime> RequestDate { get; set; }
         public Nullable<DateTime> InceptionDate { get; set; }
         public int CreatedBy { get; set; }
-        public Nullable<DateTime>   CreatedDate { get; set; }
+        public Nullable<DateTime> CreatedDate { get; set; }
     }
     public class ProjectDetailsLeftSide
     {
@@ -455,8 +455,10 @@ namespace office.Models
         public IEnumerable<SaveProjectOfficeSideTeam> SaveProjectOfficeSideTeam { get; set; }
         public IEnumerable<AuthoritySignatory> AuthoritySignatory { get; set; }
         public IEnumerable<AuthoritySignatoryDetail> AuthoritySignatoryDetail { get; set; }
+        public nProjectDetail nProjectDetail { get; set; } 
+        public IEnumerable<nSaveSurvayDetails> nSaveSurvayDetails { get; set; }
     }
-    public class CompanyDetailsLeftSide 
+    public class CompanyDetailsLeftSide
     {
         public int CompanyID { get; set; }
         public IEnumerable<CompanyAddress> CompanyAddress { get; set; }
@@ -488,18 +490,18 @@ namespace office.Models
         public int CertificationID { get; set; }
         public int CompanyOwnershipTypeID { get; set; }
         public int Isclient { get; set; }
-        public Nullable<DateTime>   RequestDate { get; set; }
-        public Nullable<DateTime>   InceptionDate { get; set; }
+        public Nullable<DateTime> RequestDate { get; set; }
+        public Nullable<DateTime> InceptionDate { get; set; }
         public int CreatedBy { get; set; }
-        public string   CreatedDate { get; set; }
-        public int? TotalRows { get; set; } 
+        public string CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
     }
 
     public class SaveCompanyMobile
     {
         [Key]
         public int? CompanyPhoneID { get; set; }
-        public string Value { get; set; } 
+        public string Value { get; set; }
         public int Type { get; set; }
         public int WorkDepartmentID { get; set; }
         public string Extension { get; set; }
@@ -562,9 +564,10 @@ namespace office.Models
     public class SaveProjectInternalTeam
     {
         [Key]
+        public int internalTeamid { get; set; }
         public int internalpersonid { get; set; }
         public int parentcompanyid { get; set; }
-        public int internalTeamid { get; set; }
+      
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
@@ -576,9 +579,10 @@ namespace office.Models
     public class SaveProjectExternalTeam
     {
         [Key]
+        public int ExternalTeamid { get; set; }
         public int Externalpersonid { get; set; }
         public int parentcompanyid { get; set; }
-        public int ExternalTeamid { get; set; }
+        
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
@@ -590,8 +594,8 @@ namespace office.Models
     public class SaveProjectOfficeSideTeam
     {
         [Key]
-        public int personid { get; set; }
         public int Teamid { get; set; }
+        public int personid { get; set; } 
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
@@ -605,7 +609,7 @@ namespace office.Models
         [Key]
         public int? Listid { get; set; }
         public int CompanyID { get; set; }
-        
+
         public int designationid1 { get; set; }
         public int subdesignationid1 { get; set; }
         public int subpartdesignationid1 { get; set; }
@@ -617,7 +621,7 @@ namespace office.Models
     public class SaveExternalTeam
     {
         [Key]
-      
+
         public int ExternalTeamid { get; set; }
         public int ExternalPersonId { get; set; }
         public int RelationId { get; set; }
@@ -812,7 +816,7 @@ namespace office.Models
         public int ProjectTypeId { get; set; }
         public string CustomerFileNo { get; set; }
         public string PhysicalPath { get; set; }
-        public int StateID { get; set; } 
+        public int StateID { get; set; }
         public int TalukaID { get; set; }
         public string District { get; set; }
         public string Road { get; set; }
@@ -821,7 +825,7 @@ namespace office.Models
         public int CreatedBy { get; set; }
         public decimal Cost { get; set; }
         public Nullable<DateTime> StartDate { get; set; }
-        public Nullable<DateTime> EndDate { get; set; } 
+        public Nullable<DateTime> EndDate { get; set; }
         public string Developers { get; set; }
         public int DeveloperTypeID { get; set; }
     }
@@ -829,12 +833,15 @@ namespace office.Models
     public class nSaveSurvayDetails
     {
         [Key]
-        public int SurvayNo { get; set; }
+        public String SurvayNo { get; set; }
         public int SurvayDetailId { get; set; }
         public int SurvayTypeID { get; set; }
-        public int HissaNo { get; set; }
+        public String HissaNo { get; set; }
         public decimal Area { get; set; }
         public int UnitID { get; set; }
+        public String UnitName { get; set; }
+        public String SurveyName { get; set; }
+         
     }
     public class SaveProformaSetting
     {
@@ -866,7 +873,7 @@ namespace office.Models
         public string AgreementNo { get; set; }
         public DateTime AgreementDate { get; set; }
         public string SubRegistarOffice { get; set; }
-        public int DocumentID { get; set; } 
+        public int DocumentID { get; set; }
         public string selectedVal1 { get; set; }
         public string selectedVal2 { get; set; }
         public string selectedVal3 { get; set; }
@@ -880,16 +887,16 @@ namespace office.Models
     }
     public class AuthoritySignatoryDetail
     {
-        [Key] 
+        [Key]
         public int SignatoryDetailID { get; set; }
         public int SignatoryID { get; set; }
         public int ProjectID { get; set; }
-        public int OwnerID { get; set; } 
+        public int OwnerID { get; set; }
         public int PersonId { get; set; }
         public int GroupId { get; set; }
-        public string PName { get; set; } 
+        public string PName { get; set; }
     }
-    public class CompanyFields 
+    public class CompanyFields
     {
 
         [Key]
@@ -908,24 +915,24 @@ namespace office.Models
         public IEnumerable<ProformaSetting> ProformaSetting { get; set; }
     }
     public class ProjectOwnerSurveyNo
-    { 
+    {
         [Key]
         public int SurvayDetailId { get; set; }
         public int ProjectID { get; set; }
-        public string  S_SurveyNo  { get; set; }
-        public int  S_OwnerID         { get; set; }
-        public string  S_HissaNo         { get; set; }
-        public string  S_PlotNo          { get; set; }
-        public string  S_OldNo           { get; set; }
-        public string  G_SurveyNo    { get; set; }
-        public string  G_HissaNo         { get; set; }
-        public string  G_PlotNo          { get; set; }
-        public string  G_OldNo           { get; set; }        
-        public string  CTS_SurveyNo  { get; set; }
-        public string  CTS_HissaNo       { get; set; }
-        public string CTS_PlotNo        { get; set; }
-        public string CTS_OldNo         { get; set; }
-        public string FP_SurveyNo  { get; set; }
+        public string S_SurveyNo { get; set; }
+        public int S_OwnerID { get; set; }
+        public string S_HissaNo { get; set; }
+        public string S_PlotNo { get; set; }
+        public string S_OldNo { get; set; }
+        public string G_SurveyNo { get; set; }
+        public string G_HissaNo { get; set; }
+        public string G_PlotNo { get; set; }
+        public string G_OldNo { get; set; }
+        public string CTS_SurveyNo { get; set; }
+        public string CTS_HissaNo { get; set; }
+        public string CTS_PlotNo { get; set; }
+        public string CTS_OldNo { get; set; }
+        public string FP_SurveyNo { get; set; }
         public int PrimarySurvey { get; set; }
     }
     public class ProjectOwnerDetails
@@ -933,35 +940,16 @@ namespace office.Models
         [Key]
         public int OwnerID { get; set; }
         public String OwnerName { get; set; }
-        
+
         public int PropertCardTypeId { get; set; }
-        public int SurvayDetailId { get; set; }  
+        public int SurvayDetailId { get; set; }
         public int isUndevidedShare { get; set; }
         public Decimal Area { get; set; }
         public int AreaUnitID { get; set; }
         public String UnitName { get; set; }
-        
+
     }
     public class ProjectOwnerDetailList
-    {
-        [Key]
-        public int OwnerID { get; set; }
-        public String OwnerName { get; set; } 
-        public int PropertCardTypeId { get; set; }
-        public int SurvayDetailId { get; set; }
-        public int isUndevidedShare { get; set; }
-        public decimal Area { get; set; }
-        public int AreaUnitID { get; set; }
-        public String UnitName { get; set; }
-        public String SurvayNo { get; set; } 
-        public String SHissaNo { get; set; }
-        public String GatNo { get; set; } 
-        public String GatHissaNo { get; set; } 
-        public String CTSNo { get; set; }
-        public String CTSHissaNo { get; set; } 
-        public String FInalPlotNo { get; set; } 
-    }
-    public class ProjectAuthorityOwnerList
     {
         [Key]
         public int OwnerID { get; set; }
@@ -979,16 +967,39 @@ namespace office.Models
         public String CTSNo { get; set; }
         public String CTSHissaNo { get; set; }
         public String FInalPlotNo { get; set; }
-        public String Remark { get; set; } 
     }
-    public class ProjectOwnerDetailSurveyWise 
+    public class ProjectAuthorityOwnerList
+    {
+        [Key]
+        public int OwnerID { get; set; }
+        public String OwnerName { get; set; }
+        public int PropertCardTypeId { get; set; }
+        public int SurvayDetailId { get; set; }
+        public int isUndevidedShare { get; set; }
+        public decimal InputArea { get; set; }
+        public decimal RemainingArea { get; set; }
+        public decimal ActualArea { get; set; }
+        public int AreaUnitID { get; set; }
+        public String UnitName { get; set; }
+        public String SurvayNo { get; set; }
+        public String SHissaNo { get; set; }
+        public String GatNo { get; set; }
+        public String GatHissaNo { get; set; }
+        public String CTSNo { get; set; }
+        public String CTSHissaNo { get; set; }
+        public String FInalPlotNo { get; set; }
+        public String Remark { get; set; }
+        public Boolean isTotalArea { get; set; }
+        
+    }
+    public class ProjectOwnerDetailSurveyWise
     {
         [Key]
         public int SurvayDetailId { get; set; }
         public String SurvayNo { get; set; }
-        public String OwnerName { get; set; } 
-        public Decimal Area { get; set; }  
-        public String UnitName { get; set; } 
+        public String OwnerName { get; set; }
+        public Decimal Area { get; set; }
+        public String UnitName { get; set; }
         public String SHissaNo { get; set; }
         public String GatNo { get; set; }
         public String GatHissaNo { get; set; }
@@ -1003,7 +1014,7 @@ namespace office.Models
         public string CertificationName { get; set; }
         public bool IsActive { get; set; }
         public int CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; } 
+        public DateTime CreatedDate { get; set; }
     }
     public class CertificationList
     {
@@ -1023,9 +1034,55 @@ namespace office.Models
         public int ProjectID { get; set; }
         public IEnumerable<ProjectOwnerDetailList> ProjectOwnerDetailList { get; set; }
         public IEnumerable<ProjectOwnerDetailSurveyWise> ProjectOwnerDetailSurveyWise { get; set; }
-        
+
+    }
+    public class ProjectAuthorityTable
+    {
+        [Key]
+        public int SurvayDetailId { get; set; }
+        public int DeveloperID { get; set; }
+        public int OwnerID { get; set; }
+        public decimal OwnerArea { get; set; }
+        public int OwnerAreaUnitID { get; set; }
+        public decimal DocArea { get; set; }
+        public int DocAreaUnitID { get; set; }
+        public String Remark { get; set; }
+        public bool isTotalArea { get; set; }
+    }
+
+    public class ProjectDetailAfterSanction
+    {
+        [Key]
+
+        public int SanctionID { get; set; }  
+      public int SurvayDetailId           { get; set; }
+      public int ProjectID                { get; set; }
+      public String SurvayNo                 { get; set; }
+      public String SHissaNo                 { get; set; }
+      public String SPlotNo                  { get; set; }
+      public String GatNo                    { get; set; }
+      public String GatHissaNo               { get; set; }
+      public String GatPlotNo                { get; set; }
+      public String CTSNo                    { get; set; }
+      public String CTSHissaNo               { get; set; }
+      public String CTSPlotNo                { get; set; }
+      public String FInalPlotNo              { get; set; }
+      public String Nomenclature             { get; set; }
+      public decimal Area                     { get; set; }
+      public int AreaUnitID               { get; set; }
+      public Boolean isTobeHandover           { get; set; }
+      public Boolean isHandOver               { get; set; }
+      public String OwnershipName            { get; set; }
+      public Nullable<System.DateTime> HandOverDate             { get; set; }
+      public String Documentnumber           { get; set; }
+      public String RegistrarOffice       { get; set; }
+         
+    }
+    public class ProjectDeveloper
+    {
+        [Key]
+        public int DeveloperId { get; set; }
+        public String Name { get; set; }
+
     }
 }
-
-
-

@@ -1,0 +1,165 @@
+﻿
+@model  office.Models.ProjectDetailAfterSanction
+
+<div class="form-group" id="SurveyNo">
+    <div class="col-lg-3">
+        <input id="S_Ow_SurveyNoValue" type="text" value="@Model.SurvayNo" placeholder="Survey No." class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="S_Ow_HissaNo" type="text" placeholder="Hissa No" value="@Model.SHissaNo" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="S_Ow_PlotNo" type="text" placeholder="Plot No." value="@Model.SPlotNo" class="form-control">
+    </div>
+
+
+</div>
+<div class="form-group " id="GatNo">
+    <div class="col-lg-3">
+        <input id="S_G_SurveyNoValue" type="text" placeholder="Gat No." value="@Model.GatNo" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="S_G_HissaNo" type="text" placeholder="Hissa No" value="@Model.GatHissaNo" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="S_G_PlotNo" type="text" placeholder="Plot No." value="@Model.GatPlotNo" class="form-control">
+    </div>
+
+
+</div>
+<div class="form-group  " id="CTSNo">
+    <div class="col-lg-3">
+        <input id="S_CTS_SurveyNoValue" type="text" placeholder="CTS No." value="@Model.CTSNo" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="S_CTS_HissaNo" type="text" placeholder="Hissa No" value="@Model.CTSHissaNo" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="S_CTS_PlotNo" type="text" placeholder="Plot No." value="@Model.CTSPlotNo" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="S_FP_SurveyNoValue" type="text" placeholder="Final Plot No." value="@Model.FInalPlotNo" class="form-control">
+    </div>
+
+</div>
+<div class="form-group">
+    <div class="col-lg-3">
+        Nomenclature
+    </div>
+    <div class="col-lg-3">
+        <input id="Nomenclature" type="text" placeholder="Nomenclature" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        <input id="Area" type="text" placeholder="Area" value="@Model.Nomenclature" class="form-control">
+    </div>
+    <div class="col-lg-3">
+        @Html.DropDownList("AreaUnitID", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "AreaUnitID", Title = "SurveyNoUnitId" })
+    </div>
+
+</div>
+<div class="form-group">
+    <div class="col-lg-3">
+        Is it to be handed over to any authority
+    </div>
+    <div class="col-lg-3">
+        <input type="checkbox" class="chkbox" id="chktobeHandOver" checked="checked" value="" />
+    </div>
+    <div class="col-lg-3">
+        If yes it handed over
+    </div>
+    <div class="col-lg-2">
+        <input type="checkbox" class="chkbox" checked="checked" id="chkisHandedOver" value="" />
+    </div>
+
+</div>
+<div class="form-group">
+    <div class="col-lg-3">
+        if yes Ownership name
+    </div>
+    <div class="col-lg-3">
+        <input id="OwnershipName" type="text" value="@Model.OwnershipName" placeholder="Ownership name" class="form-control">
+    </div>
+
+
+</div>
+<div class="form-group">
+    <div class="col-lg-3">
+        Date of handover
+    </div>
+    <div class="col-lg-6">
+        <input id="S_CTS_HissaNo" type="date" placeholder="Date of handover" value="@Model.HandOverDate" class="form-control">
+    </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-3">
+            Document number
+        </div>
+        <div class="col-lg-3">
+            <input id="Documentnumber" type="text" placeholder="Document number" value="@Model.Documentnumber" class="form-control">
+        </div>
+        <div class="col-lg-3">
+            Registrar Office
+        </div>
+        <div class="col-lg-3">
+            <input id="RegistrarOffice" type="text" placeholder="Registrar Office" value="@Model.RegistrarOffice" class="form-control">
+        </div>
+
+    </div>
+    <div class="form-group">
+
+        <div class="col-lg-10"></div>
+        <div class="col-lg-1">
+            <button id="AddSanctionDetails" class="btn btn-primary pull-left" type="button">
+                Save
+            </button>
+        </div>
+
+
+    </div>
+
+    <script>
+        $('#AddSanctionDetails').on('click', function () {
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Master/SaveSanctionDetails',
+                data:
+                {
+
+                    SurvayDetailId: $('#SanctionSurveyNo').val(),
+                    ProjectID: $('#ProjectID').val(),
+                    SurvayNo: $('#S_Ow_SurveyNoValue').val(),
+                    SHissaNo: $('#S_Ow_HissaNo').val(),
+                    SPlotNo: $('#S_Ow_PlotNo').val(),
+                    GatNo: $('#S_G_SurveyNoValue').val(),
+                    GatHissaNo: $('#S_G_HissaNo').val(),
+                    GatPlotNo: $('#S_G_PlotNo').val(),
+                    CTSNo: $('#S_CTS_SurveyNoValue').val(),
+                    CTSHissaNo: $('#S_CTS_HissaNo').val(),
+                    CTSPlotNo: $('#S_CTS_PlotNo').val(),
+                    FInalPlotNo: $('#S_FP_SurveyNoValue').val(),
+                    Nomenclature: $('#Nomenclature').val(),
+                    Area: $('#Area').val(),
+                    AreaUnitID: $('#AreaUnitID').val(),
+                    isTobeHandover: $('#isTobeHandover').val(),
+                    isHandOver: $('#isHandOver').val(),
+                    OwnershipName: $('#OwnershipName').val(),
+
+                    HandOverDate: $('#HandOverDate').val(),
+                    Documentnumber: $('#Documentnumber').val(),
+                    RegistrarOffice: $('#RegistrarOffice').val(),
+
+
+                },
+                success: function (da) {
+                    alert("Saved succesfully");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+
+
+        });
+    </script>
