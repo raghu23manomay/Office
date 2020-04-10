@@ -72,12 +72,14 @@
                     .clone(true)
                     .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
                     .insertAfter('[id=RowonerArea]:last').find("input").val("");
+                $("[id=RowonerArea]:last").find("select").prop('selectedIndex', 1);
             }
             else {
                 $('#row1')
                     .clone(true)
                     .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
                     .insertAfter('[id=RowonerArea]:last').find("input").val("");
+                $("[id=RowonerArea]:last").find("select").prop('selectedIndex', 1);
             }
         }
         else {

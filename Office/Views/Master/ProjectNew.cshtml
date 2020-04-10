@@ -96,454 +96,456 @@
                     </div>
                 </div>
             </div>
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>
-                        Internal Team
-                    </h5>
-                    <div class="ibox-tools">
+            <div id="DivEdit"  >
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                            Internal Team
+                        </h5>
+                        <div class="ibox-tools">
 
-                        <button id="addMultiInternalTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
-                            Add <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content iboxInternal">
-                    <div class="Team">
-                        <div class="form-group entityField">
-                            <input type="hidden" value="0" id="internalTeamid" />
-                            <label class="col-lg-2 control-label">Parent Company</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("ParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyListByProjectID"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ParentCompanyID", Title = "CompanyID" })
-                            </div>
-                            <label class="col-lg-2 control-label">Person</label>
-                            <div class="col-lg-4" style="display:inline-flex;">
-                                @Html.DropDownList("InternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "InternalPersonId", Title = "PersonId" })
-                            </div>
-                        </div>
-                        <div class="form-group entityField">
-                            <label class="col-lg-2 control-label">Designation</label>
-                            <div class="col-lg-4" style="display:inline-flex;">
-                                @Html.DropDownList("DesignationId1", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId1", Title = "DesignationID" })
-                            </div>
-                            <label class="col-lg-2 control-label">Sub Designation</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("SubdesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubDesignationID1", Title = "PersonId" })
-                            </div>
-                        </div>
-                        <div class="form-group entityField">
-
-                            <label class="col-lg-2 control-label">Sub Designation</label>
-                            <div class="col-lg-4" style="display:inline-flex;">
-                                @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubPartDesignationID1", Title = "DesignationID" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>
-                        External Team
-                    </h5>
-                    <div class="ibox-tools">
-                        <button id="addMultiExternalTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
-                            Add <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content iboxexternal">
-                    <div class="Team">
-                        <input type="hidden" value="0" id="ExternalTeamid" />
-                        <div class="form-group entityField">
-                            <label class="col-lg-2 control-label">Company</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("ExtTeamParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyListByProjectID"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ExtTeamParentCompanyID", Title = "CompanyID" })
-                            </div>
-                            <label class="col-lg-2 control-label">Person</label>
-                            <div class="col-lg-4" style="display:inline-flex;">
-                                @Html.DropDownList("ExternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["ExternalTeamUnderCompany"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "ExternalPersonId", Title = "PersonId" })
-                            </div>
-                        </div>
-                        <div class="form-group entityField">
-                            <label class="col-lg-2 control-label">Designation</label>
-                            <div class="col-lg-4" style="display:inline-flex;">
-                                @Html.DropDownList("DesignationId2", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId2", Title = "DesignationID" })
-                            </div>
-                            <label class="col-lg-2 control-label">Sub Designation</label>
-                            <div class="col-lg-4">
-                                @Html.DropDownList("SubdesignationID2", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "SubDesignationID2", Title = "DesignationID" })
-                            </div>
-                        </div>
-                        <div class="form-group entityField">
-                            <label class="col-lg-2 control-label">Sub Designation</label>
-                            <div class="col-lg-4" style="display:inline-flex;">
-                                @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "SubPartDesignationID2", Title = "DesignationID" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>
-                        Office Side
-                    </h5>
-                    <div class="ibox-tools">
-                        <button id="addMultiOfficeSideTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
-                            Add <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content iboxOfficeSide">
-                    <div class="form-group entityField">
-                        <input type="hidden" id="OfficeTeamid" value="0" />
-                        <label class="col-lg-2 control-label">Person</label>
-                        <div class="col-lg-4">
-                            @Html.DropDownList("OfficePersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "OfficePersonId", Title = "PersonId" })
-
-                        </div>
-                        <label class="col-lg-2 control-label">Designation</label>
-                        <div class="col-lg-4" style="display:inline-flex;">
-                            @Html.DropDownList("DesignationId3", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId3", Title = "DesignationID" })
-                        </div>
-                    </div>
-                    <div class="form-group entityField">
-                        <label class="col-lg-2 control-label">Sub Designation</label>
-                        <div class="col-lg-4">
-                            @Html.DropDownList("SubdesignationID3", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "SubDesignationID3", Title = "DesignationID" })
-                        </div>
-                        <label class="col-lg-2 control-label">Sub Designation</label>
-                        <div class="col-lg-4" style="display:inline-flex;">
-                            @Html.DropDownList("SubPartDesignationID3", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "SubPartDesignationID3", Title = "DesignationID" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>
-                        Project Details
-                    </h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content iboxProjDetails">
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Project Type</label>
-                        <div class="col-lg-4">
-                            @Html.DropDownList("ProjectTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "ProjectTypeId", Title = "ProjectTypeId" })
-                        </div>
-                        <label class="col-lg-2 control-label">Project Status</label>
-                        <div class="col-lg-4">
-                            @Html.DropDownList("StatusId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectStatusList"], "Value", "Text"), "Select Status", new { @class = "form-control", @id = "ProjectStatusId", Title = "ProjectStatusId" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Customer File No</label>
-                        <div class="col-lg-4">
-                            <input id="CustomerFileNo" value="@Model.CustomerFileNo" type="text" placeholder="Customer File No" class="form-control">
-                        </div>
-                        <label class="col-lg-2 control-label">File Location++</label>
-                        <div class="col-lg-4">
-                            <input id="FileLocation" type="text" placeholder="File Location" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Physical Path</label>
-                        <div class="col-lg-4">
-                            <input id="PhysicalPath" type="text" placeholder="Physical Path" value="@Model.PhysicalPath" class="form-control">
-                        </div>
-                        <label class="col-lg-2 control-label">State</label>
-                        <div class="col-lg-4">
-                            @Html.DropDownList("StateID", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID", Title = "StateID" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Default Taluka</label>
-                        <div class="col-lg-4">
-                            @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID", Title = "CityID" })
-                        </div>
-                        <label class="col-lg-2 control-label">Default District</label>
-                        <div class="col-lg-4">
-                            <input id="District" type="text" placeholder="District" value="@Model.District" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Road / Landmark</label>
-                        <div class="col-lg-4">
-                            <input id="Road" type="text" placeholder="Road" value="@Model.Road" class="form-control">
-                        </div>
-                        <label class="col-lg-2 control-label">Default Goan</label>
-                        <div class="col-lg-4">
-                            <input id="Goan" type="text" placeholder="Goan" value="@Model.Goan" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>
-                        Pre proposal Details
-                    </h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ibox-content iboxSurveyNo">
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">S.No,Gat No,CTS No.</label>
-                        <div class="col-lg-4">
-                            @Html.DropDownList("SurveyNoType", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoType", Title = "SurveyNoType" })
-                        </div>
-                        <label class="col-lg-2 control-label"> Value</label>
-                        <div class="col-lg-4">
-                            <input id="SurveyNoValue" type="text" placeholder="Survey Value" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Hissa No</label>
-                        <div class="col-lg-4">
-                            <input id="SurveyHissaNo" type="text" placeholder="Hissa No" class="form-control">
-                        </div>
-
-                        <div class="col-lg-3">
-                            <input id="SurveyArea" type="text" placeholder="Area" class="form-control">
-                        </div>
-                        <div class="col-lg-2">
-                            @Html.DropDownList("SurveyNoUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "SurveyNoUnitId", Title = "SurveyNoUnitId" })
-                        </div>
-                        <div class="col-lg-1">
-                            <button id="addSurvay" class="btn btn btn-primary" type="button">
-                                 <i class="fa fa-plus" aria-hidden="true"></i>
+                            <button id="addMultiInternalTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
+                                Add <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
-                             
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
                         </div>
                     </div>
+                    <div class="ibox-content iboxInternal">
+                        <div class="Team">
+                            <div class="form-group entityField">
+                                <input type="hidden" value="0" id="internalTeamid" />
+                                <label class="col-lg-2 control-label">Parent Company</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("ParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyListByProjectID"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ParentCompanyID", Title = "CompanyID" })
+                                </div>
+                                <label class="col-lg-2 control-label">Person</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("InternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderCompany"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "InternalPersonId", Title = "PersonId" })
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("DesignationId1", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId1", Title = "DesignationID" })
+                                </div>
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("SubdesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubDesignationID1", Title = "PersonId" })
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
 
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Cost  </label>
-                        <div class="col-lg-4">
-                            <input id="Cost" type="text" placeholder="Cost" value="@Model.Cost" class="form-control">
-
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Sub Designation", new { @class = "form-control", @id = "SubPartDesignationID1", Title = "DesignationID" })
+                                </div>
+                            </div>
                         </div>
-
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-2 control-label">Start Date</label>
-                        <div class="col-lg-4">
-                            @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "Start date", type = "date", id = "StartDate" })
-                        </div>
-                        <label class="col-lg-2 control-label">End Date</label>
-                        <div class="col-lg-4">
-                            @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "End date", type = "date", id = "EndDate" })
-                        </div>
-                    </div>
-
                 </div>
-            </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                            External Team
+                        </h5>
+                        <div class="ibox-tools">
+                            <button id="addMultiExternalTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
+                                Add <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
 
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>
-                        Proposal detail 7/12 entry
-                    </h5>
-                    <div class="ibox-tools">
-
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content iboxexternal">
+                        <div class="Team">
+                            <input type="hidden" value="0" id="ExternalTeamid" />
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Company</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("ExtTeamParentCompanyID", new SelectList((System.Collections.IEnumerable)ViewData["CompanyListByProjectID"], "Value", "Text"), "Select Company", new { @class = "form-control", @id = "ExtTeamParentCompanyID", Title = "CompanyID" })
+                                </div>
+                                <label class="col-lg-2 control-label">Person</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("ExternalPersonId", new SelectList((System.Collections.IEnumerable)ViewData["ExternalTeamUnderCompany"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "ExternalPersonId", Title = "PersonId" })
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("DesignationId2", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId2", Title = "DesignationID" })
+                                </div>
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("SubdesignationID2", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "SubDesignationID2", Title = "DesignationID" })
+                                </div>
+                            </div>
+                            <div class="form-group entityField">
+                                <label class="col-lg-2 control-label">Sub Designation</label>
+                                <div class="col-lg-4" style="display:inline-flex;">
+                                    @Html.DropDownList("SubPartDesignationID1", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "SubPartDesignationID2", Title = "DesignationID" })
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="ibox-content  iboxOwnership">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                            Office Side
+                        </h5>
+                        <div class="ibox-tools">
+                            <button id="addMultiOfficeSideTeam" class="btn btn btn-primary pull-left" style="padding: 2px 7px;margin-left: 14px;margin-top: -4px;" type="button">
+                                Add <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
 
-                    <div class="" style="height:auto;">
-                        <ul class="nav nav-tabs">
-                            <li class="active" id="t1"><a data-toggle="tab" href="#tab-1">  Add Survey Number </a></li>
-                            <li class="" id="t2"><a data-toggle="tab" href="#tab-2">  Surve No data</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="tab-1" class="tab-pane active">
-                                <div class="ibox-content">
-                                    <div class="full-height-scroll">
-                                        <div class="bindGrid">
-                                            <div class="form-group">
-                                                <div class="col-lg-3">
-                                                    <span class="IsultiOwner">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content iboxOfficeSide">
+                        <div class="form-group entityField">
+                            <input type="hidden" id="OfficeTeamid" value="0" />
+                            <label class="col-lg-2 control-label">Person</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("OfficePersonId", new SelectList((System.Collections.IEnumerable)ViewData["PersonList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "OfficePersonId", Title = "PersonId" })
 
-                                                        @Html.CheckBox("Propertycard1", new { @class = "", title = "Is 7/12 ", @id = "Propertycard1" })
-                                                        <label for="checkbox5">
-                                                            7-12
-                                                        </label>
-                                                    </span>
+                            </div>
+                            <label class="col-lg-2 control-label">Designation</label>
+                            <div class="col-lg-4" style="display:inline-flex;">
+                                @Html.DropDownList("DesignationId3", new SelectList((System.Collections.IEnumerable)ViewData["TeamDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "DesignationId3", Title = "DesignationID" })
+                            </div>
+                        </div>
+                        <div class="form-group entityField">
+                            <label class="col-lg-2 control-label">Sub Designation</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("SubdesignationID3", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubDesignationList"], "Value", "Text"), "Select Person", new { @class = "form-control", @id = "SubDesignationID3", Title = "DesignationID" })
+                            </div>
+                            <label class="col-lg-2 control-label">Sub Designation</label>
+                            <div class="col-lg-4" style="display:inline-flex;">
+                                @Html.DropDownList("SubPartDesignationID3", new SelectList((System.Collections.IEnumerable)ViewData["TeamSubPartDesignationList"], "Value", "Text"), "Select Designation", new { @class = "form-control", @id = "SubPartDesignationID3", Title = "DesignationID" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                            Project Details
+                        </h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content iboxProjDetails">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Project Type</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("ProjectTypeId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "ProjectTypeId", Title = "ProjectTypeId" })
+                            </div>
+                            <label class="col-lg-2 control-label">Project Status</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("StatusId", new SelectList((System.Collections.IEnumerable)ViewData["ProjectStatusList"], "Value", "Text"), "Select Status", new { @class = "form-control", @id = "ProjectStatusId", Title = "ProjectStatusId" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Customer File No</label>
+                            <div class="col-lg-4">
+                                <input id="CustomerFileNo" value="@Model.CustomerFileNo" type="text" placeholder="Customer File No" class="form-control">
+                            </div>
+                            <label class="col-lg-2 control-label">File Location++</label>
+                            <div class="col-lg-4">
+                                <input id="FileLocation" type="text" placeholder="File Location" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Physical Path</label>
+                            <div class="col-lg-4">
+                                <input id="PhysicalPath" type="text" placeholder="Physical Path" value="@Model.PhysicalPath" class="form-control">
+                            </div>
+                            <label class="col-lg-2 control-label">State</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("StateID", new SelectList((System.Collections.IEnumerable)ViewData["StateList"], "Value", "Text"), "Select State", new { @class = "form-control", @id = "StateID", Title = "StateID" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Default Taluka</label>
+                            <div class="col-lg-4">
+                                @Html.DropDownList("CityID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "CityID", Title = "CityID" })
+                            </div>
+                            <label class="col-lg-2 control-label">Default District</label>
+                            <div class="col-lg-4">
+                                <input id="District" type="text" placeholder="District" value="@Model.District" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Road / Landmark</label>
+                            <div class="col-lg-4">
+                                <input id="Road" type="text" placeholder="Road" value="@Model.Road" class="form-control">
+                            </div>
+                            <label class="col-lg-2 control-label">Default Goan</label>
+                            <div class="col-lg-4">
+                                <input id="Goan" type="text" placeholder="Goan" value="@Model.Goan" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                            Pre proposal Details
+                        </h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content iboxSurveyNo">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">S.No,Gat No,CTS No.</label>
+                            <div class="col-lg-4">
+                                <input type="hidden" id="hdnSurvayDetailId" value="0" />
+                                @Html.DropDownList("SurveyNoType", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoType", Title = "SurveyNoType" })
+                            </div>
+                            <label class="col-lg-2 control-label"> Value</label>
+                            <div class="col-lg-4">
+                                <input id="SurveyNoValue" type="text" placeholder="Survey Value" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Hissa No</label>
+                            <div class="col-lg-4">
+                                <input id="SurveyHissaNo" type="text" placeholder="Hissa No" class="form-control">
+                            </div>
+
+                            <div class="col-lg-3">
+                                <input id="SurveyArea" type="text" placeholder="Area" class="form-control">
+                            </div>
+                            <div class="col-lg-2">
+                                @Html.DropDownList("SurveyNoUnitId", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "SurveyNoUnitId", Title = "SurveyNoUnitId" })
+                            </div>
+                            <div class="col-lg-1">
+                                <button id="addSurvay" class="btn btn btn-primary" type="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Cost  </label>
+                            <div class="col-lg-4">
+                                <input id="Cost" type="text" placeholder="Cost" value="@Model.Cost" class="form-control">
+
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Start Date</label>
+                            <div class="col-lg-4">
+                                @Html.TextBoxFor(m => m.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "Start date", type = "date", id = "StartDate" })
+                            </div>
+                            <label class="col-lg-2 control-label">End Date</label>
+                            <div class="col-lg-4">
+                                @Html.TextBoxFor(m => m.EndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "End date", type = "date", id = "EndDate" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                            Proposal detail 7/12 entry
+                        </h5>
+                        <div class="ibox-tools">
+
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content  iboxOwnership">
+
+                        <div class="" style="height:auto;">
+                            <ul class="nav nav-tabs">
+                                <li class="active" id="t1"><a data-toggle="tab" href="#tab-1">  Add Survey Number </a></li>
+                                <li class="" id="t2"><a data-toggle="tab" href="#tab-2">  Surve No data</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="ibox-content">
+                                        <div class="full-height-scroll">
+                                            <div class="bindGrid">
+                                                <div class="form-group">
+                                                    <div class="col-lg-3">
+                                                        <span class="IsultiOwner">
+
+                                                            @Html.CheckBox("Propertycard1", new { @class = "", title = "Is 7/12 ", @id = "Propertycard1" })
+                                                            <label for="checkbox5">
+                                                                7-12
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <span class="IsultiOwner">
+                                                            @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
+                                                            <label for="checkbox5">
+                                                                PropertyCard
+                                                            </label>
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-3">
-                                                    <span class="IsultiOwner">
-                                                        @Html.CheckBox("Propertycard2", new { @class = "", title = "Is Property Card", @id = "Propertycard2" })
-                                                        <label for="checkbox5">
-                                                            PropertyCard
-                                                        </label>
-                                                    </span>
+                                                <div class="form-group disabledDiv" id="SurveyNo">
+                                                    <div class="col-lg-3">
+                                                        <input id="Ow_SurveyNoValue" type="text" placeholder="Survey No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input id="Ow_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input id="Ow_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input id="Ow_OldNo" type="text" placeholder="Old Survey.No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <span class="IsultiOwner">
+                                                            <input type="radio" name="isPrimarySurvey" value="1">
+
+                                                            <label for="checkbox5">
+                                                                primary
+                                                            </label>
+                                                        </span>
+                                                    </div>
                                                 </div>
+                                                <div class="form-group disabledDiv " id="GatNo">
+                                                    <div class="col-lg-3">
+                                                        <input id="G_SurveyNoValue" type="text" placeholder="Gat No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input id="G_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input id="G_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input id="G_OldNo" type="text" placeholder="Old Gat.No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <span class="IsultiOwner">
+                                                            <input type="radio" name="isPrimarySurvey" value="2">
+
+                                                            <label for="checkbox5">
+                                                                primary
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group disabledDiv " id="CTSNo">
+                                                    <div class="col-lg-3">
+                                                        <input id="CTS_SurveyNoValue" type="text" placeholder="CTS No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <input id="CTS_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input id="CTS_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <input id="CTS_OldNo" type="text" placeholder="Old CTS.No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <span class="IsultiOwner">
+                                                            <input type="radio" name="isPrimarySurvey" value="3">
+                                                            <label for="checkbox5">
+                                                                primary
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group disabledDiv" id="FinalPlot">
+                                                    <div class="col-lg-3">
+                                                        <input id="FP_SurveyNoValue" type="text" placeholder="Final Plot No." class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <span class="IsultiOwner">
+                                                            <input type="radio" name="isPrimarySurvey" value="5">
+                                                            <label for="checkbox5">
+                                                                primary
+                                                            </label>
+                                                        </span>
+                                                    </div> <div class="col-lg-1"></div>
+                                                    <div class="col-lg-2">
+                                                        <button id="AddOwnerDoc" class="btn btn-primary pull-left" type="button">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-1">
+                                                        <button id="AddOwnerDocNext" class="btn btn-primary pull-left" type="button">
+                                                            Save & Next
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-lg-3">
+
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                            <div class="form-group disabledDiv" id="SurveyNo">
-                                                <div class="col-lg-3">
-                                                    <input id="Ow_SurveyNoValue" type="text" placeholder="Survey No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <input id="Ow_HissaNo" type="text" placeholder="Hissa No" class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <input id="Ow_PlotNo" type="text" placeholder="Plot No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <input id="Ow_OldNo" type="text" placeholder="Old Survey.No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <span class="IsultiOwner">
-                                                        <input type="radio" name="isPrimarySurvey" value="1">
-
-                                                        <label for="checkbox5">
-                                                            primary
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group disabledDiv " id="GatNo">
-                                                <div class="col-lg-3">
-                                                    <input id="G_SurveyNoValue" type="text" placeholder="Gat No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <input id="G_HissaNo" type="text" placeholder="Hissa No" class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <input id="G_PlotNo" type="text" placeholder="Plot No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <input id="G_OldNo" type="text" placeholder="Old Gat.No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <span class="IsultiOwner">
-                                                        <input type="radio" name="isPrimarySurvey" value="2">
-
-                                                        <label for="checkbox5">
-                                                            primary
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group disabledDiv " id="CTSNo">
-                                                <div class="col-lg-3">
-                                                    <input id="CTS_SurveyNoValue" type="text" placeholder="CTS No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <input id="CTS_HissaNo" type="text" placeholder="Hissa No" class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <input id="CTS_PlotNo" type="text" placeholder="Plot No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <input id="CTS_OldNo" type="text" placeholder="Old CTS.No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <span class="IsultiOwner">
-                                                        <input type="radio" name="isPrimarySurvey" value="3">
-                                                        <label for="checkbox5">
-                                                            primary
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group disabledDiv" id="FinalPlot">
-                                                <div class="col-lg-3">
-                                                    <input id="FP_SurveyNoValue" type="text" placeholder="Final Plot No." class="form-control">
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <span class="IsultiOwner">
-                                                        <input type="radio" name="isPrimarySurvey" value="5">
-                                                        <label for="checkbox5">
-                                                            primary
-                                                        </label>
-                                                    </span>
-                                                </div> <div class="col-lg-1"></div>
-                                                <div class="col-lg-1">
-                                                    <button id="AddOwnerDoc" class="btn btn-primary pull-left" type="button">
-                                                        Save
-                                                    </button>
-                                                </div>
-                                                <div class="col-lg-1">
-                                                    <button id="AddOwnerDocNext" class="btn btn-primary pull-left" type="button">
-                                                        Save & Next
-                                                    </button>
-                                                </div>
-                                                <div class="col-lg-3">
-
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="tab-2" class="tab-pane">
-                                <div class="ibox-content">
-                                    <div id="AddNew2">
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="ibox-content">
+                                        <div id="AddNew2">
 
-                                        <div class="form-group">
-                                            <div class="col-md-2">
-                                                <select id="PropertyCardTypeID" class="form-control">
-                                                    <option value="1">7/12</option>
-                                                    <option value="2">Property Card</option>
-                                                </select>
+                                            <div class="form-group">
+                                                <div class="col-md-2">
+                                                    <select id="PropertyCardTypeID" class="form-control">
+                                                        <option value="1">7/12</option>
+                                                        <option value="2">Property Card</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    @Html.DropDownList("SurveyNoTypeID", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoTypeID", Title = "SurveyNoTypeID" })
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    @Html.DropDownList("OwnerSurveyNo", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoProperyCardList"], "Value", "Text"), "Select Survey No", new { @class = "form-control", @id = "OwnerSurveyNo", Title = "OwnerSurveyNo" })
+                                                </div>
+                                                <div class="col-md-2"> <button type="button" id="AddOwner" class="btn btn-default">Add Owner</button></div>
+                                                <div class="col-md-3"> <button type="button" id="AddOwnerUndevided" class="btn btn-default">Add Undevided shares</button></div>
                                             </div>
-                                            <div class="col-lg-2">
-                                                @Html.DropDownList("SurveyNoTypeID", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoTypeID", Title = "SurveyNoTypeID" })
-                                            </div>
-                                            <div class="col-lg-3">
-                                                @Html.DropDownList("OwnerSurveyNo", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoProperyCardList"], "Value", "Text"), "Select Survey No", new { @class = "form-control", @id = "OwnerSurveyNo", Title = "OwnerSurveyNo" })
-                                            </div>
-                                            <div class="col-md-2"> <button type="button" id="AddOwner" class="btn btn-default">Add Owner</button></div>
-                                            <div class="col-md-3"> <button type="button" id="AddOwnerUndevided" class="btn btn-default">Add Undevided shares</button></div>
                                         </div>
-                                    </div>
-                                    <div class="full-height-scroll">
                                         <div class="full-height-scroll">
-                                            <div class="ibox-content">
-                                                <div class="bindGrid">
+                                            <div class="full-height-scroll">
+                                                <div class="ibox-content">
+                                                    <div class="bindGrid">
 
 
-                                                    <div id="OwnersData">
+                                                        <div id="OwnersData">
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
-
                             </div>
-                        </div>
 
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -732,7 +734,7 @@
                                                     </div>
                                                 </div>
                                                 <div id="SanctionData"></div>
-                                               
+
                                             </div>
                                         </div>
                                     </div>
@@ -774,14 +776,15 @@
                     </div>
                 </div>
 
-            
-            <div class="row form-group">
-                <div class="col-md-3">
-                </div>
-                <div class="col-md-8 pull-right">
-                    <div class="pull-right">
-                        @Html.ActionLink("Cancel", "ProjectList", "Master", null, new { @class = "btn btn-white" })
-                        <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+
+                <div class="row form-group">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-8 pull-right">
+                        <div class="pull-right">
+                            @Html.ActionLink("Cancel", "ProjectList", "Master", null, new { @class = "btn btn-white" })
+                            <button class="btn btn-primary" id="btnsave" type="button">Save changes</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -914,6 +917,11 @@
 </div>
 <script>
     $(document).ready(function () {
+        var ProjectID = $('#ProjectID').val();
+        if (ProjectID == 0) {
+            $("#DivEdit").attr('disabled', 'disabled');
+            $("#DivEdit *").prop('disabled', true);
+        }
 
         getAllOwners();
         getownerauthority();
@@ -922,9 +930,23 @@
         var selected = v.split(',');
         var len1 = selected.length;
         for (i = 0; i < len1; i++) {
-            selectedValues2[i] = selected[i].trim().toString();
+            selectedValues2[i] = selected[i].trim().toString(); 
         }
+        
+        $("#SurveyNoUnitId").prop('selectedIndex', 1);
         $("#DeveloperCompanyID").val(selectedValues2);
+        var len = selectedValues2.length;
+        if (len == 1) {
+            $("select#ParentCompanyID").prop('selectedIndex', 1);
+            internalTeamChange();
+            $("select#ExtTeamParentCompanyID").prop('selectedIndex', 1);
+            ExtTeamParentCompanyIDChange();  
+            $("select#ARightID").prop('selectedIndex', 1);
+            getownerauthority();
+            getAuthoritiesList(1);
+            getAuthoritiesList(2); getAuthoritiesList(3);
+            getAuthoritiesList(4); getAuthoritiesList(5);
+        }
         $('.closeModal').on("click", function (e) {
             $('#myModal').hide();
             $('#myModalUndevided').hide();
@@ -1365,7 +1387,22 @@
             else {
                 $("#OwnerSurveyNo option:contains(" + t1 + ")").attr('selected', 'selected');
             }
+            $.ajax({
+                type: 'GET',
+                dataType: "text",
+                url: '/Master/GetOwnersPropertyCardList',
+                data:
+                {
+                    ProjectID: $('#ProjectID').val(),
+                    SurvayDetailId: $('#OwnerSurveyNo').val()
+                },
+                success: function (data) {
 
+                    $('#OwnersData').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
         });
 
         $('#SanctionSurveyNo').change(function () {
@@ -2159,27 +2196,87 @@
                 }
             });
         }
-        $('#addSurvay').on("click", function (e) {
-
+        function savesurvay() {
+  
             var SurveyNoType = $("#SurveyNoType option:selected").text();
             var SurveyNoTypeID = $("#SurveyNoType option:selected").val();
             var SurveyNoValue = $("#SurveyNoValue").val();
             var SurveyArea = $("#SurveyArea").val();
             var SurveyHissaNo = $("#SurveyHissaNo").val();
+           
 
             var SurvayUnittext = $("#SurveyNoUnitId option:selected").text();
             var SurvayUnitId = $("#SurveyNoUnitId option:selected").val();
-            var bindrow = '<tr><td>' + SurveyNoType + '</td><td class="hidden" >' + SurveyNoTypeID + '</td><td >' + SurveyNoValue + '</td><td>' + SurveyHissaNo + '</td> </td> <td>' + SurveyArea + '</td><td>' + SurvayUnittext + '</td><td class="hidden">' + SurvayUnitId + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td><td class="hidden">0/td></tr>'
-            if (SurveyNoValue != '' && SurveyArea != '') {
-                $('#survaylist tbody').append(bindrow);
-            }
+            var SurvayDetailId = $("#hdnSurvayDetailId").val();
+            var ProjectID = $('#ProjectID').val();
+            $.ajax({
+                url: "@Url.Action("SaveProjectSurvay", "Master")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    ProjectID: ProjectID
+                    , SurvayNo: SurveyNoValue
+                    , SurvayDetailId: SurvayDetailId
+                    , SurveyTypeID: SurveyNoTypeID
+                    , HissaNo: SurveyHissaNo
+                    , Area: SurveyArea
+                    , UnitID: SurvayUnitId
+                }),
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                   
+                    $("#hdnSurvayDetailId").val(0);
+                    $("#SurveyNoValue").val("");
+                    $("#SurveyArea").val("0");
+                    
+                    $("#SurveyHissaNo").val("");
+                    $("#SurveyNoType").val(0);
+                    $("select#SurveyNoUnitId").prop('selectedIndex', 0);
+                    $("select#SurveyNoType").prop('selectedIndex', 0);
+                    alert("Saved Succesfully");
+                    $.ajax({
+                        type: 'GET',
+                        dataType: "text",
+                        url: '/Master/GetProjectInfoLeftSide',
+                        data:
+                        {
+                            ProjectID: $('#ProjectID').val()
+                        },
+                        success: function (data) {
+                            $('#CompanyAddressOuterDiv').html(data);
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        }
+                    });
+                },
+                error: function (data) {
+
+                },
+                complete: function () {
+                }
+            });
+
+           
+            //if (SurvayDetailId == 0) {
+            //    var bindrow = '<tr><td>' + SurveyNoType + '</td><td class="hidden" >' + SurveyNoTypeID + '</td><td >' + SurveyNoValue + '</td><td>' + SurveyHissaNo + '</td> </td> <td>' + SurveyArea + '</td><td>' + SurvayUnittext + '</td><td class="hidden">' + SurvayUnitId + '</td> <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true"></i></td><td class="hidden">0/td></tr>'
+            //    if (SurveyNoValue != '' && SurveyArea != '') {
+            //        $('#survaylist tbody').append(bindrow);
+            //    }
+            //}
 
             $("#survaylist").show();
+
+          
+        }
+        $('#addSurvay').on("click", function (e) {
+            savesurvay();
         });
 
 
-        $('#ExtTeamParentCompanyID').change(function () {
-            $.ajax({
+        function ExtTeamParentCompanyIDChange() {
+             $.ajax({
                 url: "@Url.Action("GetExternalTeamUnderCompany", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -2198,9 +2295,13 @@
                 }
             });
             return true;
+        }
+        $('#ExtTeamParentCompanyID').change(function () {
+            ExtTeamParentCompanyIDChange();  
         });
-        $('#ParentCompanyID').change(function () {
-            $.ajax({
+        function internalTeamChange() {
+            
+             $.ajax({
                 url: "@Url.Action("GetInternalTeamUnderCompany", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -2219,6 +2320,9 @@
                 }
             });
             return true;
+        }
+        $('#ParentCompanyID').change(function () {
+            internalTeamChange();
         });
         $('#CategoryID1').change(function () {
 
@@ -2395,99 +2499,100 @@
 
         });
         function saveproject() {
-            debugger;
+            
             saveInternalTeam();
             saveExternalTeam();
             saveOfficeSide();
+            savesurvay();
             var idArrsurvay = [];
-            $('#survaylist tbody tr').each(function (k, v) {
-                var trElement = $(this);
-                var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
-                    trElement.find('td:eq(1)').text().trim() + "~" +
-                    trElement.find('td:eq(2)').text().trim() + "~" +
-                    trElement.find('td:eq(3)').text().trim() + "~" +
-                    trElement.find('td:eq(4)').text().trim() + "~" +
-                    trElement.find('td:eq(5)').text().trim() + "~" +
-                    trElement.find('td:eq(6)').text().trim() + "~" +
-                    trElement.find('td:eq(7)').text().trim()
-                idArrsurvay.push(tdVals);
-            });
+         /////   $('#survaylist tbody tr').each(function (k, v) {
+         //       var trElement = $(this);
+         //       var tdVals = trElement.find('td:eq(0)').text().trim() + "~" +
+         //           trElement.find('td:eq(1)').text().trim() + "~" +
+         //           trElement.find('td:eq(2)').text().trim() + "~" +
+         //           trElement.find('td:eq(3)').text().trim() + "~" +
+         //           trElement.find('td:eq(4)').text().trim() + "~" +
+         //           trElement.find('td:eq(5)').text().trim() + "~" +
+         //           trElement.find('td:eq(6)').text().trim() + "~" +
+         //           trElement.find('td:eq(7)').text().trim()
+         //       idArrsurvay.push(tdVals);
+         //   });
 
-            var SaveSurvayDetails = [];
-            for (var i = 0; i < idArrsurvay.length; i++) {
-                var arrElement = idArrsurvay[i].split("~");
-                item = {}
+            //var SaveSurvayDetails = [];
+            //for (var i = 0; i < idArrsurvay.length; i++) {
+            //    var arrElement = idArrsurvay[i].split("~");
+            //    item = {}
 
-                item["SurvayDetailId"] = arrElement[7];
-                item["SurvayTypeID"] = arrElement[1];
-                item["SurvayNo"] = arrElement[2];
-                item["HissaNo"] = arrElement[3];
-                item["Area"] = arrElement[4];
-                item["UnitID"] = arrElement[6];
-                SaveSurvayDetails.push(item);
-            }
+            //    item["SurvayDetailId"] = arrElement[7];
+            //    item["SurvayTypeID"] = arrElement[1];
+            //    item["SurvayNo"] = arrElement[2];
+            //    item["HissaNo"] = arrElement[3];
+            //    item["Area"] = arrElement[4];
+            //    item["UnitID"] = arrElement[6];
+            //    SaveSurvayDetails.push(item);
+            //}
 
-            //Adding multipal Internal Team into array
-            var idArrInternalTeam = [];
-            $('.MultiInternalTeam').each(function (k, v) {
-                var tdVals = $(this).attr("parentcompanyid") + "~" + $(this).attr("internalpersonid") + "~" + $(this).attr("designationid1") + "~" + $(this).attr("subdesignationid1") + "~" + $(this).attr("subpartdesignationid1") + "~" + $(this).attr("internalteamcount");
-                idArrInternalTeam.push(tdVals);
-            });
+            ////Adding multipal Internal Team into array
+            //var idArrInternalTeam = [];
+            //$('.MultiInternalTeam').each(function (k, v) {
+            //    var tdVals = $(this).attr("parentcompanyid") + "~" + $(this).attr("internalpersonid") + "~" + $(this).attr("designationid1") + "~" + $(this).attr("subdesignationid1") + "~" + $(this).attr("subpartdesignationid1") + "~" + $(this).attr("internalteamcount");
+            //    idArrInternalTeam.push(tdVals);
+            //});
 
-            var SaveInternalTeam = [];
-            for (var i = 0; i < idArrInternalTeam.length; i++) {
-                var arrElement = idArrInternalTeam[i].split("~");
-                item = {}
+            //var SaveInternalTeam = [];
+            //for (var i = 0; i < idArrInternalTeam.length; i++) {
+            //    var arrElement = idArrInternalTeam[i].split("~");
+            //    item = {}
 
-                item["parentcompanyid"] = arrElement[0];
-                item["internalpersonid"] = arrElement[1];
-                item["designationid1"] = arrElement[2];
-                item["subdesignationid1"] = arrElement[3];
-                item["subpartdesignationid1"] = arrElement[4];
-                item["internalTeamid"] = arrElement[5];
-                SaveInternalTeam.push(item);
-            }
+            //    item["parentcompanyid"] = arrElement[0];
+            //    item["internalpersonid"] = arrElement[1];
+            //    item["designationid1"] = arrElement[2];
+            //    item["subdesignationid1"] = arrElement[3];
+            //    item["subpartdesignationid1"] = arrElement[4];
+            //    item["internalTeamid"] = arrElement[5];
+            //    SaveInternalTeam.push(item);
+            //}
 
-            //Adding multipal Internal Team into array
-            var idArrExternalTeam = [];
-            $('.MultiExternalTeam').each(function (k, v) {
-                var tdVals = $(this).attr("ExtTeamParentCompanyID") + "~" + $(this).attr("externalpersonid") + "~" + $(this).attr("designationid2") + "~" + $(this).attr("subdesignationid2") + "~" + $(this).attr("subpartdesignationid2") + "~" + $(this).attr("externalteamcount");
-                idArrExternalTeam.push(tdVals);
-            });
+            ////Adding multipal Internal Team into array
+            //var idArrExternalTeam = [];
+            //$('.MultiExternalTeam').each(function (k, v) {
+            //    var tdVals = $(this).attr("ExtTeamParentCompanyID") + "~" + $(this).attr("externalpersonid") + "~" + $(this).attr("designationid2") + "~" + $(this).attr("subdesignationid2") + "~" + $(this).attr("subpartdesignationid2") + "~" + $(this).attr("externalteamcount");
+            //    idArrExternalTeam.push(tdVals);
+            //});
 
-            var SaveExternalTeam = [];
-            for (var i = 0; i < idArrExternalTeam.length; i++) {
-                var arrElement = idArrExternalTeam[i].split("~");
-                item = {}
+            //var SaveExternalTeam = [];
+            //for (var i = 0; i < idArrExternalTeam.length; i++) {
+            //    var arrElement = idArrExternalTeam[i].split("~");
+            //    item = {}
 
-                item["parentcompanyid"] = arrElement[0];
-                item["Externalpersonid"] = arrElement[1];
-                item["designationid1"] = arrElement[2];
-                item["subdesignationid1"] = arrElement[3];
-                item["subpartdesignationid1"] = arrElement[4];
-                item["ExternalTeamid"] = arrElement[5];
-                SaveExternalTeam.push(item);
-            }
+            //    item["parentcompanyid"] = arrElement[0];
+            //    item["Externalpersonid"] = arrElement[1];
+            //    item["designationid1"] = arrElement[2];
+            //    item["subdesignationid1"] = arrElement[3];
+            //    item["subpartdesignationid1"] = arrElement[4];
+            //    item["ExternalTeamid"] = arrElement[5];
+            //    SaveExternalTeam.push(item);
+            //}
 
-            //Adding multipal Offie side Team into array
-            var idArrOfficeSideTeam = [];
-            $('.MultiOfficeSideTeam').each(function (k, v) {
-                var tdVals = $(this).attr("officepersonid") + "~" + $(this).attr("designationid3") + "~" + $(this).attr("subdesignationid3") + "~" + $(this).attr("subpartdesignationid3") + "~" + $(this).attr("officesideteamcount");
-                idArrOfficeSideTeam.push(tdVals);
-            });
+            ////Adding multipal Offie side Team into array
+            //var idArrOfficeSideTeam = [];
+            //$('.MultiOfficeSideTeam').each(function (k, v) {
+            //    var tdVals = $(this).attr("officepersonid") + "~" + $(this).attr("designationid3") + "~" + $(this).attr("subdesignationid3") + "~" + $(this).attr("subpartdesignationid3") + "~" + $(this).attr("officesideteamcount");
+            //    idArrOfficeSideTeam.push(tdVals);
+            //});
 
-            var SaveOfficeSideTeam = [];
-            for (var i = 0; i < idArrExternalTeam.length; i++) {
-                var arrElement = idArrExternalTeam[i].split("~");
-                item = {}
+            //var SaveOfficeSideTeam = [];
+            //for (var i = 0; i < idArrExternalTeam.length; i++) {
+            //    var arrElement = idArrExternalTeam[i].split("~");
+            //    item = {}
 
-                item["personid"] = arrElement[1];
-                item["designationid1"] = arrElement[2];
-                item["subdesignationid1"] = arrElement[3];
-                item["subpartdesignationid1"] = arrElement[4];
-                item["Teamid"] = arrElement[5];
-                SaveOfficeSideTeam.push(item);
-            }
+            //    item["personid"] = arrElement[1];
+            //    item["designationid1"] = arrElement[2];
+            //    item["subdesignationid1"] = arrElement[3];
+            //    item["subpartdesignationid1"] = arrElement[4];
+            //    item["Teamid"] = arrElement[5];
+            //    SaveOfficeSideTeam.push(item);
+            //}
 
             var selectedDeveloper = $("#DeveloperCompanyID").val().toString();
 
@@ -2517,9 +2622,9 @@
                     EndDate: $('#EndDate').val(),
                     Developers: selectedDeveloper,
                     DeveloperTypeID: DeveloperTypeID,
-                    SaveSurvayDetails: SaveSurvayDetails,
-                    SaveProjectInternalTeam: SaveInternalTeam,
-                    SaveProjectExternalTeam: SaveExternalTeam,
+                    //SaveSurvayDetails: SaveSurvayDetails,
+                    //SaveProjectInternalTeam: SaveInternalTeam,
+                    //SaveProjectExternalTeam: SaveExternalTeam,
 
                 },
                 success: function (da) {

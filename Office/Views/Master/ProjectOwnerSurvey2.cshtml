@@ -88,26 +88,17 @@ foreach (var item2 in Model)
                     .clone(true)
                     .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
                     .insertAfter('[id=RowonerArea2]:last').find("input").val("");
+
             }
-            else {
-                $('#row1')
-                    .clone(true)
-                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
-                    .insertAfter('[id=RowonerArea2]:last').find("input").val("");
-            }
+            
         }
         else {
-            if (rowLen > 0) {
-                $('#RowonerArea2')
-                    .clone(true)
-                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
-                    .insertAfter('[id=row1]:last').find("input").val("");
-            } else {
+             
                 $('#row1')
                     .clone(true)
                     .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
                     .insertAfter('[id=row1]:last').find("input").val("");
-            }
+            
         }
 
         return false;
