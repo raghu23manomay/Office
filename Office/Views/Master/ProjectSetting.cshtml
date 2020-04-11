@@ -61,12 +61,14 @@
                 <div class="ibox-content iboxProjectinfo">
                     <div class="form-group">
                         <label class="col-lg-2 control-label">
-                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__EnquiryDate").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__EnquiryDate").FieldID"> Enquiry Date</label>
+                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__EnquiryDate").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__EnquiryDate").FieldID"> Enquiry Date
+                        </label>
                         <div class="col-lg-4" style="display: inline-flex;">
                             <input type="date" id="EnquiryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="EnquiryDate" class="form-control">
                         </div>
                         <label class="col-lg-2 control-label">
-                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectName").FieldID"> Project</label>
+                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectName").FieldID"> Project
+                        </label>
                         <div class="col-lg-4">
                             <input type="text" id="ProjectName" placeholder="ProjectName" class="form-control">
 
@@ -75,14 +77,14 @@
                     <div class="form-group">
 
                         <label class="col-lg-2 control-label">
-                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectShortName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectShortName").FieldID"> 
+                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectShortName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectShortName").FieldID">
                             Short Name
                         </label>
                         <div class="col-lg-4">
                             <input id="ProjectShortName" type="text" placeholder="Short Form" class="form-control">
                         </div>
                         <label class="col-lg-2 control-label">
-                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project_DeveloperID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project_DeveloperID").FieldID"> 
+                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project_DeveloperID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project_DeveloperID").FieldID">
                             Developers
                         </label>
                         <div class="col-lg-4">
@@ -93,7 +95,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">
-                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectTypeId").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectTypeId").FieldID"> 
+                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectTypeId").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__ProjectTypeId").FieldID">
                             Type
                         </label>
 
@@ -124,9 +126,9 @@
                     <div class="ibox-content iboxInternal">
                         <div class="Team">
                             <div class="form-group entityField">
-                                 
+
                                 <label class="col-lg-2 control-label">
-                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__ParentCompanyID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__ParentCompanyID").FieldID"> 
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__ParentCompanyID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__ParentCompanyID").FieldID">
                                     Parent Company
                                 </label>
                                 <div class="col-lg-4">
@@ -135,7 +137,7 @@
                                     </select>
                                 </div>
                                 <label class="col-lg-2 control-label">
-                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__PersonID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__PersonID").FieldID"> 
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__PersonID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__PersonID").FieldID">
                                     Person
                                 </label>
                                 <div class="col-lg-4" style="display:inline-flex;">
@@ -146,7 +148,7 @@
                             </div>
                             <div class="form-group entityField">
                                 <label class="col-lg-2 control-label">
-                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__Designationid1").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__Designationid1").FieldID"> 
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__Designationid1").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__Designationid1").FieldID">
                                     Designation
                                 </label>
                                 <div class="col-lg-4" style="display:inline-flex;">
@@ -155,7 +157,7 @@
                                     </select>
                                 </div>
                                 <label class="col-lg-2 control-label">
-                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__SubdesignationId1").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__SubdesignationId1").FieldID"> 
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__SubdesignationId1").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__SubdesignationId1").FieldID">
                                     Sub Designation
                                 </label>
                                 <div class="col-lg-4">
@@ -167,8 +169,8 @@
                             <div class="form-group entityField">
 
                                 <label class="col-lg-2 control-label">
-                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__subpartDesignationId1").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__subpartDesignationId1").FieldID"> 
-                                    
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__subpartDesignationId1").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectInternalTeam__subpartDesignationId1").FieldID">
+
                                     Sub Designation
                                 </label>
                                 <div class="col-lg-4" style="display:inline-flex;">
@@ -197,7 +199,7 @@
                     </div>
                     <div class="ibox-content iboxexternal">
                         <div class="Team">
-                             
+
                             <div class="form-group entityField">
                                 <label class="col-lg-2 control-label">
                                     <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectExternalTeam__ParentCompanyID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectExternalTeam__ParentCompanyID").FieldID">
@@ -269,7 +271,7 @@
                     </div>
                     <div class="ibox-content iboxOfficeSide">
                         <div class="form-group entityField">
-                             
+
                             <label class="col-lg-2 control-label">
                                 <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectOfficeTeam__PersonID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectOfficeTeam__PersonID").FieldID">
                                 Person
@@ -357,17 +359,17 @@
                                 File Location++
                             </label>
                             <div class="col-lg-4">
-                                    <input id="FileLocation" type="text" placeholder="File Location" class="form-control">
+                                <input id="FileLocation" type="text" placeholder="File Location" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             @*<label class="col-lg-2 control-label">
-                                <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").FieldID">
-                                Physical Path
-                            </label>
-                            <div class="col-lg-4">
-                                <input id="PhysicalPath" type="text" placeholder="Physical Path" class="form-control">
-                            </div>*@
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").FieldID">
+                                    Physical Path
+                                </label>
+                                <div class="col-lg-4">
+                                    <input id="PhysicalPath" type="text" placeholder="Physical Path" class="form-control">
+                                </div>*@
                             <label class="col-lg-2 control-label">
                                 <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__StateID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__StateID").FieldID">
                                 State
@@ -462,8 +464,8 @@
                             </div>
                             <div class="col-lg-1">
                                 @*<button id="addSurvay" class="btn btn btn-primary" type="button">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                </button>*@
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>*@
 
                             </div>
                         </div>
@@ -471,16 +473,17 @@
                         <div class="form-group">
                             <label class="col-lg-2 control-label">
                                 <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__Cost").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__Cost").FieldID">
-                            Cost  </label>
+                                Cost
+                            </label>
                             <div class="col-lg-4">
                                 <input id="Cost" type="text" placeholder="Cost" class="form-control">
-                                
+
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">
-                                <input type="checkbox" class="chkApplicable mycheck"  checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__StartDate").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__StartDate").FieldID">
+                                <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__StartDate").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Project__StartDate").FieldID">
                                 Start Date
                             </label>
                             <div class="col-lg-4">
@@ -491,7 +494,7 @@
                                 End Date
                             </label>
 
-                            <div class="col-lg-4"> 
+                            <div class="col-lg-4">
                                 <input type="text" placeholder="End Date" class="form-control" />
                             </div>
                         </div>
@@ -523,30 +526,30 @@
                                     <div class="ibox-content">
                                         <div class="full-height-scroll">
                                             <div class="bindGrid">
-                                                
+
                                                 <div class="form-group " id="SurveyNo">
                                                     <div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__SurvayNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__SurvayNo").FieldID">
                                                     </div>
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-3">
                                                         <input id="Ow_SurveyNoValue" type="text" placeholder="Survey No." class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    @*<div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__SHissaNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__SHissaNo").FieldID">
-                                                    </div>
-                                                    <div class="col-lg-2">
+                                                    </div>*@
+                                                    <div class="col-lg-3">
                                                         <input id="Ow_HissaNo" type="text" placeholder="Hissa No" class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    @*<div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__SPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__SPlotNo").FieldID">
-                                                    </div>
-                                                   
-                                                    <div class="col-lg-2">
+                                                    </div>*@
+
+                                                    <div class="col-lg-3">
                                                         <input id="Ow_PlotNo" type="text" placeholder="Plot No." class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    @*<div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldSurvayNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldSurvayNo").FieldID">
-                                                    </div>
+                                                    </div>*@
                                                     <div class="col-lg-2">
                                                         <input id="Ow_OldNo" type="text" placeholder="Old Survey.No." class="form-control">
                                                     </div>
@@ -555,55 +558,55 @@
                                                     <div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatNo").FieldID">
                                                     </div>
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-3">
                                                         <input id="G_SurveyNoValue" type="text" placeholder="Gat No." class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
-                                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatHissaNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatHissaNo").FieldID">
-                                                    </div>
-                                                    <div class="col-lg-2">
+                                                    @*<div class="col-lg-1">
+            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatHissaNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatHissaNo").FieldID">
+        </div>*@
+                                                    <div class="col-lg-3">
                                                         <input id="G_HissaNo" type="text" placeholder="Hissa No" class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
-                                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatPlotNo").FieldID">
-                                                    </div>
-                                                    <div class="col-lg-2">
+                                                    @*<div class="col-lg-1">
+            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__GatPlotNo").FieldID">
+        </div>*@
+                                                    <div class="col-lg-3">
                                                         <input id="G_PlotNo" type="text" placeholder="Plot No." class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
-                                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldGatNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldGatNo").FieldID">
-                                                    </div>
+                                                    @*<div class="col-lg-1">
+            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldGatNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldGatNo").FieldID">
+        </div>*@
                                                     <div class="col-lg-2">
                                                         <input id="G_OldNo" type="text" placeholder="Old Gat.No." class="form-control">
                                                     </div>
-                                                  
+
                                                 </div>
                                                 <div class="form-group  " id="CTSNo">
                                                     <div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__CTSNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__CTSNo").FieldID">
                                                     </div>
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-3">
                                                         <input id="CTS_SurveyNoValue" type="text" placeholder="CTS No." class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    @*<div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__CTSHissaNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__CTSHissaNo").FieldID">
-                                                    </div>
-                                                    <div class="col-lg-2">
+                                                    </div>*@
+                                                    <div class="col-lg-3">
                                                         <input id="CTS_HissaNo" type="text" placeholder="Hissa No" class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    @*<div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__CTSPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__CTSPlotNo").FieldID">
-                                                    </div>
-                                                    <div class="col-lg-2">
+                                                    </div>*@
+                                                    <div class="col-lg-3">
                                                         <input id="CTS_PlotNo" type="text" placeholder="Plot No." class="form-control">
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    @*<div class="col-lg-1">
                                                         <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldCTSNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectProposalSurvayDetails__OldCTSNo").FieldID">
-                                                    </div>
+                                                    </div>*@
                                                     <div class="col-lg-2">
                                                         <input id="CTS_OldNo" type="text" placeholder="Old CTS.No." class="form-control">
                                                     </div>
-                                                   
+
                                                 </div>
                                                 <div class="form-group " id="FinalPlot">
                                                     <div class="col-lg-1">
@@ -620,67 +623,67 @@
                                     </div>
                                 </div>
                                 @*<div id="tab-2" class="tab-pane">
-                                    <div class="ibox-content">
-                                        <div id="AddNew2">
+                                        <div class="ibox-content">
+                                            <div id="AddNew2">
 
-                                            <div class="form-group">
-                                                <div class="col-md-2">
-                                                    <select id="PropertyCardTypeID" class="form-control">
-                                                        <option value="1">7/12</option>
-                                                        <option value="2">Property Card</option>
-                                                    </select>
+                                                <div class="form-group">
+                                                    <div class="col-md-2">
+                                                        <select id="PropertyCardTypeID" class="form-control">
+                                                            <option value="1">7/12</option>
+                                                            <option value="2">Property Card</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        @Html.DropDownList("SurveyNoTypeID", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoTypeID", Title = "SurveyNoTypeID" })
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        @Html.DropDownList("OwnerSurveyNo", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoProperyCardList"], "Value", "Text"), "Select Survey No", new { @class = "form-control", @id = "OwnerSurveyNo", Title = "OwnerSurveyNo" })
+                                                    </div>
+                                                    <div class="col-md-2"> <button type="button" id="AddOwner" class="btn btn-default">Add Owner</button></div>
+                                                    <div class="col-md-3"> <button type="button" id="AddOwnerUndevided" class="btn btn-default">Add Undevided shares</button></div>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    @Html.DropDownList("SurveyNoTypeID", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SurveyNoTypeID", Title = "SurveyNoTypeID" })
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    @Html.DropDownList("OwnerSurveyNo", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoProperyCardList"], "Value", "Text"), "Select Survey No", new { @class = "form-control", @id = "OwnerSurveyNo", Title = "OwnerSurveyNo" })
-                                                </div>
-                                                <div class="col-md-2"> <button type="button" id="AddOwner" class="btn btn-default">Add Owner</button></div>
-                                                <div class="col-md-3"> <button type="button" id="AddOwnerUndevided" class="btn btn-default">Add Undevided shares</button></div>
                                             </div>
-                                        </div>
-                                        <div class="full-height-scroll">
                                             <div class="full-height-scroll">
-                                                <div class="ibox-content">
-                                                    <div class="bindGrid">
+                                                <div class="full-height-scroll">
+                                                    <div class="ibox-content">
+                                                        <div class="bindGrid">
 
 
-                                                        <div id="OwnersData">
+                                                            <div id="OwnersData">
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>*@
+                                    </div>*@
                             </div>
 
                         </div>
                     </div>
                 </div>
                 @*<div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>
-                            Proposal detail entry
-                        </h5>
-                        <div class="ibox-tools">
+                        <div class="ibox-title">
+                            <h5>
+                                Proposal detail entry
+                            </h5>
+                            <div class="ibox-tools">
 
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-down"></i>
-                            </a>
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-down"></i>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="ibox-content iboxProposaldataentryView">
+                        <div class="ibox-content iboxProposaldataentryView">
 
-                        <div id="OwnersDataAll">
+                            <div id="OwnersDataAll">
+
+                            </div>
 
                         </div>
-
-                    </div>
-                </div>*@
+                    </div>*@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
@@ -696,7 +699,7 @@
                         <div class="form-group">
 
                             <label class="col-lg-2 control-label">
-                                <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").FieldID">
+                                <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__OwnerID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__OwnerID").FieldID">
                                 Current Developing rights with
                             </label>
                             <div class="col-lg-4">
@@ -716,84 +719,84 @@
                             <div class="col-lg-2">
                                 <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatoryDetail__NoOfSignatureRequired").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatoryDetail__NoOfSignatureRequired").FieldID">
                             </div>
-                                <div class="col-lg-3">
-                                   
-                                    @Html.DropDownList("either1", new SelectList((System.Collections.IEnumerable)ViewData["Either1"], "Value", "Text"), "Select ", new { @class = "form-control ", @id = "either1", Title = "PersonId", Placeholder = "  " })
+                            <div class="col-lg-3">
 
-                                </div>
+                                @Html.DropDownList("either1", new SelectList((System.Collections.IEnumerable)ViewData["Either1"], "Value", "Text"), "Select ", new { @class = "form-control ", @id = "either1", Title = "PersonId", Placeholder = "  " })
 
                             </div>
-                             
 
-                            <div id="AuthorityDetails">
-
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">
-                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__DocumentID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__DocumentID").FieldID">
-                                        Document Name
-                                    </label>
-                                    <div class="col-lg-4">
-                                        @Html.DropDownList("DocumentID", new SelectList((System.Collections.IEnumerable)ViewData["MDocumentList"], "Value", "Text"), "Select Document", new { @class = "form-control", @id = "MDocumentID", Title = " " })
-                                    </div>
-
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">
-                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnderDevelopment").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnderDevelopment").FieldID">
-                                        Area under developing
-                                    </label>
-                                    <div class="col-lg-4">
-                                        <input id="Areaunderdeveloping" type="text" placeholder="Area Under Developing" class="form-control">
-                                    </div>
-                                    <label class="col-lg-2 control-label">
-                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnitID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnitID").FieldID">
-                                        Units
-                                    </label>
-                                    <div class="col-lg-4">
-                                        @Html.DropDownList("AreaUnitID", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "AreaUnderProposalUnitId", Title = "AreaUnderProposalUnitId" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-
-                                    <label class="col-lg-2 control-label">
-                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementNo").FieldID">
-                                        Agreement No
-                                    </label>
-                                    <div class="col-lg-4">
-                                        <input type="text" placeholder="Agreement No" class="form-control">
-                                    </div>
-                                    <label class="col-lg-2 control-label">
-                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementDate").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementDate").FieldID">
-                                        Agreement Date
-                                    </label>
-                                    <div class="col-lg-4">
-                                        <input type="text" placeholder="Agreement Date" class="form-control">
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">
-                                        <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__SubRegistarOffice").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__SubRegistarOffice").FieldID">
-
-                                        Sub-registrar office
-                                    </label>
-                                    <div class="col-lg-4">
-                                        <input id="SubRegistrar" type="text" placeholder="Sub-registrar Office" class="form-control">
-                                    </div>
-                                    <div class="col-lg-4">
-                                        @*<input id="SaveAuthority" type="button" class="btn btn-primary" value="Save">*@
-                                    </div>
-                                </div>
-                                <div id="AuthorityListDetails">
-
-                                </div>
-
-
-                            </div>
                         </div>
+
+
+                        <div id="AuthorityDetails">
+
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__DocumentID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__DocumentID").FieldID">
+                                    Document Name
+                                </label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("DocumentID", new SelectList((System.Collections.IEnumerable)ViewData["MDocumentList"], "Value", "Text"), "Select Document", new { @class = "form-control", @id = "MDocumentID", Title = " " })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnderDevelopment").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnderDevelopment").FieldID">
+                                    Area under developing
+                                </label>
+                                <div class="col-lg-4">
+                                    <input id="Areaunderdeveloping" type="text" placeholder="Area Under Developing" class="form-control">
+                                </div>
+                                <label class="col-lg-2 control-label">
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnitID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AreaUnitID").FieldID">
+                                    Units
+                                </label>
+                                <div class="col-lg-4">
+                                    @Html.DropDownList("AreaUnitID", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "AreaUnderProposalUnitId", Title = "AreaUnderProposalUnitId" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+
+                                <label class="col-lg-2 control-label">
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementNo").FieldID">
+                                    Agreement No
+                                </label>
+                                <div class="col-lg-4">
+                                    <input type="text" placeholder="Agreement No" class="form-control">
+                                </div>
+                                <label class="col-lg-2 control-label">
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementDate").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__AgreementDate").FieldID">
+                                    Agreement Date
+                                </label>
+                                <div class="col-lg-4">
+                                    <input type="text" placeholder="Agreement Date" class="form-control">
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">
+                                    <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__SubRegistarOffice").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "ProjectSignatory__SubRegistarOffice").FieldID">
+
+                                    Sub-registrar office
+                                </label>
+                                <div class="col-lg-4">
+                                    <input id="SubRegistrar" type="text" placeholder="Sub-registrar Office" class="form-control">
+                                </div>
+                                <div class="col-lg-4">
+                                    @*<input id="SaveAuthority" type="button" class="btn btn-primary" value="Save">*@
+                                </div>
+                            </div>
+                            <div id="AuthorityListDetails">
+
+                            </div>
+
+
+                        </div>
+                    </div>
                 </div>
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -813,7 +816,6 @@
                         <div class="" style="height:auto;">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-3">Add Property details</a></li>
-                                @*<li class=""><a data-toggle="tab" href="#tab-4">  Surve No data</a></li>*@
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-3" class="tab-pane active">
@@ -831,16 +833,162 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-lg-3 control-label">S.No,Gat No,CTS No.</label>
-                                                    <div class="col-lg-3">
-                                                        @Html.DropDownList("SurveyNoTypeID", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoTypeList"], "Value", "Text"), "Select Type", new { @class = "form-control", @id = "SanctionNoTypeID", Title = "SanctionNoTypeID" })
+
+                                                <div id="SanctionData">
+                                                    <div class="form-group " id="SurveyNo">
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__SurvayNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__SurvayNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="Ow_SurveyNoValue" type="text" placeholder="Survey No." class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__SHissaNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__SHissaNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="Ow_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__SPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__SPlotNo").FieldID">
+                                                        </div>
+
+                                                        <div class="col-lg-2">
+                                                            <input id="Ow_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                        </div>
+
                                                     </div>
-                                                    <div class="col-lg-3">
-                                                        @Html.DropDownList("OwnerSurveyNo", new SelectList((System.Collections.IEnumerable)ViewData["SurveyNoProperyCardList"], "Value", "Text"), "Select Survey No", new { @class = "form-control", @id = "SanctionSurveyNo", Title = "OwnerSurveyNo" })
+                                                    <div class="form-group  " id="GatNo">
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__GatNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__GatNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="G_SurveyNoValue" type="text" placeholder="Gat No." class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__GatHissaNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__GatHissaNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="G_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__GatPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__GatPlotNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="G_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                        </div>
+
+
                                                     </div>
+                                                    <div class="form-group  " id="CTSNo">
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__CTSNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__CTSNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="CTS_SurveyNoValue" type="text" placeholder="CTS No." class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__CTSHissaNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__CTSHissaNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="CTS_HissaNo" type="text" placeholder="Hissa No" class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__CTSPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__CTSPlotNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="CTS_PlotNo" type="text" placeholder="Plot No." class="form-control">
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="form-group " id="FinalPlot">
+                                                        <div class="col-lg-1">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__FInalPlotNo").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__FInalPlotNo").FieldID">
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <input id="FP_SurveyNoValue" type="text" placeholder="Final Plot No." class="form-control">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__Nomenclature").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__Nomenclature").FieldID">
+                                                            Nomenclature
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input id="Nomenclature" type="text" placeholder="Nomenclature" class="form-control">
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__Area").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__Area").FieldID">
+                                                            Area
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input id="Area" type="text" placeholder="Area" class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            @Html.DropDownList("AreaUnitID", new SelectList((System.Collections.IEnumerable)ViewData["UnitList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "AreaUnitID", Title = "SurveyNoUnitId" })
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="form-group">
+                                                            <div class="col-lg-3">
+                                                                Is it to be handed over to any authority
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <input type="checkbox" class="chkbox" id="chktobeHandOver" checked="checked" value="" />
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                If yes it handed over
+                                                            </div>
+                                                            <div class="col-lg-2">
+                                                                <input type="checkbox" class="chkbox" checked="checked" id="chkisHandedOver" value="" />
+                                                            </div>
+
+                                                        </div>*@
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__OwnershipName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__OwnershipName").FieldID">
+
+                                                            if Handover Ownership name
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input id="OwnershipName" type="text" placeholder="Ownership name" class="form-control">
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__HandOverDate").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__HandOverDate").FieldID">
+                                                            Date of handover
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <input id="S_CTS_HissaNo" type="date" placeholder="Date of handover" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-3">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__Documentnumber").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__Documentnumber").FieldID">
+                                                            Document number
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input id="Documentnumber" type="text" placeholder="Document number" class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__RegistrarOffice").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "nProjectSactionDetails__RegistrarOffice").FieldID">
+                                                            Registrar Office
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <input id="RegistrarOffice" type="text" placeholder="Registrar Office" class="form-control">
+                                                        </div>
+
+                                                    </div>
+
+
                                                 </div>
-                                                <div id="SanctionData"></div>
 
                                             </div>
                                         </div>
@@ -972,3 +1120,46 @@
 </form>
 
 
+<script>
+    $(document).ready(function () {
+        $("#btnsave").on("click", function (e) {
+            var chkArray = [];
+            var chkArray1 = [];
+
+            $(".chkApplicable:checked").each(function () {
+                chkArray.push($(this).val());
+            });
+            var selected;
+            selected = chkArray.join(',');
+            var l = chkArray.length;
+
+            $(".chkApplicable:not(:checked)").each(function () {
+
+                chkArray1.push($(this).val());
+            });
+            var unselected;
+            unselected = chkArray1.join(',');
+            var m = chkArray1.length;
+              $.ajax({
+                url: "@Url.Action("SaveProformaSetting", "Master")",
+                data:
+                {
+                    SelectedField: selected,
+                    UnSelectedField: unselected
+
+                },
+
+                  type: 'POST',
+                  dataType: 'json',
+                  success: function (data) {
+                      alert("Save Succesfully");
+                  //  $('#CompareTemplateDiv').html(data);
+
+                },
+                error: function (error) {
+                    eval(error);
+                }
+            });
+        });
+    });
+</script>

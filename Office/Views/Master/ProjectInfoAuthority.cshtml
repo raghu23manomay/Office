@@ -10,6 +10,10 @@
     <div class="col-lg-4">
         @Html.DropDownList("DocumentID", new SelectList((System.Collections.IEnumerable)ViewData["MDocumentList"], "Value", "Text"), "Select Document", new { @class = "form-control", @id = "MDocumentID", Title = " " })
         <input type="hidden" value="@Model.selectedVal1" id="selectedVal1" />
+        <input type="hidden" value="@Model.selectedVal2" id="selectedVal2" />
+        <input type="hidden" value="@Model.selectedVal3" id="selectedVal3" />
+        <input type="hidden" value="@Model.selectedVal4" id="selectedVal4" />
+        <input type="hidden" value="@Model.selectedVal5" id="selectedVal5" />
         <input type="hidden" value="@Model.signatorId" id="signatorId" />
         <input type="hidden" value="@Model.SubRegistarOffice" id="hdnSubRegistarOffice" />
         <input type="hidden" value="@Model.either1" id="hdneither1" />

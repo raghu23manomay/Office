@@ -38,10 +38,10 @@
             <td>
                 @if (item2.isTotalArea == true)
                 {
-                    <input type="checkbox" class="chkbox" checked="checked" value="@item2.isTotalArea" />
+                    <input type="checkbox" class="chkbox"  inputArea="@item2.InputArea" RemainingArea="@item2.RemainingArea" id="chkbox_@item2.SurvayDetailId" checked="checked" value="@item2.isTotalArea" />
                 }
                 else
-                { <input type="checkbox" class="chkbox" value="@item2.isTotalArea"   />
+                { <input type="checkbox" class="chkbox"  inputArea="@item2.InputArea" RemainingArea="@item2.RemainingArea" value="@item2.isTotalArea"   />
                 }
             </td>
             <td>
@@ -76,7 +76,7 @@
 </table>
 <script>
     $(".docarea").change(function () {
-        debugger;
+        
         var RemainingArea = $(this).attr("RemainingArea");
         var inputArea = $(this).attr("inputArea");
         var a = $(this).val();
@@ -152,5 +152,22 @@
 
             saveAuthorityChart();
 
-        });
+    });
+    $('.chkbox').on('click', function () {
+        
+        var val = this.checked;
+        if (val == true) {
+            var RemainingArea = $(this).attr("RemainingArea");
+            var inputArea = $(this).attr("inputArea");
+            var ab = (parseFloat(RemainingArea) + parseFloat(inputArea))
+            this.parentElement.parentElement.cells[4].querySelector("input").value = ab;
+        }
+        else {
+ 
+            var inputArea = $(this).attr("inputArea");
+            //var ab = (parseFloat(RemainingArea) + parseFloat(inputArea))
+            this.parentElement.parentElement.cells[4].querySelector("input").value = inputArea;
+        }
+       
+    });
 </script>

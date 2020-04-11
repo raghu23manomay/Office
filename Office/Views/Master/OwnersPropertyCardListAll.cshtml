@@ -3,6 +3,10 @@
     Layout = null;
 }
 <style>
+   .details-control {
+        background: url(../resources/details_open.png) no-repeat center center;
+        cursor: pointer;
+    }
     .displays{
         display:block!important;
     }
@@ -40,32 +44,31 @@
                 <div class="divOwner">
                     @foreach (var item2 in Model.ProjectOwnerDetailSurveyWise)
                     {
-                        <div class="row show-grid">
-                            <div class="col-md-2">
+                        <div class="row show-grid sgrid1">
+                            <div class="col-md-2 s1">
                                 <i class="fa fa-plus ViewSurveyDetail" id="ViewSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px; "></i>
                                 <i class="fa fa-minus hideSurveyDetail" id="hideSurveyDetail-@item2.SurvayDetailId" SurvayDetailId="@item2.SurvayDetailId" aria-hidden="true" style="margin-left: 8px;display:none; "></i>
                                 @item2.SurvayNo  - @item2.SHissaNo
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 s2">
                                 @item2.GatNo - @item2.GatHissaNo
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 s3">
                                 @item2.CTSNo - @item2.CTSHissaNo
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-1 s4">
                                 @item2.FInalPlotNo &nbsp;
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 s5">
                                 @item2.OwnerName &nbsp;
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 s6">
                                 @item2.Area &nbsp;
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-1 s7">
                                 SqrMtr
                             </div>
-                        </div>
-
+                        </div> 
                         <div class="row show-grid1" id="row-@item2.SurvayDetailId" style="display:none;">
 
                             <div>
@@ -88,6 +91,48 @@
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $('.sgrid1').each(function (k, v) {
+           
+            var h = "10";
+            var tdheight1 = $(this).find(".s1").height();
+            var tdheight2 = $(this).find(".s2").height();
+            var tdheight3 = $(this).find(".s3").height();
+            var tdheight4 = $(this).find(".s4").height();
+            var tdheight5 = $(this).find(".s5").height();
+            var tdheight6 = $(this).find(".s6").height();
+            var tdheight7 = $(this).find(".s7").height();
+            if (tdheight1 > h) {
+                h = tdheight1;
+            }
+            if (tdheight2 > h) {
+                h = tdheight2;
+            }
+            if (tdheight3 > h) {
+                h = tdheight3;
+            }
+            if (tdheight4 > h) {
+                h = tdheight4;
+            }
+            if (tdheight5 > h) {
+                h = tdheight5;
+            }
+            if (tdheight6 > h) {
+                h = tdheight6;
+            }
+            if (tdheight7 > h) {
+                h = tdheight7;
+            }
+
+            $(".s1").height(h);
+            $(".s2").height(h);
+            $(".s3").height(h);
+            $(".s4").height(h);
+            $(".s5").height(h);
+            $(".s6").height(h);
+            $(".s7").height(h);
+        });
+    });
     $('.ViewSurveyDetail').on("click", function (e) {
          var SurvayDetailId = $(this).attr("SurvayDetailId");
         $.ajax({

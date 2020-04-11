@@ -67,52 +67,59 @@ foreach (var item2 in Model)
 }
 }
 <script>
-    $('.removeMultiOwner').on("click", function (e) {
-        var l = $(".RowOwnerArea2").length;
+    $(document).ready(function () {
+       
+        if ($("#OwnerAreaUnderProposalUnitId2").val() == "") {
+            $("#OwnerAreaUnderProposalUnitId2").val(1);
 
-        if (l > 1) {
-            $(this).closest(".RowOwnerArea2").remove();
         }
 
-    });
-    $('.addMultiOwner2').on("click", function (e) { 
-        debugger;
+        $('.removeMultiOwner').on("click", function (e) {
+            var l = $(".RowOwnerArea2").length;
 
-        var len = 0, rowLen = 0
-        len = $("#row1").length;
-        rowLen = $("#RowonerArea2").length;
-        var cloneCount = 1;
-        if (len == 0) {
-            if (rowLen > 0) {
-                $('#RowonerArea2')
-                    .clone(true)
-                    .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
-                    .insertAfter('[id=RowonerArea2]:last').find("input").val("");
+            if (l > 1) {
+                $(this).closest(".RowOwnerArea2").remove();
+            }
+
+        });
+        $('.addMultiOwner2').on("click", function (e) {
+
+            var len = 0, rowLen = 0
+            len = $("#row1").length;
+            rowLen = $("#RowonerArea2").length;
+            var cloneCount = 1;
+            if (len == 0) {
+                if (rowLen > 0) {
+                    $('#RowonerArea2')
+                        .clone(true)
+                        .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
+                        .insertAfter('[id=RowonerArea2]:last').find("input").val("");
+
+                }
 
             }
-            
-        }
-        else {
-             
+            else {
+
                 $('#row1')
                     .clone(true)
                     .attr('id', 'row' + cloneCount++, 'class', 'row RowOwnern disp')
                     .insertAfter('[id=row1]:last').find("input").val("");
-            
-        }
 
-        return false;
-    });
+            }
 
-    $('.dlist').each(function (k, v) {
+            return false;
+        });
 
-        var Unitids = 0;
-        Unitids = $(this).attr("v");
-        if (Unitids != null && Unitids > 0) {
-            $(this).val(Unitids);
-        }
-        else {
-            $(this).val(1);
-        }
+        $('.dlist').each(function (k, v) {
+
+            var Unitids = 0;
+            Unitids = $(this).attr("v");
+            if (Unitids != null && Unitids > 0) {
+                $(this).val(Unitids);
+            }
+            else {
+                $(this).val(1);
+            }
+        });
     });
 </script>

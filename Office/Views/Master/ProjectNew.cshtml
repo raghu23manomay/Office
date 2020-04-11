@@ -68,6 +68,7 @@
                         <div class="col-lg-4">
                             <input type="text" id="ProjectName" placeholder="ProjectName" value="@Model.ProjectName" class="form-control">
                             @Html.HiddenFor(a => a.ProjectID, new { @id = "ProjectID" })
+                            <p id="Namevalidation" style="color:red;display:none">Please enter name</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -75,11 +76,13 @@
                         <label class="col-lg-2 control-label">Short Name</label>
                         <div class="col-lg-4">
                             <input id="ProjectShortName" type="text" placeholder="Short Form" value="@Model.ProjectShortName" class="form-control">
+                            <p id="shortnamevalidation" style="color:red;display:none">Please enter short name</p>
                         </div>
                         <label class="col-lg-2 control-label">Developers </label>
                         <div class="col-lg-4">
                             @Html.DropDownList("Developers", new SelectList((System.Collections.IEnumerable)ViewData["CompanyList"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "DeveloperCompanyID", Title = "Developer", @Placeholder = "Select Developer" })
                             <input type="hidden" id="DevelopersId" value="@Model.Developers" />
+                            <p id="DevelopersIdvalidation" style="color:red;display:none">Please select developer</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -587,7 +590,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group RowAddSignature" id="RowAddSignature">
+                        <div class="form-group RowAddSignature" id="RowAddSignature1">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
                                 @Html.DropDownList("SignatoryPersonId1", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId1", Title = "PersonId", Placeholder = "Signature " })
@@ -598,7 +601,7 @@
                             </div>
                             <div class="col-lg-3"><button type="button" class="btn btn-primary pull-right AddSignature" id="btnAddSignature">Add Condition AND</button></div>
                         </div>
-                        <div class="form-group RowAddSignature" id="RowAddSignature1" style="display:none;">
+                        <div class="form-group RowAddSignature" id="RowAddSignature2" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
                                 @Html.DropDownList("OfficePersonId2", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId2", Title = "PersonId", Placeholder = "Signature " })
@@ -615,7 +618,7 @@
                                 <i class="fa fa-minus-circle removeMultiAuthority" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                             </div>
                         </div>
-                        <div class="form-group RowAddSignature" id="RowAddSignature2" style="display:none;">
+                        <div class="form-group RowAddSignature" id="RowAddSignature3" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
                                 @Html.DropDownList("OfficePersonId3", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId3", Title = "PersonId", Placeholder = "Signature " })
@@ -632,7 +635,7 @@
                                 <i class="fa fa-minus-circle removeMultiAuthority" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                             </div>
                         </div>
-                        <div class="form-group RowAddSignature" id="RowAddSignature3" style="display:none;">
+                        <div class="form-group RowAddSignature" id="RowAddSignature4" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
                                 @Html.DropDownList("OfficePersonId4", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId4", Title = "PersonId", Placeholder = "Signature " })
@@ -649,7 +652,7 @@
                                 <i class="fa fa-minus-circle removeMultiAuthority" id="removeMultiMobile" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
                             </div>
                         </div>
-                        <div class="form-group RowAddSignature" id="RowAddSignature3" style="display:none;">
+                        <div class="form-group RowAddSignature" id="RowAddSignature5" style="display:none;">
                             <label class="col-lg-2 control-label">Authority Signatory</label>
                             <div class="col-lg-4">
                                 @Html.DropDownList("OfficePersonId5", new SelectList((System.Collections.IEnumerable)ViewData["InternalTeamUnderProject"], "Value", "Text"), new { @class = "form-control js-select2", multiple = "multiple", @id = "SignatoryPersonId5", Title = "PersonId", Placeholder = "Signature " })
@@ -1426,7 +1429,7 @@
         });
         $('#OwnerSurveyNo').change(function () {
             //
-            debugger;
+             
             $.ajax({
                 type: 'GET',
                 dataType: "text",
@@ -1517,8 +1520,73 @@
                     for (i = 0; i < len; i++) {
                         selectedValues[i] = selected[i].trim().toString();
                     }
-
+                    if (len > 0) {
+                        $('#RowAddSignature1').show();
+                    }
                     $("#SignatoryPersonId1").val(selectedValues);//.trigger('change.select2');;//.trigger("change");
+
+                    //2
+                    debugger;
+                    var v2 = $("#selectedVal2").val();
+                    if (v2 == "" || v2=="0") {
+                        $('#RowAddSignature2').hide();
+                    }
+
+                    else {
+                        var selectedValues2 = new Array();
+                        var selected2 = v2.split(',');
+                        var len2 = selected2.length;
+                        for (i2 = 0; i2 < len2; i2++) {
+                            selectedValues2[i2] = selected2[i2].trim().toString();
+                        }
+                        $("#SignatoryPersonId2").val(selectedValues2);//.trigger('change.select2');;//.trigger("change");
+                        if (len2 > 0) {
+                            $('#RowAddSignature2').show();
+                        }
+                        else
+                        {$('#RowAddSignature2').hide();}
+                    }
+                    //3
+                    var v3 = $("#selectedVal3").val();
+                    if (v3 == "" || v3 == "0") {
+                        $('#RowAddSignature3').hide();
+                    }
+
+                    else {
+                        var selectedValues3 = new Array();
+                        var selected3 = v3.split(',');
+                        var len3 = selected3.length;
+                        for (i3 = 0; i3 < len3; i3++) {
+                            selectedValues3[i3] = selected3[i3].trim().toString();
+                        }
+                        $("#SignatoryPersonId3").val(selectedValues3);//.trigger('change.select2');;//.trigger("change");
+                        if (len3 > 0) {
+                            $('#RowAddSignature3').show();
+                        }
+                    }
+                    //4
+                    
+                    var v4 = $("#selectedVal4").val();
+                    if (v4 == "" || v4 == "0") {
+                        $('#RowAddSignature4').hide();
+                    }
+
+                    else {
+                        var selectedValues4 = new Array();
+                        var selected4 = v4.split(',');
+                        var len4 = selected4.length;
+                        for (i4 = 0; i4 < len4; i4++) {
+                            selectedValues4[i4] = selected4[i4].trim().toString();
+                        }
+                        $("#SignatoryPersonId4").val(selectedValues4);//.trigger('change.select2');;//.trigger("change");
+                        if (len4 > 0) {
+                            $('#RowAddSignature4').show();
+                        }
+                        else {
+                            $('#RowAddSignature4').hide();
+                        }
+                    }
+
                     // $('#SignatoryPersonId1').trigger('change')
                     $("#SubRegistrar").val($('#hdnSubRegistarOffice').val());
                     $("#either1").val($('#hdneither1').val());
@@ -1571,18 +1639,23 @@
                 success: function (data) {
                     if (val1 == 1) {
                         $('#SignatoryPersonId1').html(data);
+                        //$('#RowAddSignature1').show();
                     }
                     else if (val1 == 2) {
                         $('#SignatoryPersonId2').html(data);
+                        //$('#RowAddSignature2').show();
                     }
                     else if (val1 == 3) {
                         $('#SignatoryPersonId3').html(data);
+                       // $('#RowAddSignature3').show();
                     }
                     else if (val1 == 4) {
                         $('#SignatoryPersonId4').html(data);
+                        //$('#RowAddSignature4').show();
                     }
                     else if (val1 == 5) {
                         $('#SignatoryPersonId5').html(data);
+                        //$('#RowAddSignature5').show();
                     }
                 },
                 error: function (data) {
@@ -1863,7 +1936,7 @@
 
 
         function saveExternalTeam() {
-            debugger;
+             
             var ProjectID = $('#ProjectID').val();
             var ExternalTeamid = $("#ExternalTeamid").val();
             var ExtTeamParentCompanyID = $("#ExtTeamParentCompanyID").val();
@@ -2156,7 +2229,7 @@
             }
         });
         function saveOfficeSide() {
-            debugger;
+             
             var ProjectID= $('#ProjectID').val();
             var Teamid = $('#OfficeTeamid').val();
             var OfficePersonId_text = $("#OfficePersonId option:selected").text();
@@ -2412,8 +2485,6 @@
             else {
                 $("#CTSNo").addClass("disabledDiv");
             }
-
-
         });
         $('#IsultiOwner').on('click', function () {
             var val = document.getElementById("IsultiOwner").checked;
@@ -2499,7 +2570,30 @@
 
         });
         function saveproject() {
-            
+             
+            var ret = 1;
+            $("#Namevalidation").hide();
+            $("#shortnamevalidation").hide();
+            $("#DevelopersIdvalidation").hide();
+             
+            if ($("#ProjectName").val() == "") {
+                $("#Namevalidation").show();
+                ret = 0;
+            }
+            if ($("#ProjectShortName").val() == "") {
+                $("#shortnamevalidation").show();
+                ret = 0;
+            }
+
+            var v = $("#DeveloperCompanyID").val();
+             
+            if (v == null) {
+                $("#DevelopersIdvalidation").show();
+                ret = 0;
+            }
+            if (ret == 0) {
+                return false;
+            }
             saveInternalTeam();
             saveExternalTeam();
             saveOfficeSide();
@@ -2595,7 +2689,7 @@
             //}
 
             var selectedDeveloper = $("#DeveloperCompanyID").val().toString();
-
+             
             var ProjectID = $('#ProjectID').val();
             var DeveloperTypeID = $("#CompanyOwnershipTypeID").val();
             $.ajax({
