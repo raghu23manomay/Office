@@ -39,6 +39,7 @@ namespace office.Models
     {
         [Key]
         public String PlaceHolderName { get; set; }
+        public String PlaceHolderDisplayName { get; set; }
         public String TableName { get; set; }
     }
     public class DepartmentType
@@ -97,8 +98,9 @@ namespace office.Models
         public int DTTemplateID { get; set; }
         public int ProjectID { get; set; }
         public int DeveloperId { get; set; }
-        public int ConsultantId { get; set; }
-        public int CoordinatorID { get; set; }
+        public int InternalTeamId { get; set; }
+        public int ExternalTeamId { get; set; }
+        public int OfficeTeamId { get; set; }
         public String DataTemplateName { get; set; }
     }
 

@@ -15,8 +15,7 @@
 <div class="wrapper wrapper-content1">
 
     <div class="row" id="TemplateData">
-
-
+         
         <div class="col-md-2">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
@@ -49,8 +48,7 @@
                         <div class="" id="ProjectGrid">
                             <div class="table-responsive">
                             </div>
-                        </div>
-
+                        </div> 
                         <div class="row">
                             <div class="" id="ProjectInnerInfo">
                                 <div class="table-responsive">
@@ -58,19 +56,34 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="pull-right">
-                                <button class="btn btn-primary" id="btnGenerateDataTemplate" type="button">Save Data Templare</button>
-                                <button class="btn btn-primary" id="btnGenerateDocument" type="button" style="display:none;">Generate Document</button>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
-            </div>
-                <div class="col-md-8" id="CompareTemplateDiv">
+            <div class="row">
+                <div class="pull-right">
+                    <button class="btn btn-primary" id="btnGenerateDtTemplate" type="button">Save Data Templare</button>
+                    <button class="btn btn-primary" id="btnGenerateDocument" type="button" style="display:none;">Generate Document</button>
                 </div>
+
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="timeline-row post-even ">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+
+                        <div class="" id="CompanyTeam">
+                            <div class="table-responsive">
+                            </div>
+                        </div>
+                         
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8" id="CompareTemplateDiv">
+        </div>
 
             </div>
     </div>
@@ -85,7 +98,7 @@
 
     $(document).ready(function () {
         $('.close').on("click", function (e) {
-            $('#mdlGenerate').hide();
+            $('#mdlGte').enerahide();
         });
         var urlParams = new URLSearchParams(location.search);
         if (urlParams.has('ProjectID')) {

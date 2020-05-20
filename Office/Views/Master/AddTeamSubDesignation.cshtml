@@ -6,7 +6,7 @@
 @{
     ViewBag.Title = "";
 } 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmCandidate" }))
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmSubDesignation" }))
 {
     <div class="row">
         <div class="col-lg-12"> 
@@ -91,6 +91,9 @@
                         $('#TeamSubDesignationName2').val('');
                         $('#TeamSubDesignationID2').val(0);
                         $('#TeamDesignationID2').val(0);
+                        alert("Save Successfully")
+                      refreshSubdesignation();
+
                             $.ajax({
                             url: "@Url.Action("LoadTeamSubDesignationGrid", "Master")",
                             contentType: "application/json",
@@ -112,4 +115,29 @@
             }
         });
     });
+     function refreshSubdesignation() {
+
+            $.ajax({
+                url: "@Url.Action("refreshSubpartdesignation", "Master")",
+                contentType: "application/json",
+                
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    $('#TeamDesignationID3').html(data);
+
+                },
+                error: function (data) {
+                    console.log(Error);
+
+                },
+                complete: function () {
+
+                }
+
+            });
+            return true;
+    }  
+    
 </script>

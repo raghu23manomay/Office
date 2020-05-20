@@ -16,7 +16,7 @@ namespace Calibration
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Master", action = "DesignationList", id = UrlParameter.Optional }
+                defaults: new { controller = "Master", action = "Projectlist", id = UrlParameter.Optional }
             );
         }
     }

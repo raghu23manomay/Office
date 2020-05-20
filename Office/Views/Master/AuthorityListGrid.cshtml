@@ -75,6 +75,12 @@
         </tbody>
 </table>
 <script>
+    $(document).ready(function () {
+        $("#Setting").removeClass("collapse");
+        $("#Master").addClass("collapse");
+    });
+
+    
     $(".docarea").change(function () {
         
         var RemainingArea = $(this).attr("RemainingArea");

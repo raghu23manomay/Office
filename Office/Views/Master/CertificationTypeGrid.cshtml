@@ -1,4 +1,4 @@
-﻿@model IEnumerable<office.Models.SaveProject>
+﻿@model IEnumerable<office.Models.CertificationTypeList>
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
@@ -9,43 +9,31 @@
             <thead>
                 <tr>
 
+                    <th>#</th>
                     <th>Name </th>
-                    <th>Short Name</th>
-                    <th>Enquiry Date   </th> 
-                    <th>Project Type   </th>  
-                    <th>location </th>
-                    <th>Status  </th>
+                    <th>Status </th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@item.ProjectName </td>
-                    <td> @item.ProjectShortName </td>
-                    <td style="width: 85px;"> @item.EnquiryDate.ToString("yyyy-MM-dd")</td>
-                    <td> @item.ProjectType   </td>
-                    @*<td> @item.Goan </td>*@
-                    @*<td> @item.Taluka </td>*@
-                    <td> @item.District </td>
-                    @*@*<td> @item.Duration </td>*@
-                    @*<td style="width: 85px;"> @item.StartDate.ToString("yyyy-MM-dd") </td>
-                           <td style="width: 85px;"> @item.EndDate.ToString("yyyy-MM-dd")   </td>*@
-                    <td> @item.ProjectStatus  </td>
-                    <td>
-                        <a class="l" href="../Template/DocTemplateList?ProjectID=@item.ProjectID" name="@item.ProjectID" id="linkProject">
-                            <i class="fa fa-mail-forward" style="color: darkgrey;" aria-hidden="true"></i>
-                        </a>
-                        <a class="edit" href="ProjectNew?id=@item.ProjectID" id="EditMember">
-                            <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
-                        </a>
-                        @*<a class="Delete" name="@item.ProjectID" id="DeleteProject">
-                <i class="fa fa-trash" style="color: darkgrey;display:none" aria-hidden="true"></i>
-            </a>*@
+                    <tr>
+                        <td>@item.CertificationID</td>
+                        <td>@item.CertificationName</td>
+                        <td>@item.IsActive</td>
+                        <td>
 
-                    </td>
-                </tr>
+                            <span class="edit" v="@item.CertificationID">
+                                <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
+                            </span>
+                            @*<a class="Delete" v="@item.CertificationTypeID" id="DeleteMember">
+                                    <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
+                                </a>*@
+
+
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -75,10 +63,11 @@
             $('.loader').show();
             var temp = $(this).attr('href');
 
+
             var pageid = temp.replace('/?page=', '');
 
             $.ajax({
-                url: "@Url.Action("LoadProjectList", "Master")",
+                url: "@Url.Action("LoadCertificationTypeGrid", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     page: pageid,
@@ -98,9 +87,33 @@
             });
 
         });
+        $('.edit').on('click', function () {
+            
+            var CategoryID = $(this).attr("v");
+          $.ajax({
+                url: "@Url.Action("AddCertificationType", "Master")",
+                contentType: "application/json",
+                dataType: "text",
+                type: "GET",
+                async: true,
+                  data:
+                  {
+                      id: CategoryID
 
-         
+                  },
+                success: function (data) {
+                    $('#AddNew').html(data);
+
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+        });
+
+
+
     });
 
 </script>
-

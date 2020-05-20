@@ -35,7 +35,7 @@
                 </div>
             </div>
              <div class="form-group">
-                <label class="col-lg-2 control-label"> <input type="checkbox" class="chkApplicable mycheck"   checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessCategoryID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessCategoryID").FieldID">Business Category</label>
+                <label class="col-lg-2 control-label"> <input type="checkbox" class="chkApplicable mycheck"   checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessCategory").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessCategory").FieldID">Business Category</label>
                 <div class="col-lg-4">
                     <select class="form-control " >
                         <option value="1">Business Category</option>
@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="col-lg-2 control-label"><input type="checkbox" class="chkApplicable mycheck"   checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessSubCategoryID").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessSubCategoryID").FieldID">Sub Category </label>
+                    <label class="col-lg-2 control-label"><input type="checkbox" class="chkApplicable mycheck"   checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessSubCategory").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__BusinessSubCategory").FieldID">Sub Category </label>
                     <div class="col-lg-4">
                         <select class="form-control ">
                             <option value="1">Business Sub Category</option>
@@ -98,7 +98,7 @@
             </div>
         </div>
                 </div>
-                <div class="ibox float-e-margins">
+                @*<div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>
                     Office Address
@@ -360,16 +360,7 @@
                             <input type="text" id="MobileNo" placeholder="Contact Number" class="form-control MobileNo">
 
                         </div>
-                        @*<div class="col-lg-3" style="display: inline-flex;"><input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").FieldID">
-                            <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
-                                <option value="1">Work Department</option>
-                                <option value="0">HR</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2" style="display: inline-flex;"><input type="checkbox" class="chkApplicable mycheck" checked="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").isApplicable" value="@Model.ProformaSetting.FirstOrDefault(h => h.FieldName == "Company__CompanyName").FieldID">
-                            <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control MobileNoExtension">
-                        </div>*@
-
+                        
                     </div>
                     <div class="form-group rowEmailSupportTeam" id="rowEmailSupportTeam">
                         <input type="hidden" value="0" id="CompanyPhoneIDValue" class="CompanyPhoneID" />
@@ -379,10 +370,7 @@
                             <input type="text" id="MobileNo" placeholder="Email" class="form-control MobileNo">
                         </div>
                         <div class="col-lg-3" style="display: inline-flex;">
-                            @*<select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
-                                <option value="1">Work Department</option>
-                                <option value="0">HR</option>
-                            </select>*@
+                             
                         </div>
                         <div class="col-lg-2" style="display: inline-flex;">
 
@@ -391,7 +379,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
                 <div class="hr-line-dashed"></div>
                 <div class="row form-group">

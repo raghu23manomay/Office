@@ -1,4 +1,4 @@
-﻿@model IEnumerable<office.Models.CertificationList>
+﻿@model IEnumerable<office.Models.DocumentTypeList>
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
@@ -19,15 +19,15 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.BusinessCategoryID</td>
-                        <td>@item.BusinessCategoryName</td>
+                        <td>@item.DocumentTypeID</td>
+                        <td>@item.DocumentTypeName</td>
                         <td>@item.IsActive</td>
                         <td>
 
-                            <span class="edit" v="@item.BusinessCategoryID">
+                            <span class="edit" v="@item.DocumentTypeID">
                                 <i class="fa fa-pencil-square-o" style="color: darkgrey;" aria-hidden="true">&nbsp;</i>
                             </span>
-                            @*<a class="Delete" v="@item.BusinessCategoryID" id="DeleteMember">
+                            @*<a class="Delete" v="@item.DocumentTypeID" id="DeleteMember">
                                     <i class="fa fa-trash" style="color: darkgrey;" aria-hidden="true"></i>
                                 </a>*@
 
@@ -66,7 +66,7 @@
             var pageid = temp.replace('/?page=', '');
 
             $.ajax({
-                url: "@Url.Action("LoadBussinessCategoryGrid", "Master")",
+                url: "@Url.Action("LoadDocumentTypeGrid", "Master")",
                 contentType: "application/json",
                 data: JSON.stringify({
                     page: pageid,
@@ -90,7 +90,7 @@
             debugger;
             var CategoryID = $(this).attr("v");
           $.ajax({
-                url: "@Url.Action("AddBussinessCategory", "Master")",
+                url: "@Url.Action("AddDocumentType", "Master")",
                 contentType: "application/json",
                 dataType: "text",
                 type: "GET",

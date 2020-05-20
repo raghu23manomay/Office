@@ -457,12 +457,37 @@ namespace office.Models
         public IEnumerable<AuthoritySignatoryDetail> AuthoritySignatoryDetail { get; set; }
         public nProjectDetail nProjectDetail { get; set; } 
         public IEnumerable<nSaveSurvayDetails> nSaveSurvayDetails { get; set; }
+
     }
+    public class DataTemplateProjectDetails
+    {
+        public int ProjectID { get; set; }
+        public IEnumerable<SaveProjectInternalTeam> SaveProjectInternalTeam { get; set; }
+        public IEnumerable<SaveProjectExternalTeam> SaveProjectExternalTeam { get; set; }
+        public IEnumerable<SaveProjectOfficeSideTeam> SaveProjectOfficeSideTeam { get; set; }
+        public IEnumerable<AuthoritySignatory> AuthoritySignatory { get; set; }
+        public IEnumerable<AuthoritySignatoryDetail> AuthoritySignatoryDetail { get; set; }
+        public nProjectDetail nProjectDetail { get; set; }
+        public IEnumerable<nSaveSurvayDetails> nSaveSurvayDetails { get; set; }
+        public IEnumerable<ProjectOwnerDetailList> ProjectOwnerDetailList { get; set; }
+
+    }
+
     public class CompanyDetailsLeftSide
     {
         public int CompanyID { get; set; }
         public IEnumerable<CompanyAddress> CompanyAddress { get; set; }
         public IEnumerable<SaveCompanyMobile> SaveCompanyMobile { get; set; }
+        public IEnumerable<SaveCertification> SaveCertification { get; set; }
+        public IEnumerable<SaveInternalTeam> SaveInternalTeam { get; set; }
+        public IEnumerable<SaveExternalTeam> SaveExternalTeam { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile2 { get; set; }
+        public IEnumerable<SaveCompanyMobile> SaveCompanyMobile3 { get; set; }
+    }
+    public class TemplateCompanyTeam
+    {
+        public int CompanyID { get; set; }
+        public IEnumerable<CompanyAddress> CompanyAddress { get; set; }
         public IEnumerable<SaveCertification> SaveCertification { get; set; }
         public IEnumerable<SaveInternalTeam> SaveInternalTeam { get; set; }
         public IEnumerable<SaveExternalTeam> SaveExternalTeam { get; set; }
@@ -575,6 +600,7 @@ namespace office.Models
         public string DesignationidText { get; set; }
         public string SubDesignationText { get; set; }
         public string SubPartDesignationText { get; set; }
+        public int? isselected { get; set; } 
     }
     public class SaveProjectExternalTeam
     {
@@ -590,6 +616,7 @@ namespace office.Models
         public string DesignationidText { get; set; }
         public string SubDesignationText { get; set; }
         public string SubPartDesignationText { get; set; }
+        public int? isselected { get; set; }
     }
     public class SaveProjectOfficeSideTeam
     {
@@ -603,6 +630,7 @@ namespace office.Models
         public string DesignationidText { get; set; }
         public string SubDesignationText { get; set; }
         public string SubPartDesignationText { get; set; }
+        public int? isselected { get; set; }
     }
     public class SaveCompanyList
     {
@@ -968,6 +996,27 @@ namespace office.Models
         public String CTSHissaNo { get; set; }
         public String FInalPlotNo { get; set; }
     }
+    public class ProjectOwnerForDoc
+    {
+        [Key]
+        public int OwnerID { get; set; }
+        public String OwnerName { get; set; }
+        public int PropertCardTypeId { get; set; }
+        public int SurvayDetailId { get; set; }
+        public int isUndevidedShare { get; set; }
+        public decimal Area { get; set; }
+        
+        
+        public int AreaUnitID { get; set; }
+        public String UnitName { get; set; }
+        public String SurvayNo { get; set; }
+        public String SHissaNo { get; set; }
+        public String GatNo { get; set; }
+        public String GatHissaNo { get; set; }
+        public String CTSNo { get; set; }
+        public String CTSHissaNo { get; set; }
+        public String FInalPlotNo { get; set; }
+    }
     public class ProjectAuthorityOwnerList
     {
         [Key]
@@ -1083,6 +1132,154 @@ namespace office.Models
         [Key]
         public int DeveloperId { get; set; }
         public String Name { get; set; }
+
+    }
+
+    public class RelationList
+    {
+        [Key]
+        public int? RelationID { get; set; }
+        public string RelationName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+
+    }
+
+    public class Relation
+    {
+        [Key]
+        public int? RelationID { get; set; }
+        public string RelationName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+
+    }
+
+    public class FormationTypeList
+    {
+        [Key]
+        public int? OwnershipTypeID { get; set; }
+        public string OwnershipType { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+
+    }
+
+    public class FormationType
+    {
+        [Key]
+        public int? OwnershipTypeID { get; set; }
+        public string OwnershipType { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+
+    }
+    
+
+    public class CertificationType
+    {
+        [Key]
+        public int? CertificationID { get; set; }
+        public string CertificationName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+
+    }
+    public class CertificationTypeList
+    {
+        [Key]
+        public int? CertificationID { get; set; }
+        public string CertificationName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+    }
+    public class UnitsList
+    {
+        [Key]
+        public int? UnitID { get; set; }
+        public string Unit { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+    }
+
+    public class Units
+    {
+        [Key]
+        public int? UnitID { get; set; }
+        public string Unit { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+       
+    }
+
+    public class WorkdepartmentList
+    {
+        [Key]
+        public int? WorkdepartmentID { get; set; }
+        public string WorkdepartmentName { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+    }
+
+    public class Workdepartment
+    {
+        [Key]
+        public int? WorkdepartmentID { get; set; }
+        public string WorkdepartmentName { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+
+    }
+
+    public class ProjectStatusList
+    {
+        [Key]
+        public int? ProjectStatusId { get; set; }
+        public string ProjectStatus { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+    }
+
+    public class ProjectStatuses
+    {
+        [Key]
+        public int? ProjectStatusId { get; set; }
+        public string ProjectStatus { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
+  
+    }
+
+    public class ProjectTypeList
+    {
+        [Key]
+        public int? ProjectTypeId { get; set; }
+        public string ProjectType { get; set; }
+        public string IsActive { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int? TotalRows { get; set; }
+    }
+
+    public class ProjectTypes
+    {
+        [Key]
+        public int? ProjectTypeId { get; set; }
+        public string ProjectType { get; set; }
+        public bool IsActive { get; set; }
+        public int CreatedBy { get; set; }
 
     }
 }

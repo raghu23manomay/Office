@@ -91,7 +91,7 @@
                         <label class="col-lg-2 control-label">Request Date</label>
                         <div class="col-lg-4" style="display: inline-flex;">
 
-                            @Html.TextBoxFor(m => m.CreatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "Request date", type = "date", id = "RequestDate" })
+                            @Html.TextBoxFor(m => m.CreatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", placeholder = "Request date", type = "date", id = "RequestDate" , maxLength = "8" })
 
                         </div>
                     </div>
@@ -104,6 +104,7 @@
                             {
                                 if (item2.Type != 3)
                                 {
+                                  
 
                                     mobilecount = mobilecount + 1;
                                     <div class="form-group rowMobile" id="rowMobile">
@@ -116,10 +117,11 @@
 
                                         </div>
                                         <div class="col-lg-3" style="display: inline-flex;">
-                                            <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                            @Html.DropDownList("Type", new SelectList((System.Collections.IEnumerable)ViewData["WorkDepartmentList"], "Value", "Text"), "Select department", new { @class = "form-control MobileWorkDepartment", @id = "MobileWorkDepartment", Title = "Work Department" })
+                                            @*<select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
                                                 <option value="0">Work Department</option>
                                                 <option value="1">HR</option>
-                                            </select>
+                                            </select>*@
                                         </div>
                                         <div class="col-lg-2" style="display: inline-flex;">
                                             <input type="text" id="MobileNoExtension" placeholder="Extension" value="@item2.Extension" class="form-control MobileNoExtension">
@@ -145,10 +147,11 @@
 
                                         </div>
                                         <div class="col-lg-3" style="display: inline-flex;">
-                                            <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                            @Html.DropDownList("Type", new SelectList((System.Collections.IEnumerable)ViewData["WorkDepartmentList"], "Value", "Text"), "Select department", new { @class = "form-control MobileWorkDepartment", @id = "MobileWorkDepartment", Title = "Work Department" })
+                                            @*<select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
                                                 <option value="1">Work Department</option>
                                                 <option value="0">HR</option>
-                                            </select>
+                                            </select>*@
                                         </div>
                                         <div class="col-lg-2" style="display: inline-flex;">
 
@@ -175,10 +178,11 @@
 
                                 </div>
                                 <div class="col-lg-3" style="display: inline-flex;">
-                                    <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                    @Html.DropDownList("Type", new SelectList((System.Collections.IEnumerable)ViewData["WorkDepartmentList"], "Value", "Text"), "Select department", new { @class = "form-control MobileWorkDepartment", @id = "MobileWorkDepartment", Title = "Work Department" })
+                                    @*<select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
                                         <option value="0">Work Department</option>
                                         <option value="1">HR</option>
-                                    </select>
+                                    </select>*@
                                 </div>
                                 <div class="col-lg-2" style="display: inline-flex;">
                                     <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control MobileNoExtension">
@@ -202,10 +206,11 @@
 
                                 </div>
                                 <div class="col-lg-3" style="display: inline-flex;">
-                                    <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                    @Html.DropDownList("Type", new SelectList((System.Collections.IEnumerable)ViewData["WorkDepartmentList"], "Value", "Text"), "Select department", new { @class = "form-control MobileWorkDepartment", @id = "MobileWorkDepartment", Title = "Work Department" })
+                                    @*<select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
                                         <option value="1">Work Department</option>
                                         <option value="0">HR</option>
-                                    </select>
+                                    </select>*@
                                 </div>
                                 <div class="col-lg-2" style="display: inline-flex;">
 
@@ -371,10 +376,11 @@
 
                                 </div>
                                 <div class="col-lg-3" style="display: inline-flex;">
-                                    <select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
+                                    @Html.DropDownList("WorkDepartmentID", new SelectList((System.Collections.IEnumerable)ViewData["WorkDepartmentList"], "Value", "Text"), "Select department", new { @class = "form-control MobileWorkDepartment", @id = "MobileWorkDepartment", Title = "Work Department" })
+                                    @*<select class="form-control MobileWorkDepartment" id="MobileWorkDepartment">
                                         <option value="1">Work Department</option>
                                         <option value="0">HR</option>
-                                    </select>
+                                    </select>*@
                                 </div>
                                 <div class="col-lg-2" style="display: inline-flex;">
                                     <input type="text" id="MobileNoExtension" placeholder="Extension" class="form-control MobileNoExtension">
@@ -470,7 +476,7 @@
                 <div class="ibox-content ibox-content1">
 
                     <div id="CompanyDetailsOuterDiv">
-                        <div class="row">
+                        <div class="">
 
                             <div id="nocontacts" class="CompanyList">
 
@@ -854,7 +860,7 @@
                 }
             }
             else {
-
+                
                 var idArrMobileTeam = [];
                 $('.rowMobileTeam').each(function (k, v) {
                     var MobileNo = $(this).closest("div").find("#MobileNo").val();
@@ -1014,7 +1020,7 @@
 
         $('#btnsavePerson').on('click', function () {
 
-            debugger;
+            
             $("#fNamevalidation").hide();
             $("#lNamevalidation").hide();
             $("#ShNamevalidation").hide();
@@ -1046,7 +1052,7 @@
             var idArrParameter = [];
             var idArrAdditionField = [];
             var PersonID = $('#PersonID').val();
-            if(PersonID == 0) {
+            //if(PersonID == 0) {
                 var DbAddressID = $('#DbAddressID').val();
                 var idArrMobile = [];
                 $('.rowMobile').each(function (k, v) {
@@ -1196,7 +1202,7 @@
 
                     SaveSocialLink.push(item);
                 }
-            }
+           // }
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -1227,7 +1233,7 @@
                     SaveSocialLink: SaveSocialLink
                 },
                 success: function (da) {
-                    debugger;
+                    
                     if (da == "Success") {
                         var red = $("#RediectPage").val();
                         if (red == "1") {

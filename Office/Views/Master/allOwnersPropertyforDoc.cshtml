@@ -1,0 +1,109 @@
+﻿
+@model IEnumerable<office.Models.ProjectOwnerForDoc>
+@{
+    Layout = null;
+}
+<div class="row">
+    <div class="divOwner">
+        <table class="table table-bordered" id="tblCertification">
+            <thead>
+                <tr>
+                    <th>
+                        Survey No
+                    </th>
+                    <th>
+                        OwnerName
+                    </th>
+                    <th>
+                        Area
+                    </th>
+                    <th>
+                        Unit
+                    </th>
+                    <th>
+                        Doc number
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Registrar
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item2 in Model.Where(m => m.isUndevidedShare == 0))
+                {
+                <tr>
+                    <td>
+                        @item2.SurvayNo
+                    </td>
+
+                    <td>
+                        @item2.OwnerName
+                    </td>
+                    <td>
+                        @item2.Area
+                    </td>
+                    <td>
+                        @item2.UnitName
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Doc No" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Date" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Registrar" class="form-control" />
+                    </td>
+                </tr>
+                }
+
+                @foreach (var item2 in Model.Where(m => m.isUndevidedShare == 1))
+                {
+                <tr>
+                    <td>
+                        @item2.SurvayNo
+                    </td>
+                    
+                    <td>
+                        @{
+                            string[] times = item2.OwnerName.Split(',');
+                            int len = times.Length;
+                            for (int i = 0; i < len; i++)
+                            {
+                                <span>@times[i]</span>
+                                <br />
+                            }
+
+                        }
+                    </td>
+                    <td>
+                        @item2.Area
+                    </td>
+                    <td>
+                        @item2.UnitName
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Doc No" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Date" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="text" placeholder="Registrar" class="form-control" />
+                    </td>
+                     
+                </tr>
+                }
+
+            </tbody>
+        </table>
+        <div>
+            <button type="button" class="btn btn-primary" >Save</button>
+        </div>
+    </div>
+</div>
+
+ 

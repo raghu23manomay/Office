@@ -46,10 +46,20 @@
                             IN+
                         </div>
                     </li>
-                    <li class="active">
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Master</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            @*<li class="active"><a href="../Master/DesignationList">Designation</a></li>*@
+                    <li class="">
+
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Setting </span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level" id="Setting">
+                            <li><a href="../Master/BussinessCategoryList">Bussiness Category</a></li>
+                            <li><a href="../Master/TeamdesignationList">  Designation</a></li>
+                            <li><a href="../Master/UnitList">Unit</a></li>
+                            <li><a href="../Master/RelationList">Relation</a></li>
+                            <li><a href="../Master/FormationTypeList">Company Formation </a></li>
+
+                            <li><a href="../Master/CertificationTypeList">Certification</a></li>
+                            <li><a href="../Master/WorkDepartmentList">Work Department </a></li>
+                            <li><a href="../Master/ProjectTypeList">Project Type</a></li>
+                            <li><a href="../Master/ProjectStatusList">Project Status</a></li>
                             <li><a href="../Master/DepartmentList">Department</a></li>
                             <li><a href="../Master/ModuleList">Module</a></li>
                             <li><a href="../Master/AuthorityList">Authority</a></li>
@@ -58,8 +68,15 @@
                             <li><a href="../Master/EmployeeList">Employee</a></li>
                             <li><a href="../Master/SubscriptionList">Subscription</a></li>
                             <li><a href="../Master/CityList">City</a></li>
-                            <li><a href="../Master/BussinessCategoryList">Bussiness Category</a></li>
-                            <li><a href="../Master/TeamdesignationList">  Designation</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li class="active">
+
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Master</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level" id="Master">
+
 
                             <li><a href="../Master/Projectlist">ProjectList</a></li>
 
@@ -69,11 +86,10 @@
                             <li><a href="../Master/PersonList">   Person </a></li>
                             <li><a href="../Master/test"> Company Proforma Setting</a></li>
                             <li><a href="../Master/ProjectSetting"> Project Proforma Setting</a></li>
-                            <li><a href="../Master/CertificationList"> Certification</a></li>
+                            @*<li><a href="../Master/CertificationList"> Certification</a></li>*@
                             <li><a href="../Rulebook/Rulebook"> Rulebook</a></li>
                         </ul>
-                    </li> 
-                   
+                    </li>
                 </ul>
 
             </div>
@@ -94,7 +110,7 @@
                         <li>
                             <span class="m-r-sm text-muted welcome-message">Welcome to Admin.</span>
                         </li>
-                        
+
                         <li>
                             <a href="login.html">
                                 <i class="fa fa-sign-out"></i> Log out
@@ -112,19 +128,19 @@
 
 
             <div class="wrapper wrapper-content">
-             @RenderBody()
+                @RenderBody()
 
             </div>
 
 
             @*@*<div class="footer">
-                <div class="pull-right">
-                     
-                </div>
-                <div>
-                    <strong>Copyright</strong>  &copy; 2019-2020
-                </div>
-            </div>*@
+                    <div class="pull-right">
+
+                    </div>
+                    <div>
+                        <strong>Copyright</strong>  &copy; 2019-2020
+                    </div>
+                </div>*@
 
         </div>
         <div id="right-sidebar">
@@ -212,7 +228,7 @@
                             <div class="sidebar-message">
                                 <a href="#">
                                     <div class="pull-left text-center">
-                                @*        <img alt="image" class="img-circle message-avatar" src="img/a4.jpg">*@
+                                        @*        <img alt="image" class="img-circle message-avatar" src="img/a4.jpg">*@
                                     </div>
 
                                     <div class="media-body">
@@ -518,8 +534,18 @@
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="~/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-                 
-    
+    <script>
+        $(document).ready(function () {
+            //console.log(window.location.pathname.split("/").pop());
+             
+            var url = window.location.pathname.split("/").pop();
+            if (url == "BussinessCategoryList" || url == "BussinessCategoryList" || url == "BussinessCategoryList" || url == "BussinessCategoryList" || url == "BussinessCategoryList" || url == "BussinessCategoryList" || url == "BussinessCategoryList") {
+                $("#Setting").removeClass("collapse");
+            }
+
+        });
+    </script>
+
     <!-- Peity -->
     <script src="~/js/plugins/peity/jquery.peity.min.js"></script>
     <script src="~/js/demo/peity-demo.js"></script>
@@ -541,8 +567,8 @@
     <!-- Sparkline demo data  -->
     <script src="~/js/demo/sparkline-demo.js"></script>
 
-   
 
-    
+
+
 </body>
 </html>

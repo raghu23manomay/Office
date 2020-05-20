@@ -54,6 +54,9 @@
 
 <script>
     $(document).ready(function () {
+
+        $("#Setting").removeClass("collapse");
+        $("#Master").addClass("collapse");
         $('#mgrid .pagination li a').on('click', function (e) {
             e.preventDefault();
             e.stopImmediatePropagation();

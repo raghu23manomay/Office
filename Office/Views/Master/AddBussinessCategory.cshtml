@@ -64,7 +64,7 @@
         });
         $('#btnsave').on('click', function () {
             $("#Namevalidation").hide();
-            
+
             if ($("#BusinessCategoryName").val() == "") {
                 $("#Namevalidation").show();
                 return false;
@@ -77,29 +77,32 @@
                     url: '/Master/SaveBussinessCategory',
                     data:
                     {
-                        BussinessCategoryID: $("#BusinessCategoryID").val() ,
+                        BussinessCategoryID: $("#BusinessCategoryID").val(),
                         BussinessCategoryName: $("#BusinessCategoryName").val(),
                         IsActive: $('input[name=IsActive]').prop('checked')
                     },
                     success: function (da) {
                         $('#BusinessCategoryID').val(0);
                         $('#BusinessCategoryName').val('');
-                                 $.ajax({
-                                    url: "@Url.Action("LoadBussinessCategoryGrid", "Master")",
-                                    contentType: "application/json",
+                        alert("Save Succesfully");
+                        $.ajax({
+                            url: "@Url.Action("LoadBussinessCategoryGrid", "Master")",
+                            contentType: "application/json",
 
-                                    dataType: "text",
-                                    type: "Get",
-                                    async: true,
-                                    success: function (data) {
-                                        $('#mgrid').html(data);
+                            dataType: "text",
+                            type: "Get",
+                            async: true,
+                            success: function (data) {
+                                $('#mgrid').html(data);
 
-                                    },
-                                    error: function (data) {
-                                    },
-                                    complete: function () {
-                                    }
-                                });  
+                            },
+                            error: function (data) {
+                            },
+                            complete: function () {
+                            }
+                        });
+                        refreshSubCategory();
+
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                     }
@@ -107,4 +110,31 @@
             }
         });
     });
+        function refreshSubCategory() {
+
+            $.ajax({
+                url: "@Url.Action("refreshSubCategory", "Master")",
+                contentType: "application/json",
+                
+                dataType: "text",
+                type: "POST",
+                async: false,
+                success: function (data) {
+                    $('#BusinessCategoryID2').html(data);
+
+                },
+                error: function (data) {
+                    console.log(Error);
+
+                },
+                complete: function () {
+
+                }
+
+            });
+            return true;
+        }
+   
+
+   
 </script> 

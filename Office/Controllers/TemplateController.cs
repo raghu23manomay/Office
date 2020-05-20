@@ -252,32 +252,36 @@ namespace office.Controllers
 
                     data.DeveloperDatalist = result2;
 
-                    IEnumerable<CoordinatorDetailsData> result3 = _db.CoordinatorDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
-                 @ProjectId,@Tno",
-                    new SqlParameter("@ProjectId", ProjectID),
-                     new SqlParameter("@Tno", 3)
-                      ).ToList<CoordinatorDetailsData>();
+                //IEnumerable<SaveProjectInternalTeam> result4 = _db.SaveProjectInternalTeam.SqlQuery(@"exec uspGetProjectInternalTeam
+                //@ProjectID",
+                //new SqlParameter("@ProjectID", ProjectID)
+                //).ToList<SaveProjectInternalTeam>();
+                //data.SaveProjectInternalTeam = result4;
 
+                //IEnumerable<SaveProjectExternalTeam> result5 = _db.SaveProjectExternalTeam.SqlQuery(@"exec uspGetProjectExternalTeam
+                //@ProjectID",
+                //  new SqlParameter("@ProjectID", ProjectID)
+                //  ).ToList<SaveProjectExternalTeam>();
+                //    data.SaveProjectExternalTeam = result5;
 
-                    data.CoordinatorDetailsData = result3;
+                //IEnumerable<SaveProjectOfficeSideTeam> result6 = _db.SaveProjectOfficeSideTeam.SqlQuery(@"exec uspGetProjectOfficeSideTeam
+                //@ProjectID",
+                //new SqlParameter("@ProjectID", ProjectID)
+                //).ToList<SaveProjectOfficeSideTeam>();
+                //    data.SaveProjectOfficeSideTeam = result6;
 
+                //IEnumerable<AuthoritySignatory> result7 = _db.AuthoritySignatory.SqlQuery(@"exec GetProjectSignatory
+                //@ProjectID",
+                //new SqlParameter("@ProjectID", ProjectID)
+                //).ToList<AuthoritySignatory>();
 
-                    IEnumerable<AssistantDetailsData> result4 = _db.AssistantDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
-                 @ProjectId,@Tno",
-                        new SqlParameter("@ProjectId", ProjectID),
-                         new SqlParameter("@Tno", 4)
-                          ).ToList<AssistantDetailsData>();
-                    data.AssistantDetailsData = result4;
-                    IEnumerable<DeveloperSideContactPerson> result5 = _db.DeveloperSideContactPersons.SqlQuery(@"exec GetProjectDetailsForTemplate
-                 @ProjectId,@Tno,@DTTemplateID",
-                     new SqlParameter("@ProjectId", ProjectID),
-                     new SqlParameter("@Tno", 5),
-                     new SqlParameter("@DTTemplateID", DTTemplateID)
-                        ).ToList<DeveloperSideContactPerson>();
-                    data.DeveloperSideContactPersons = result5;
+                //    IEnumerable<AuthoritySignatoryDetail> result8 = _db.AuthoritySignatoryDetail.SqlQuery(@"exec GetProjectSignatoryDetail
+                //@ProjectID",
+                //new SqlParameter("@ProjectID", ProjectID)
+                //).ToList<AuthoritySignatoryDetail>();
 
-
-                    //  --here
+           
+                  
                     IEnumerable<CustomPlaceholders> resultCustomPlaceholder = _db.CustomPlaceholders.SqlQuery(@"exec usp_GetCustomPlaceholder @TemplateID,@DtTemplateID",
                     new SqlParameter("@TemplateID", TemplateID),
                      new SqlParameter("@DTTemplateID", DTTemplateID)).ToList<CustomPlaceholders>();
@@ -287,7 +291,7 @@ namespace office.Controllers
                 {
                     OfficeDbContext _db = new OfficeDbContext();
                     var result = _db.ProjectsData.SqlQuery(@"exec GetProjectDetailsForTemplate
-               @ProjectId,@Tno,@DTTemplateID",
+                       @ProjectId,@Tno,@DTTemplateID",
                        new SqlParameter("@ProjectId", ProjectID),
                        new SqlParameter("@Tno", 1),
                        new SqlParameter("@DTTemplateID", DTTemplateID)
@@ -302,43 +306,17 @@ namespace office.Controllers
                        new SqlParameter("@DTTemplateID", DTTemplateID)
                        ).ToList<DeveloperData>();
 
-                    data.DeveloperDatalist = result2;
+                    data.DeveloperDatalist = result2; 
 
-                    IEnumerable<CoordinatorDetailsData> result3 = _db.CoordinatorDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
-                 @ProjectId,@Tno,@DTTemplateID",
-                       new SqlParameter("@ProjectId", ProjectID),
-                       new SqlParameter("@Tno", 3),
-                       new SqlParameter("@DTTemplateID", DTTemplateID)
-                      ).ToList<CoordinatorDetailsData>();
+                    
+            IEnumerable<SaveProjectInternalTeam> result3 = _db.SaveProjectInternalTeam.SqlQuery(@"exec uspGetProjectInternalTeam
+                @ProjectID,@DTTemplateID",
+           new SqlParameter("@ProjectID", ProjectID),
+           new SqlParameter("@DTTemplateID", DTTemplateID)
+           ).ToList<SaveProjectInternalTeam>();
 
+                    data.SaveProjectInternalTeam = result3;
 
-                    data.CoordinatorDetailsData = result3;
-
-
-                    IEnumerable<AssistantDetailsData> result4 = _db.AssistantDetailsData.SqlQuery(@"exec GetProjectDetailsForTemplate
-                 @ProjectId,@Tno,@DTTemplateID",
-                       new SqlParameter("@ProjectId", ProjectID),
-                       new SqlParameter("@Tno", 4),
-                       new SqlParameter("@DTTemplateID", DTTemplateID)
-                          ).ToList<AssistantDetailsData>();
-                    data.AssistantDetailsData = result4;
-
-                     
-                    IEnumerable<DeveloperSideContactPerson> result5 = _db.DeveloperSideContactPersons.SqlQuery(@"exec GetProjectDetailsForTemplate
-                 @ProjectId,@Tno,@DTTemplateID",
-                     new SqlParameter("@ProjectId", ProjectID),
-                     new SqlParameter("@Tno", 5),
-                     new SqlParameter("@DTTemplateID", DTTemplateID)
-                        ).ToList<DeveloperSideContactPerson>();
-                    data.DeveloperSideContactPersons = result5;
-
-                    IEnumerable<OfficeSideContactPerson> result6 = _db.OfficeSideContactPersons.SqlQuery(@"exec GetProjectDetailsForTemplate
-                 @ProjectId,@Tno,@DTTemplateID",
-                    new SqlParameter("@ProjectId", ProjectID),
-                    new SqlParameter("@Tno", 6),
-                    new SqlParameter("@DTTemplateID", DTTemplateID)
-                       ).ToList<OfficeSideContactPerson>();
-                    data.OfficeSideContactPersons = result6;
                     IEnumerable<CustomPlaceholders> resultCustomPlaceholder = _db.CustomPlaceholders.SqlQuery(@"exec usp_GetCustomPlaceholder @TemplateID,@DtTemplateID",
                        new SqlParameter("@TemplateID", TemplateID),
                         new SqlParameter("@DTTemplateID", DTTemplateID)).ToList<CustomPlaceholders>();
@@ -485,16 +463,20 @@ namespace office.Controllers
                 tvpParamCustomField.TypeName = "UT_CustomField";
 
                 var result = _db.Database.ExecuteSqlCommand(@"exec USP_GenerateDataTemplate @TemplateID,
-                @DTTemplateID,@DataTemplateName,@ProjectID,@DeveloperID,@CoordinatorID,@ConsultantId,@contractorID,@AssistanceID,@CustomField",
+                @DTTemplateID,@DataTemplateName,@ProjectID,@DeveloperID,@InternalTeamId,@ExternalTeamId,@OfficeTeamId,@CInternalTeamID,@CExternalTeamID, @CAddressID,@CustomField",
                 new SqlParameter("@TemplateID", sp.TemplateID),
-                new SqlParameter("@DTTemplateID", sp.DTTemplateID),
+                new SqlParameter("@DTTemplateID", sp.DTTemplateID==null?0:sp.DTTemplateID),
                 new SqlParameter("@DataTemplateName", sp.DataTemplateName),
                 new SqlParameter("@ProjectID", sp.ProjectID),
                 new SqlParameter("@DeveloperID", sp.DeveloperID),
-                new SqlParameter("@CoordinatorID", sp.CoordinatorID), 
-                new SqlParameter("@ConsultantId", sp.ConsultantId),
-                new SqlParameter("@contractorID", sp.contractorID),
-                new SqlParameter("@AssistanceID", sp.AssistanceID)
+                new SqlParameter("@InternalTeamId", sp.InternalTeamId), 
+                new SqlParameter("@ExternalTeamId", sp.ExternalTeamId),
+                new SqlParameter("@OfficeTeamId", sp.OfficeTeamId),
+
+                 new SqlParameter("@CInternalTeamID", sp.CInternalTeamID),
+                new SqlParameter("@CExternalTeamID", sp.CExternalTeamID),
+                new SqlParameter("@CAddressID", sp.CAddressID)
+
                 , tvpParamCustomField
                 
 

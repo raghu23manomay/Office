@@ -27,12 +27,19 @@
         display: block;
     }
 
-    .iboxexternal, .iboxOffice, .iboxInternal, .iboxProjDetails, .iboxOfficeSide, .iboxAuthority, .iboxProposaldataentryView, .iboxCumulativedataView, .iboxSurveyNo {
+    .iboxexternal, .iboxOffice, .iboxInternal, .iboxProjDetails, .iboxOfficeSide, .iboxAuthority, .iboxProposaldataentryView, .iboxProposaldataentry , .iboxCumulativedataView, .iboxSurveyNo {
         display: none;
     }
 
-    .ibox {
-        margin-bottom: 15px !important;
+
+    .iboxOwnership {
+        display:none;
+    }
+    .iboxOwnership1 {
+        display:block!important;
+    }
+    .iboxOwnership2 {
+        display: block !important;
     }
 
     .disabledDiv {
@@ -99,7 +106,7 @@
                     </div>
                 </div>
             </div>
-            <div id="DivEdit"  >
+            <div id="DivEdit">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
@@ -387,7 +394,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
-                                    <div class="ibox-content">
+                                    <div class="ibox-content iboxOwnership1">
                                         <div class="full-height-scroll">
                                             <div class="bindGrid">
                                                 <div class="form-group">
@@ -509,7 +516,7 @@
                                     </div>
                                 </div>
                                 <div id="tab-2" class="tab-pane">
-                                    <div class="ibox-content">
+                                    <div class="ibox-content iboxOwnership2">
                                         <div id="AddNew2">
 
                                             <div class="form-group">
@@ -531,7 +538,7 @@
                                         </div>
                                         <div class="full-height-scroll">
                                             <div class="full-height-scroll">
-                                                <div class="ibox-content">
+                                                <div class="ibox-content iboxProposaldataentry">
                                                     <div class="bindGrid">
 
 
@@ -691,6 +698,28 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>
+                             cumulative data  
+                        </h5>
+                        <div class="ibox-tools">
+
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content iboxProposaldataentryView">
+
+                        <div id="OwnersDataforDoc">
+
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>
@@ -925,7 +954,7 @@
             $("#DivEdit").attr('disabled', 'disabled');
             $("#DivEdit *").prop('disabled', true);
         }
-
+        getAllOwnersDoc();
         getAllOwners();
         getownerauthority();
         var v = $("#DevelopersId").val();
@@ -1046,7 +1075,7 @@
 
 
         $('#SaveModal').on("click", function (e) {
-
+            debugger;
             var OwnerAreaUnderProposal1 = $("#OwnerAreaUnderProposal").val();
             var OwnerNames1 = $("#OwnerName1").val();
 
@@ -1330,6 +1359,21 @@
                     PrimarySurvey: isPrimarySurvey
                 },
                 success: function (data) {
+                    alert("Saved Successfully");
+                    $('#Ow_SurveyNoValue').val('');
+                    $('#ownerid').val('');
+                    $('#Ow_HissaNo').val('');
+                    $('#Ow_PlotNo').val('');
+                    $('#Ow_OldNo').val('');
+                    $('#G_SurveyNoValue').val('');
+                    $('#G_HissaNo').val('');
+                    $('#G_PlotNo').val('');
+                    $('#G_OldNo').val('');
+                    $('#CTS_SurveyNoValue').val('');
+                    $('#CTS_HissaNo').val('');
+                    $('#CTS_PlotNo').val('');
+                    $('#CTS_OldNo').val('');
+                    $('#FP_SurveyNoValue').val('');
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                 }
@@ -1440,10 +1484,11 @@
                     SurvayDetailId: $('#OwnerSurveyNo').val()
                 },
                 success: function (data) {
-
+                    debugger;
                     $('#OwnersData').html(data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    debugger;
                 }
             });
         });
@@ -1526,7 +1571,7 @@
                     $("#SignatoryPersonId1").val(selectedValues);//.trigger('change.select2');;//.trigger("change");
 
                     //2
-                    debugger;
+                    
                     var v2 = $("#selectedVal2").val();
                     if (v2 == "" || v2=="0") {
                         $('#RowAddSignature2').hide();
@@ -1746,7 +1791,7 @@
                     return false;
                 }
                 if (DesignationId1 == "") {
-                    return false;
+                    DesignationId1 = "0";
                 }
 
                 $.ajax({
@@ -1883,6 +1928,10 @@
                 var SubDesignationID2_Text = $("#SubDesignationID2 option:selected").text();
                 var SubPartDesignationID2 = $("#SubPartDesignationID2 option:selected").val();
                 var SubPartDesignationID2_text = $("#SubPartDesignationID2 option:selected").text();
+                
+                if (ExternalPersonId == "") {
+                    return false;
+                }
                 if (SubDesignationID2_Text.trim() == "Select Sub Designation") {
                     SubDesignationID2_Text = "";
                 }
@@ -1949,6 +1998,9 @@
             var SubDesignationID2_Text = $("#SubDesignationID2 option:selected").text();
             var SubPartDesignationID2 = $("#SubPartDesignationID2 option:selected").val();
             var SubPartDesignationID2_text = $("#SubPartDesignationID2 option:selected").text();
+            if (ExternalPersonId == "") {
+                return false;
+            }
             if (SubDesignationID2_Text.trim() == "Select Sub Designation") {
                 SubDesignationID2_Text = "";
             }
@@ -2165,6 +2217,10 @@
                     if (SubPartDesignationID3_text.trim() == "Select Sub Designation") {
                         SubPartDesignationID3_text = "";
                     }
+                     
+                    if (OfficePersonId == "") {
+                        return false;
+                    }
 
                     $.ajax({
                         type: 'POST',
@@ -2228,6 +2284,7 @@
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }
         });
+
         function saveOfficeSide() {
              
             var ProjectID= $('#ProjectID').val();
@@ -2246,6 +2303,10 @@
             }
             if (SubPartDesignationID3_text.trim() == "Select Sub Designation") {
                 SubPartDesignationID3_text = "";
+            }
+            debugger;
+            if (OfficePersonId == "") {
+                return false;
             }
 
             $.ajax({
@@ -2282,6 +2343,9 @@
             var SurvayUnitId = $("#SurveyNoUnitId option:selected").val();
             var SurvayDetailId = $("#hdnSurvayDetailId").val();
             var ProjectID = $('#ProjectID').val();
+            if (SurveyArea == "") {
+                return false;
+            }
             $.ajax({
                 url: "@Url.Action("SaveProjectSurvay", "Master")",
                 contentType: "application/json",
@@ -2372,6 +2436,9 @@
         $('#ExtTeamParentCompanyID').change(function () {
             ExtTeamParentCompanyIDChange();  
         });
+         
+
+       
         function internalTeamChange() {
             
              $.ajax({
@@ -2955,17 +3022,78 @@
         var originalOptionBadge = $(originalOption).data('badge');
         return $('<span><i class="fa ' + $(originalOption).data('icon') + '"></i> ' + icon.text + '<span class="badge">' + originalOptionBadge + '</span></span>');
     }
+    $('#SignatoryPersonId1').on("select2:unselecting", function (e) {
+
+        var el = e.params.args.data.id;
+
+        $('#SignatoryPersonId2').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId3').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId4').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId5').children('option[value="' + el + '"]').attr('disabled', false);
+
+    }).trigger('change');
+
+        $('#SignatoryPersonId2').on("select2:unselecting", function (e) {
+
+            var el = e.params.args.data.id;
+
+            $('#SignatoryPersonId1').children('option[value="' + el + '"]').attr('disabled', false);
+            $('#SignatoryPersonId3').children('option[value="' + el + '"]').attr('disabled', false);
+            $('#SignatoryPersonId4').children('option[value="' + el + '"]').attr('disabled', false);
+            $('#SignatoryPersonId5').children('option[value="' + el + '"]').attr('disabled', false);
+
+        }).trigger('change');
+
+    $('#SignatoryPersonId3').on("select2:unselecting", function (e) {
+
+        var el = e.params.args.data.id;
+
+        $('#SignatoryPersonId1').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId2').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId4').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId5').children('option[value="' + el + '"]').attr('disabled', false);
+
+    }).trigger('change');
+    $('#SignatoryPersonId4').on("select2:unselecting", function (e) {
+
+        var el = e.params.args.data.id;
+
+        $('#SignatoryPersonId1').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId2').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId3').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId5').children('option[value="' + el + '"]').attr('disabled', false);
+
+    }).trigger('change');
+    $('#SignatoryPersonId5').on("select2:unselecting", function (e) {
+
+        var el = e.params.args.data.id;
+
+        $('#SignatoryPersonId1').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId2').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId3').children('option[value="' + el + '"]').attr('disabled', false);
+        $('#SignatoryPersonId4').children('option[value="' + el + '"]').attr('disabled', false);
+
+    }).trigger('change');
     $("#SignatoryPersonId1").change(function () {
-         
+       
         var count = $('#SignatoryPersonId1 option:selected').length;
+        
         $('#either1 option').remove()
         for (i = 1; i < count; i++) {
             var c = i ;
             z = $('<option value="' + c+ '">Either' + c + '</option>');
             $("#either1").append(z);
         }
-       
-        
+         
+        var selectedValues2 = new Array();
+        var selectedValues2 = $('#SignatoryPersonId1').val();
+        var len1 = selectedValues2.length;
+        for (i = 0; i < len1; i++) {
+            $('#SignatoryPersonId2').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId3').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId4').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId5').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+        } 
     });
 
     $("#SignatoryPersonId2").change(function () {
@@ -2977,7 +3105,15 @@
             z = $('<option value="' + c + '">Either' + c + '</option>');
             $("#either2").append(z);
         }
-
+        var selectedValues2 = new Array();
+        var selectedValues2 = $('#SignatoryPersonId2').val();
+        var len1 = selectedValues2.length;
+        for (i = 0; i < len1; i++) {
+            $('#SignatoryPersonId1').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId3').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId4').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId5').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+        }
 
     });
 
@@ -2991,7 +3127,15 @@
             $("#either3").append(z);
         }
 
-
+        var selectedValues2 = new Array();
+        var selectedValues2 = $('#SignatoryPersonId3').val();
+        var len1 = selectedValues2.length;
+        for (i = 0; i < len1; i++) {
+            $('#SignatoryPersonId1').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId2').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId4').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId5').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+        }
     });
 
     $("#SignatoryPersonId4").change(function () {
@@ -3004,7 +3148,15 @@
             $("#either4").append(z);
         }
 
-
+        var selectedValues2 = new Array();
+        var selectedValues2 = $('#SignatoryPersonId4').val();
+        var len1 = selectedValues2.length;
+        for (i = 0; i < len1; i++) {
+            $('#SignatoryPersonId1').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId2').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId3').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId5').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+        }
     });
 
     $("#SignatoryPersonId5").change(function () {
@@ -3016,7 +3168,34 @@
             z = $('<option value="' + c + '">Either' + c + '</option>');
             $("#either5").append(z);
         }
-
+        var selectedValues2 = new Array();
+        var selectedValues2 = $('#SignatoryPersonId5').val();
+        var len1 = selectedValues2.length;
+        for (i = 0; i < len1; i++) {
+            $('#SignatoryPersonId1').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId2').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId3').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+            $('#SignatoryPersonId4').children('option[value="' + selectedValues2[i] + '"]').attr('disabled', true);
+        }
 
     });
+    function getAllOwnersDoc() {
+
+        $.ajax({
+            type: 'Post',
+            dataType: "text",
+            url: '/Master/GetallOwnersPropertyforDoc',
+            data:
+            {
+                ProjectID: $('#ProjectID').val()
+            },
+            success: function (data) {
+                debugger;
+                $('#OwnersDataforDoc').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
 </script>

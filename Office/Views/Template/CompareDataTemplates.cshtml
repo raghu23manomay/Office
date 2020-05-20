@@ -7,7 +7,7 @@
 <div class="wrapper animated fadeInRight">
     <div class="row">
 
-        @if (Model.Count() == 1)
+        @if (Model.Count() == 1 && Model != null)
         {
             foreach (var item in Model)
             {

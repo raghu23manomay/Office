@@ -1,35 +1,35 @@
 ﻿
-@model office.Models.TeamDesignation
+@model office.Models.FormationType
 @using PagedList;
 @using PagedList.Mvc;
-@using GridMvc.Html 
+@using GridMvc.Html
 @{
     ViewBag.Title = "";
-} 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmDesignation" }))
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "", @id = "frmCandidate" }))
 {
     <div class="row">
-        <div class="col-lg-12"> 
+        <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Designation</h5>
+                    <h5> Company Formation </h5>
                     <div class="ibox-tools">
                     </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-12"> 
+                        <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label>Designation </label>
+                                    <label> Name</label>
                                 </div>
                                 <div class="col-md-3">
-                                    @Html.HiddenFor(a => a.TeamDesignationID, new { @id = "TeamDesignationID" })
-                                    @Html.TextBoxFor(a => a.TeamDesignationName, new { @class = "form-control", title = "TeamDesignationName", @id = "TeamDesignationName" })
-                                    <p id="Namevalidation1" style="color:red;display:none">Please enter designation</p>
+                                    @Html.HiddenFor(a => a.OwnershipTypeID, new { @id = "OwnershipTypeID" })
+                                    @Html.TextBoxFor(a => a.OwnershipType, new { @class = "form-control", title = "OwnershipType", @id = "OwnershipTypeName" })
+                                    <p id="Namevalidation" style="color:red;display:none">Please Enter Name</p>
                                 </div>
                                 <div class="col-md-3" style="margin-left: 0!important">
-                                    @Html.CheckBoxFor(a => a.IsActive, new { @class = "   ", title = "Active", @id = "IsActive" })
+                                    @Html.CheckBoxFor(a => a.IsActive, new { @class = "", value = "true", title = "Active", @id = "IsActive" })
                                     <label for="checkbox5">
                                         Active
                                     </label>
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="row" style="padding-top: 10px;">
                         <div class="col-md-2">
                         </div>
@@ -57,17 +57,16 @@
 <script>
 
     $(document).ready(function () {
-        $("#Namevalidation1").hide();
+        $("#Namevalidation").hide();
         $('#btnClear').on('click', function () {
-            $('#TeamDesignationID').val(0);
-            $('#TeamDesignationName').val('');
+            $('#OwnershipTypeID').val(0);
+            $('#OwnershipTypeName').val('');
         });
         $('#btnsave').on('click', function () {
-             
-            $("#Namevalidation1").hide();
-            
-            if ($("#TeamDesignationName").val() == "") {
-                $("#Namevalidation1").show();
+            $("#Namevalidation").hide();
+
+            if ($("#OwnershipTypeName").val() == "") {
+                $("#Namevalidation").show();
                 return false;
             }
             else {
@@ -75,20 +74,18 @@
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
-                    url: '/Master/SaveTeamDesignation',
+                    url: '/Master/SaveFormationType',
                     data:
                     {
-                        TeamDesignationID: $("#TeamDesignationID").val() ,
-                        TeamDesignationName: $("#TeamDesignationName").val(),
+                        OwnershipTypeID: $("#OwnershipTypeID").val() ,
+                        OwnershipType: $("#OwnershipTypeName").val(),
                         IsActive: $('input[name=IsActive]').prop('checked')
                     },
                     success: function (da) {
-                        $('#TeamDesignationID').val(0);
-                        $('#TeamDesignationName').val('');
-                        alert("Save sucesfully");
-
+                        $('#OwnershipTypeID').val(0);
+                        $('#OwnershipTypeName').val('');
                                  $.ajax({
-                                    url: "@Url.Action("LoadTeamDesignationGrid", "Master")",
+                                    url: "@Url.Action("LoadFormationTypeGrid", "Master")",
                                     contentType: "application/json",
 
                                     dataType: "text",
@@ -96,14 +93,13 @@
                                     async: true,
                                     success: function (data) {
                                         $('#mgrid').html(data);
-
+                                        alert("Save succesfully");
                                     },
                                     error: function (data) {
                                     },
                                     complete: function () {
                                     }
-                        });  
-                        refreshSubdesignation();
+                                });
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                     }
@@ -111,28 +107,4 @@
             }
         });
     });
-     function refreshSubdesignation() {
-
-            $.ajax({
-                url: "@Url.Action("refreshSubdesignation", "Master")",
-                contentType: "application/json",
-                
-                dataType: "text",
-                type: "POST",
-                async: false,
-                success: function (data) {
-                    $('#TeamDesignationID2').html(data);
-
-                },
-                error: function (data) {
-                    console.log(Error);
-
-                },
-                complete: function () {
-
-                }
-
-            });
-            return true;
-        }
-</script> 
+</script>

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<office.Models.PerformaPlaceholders>
 @{
-     
+
 
     ViewBag.Title = "Placeholder";
     Layout = null;
@@ -9,8 +9,9 @@
     .ibox.fullscreen .collapse-link {
         display: none;
     }
+
     .ibox {
-        margin-bottom: 5px!important;
+        margin-bottom: 5px !important;
     }
 </style>
 <div class="ibox float-e-margins border-bottom">
@@ -20,35 +21,154 @@
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            
+
         </div>
     </div>
-   
-        <div class="ibox-content" style="display: none;">
-            <div class="row">
-                <div class="col-lg-6"> 
-                    <div class="table table-hover margin bottom">
-                        
-                        @foreach (var item in Model)
-                        {
-                            if (item.TableName == "Project")
-                            {
-                                <div>
-                                    <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
-                                        @item.PlaceHolderName
-                                    </button>
-                                </div>
-                            }
-                        }
 
-                    </div>
+    <div class="ibox-content" style="display: none;">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="table table-hover margin bottom">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "Project")
+                        {
+                            <div>
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                    @if (@item.PlaceHolderName.Contains("__"))
+                                    {
+                                        @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
+                                    }
+                                    else
+                                    { @item.PlaceHolderName}
+                                </button>
+                            </div>
+                        }
+                    }
+
                 </div>
-                <div class="col-lg-6">
-                    <div id="world-map" style="height: 300px;"></div>
-                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
             </div>
         </div>
     </div>
+
+</div>
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Project Internal Team </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="ibox-content" style="display: none;">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="table table-hover margin bottom">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "projectIT")
+                        {
+                            <div>
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                    @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
+                                </button>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 180px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Project External Team </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="ibox-content" style="display: none;">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="table table-hover margin bottom">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "projectET")
+                        {
+                            <div>
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                    @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
+                                </button>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 180px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Project Office Team </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="ibox-content" style="display: none;">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="table table-hover margin bottom">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "projectOT")
+                        {
+                            <div>
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                    @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
+                                </button>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 165px;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div class="ibox float-e-margins border-bottom">
     <div class="ibox-title">
         <h5>Company</h5>
@@ -56,14 +176,14 @@
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            
+
         </div>
     </div>
     <div class="ibox-content" style="display: none;">
 
         <div class="row">
-            <div class="col-lg-6"> 
-                <div class="table table-hover margin bottom">  
+            <div class="col-lg-6">
+                <div class="table table-hover margin bottom">
                     @foreach (var item in Model)
                     {
                         if (item.TableName == "Company")
@@ -71,8 +191,84 @@
                             <div>
 
                                 <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                    @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
+                                </button>
+                            </div>
 
-                                    @item.PlaceHolderName
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Company Address</h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="table table-hover margin bottom">
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "CompanyAddress")
+                        {
+                            <div>
+
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                    @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
+                                </button>
+                            </div>
+
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="world-map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ibox float-e-margins border-bottom">
+    <div class="ibox-title">
+        <h5>Company Internal Team  </h5>
+        <div class="ibox-tools">
+            <a class="collapse-link">
+                <i class="fa fa-chevron-down"></i>
+            </a>
+
+        </div>
+    </div>
+    <div class="ibox-content" style="display: none;">
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="table table-hover margin bottom">
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.TableName == "CompanyIT")
+                        {
+                            <div>
+
+                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                                    @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
 
                                 </button>
                             </div>
@@ -95,7 +291,7 @@
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            
+
         </div>
     </div>
     <div class="ibox-content" style="display: none;">
@@ -104,7 +300,7 @@
             <div class="col-lg-6">
 
                 <div class="table table-hover margin bottom">
-                     
+
                     @foreach (var item in Model)
                     {
                         if (item.TableName == "CompanyST")
@@ -112,92 +308,7 @@
                             <div>
 
                                 <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
-
-                                    @item.PlaceHolderName
-
-                                </button>
-                            </div>
-
-                        }
-                    }
-
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div id="world-map" style="height: 300px;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="ibox float-e-margins border-bottom">
-    <div class="ibox-title">
-        <h5>Company Internal Team  </h5>
-        <div class="ibox-tools">
-            <a class="collapse-link">
-                <i class="fa fa-chevron-down"></i>
-            </a>
-            
-        </div>
-    </div>
-    <div class="ibox-content" style="display: none;">
-
-        <div class="row">
-            <div class="col-lg-6">
-
-                <div class="table table-hover margin bottom"> 
-
-                    @foreach (var item in Model)
-                    {
-                        if (item.TableName == "CompanyIT")
-                        {
-                            <div>
-
-                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
-
-                                    @item.PlaceHolderName
-
-                                </button>
-                            </div>
-
-                        }
-                    }
-
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div id="world-map" style="height: 300px;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="ibox float-e-margins border-bottom">
-    <div class="ibox-title">
-        <h5>Assistance Details</h5>
-        <div class="ibox-tools">
-            <a class="collapse-link">
-                <i class="fa fa-chevron-down"></i>
-            </a>
-            
-        </div>
-    </div>
-    <div class="ibox-content" style="display: none;">
-
-        <div class="row">
-            <div class="col-lg-6">
-
-                <div class="table table-hover margin bottom"> 
-
-                    @foreach (var item in Model)
-                    {
-                        if (item.TableName == "AssistanceInfo")
-                        {
-                            <div>
-
-                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
-
-                                    @item.PlaceHolderName
-
+                                    @item.PlaceHolderName.Substring(item.PlaceHolderName.IndexOf("__")).ToString().Replace("__", "")
                                 </button>
                             </div>
 
@@ -214,46 +325,10 @@
 </div>
 
 
-<div class="ibox float-e-margins border-bottom">
-    <div class="ibox-title">
-        <h5>CoOrdinator Details</h5>
-        <div class="ibox-tools">
-            <a class="collapse-link">
-                <i class="fa fa-chevron-down"></i>
-            </a>
-            
-        </div>
-    </div>
-    <div class="ibox-content" style="display: none;">
+ 
 
-        <div class="row">
-            <div class="col-lg-6"> 
-                <div class="table table-hover margin bottom">
-                     
-                    @foreach (var item in Model)
-                    {
-                        if (item.TableName == "CoordinatorInfo")
-                        {
-                            <div>
 
-                                <button class="aLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
-
-                                    @item.PlaceHolderName
-
-                                </button>
-                            </div>
-
-                        }
-                    }
-
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div id="world-map" style="height: 300px;"></div>
-            </div>
-        </div>
-    </div>
-</div>
+ 
 
 
 <div class="ibox float-e-margins border-bottom">
@@ -263,7 +338,7 @@
             <a class="collapse-link">
                 <i class="fa fa-chevron-down"></i>
             </a>
-            
+
         </div>
     </div>
     <div class="ibox-content" id="ibox-Customfield" style="display: none;">
@@ -281,24 +356,24 @@
                 <input type="button" id="btnAddCustomfield" value="Add" class="btn btn-primary" />
             </div>
 
-           
+
             @foreach (var item in Model)
             {
                 if (item.TableName == "CustomField")
                 {
-                   
-                        <div>
 
-                            <button class="bLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
-                                @item.PlaceHolderName
-                            </button>
-                        </div>
-                        <div>
- 
-                        </div>
-                    
+                    <div>
+
+                        <button class="bLink  btn btn-link" id="@item.PlaceHolderName" style="margin-bottom: 0px!important;">
+                            @item.PlaceHolderName
+                        </button>
+                    </div>
+                    <div>
+
+                    </div>
+
                 }
-            } 
+            }
 
         </div>
     </div>
@@ -318,14 +393,14 @@
             insertTextAtCursor(texts);
         });
         $('#btnAddCustomfield').on('click', function () {
-             
+
             var Customfield;
             CustomFieldName = $("#txtCustomfield").val();
             if (CustomFieldName == "") {
                 $("#Customfieldvalidation").show();
                 return false;
             }
-            else { 
+            else {
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
@@ -349,11 +424,11 @@
                     }
                 });
             }
-        }); 
+        });
     });
     function insertTextAtCursor(text) {
         var sel, range;
-       
+
         if (window.getSelection) {
             if (window.getSelection().baseNode.parentNode.className == "aLink" || window.getSelection().baseNode.parentNode.className == "pull-right") { return; }
             if (window.getSelection().baseNode.parentNode.className == "file-manager" || window.getSelection().baseNode.parentNode.className == "mailbox-content") { return; }
@@ -366,7 +441,7 @@
                 range.deleteContents();
                 range.insertNode(document.createTextNode(text));
             }
-           
+
         } else if (document.selection && document.selection.createRange) {
             document.selection.createRange().text = text;
         }

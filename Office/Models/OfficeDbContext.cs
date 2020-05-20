@@ -90,6 +90,8 @@ namespace office.Models
         public DbSet<SaveCompanyMobile> SaveCompanyMobile { get; set; }
         public DbSet<ProjectOwnerDetails> ProjectOwnerDetails { get; set; }
         public DbSet<ProjectOwnerDetailList> ProjectOwnerDetailList { get; set; }
+        public DbSet<ProjectOwnerForDoc> ProjectOwnerForDoc { get; set; }
+        
         public DbSet<SaveSocialLink> SaveSocialLink { get; set; }
         public DbSet<ProjectOwnerDetailSurveyWise> ProjectOwnerDetailSurveyWise { get; set; }
         
@@ -125,6 +127,26 @@ namespace office.Models
         public DbSet<Certification> Certification { get; set; }
         public DbSet<nSaveSurvayDetails> nSaveSurvayDetails { get; set; }
         public DbSet<ProjectDeveloper> ProjectDeveloper { get; set; }
-         
+
+        public DbSet<RelationList> RelationList { get; set; }
+        public DbSet<Relation> Relation { get; set; }
+
+        public DbSet<UnitsList> UnitsList { get; set; }
+        public DbSet<Units> Units { get; set; }
+
+        public DbSet<FormationTypeList> FormationTypeList { get; set; }
+        public DbSet<FormationType> FormationType { get; set; }
+
+        public DbSet<CertificationTypeList> CertificationTypeList { get; set; }
+        public DbSet<CertificationType> CertificationType { get; set; }
+
+        public DbSet<WorkdepartmentList> WorkdepartmentList { get; set; }
+        public DbSet<Workdepartment> Workdepartment { get; set; }
+
+        public DbSet<ProjectStatusList> ProjectStatusList { get; set; }
+        public DbSet<ProjectStatuses> ProjectStatuses { get; set; }
+
+        public DbSet<ProjectTypeList> ProjectTypeList { get; set; }
+        public DbSet<ProjectTypes> ProjectTypes { get; set; }
     }
 }

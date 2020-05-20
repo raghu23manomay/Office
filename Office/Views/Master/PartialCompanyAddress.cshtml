@@ -178,14 +178,15 @@
         <h5 class="help-block m-b-none">Support Team </h5>
         <hr style="margin-top: 11px; margin-bottom: 10px;" />
     </div>
-    <div class="DivSupportTeam ">
-        @*<table id="tblSupportTeam" class="table tbSupportTeam">
-            <thead></thead>
-        </table>*@
+    <div class="DivSupportTeam">
+         
         @foreach (var item5 in Model.SaveExternalTeam)
         {
             int k = 1, l = 1;
-            foreach (var item1 in Model.SaveCompanyMobile3)
+        <div class="row col-md-12">
+
+
+            @foreach (var item1 in Model.SaveCompanyMobile3)
             {
                 if (item1.AddressID == item5.ExternalTeamid)
                 {
@@ -228,10 +229,11 @@
                     </span>
                 </div>
             </div>
+            </div>
             <hr style="margin-top: 11px; margin-bottom: 10px;" />
-        }
+            }
+        </div>
     </div>
-</div>
 <script>
     $(document).ready(function () {
 
@@ -435,7 +437,8 @@
                 });
             }
         });
-        $('.EditAddress').on("click", function (e) { 
+        $('.EditAddress').on("click", function (e) {
+            debugger;
             $(".iboxOffice").show();
             $(".iboxCompanynfo").hide();
             $(".iboxInternal").hide();
@@ -444,18 +447,18 @@
             $("#MobileNo").val("");
             $("#MobileWorkDepartment").val(0);
             $("#MobileNoExtension").val(""); 
-            if ($("#row1").length > 0) {
-                $("#row1").remove();
-            }
-            if ($("#row2").length > 0) {
-                $("#row2").remove();
-            }
-            if ($("#row3").length > 0) {
-                $("#row3").remove();
-            }
-            if ($("#row4").length > 0) {
-                $("#row4").remove();
-            }
+            //if ($("#row1").length > 0) {
+            //    $("#row1").remove();
+            //}
+            //if ($("#row2").length > 0) {
+            //    $("#row2").remove();
+            //}
+            //if ($("#row3").length > 0) {
+            //    $("#row3").remove();
+            //}
+            //if ($("#row4").length > 0) {
+            //    $("#row4").remove();
+            //}
             $("#DbAddressID").val(0);
             var liveaddressID = $(this).closest(".MultiOfficeAddress").attr("liveaddressID");
 
@@ -477,10 +480,13 @@
             var MobileLength = $(this).closest(".MultiOfficeAddress").parent().find(".showMobileNo").length
             for (var i = 1; i < MobileLength; i++) {
 
-                $('#rowMobile')
-                    .clone(true)
-                    .attr('id', 'row' + i, 'name', 'rowMobilen')
-                    .insertAfter('[id^=rowMobile]:last').find("input[type='text']").val("");
+                $('#rowMobile').clone(true)
+                    .attr('id', 'row' + i, 'name', 'rowMobile')
+                    .insertAfter('[id=rowMobile]:last').find("input[type='text']").val("");
+                //$('#rowMobile')
+                //    .clone(true)
+                //    .attr('id', 'row' + i, 'name', 'rowMobilen')
+                //    .insertAfter('[id^=rowMobile]:last').find("input[type='text']").val("");
             } 
             var j = 1;
 
@@ -546,12 +552,12 @@
             }
 
             var EmailLength = $(this).closest(".MultiOfficeAddress").parent().find(".showEmailID").length
-            for (var i = 1; i < MobileLength; i++) {
+            for (var i = 1; i < EmailLength; i++) {
 
                 $('#rowEmail')
                     .clone(true)
                     .attr('id', 'rowEmail' + i, 'name', 'rowEmailn')
-                    .insertAfter('[id^=rowEmail]:last').find("input[type='text']").val("");
+                    .insertAfter('[id=rowEmail]:last').find("input[type='text']").val("");
             }
 
             var j = 1;
@@ -609,11 +615,11 @@
                     var extension = "";// $(this).closest(".MultiOfficeAddress").parent().find(".showEmailID-" + j).attr("extension");
                     var companyphoneid = $(this).closest(".MultiOfficeAddress").parent().find(".showEmailID-" + j).attr("companyphoneid");
                     var workdepartmentid = $(this).closest(".MultiOfficeAddress").parent().find(".showEmailID-" + j).attr("workdepartmentid");
-                    $("#rowEmai3").find("#MobileNo").val(MobileNo);
-                    $("#rowEmai3").find("#MobileNoExtension").val(extension);
-                    $("#rowEmai3").find("#companyphoneid").val(companyphoneid);
-                    $("#rowEmai3").find("#MobileWorkDepartment").val(workdepartmentid);
-                    $("#rowEmai3").find("#MobileType").val(MobileType);
+                    $("#rowEmail3").find("#MobileNo").val(MobileNo);
+                    $("#rowEmail3").find("#MobileNoExtension").val(extension);
+                    $("#rowEmail3").find("#companyphoneid").val(companyphoneid);
+                    $("#rowEmail3").find("#MobileWorkDepartment").val(workdepartmentid);
+                    $("#rowEmail3").find("#MobileType").val(MobileType);
                     j++;
                 }
             }
@@ -669,14 +675,14 @@
             GetSubDesignation();
             $("#SubDesignationID1").val(subdesignationid1);
             GetSubPartDesignation();
-            $("#SubPartDesignationID1").val(subpartdesignationid1); 
-
+            $("#SubPartDesignationID1").val(subpartdesignationid1);
+            debugger;
                 var MobileLength = $(this).closest(".showInternalTeam").parent().find(".showMobileNo").length
                 for (var i = 1; i < MobileLength; i++) {
 
                     $('#rowMobileTeam')
                         .clone(true)
-                        .attr('id', 'row' + i, 'name', 'rowMobilen')
+                        .attr('id', 'rowMobileTeam' + i, 'name', 'rowMobilen')
                         .insertAfter('[id^=rowMobileTeam]:last').find("input[type='text']").val("");
                 }
 
@@ -705,11 +711,11 @@
                         var extension = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("extension");
                         var companyphoneid = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("companyphoneid");
                         var workdepartmentid = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
-                        $("#row1").find("#MobileNo").val(MobileNo);
-                        $("#row1").find("#MobileNoExtension").val(extension);
-                        $("#row1").find("#CompanyPhoneIDValue").val(companyphoneid);
-                        $("#row1").find("#MobileWorkDepartment").val(workdepartmentid);
-                        $("#row1").find("#MobileType").val(MobileType);
+                        $("#rowMobileTeam1").find("#MobileNo").val(MobileNo);
+                        $("#rowMobileTeam1").find("#MobileNoExtension").val(extension);
+                        $("#rowMobileTeam1").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#rowMobileTeam1").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowMobileTeam1").find("#MobileType").val(MobileType);
                         j++;
                     }
                     if (j == 3 && MobileLength >= j) {
@@ -719,11 +725,11 @@
                         var extension = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("extension");
                         var companyphoneid = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("companyphoneid");
                         var workdepartmentid = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
-                        $("#row2").find("#MobileNo").val(MobileNo);
-                        $("#row2").find("#MobileNoExtension").val(extension);
-                        $("#row2").find("#CompanyPhoneIDValue").val(companyphoneid);
-                        $("#row2").find("#MobileWorkDepartment").val(workdepartmentid);
-                        $("#row2").find("#MobileType").val(MobileType);
+                        $("#rowMobileTeam2").find("#MobileNo").val(MobileNo);
+                        $("#rowMobileTeam2").find("#MobileNoExtension").val(extension);
+                        $("#rowMobileTeam2").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#rowMobileTeam2").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowMobileTeam2").find("#MobileType").val(MobileType);
                         j++;
                     }
                     if (j == 4 && MobileLength >= j) {
@@ -733,11 +739,11 @@
                         var extension = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("extension");
                         var companyphoneid = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("companyphoneid");
                         var workdepartmentid = $(this).closest(".showInternalTeam").parent().find(".showMobileNo-" + j).attr("workdepartmentid");
-                        $("#row3").find("#MobileNo").val(MobileNo);
-                        $("#row3").find("#MobileNoExtension").val(extension);
-                        $("#row3").find("#CompanyPhoneIDValue").val(companyphoneid);
-                        $("#row3").find("#MobileWorkDepartment").val(workdepartmentid);
-                        $("#row3").find("#MobileType").val(MobileType);
+                        $("#row").find("#MobileNo").val(MobileNo);
+                        $("#row").find("#MobileNoExtension").val(extension);
+                        $("#row").find("#CompanyPhoneIDValue").val(companyphoneid);
+                        $("#row").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#row").find("#MobileType").val(MobileType);
                         j++;
                     }
                 }
@@ -804,6 +810,62 @@
                         $("#rowEmailTeam3").find("#companyphoneid").val(companyphoneid);
                         $("#rowEmailTeam3").find("#MobileWorkDepartment").val(workdepartmentid);
                         $("#rowEmailTeam3").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 5 && EmailLength >= j) {
+
+                        var MobileType = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileNo");
+                        var extension = "";// $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                        $("#rowEmailTeam4").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam4").find("#MobileNoExtension").val(extension);
+                        $("#rowEmailTeam4").find("#companyphoneid").val(companyphoneid);
+                        $("#rowEmailTeam4").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam4").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 6 && EmailLength >= j) {
+
+                        var MobileType = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileNo");
+                        var extension = "";// $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                        $("#rowEmailTeam5").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam5").find("#MobileNoExtension").val(extension);
+                        $("#rowEmailTeam5").find("#companyphoneid").val(companyphoneid);
+                        $("#rowEmailTeam5").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam5").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 7 && EmailLength >= j) {
+
+                        var MobileType = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileNo");
+                        var extension = "";// $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                        $("#rowEmailTeam6").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam6").find("#MobileNoExtension").val(extension);
+                        $("#rowEmailTeam6").find("#companyphoneid").val(companyphoneid);
+                        $("#rowEmailTeam6").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam6").find("#MobileType").val(MobileType);
+                        j++;
+                    }
+                    if (j == 8 && EmailLength >= j) {
+
+                        var MobileType = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileType");
+                        var MobileNo = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("MobileNo");
+                        var extension = "";// $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("extension");
+                        var companyphoneid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("companyphoneid");
+                        var workdepartmentid = $(this).closest(".showInternalTeam").parent().find(".showEmailID-" + j).attr("workdepartmentid");
+                        $("#rowEmailTeam7").find("#MobileNo").val(MobileNo);
+                        $("#rowEmailTeam7").find("#MobileNoExtension").val(extension);
+                        $("#rowEmailTeam7").find("#companyphoneid").val(companyphoneid);
+                        $("#rowEmailTeam7").find("#MobileWorkDepartment").val(workdepartmentid);
+                        $("#rowEmailTeam7").find("#MobileType").val(MobileType);
                         j++;
                     }
                 }
@@ -878,9 +940,10 @@
             GetSupportTeamSubPartDesignation();
             $("#SubPartDesignationID2").val(subpartdesignationid);
             
-          
-            
-            var MobileLength = $(this).closest(".DivSupportTeam ").parent().find(".showMobileNo").length
+
+                debugger;
+                var MobileLength = $(this).closest(".showExternalTeam").parent().parent().parent().find(".showMobileNo").length
+                //var MobileLength = $(this).closest(".showExternalTeam").parent().find(".showMobileNo").length
             for (var i = 1; i < MobileLength; i++) {
                 $('#rowMobileSupportTeam')
                     .clone(true)
@@ -943,7 +1006,8 @@
                     $("#rowMobileSupportTeam3").find("#MobileType").val(MobileType);
                     j++;
                 }
-            } 
+                }
+                debugger;
             var EmailLength = $(this).closest(".DivSupportTeam ").parent().find(".showEmailID").length
             for (var i = 1; i < EmailLength; i++) {
                 $('#rowEmailSupportTeam')

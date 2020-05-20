@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Calibration.Controllers
@@ -1077,6 +1075,41 @@ namespace Calibration.Controllers
                    : View("PartialCompanyAddress", data);
               
         }
+        public ActionResult TemplateCompanyTeam(int CompanyId)
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            TemplateCompanyTeam data = new TemplateCompanyTeam();
+            IEnumerable<SaveInternalTeam> result4 = _db.SaveInternalTeam.SqlQuery(@"exec uspGetInternalTeam
+                @CompanyID",
+          new SqlParameter("@CompanyID", CompanyId)
+          ).ToList<SaveInternalTeam>();
+            data.SaveInternalTeam = result4;
+
+            IEnumerable<SaveExternalTeam> result5 = _db.SaveExternalTeam.SqlQuery(@"exec uspGetExternalTeam
+                @CompanyID",
+          new SqlParameter("@CompanyID", CompanyId)
+          ).ToList<SaveExternalTeam>();
+            data.SaveExternalTeam = result5;
+            data.CompanyID = CompanyId;
+
+
+            IEnumerable<SaveExternalTeam> result6 = _db.SaveExternalTeam.SqlQuery(@"exec uspGetExternalTeam
+                @CompanyID",
+         new SqlParameter("@CompanyID", CompanyId)
+         ).ToList<SaveExternalTeam>();
+            data.SaveExternalTeam = result5;
+            data.CompanyID = CompanyId;
+
+            IEnumerable<CompanyAddress> result7 = _db.CompanyAddress.SqlQuery(@"exec uspGetCompanyAddress
+                @CompanyID",
+          new SqlParameter("@CompanyID", CompanyId)
+          ).ToList<CompanyAddress>();
+            data.CompanyAddress = result7;
+            return Request.IsAjaxRequest()
+               ? (ActionResult)PartialView("TemplateCompanyTeam", data)
+               : View("TemplateCompanyTeam", data);
+
+        }
         public ActionResult GetProjectInfoLeftSide(int ProjectID = 0)
         {
             OfficeDbContext _db = new OfficeDbContext();
@@ -1210,6 +1243,7 @@ namespace Calibration.Controllers
             ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
             ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", 0);
             ViewData["TeamSubPartDesignationList"] = binddropdown("TeamSubPartDesignationList", 0);
+            ViewData["WorkDepartmentList"] = binddropdown("WorkDepartmentList", 0);
             if (Request.IsAjaxRequest())
             {
                 ViewBag.layout = "0";
@@ -1265,6 +1299,7 @@ namespace Calibration.Controllers
             ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
             ViewData["TeamSubDesignationList"] = binddropdown("TeamSubDesignationList", 0);
             ViewData["TeamSubPartDesignationList"] = binddropdown("TeamSubPartDesignationList", 0);
+            ViewData["WorkDepartmentList"] = binddropdown("WorkDepartmentList", 0);
             if (i > 0)
             {
                 ViewData["redirect"] = 1;
@@ -4871,37 +4906,49 @@ namespace Calibration.Controllers
                : View("PartialCompanyAddress", data);
 
         }
-        public ActionResult GetProjectInnerInfo(int ProjectID = 0)
+        public ActionResult GetProjectInnerInfo(int ProjectID = 0, int DTTemplateID=0)
         {
             OfficeDbContext _db = new OfficeDbContext();
-            ProjectDetailsLeftSide data = new ProjectDetailsLeftSide();
+            DataTemplateProjectDetails data = new DataTemplateProjectDetails();
 
             IEnumerable<SaveProjectInternalTeam> result = _db.SaveProjectInternalTeam.SqlQuery(@"exec uspGetProjectInternalTeam
-                @ProjectID",
-           new SqlParameter("@ProjectID", ProjectID)
+                @ProjectID,@DTTemplateID",
+           new SqlParameter("@ProjectID", ProjectID),
+           new SqlParameter("@DTTemplateID", DTTemplateID)
            ).ToList<SaveProjectInternalTeam>();
             data.SaveProjectInternalTeam = result;
 
             IEnumerable<SaveProjectExternalTeam> result2 = _db.SaveProjectExternalTeam.SqlQuery(@"exec uspGetProjectExternalTeam
-                @ProjectID",
-          new SqlParameter("@ProjectID", ProjectID)
+                @ProjectID,@DTTemplateID",
+          new SqlParameter("@ProjectID", ProjectID),
+          new SqlParameter("@DTTemplateID", DTTemplateID)
           ).ToList<SaveProjectExternalTeam>();
 
             IEnumerable<SaveProjectOfficeSideTeam> result3 = _db.SaveProjectOfficeSideTeam.SqlQuery(@"exec uspGetProjectOfficeSideTeam
-                @ProjectID",
-        new SqlParameter("@ProjectID", ProjectID)
+                 @ProjectID,@DTTemplateID",
+        new SqlParameter("@ProjectID", ProjectID),
+         new SqlParameter("@DTTemplateID", DTTemplateID)
         ).ToList<SaveProjectOfficeSideTeam>();
 
             IEnumerable<AuthoritySignatory> result4 = _db.AuthoritySignatory.SqlQuery(@"exec GetProjectSignatory
                 @ProjectID",
         new SqlParameter("@ProjectID", ProjectID)
         ).ToList<AuthoritySignatory>();
+            data.AuthoritySignatory = result4;
 
             IEnumerable<AuthoritySignatoryDetail> result5 = _db.AuthoritySignatoryDetail.SqlQuery(@"exec GetProjectSignatoryDetail
                 @ProjectID",
         new SqlParameter("@ProjectID", ProjectID)
         ).ToList<AuthoritySignatoryDetail>();
+            data.AuthoritySignatoryDetail = result5;
 
+            IEnumerable<ProjectOwnerDetailList> result9 = _db.ProjectOwnerDetailList.SqlQuery(@"exec GetProjectOwnersUnderProperty
+                @projectID",
+           new SqlParameter("@projectID", ProjectID)
+           
+           ).ToList<ProjectOwnerDetailList>();
+
+            data.ProjectOwnerDetailList = result9;
             data.SaveProjectOfficeSideTeam = result3;
             data.SaveProjectExternalTeam = result2;
             data.ProjectID = ProjectID;
@@ -4965,5 +5012,789 @@ namespace Calibration.Controllers
                 return Json(message);
             }
         }
+
+
+        #region RelationMaster
+        public ActionResult LoadRelationGrid(int? page, String Name = null)
+        {
+            StaticPagedList<RelationList> itemsAsIPagedList;
+            itemsAsIPagedList = RelationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("RelationGrid", itemsAsIPagedList)
+                    : View("RelationGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult RelationList(int? page, String Name = null)
+        {
+            StaticPagedList<RelationList> itemsAsIPagedList;
+            itemsAsIPagedList = RelationGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("RelationList", itemsAsIPagedList)
+                    : View("RelationList", itemsAsIPagedList);
+        }
+        public StaticPagedList<RelationList> RelationGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            RelationList clist = new RelationList();
+
+            IEnumerable<RelationList> result = _db.RelationList.SqlQuery(@"exec GetRelationList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<RelationList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<RelationList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddRelation(int id = 0)
+        {
+            Relation data = new Relation();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.Relation.SqlQuery(@"exec GetRelationDetails 
+                @RelationID",
+                 new SqlParameter("@RelationID", id)).ToList<Relation>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.RelationID = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddRelation", data)
+                  : View("AddRelation", data);
+        }
+        [HttpPost]
+        public ActionResult SaveRelation(int RelationID = 0, String RelationName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveRelation
+               @RelationID, @RelationName,@CreatedBy,@IsActive",
+                new SqlParameter("@RelationID", RelationID),
+                new SqlParameter("@RelationName", RelationName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region CertificationTypeMaster
+        public ActionResult LoadCertificationTypeGrid(int? page, String Name = null)
+        {
+            StaticPagedList<CertificationTypeList> itemsAsIPagedList;
+            itemsAsIPagedList = CertificationTypeGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("CertificationTypeGrid", itemsAsIPagedList)
+                    : View("CertificationTypeGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult CertificationTypeList(int? page, String Name = null)
+        {
+            StaticPagedList<CertificationTypeList> itemsAsIPagedList;
+            itemsAsIPagedList = CertificationTypeGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("CertificationTypeList", itemsAsIPagedList)
+                    : View("CertificationTypeList", itemsAsIPagedList);
+        }
+        public StaticPagedList<CertificationTypeList> CertificationTypeGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            CertificationTypeList clist = new CertificationTypeList();
+
+            IEnumerable<CertificationTypeList> result = _db.CertificationTypeList.SqlQuery(@"exec GetCertificationList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<CertificationTypeList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<CertificationTypeList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddCertificationType(int id = 0)
+        {
+            CertificationType data = new CertificationType();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.CertificationType.SqlQuery(@"exec GetCertificationDetails 
+                @CertificationID",
+                 new SqlParameter("@CertificationID", id)).ToList<CertificationType>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.CertificationID = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddCertificationType", data)
+                  : View("AddCertificationType", data);
+        }
+        [HttpPost]
+        public ActionResult SaveCertificationType(int CertificationID = 0, String CertificationName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveCertification
+               @CertificationID, @CertificationName,@CreatedBy,@IsActive",
+                new SqlParameter("@CertificationID", CertificationID),
+                new SqlParameter("@CertificationName", CertificationName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region FormationTypeMaster
+        public ActionResult LoadFormationTypeGrid(int? page, String Name = null)
+        {
+            StaticPagedList<FormationTypeList> itemsAsIPagedList;
+            itemsAsIPagedList = FormationTypeGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("FormationTypeGrid", itemsAsIPagedList)
+                    : View("FormationTypeGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult FormationTypeList(int? page, String Name = null)
+        {
+            StaticPagedList<FormationTypeList> itemsAsIPagedList;
+            itemsAsIPagedList = FormationTypeGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("FormationTypeList", itemsAsIPagedList)
+                    : View("FormationTypeList", itemsAsIPagedList);
+        }
+        public StaticPagedList<FormationTypeList> FormationTypeGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            FormationTypeList clist = new FormationTypeList();
+
+            IEnumerable<FormationTypeList> result = _db.FormationTypeList.SqlQuery(@"exec GetOwnershipList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<FormationTypeList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<FormationTypeList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddFormationType(int id = 0)
+        {
+            FormationType data = new FormationType();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.FormationType.SqlQuery(@"exec GetOwnershipTypeDetails 
+                @OwnershipTypeID",
+                 new SqlParameter("@OwnershipTypeID", id)).ToList<FormationType>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.OwnershipTypeID = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddFormationType", data)
+                  : View("AddFormationType", data);
+        }
+        [HttpPost]
+        public ActionResult SaveFormationType(int OwnershipTypeID = 0, String OwnershipType = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveOwnership
+               @OwnershipTypeID, @OwnershipType,@CreatedBy,@IsActive",
+                new SqlParameter("@OwnershipTypeID", OwnershipTypeID),
+                new SqlParameter("@OwnershipType", OwnershipType),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region WorkdepartmentMaster
+        public ActionResult LoadWorkdepartmentGrid(int? page, String Name = null)
+        {
+            StaticPagedList<WorkdepartmentList> itemsAsIPagedList;
+            itemsAsIPagedList = WorkdepartmentGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("WorkdepartmentGrid", itemsAsIPagedList)
+                    : View("WorkdepartmentGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult WorkdepartmentList(int? page, String Name = null)
+        {
+            StaticPagedList<WorkdepartmentList> itemsAsIPagedList;
+            itemsAsIPagedList = WorkdepartmentGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("WorkdepartmentList", itemsAsIPagedList)
+                    : View("WorkdepartmentList", itemsAsIPagedList);
+        }
+        public StaticPagedList<WorkdepartmentList> WorkdepartmentGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            WorkdepartmentList clist = new WorkdepartmentList();
+
+            IEnumerable<WorkdepartmentList> result = _db.WorkdepartmentList.SqlQuery(@"exec GetWorkdepartmentList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<WorkdepartmentList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<WorkdepartmentList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddWorkdepartment(int id = 0)
+        {
+            Workdepartment data = new Workdepartment();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.Workdepartment.SqlQuery(@"exec GetWorkdepartmentDetails 
+                @WorkdepartmentID",
+                 new SqlParameter("@WorkdepartmentID", id)).ToList<Workdepartment>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.WorkdepartmentID = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddWorkdepartment", data)
+                  : View("AddWorkdepartment", data);
+        }
+        [HttpPost]
+        public ActionResult SaveWorkdepartment(int WorkdepartmentID = 0, String WorkdepartmentName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveWorkdepartment
+               @WorkdepartmentID, @WorkdepartmentName,@CreatedBy,@IsActive",
+                new SqlParameter("@WorkdepartmentID", WorkdepartmentID),
+                new SqlParameter("@WorkdepartmentName", WorkdepartmentName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region ProjectTypeMaster
+        public ActionResult LoadProjectTypeGrid(int? page, String Name = null)
+        {
+            StaticPagedList<ProjectTypeList> itemsAsIPagedList;
+            itemsAsIPagedList = ProjectTypeGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("ProjectTypeGrid", itemsAsIPagedList)
+                    : View("ProjectTypeGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult ProjectTypeList(int? page, String Name = null)
+        {
+            StaticPagedList<ProjectTypeList> itemsAsIPagedList;
+            itemsAsIPagedList = ProjectTypeGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("ProjectTypeList", itemsAsIPagedList)
+                    : View("ProjectTypeList", itemsAsIPagedList);
+        }
+        public StaticPagedList<ProjectTypeList> ProjectTypeGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            ProjectTypeList clist = new ProjectTypeList();
+
+            IEnumerable<ProjectTypeList> result = _db.ProjectTypeList.SqlQuery(@"exec GetProjectTypeList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<ProjectTypeList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<ProjectTypeList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddProjectType(int id = 0)
+        {
+            ProjectTypes data = new ProjectTypes();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.ProjectTypes.SqlQuery(@"exec GetProjectTypeDetails 
+                @ProjectTypeID",
+                 new SqlParameter("@ProjectTypeID", id)).ToList<ProjectTypes>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.ProjectTypeId = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddProjectType", data)
+                  : View("AddProjectType", data);
+        }
+        [HttpPost]
+        public ActionResult SaveProjectType(int ProjectTypeID = 0, String ProjectTypeName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveProjectType
+               @ProjectTypeID, @ProjectTypeName,@CreatedBy,@IsActive",
+                new SqlParameter("@ProjectTypeID", ProjectTypeID),
+                new SqlParameter("@ProjectTypeName", ProjectTypeName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region ProjectStatusMaster
+        public ActionResult LoadProjectStatusGrid(int? page, String Name = null)
+        {
+            StaticPagedList<ProjectStatusList> itemsAsIPagedList;
+            itemsAsIPagedList = ProjectStatusGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("ProjectStatusGrid", itemsAsIPagedList)
+                    : View("ProjectStatusGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult ProjectStatusList(int? page, String Name = null)
+        {
+            StaticPagedList<ProjectStatusList> itemsAsIPagedList;
+            itemsAsIPagedList = ProjectStatusGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("ProjectStatusList", itemsAsIPagedList)
+                    : View("ProjectStatusList", itemsAsIPagedList);
+        }
+        public StaticPagedList<ProjectStatusList> ProjectStatusGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            ProjectStatusList clist = new ProjectStatusList();
+
+            IEnumerable<ProjectStatusList> result = _db.ProjectStatusList.SqlQuery(@"exec GetProjectStatusList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<ProjectStatusList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<ProjectStatusList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddProjectStatus(int id = 0)
+        {
+            ProjectStatuses data = new ProjectStatuses();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.ProjectStatuses.SqlQuery(@"exec GetProjectStatusDetails 
+                @ProjectStatusID",
+                 new SqlParameter("@ProjectStatusID", id)).ToList<ProjectStatuses>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.ProjectStatusId = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddProjectStatus", data)
+                  : View("AddProjectStatus", data);
+        }
+        [HttpPost]
+        public ActionResult SaveProjectStatus(int ProjectStatusID = 0, String ProjectStatusName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveProjectStatus
+               @ProjectStatusID, @ProjectStatusName,@CreatedBy,@IsActive",
+                new SqlParameter("@ProjectStatusID", ProjectStatusID),
+                new SqlParameter("@ProjectStatusName", ProjectStatusName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        #region UnitMaster
+        public ActionResult LoadUnitGrid(int? page, String Name = null)
+        {
+            StaticPagedList<UnitsList> itemsAsIPagedList;
+            itemsAsIPagedList = UnitGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("UnitGrid", itemsAsIPagedList)
+                    : View("UnitGrid", itemsAsIPagedList);
+        }
+
+        public ActionResult UnitList(int? page, String Name = null)
+        {
+            StaticPagedList<UnitsList> itemsAsIPagedList;
+            itemsAsIPagedList = UnitGridList(page, Name);
+
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("UnitList", itemsAsIPagedList)
+                    : View("UnitList", itemsAsIPagedList);
+        }
+        public StaticPagedList<UnitsList> UnitGridList(int? page, String Name = "")
+        {
+            OfficeDbContext _db = new OfficeDbContext();
+            var pageIndex = (page ?? 1);
+            const int pageSize = 10;
+            int totalCount = 10;
+            UnitsList clist = new UnitsList();
+
+            IEnumerable<UnitsList> result = _db.UnitsList.SqlQuery(@"exec GetUnitList
+                   @pPageIndex, @pPageSize,@Name",
+               new SqlParameter("@pPageIndex", pageIndex),
+               new SqlParameter("@pPageSize", pageSize),
+               new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+               ).ToList<UnitsList>();
+
+            totalCount = 0;
+            if (result.Count() > 0)
+            {
+                totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+            }
+            var itemsAsIPagedList = new StaticPagedList<UnitsList>(result, pageIndex, pageSize, totalCount);
+            return itemsAsIPagedList;
+        }
+        public ActionResult AddUnit(int id = 0)
+        {
+            Units data = new Units();
+            OfficeDbContext _db = new OfficeDbContext();
+
+            if (id > 0)
+            {
+                var result = _db.Units.SqlQuery(@"exec GetUnitDetails 
+                @UnitID",
+                 new SqlParameter("@UnitID", id)).ToList<Units>();
+                data = result.FirstOrDefault();
+            }
+            else
+            {
+                data.UnitID = 0;
+                data.IsActive = true;
+            }
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("AddUnit", data)
+                  : View("AddUnit", data);
+        }
+        [HttpPost]
+        public ActionResult SaveUnit(int UnitID = 0, String UnitName = "", String IsActive = "")
+        {
+            try
+            {
+                OfficeDbContext _db = new OfficeDbContext();
+                Boolean Active = true;
+                if (IsActive == "false")
+                {
+                    Active = false;
+                }
+                var result = _db.Database.ExecuteSqlCommand(@"exec SaveUnit
+               @UnitID, @UnitName,@CreatedBy,@IsActive",
+                new SqlParameter("@UnitID", UnitID),
+                new SqlParameter("@UnitName", UnitName),
+                new SqlParameter("@CreatedBy", 1),
+                new SqlParameter("@IsActive", Active)
+            );
+                return Json("Success");
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+                return View("IndexForUser", message);
+            }
+        }
+        #endregion
+
+        //#region DocumentTypeMaster
+        //public ActionResult LoadDocumentTypeGrid(int? page, String Name = null)
+        //{
+        //    StaticPagedList<DocumentTypeList> itemsAsIPagedList;
+        //    itemsAsIPagedList = DocumentTypeGridList(page, Name);
+
+        //    return Request.IsAjaxRequest()
+        //            ? (ActionResult)PartialView("DocumentTypeGrid", itemsAsIPagedList)
+        //            : View("DocumentTypeGrid", itemsAsIPagedList);
+        //}
+
+        //public ActionResult DocumentTypeList(int? page, String Name = null)
+        //{
+        //    StaticPagedList<DocumentTypeList> itemsAsIPagedList;
+        //    itemsAsIPagedList = DocumentTypeGridList(page, Name);
+
+        //    return Request.IsAjaxRequest()
+        //            ? (ActionResult)PartialView("DocumentTypeList", itemsAsIPagedList)
+        //            : View("DocumentTypeList", itemsAsIPagedList);
+        //}
+        //public StaticPagedList<DocumentTypeList> DocumentTypeGridList(int? page, String Name = "")
+        //{
+        //    OfficeDbContext _db = new OfficeDbContext();
+        //    var pageIndex = (page ?? 1);
+        //    const int pageSize = 10;
+        //    int totalCount = 10;
+        //    DocumentTypeList clist = new DocumentTypeList();
+
+        //    IEnumerable<DocumentTypeList> result = _db.DocumentTypeList.SqlQuery(@"exec GetDocumentTypeList
+        //           @pPageIndex, @pPageSize,@Name",
+        //       new SqlParameter("@pPageIndex", pageIndex),
+        //       new SqlParameter("@pPageSize", pageSize),
+        //       new SqlParameter("@Name", Name == null ? (object)DBNull.Value : Name)
+        //       ).ToList<DocumentTypeList>();
+
+        //    totalCount = 0;
+        //    if (result.Count() > 0)
+        //    {
+        //        totalCount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
+        //    }
+        //    var itemsAsIPagedList = new StaticPagedList<DocumentTypeList>(result, pageIndex, pageSize, totalCount);
+        //    return itemsAsIPagedList;
+        //}
+        //public ActionResult AddDocumentType(int id = 0)
+        //{
+        //    DocumentType data = new DocumentType();
+        //    OfficeDbContext _db = new OfficeDbContext();
+
+        //    if (id > 0)
+        //    {
+        //        var result = _db.DocumentType.SqlQuery(@"exec GetDocumentTypeDetails 
+        //        @DocumentTypeID",
+        //         new SqlParameter("@DocumentTypeID", id)).ToList<DocumentType>();
+        //        data = result.FirstOrDefault();
+        //    }
+        //    else
+        //    {
+        //        data.DocumentTypeID = 0;
+        //        data.IsActive = true;
+        //    }
+
+        //    return Request.IsAjaxRequest()
+        //          ? (ActionResult)PartialView("AddDocumentType", data)
+        //          : View("AddDocumentType", data);
+        //}
+        //[HttpPost]
+        //public ActionResult SaveDocumentType(int DocumentTypeID = 0, String DocumentTypeName = "", String IsActive = "")
+        //{
+        //    try
+        //    {
+        //        OfficeDbContext _db = new OfficeDbContext();
+        //        Boolean Active = true;
+        //        if (IsActive == "false")
+        //        {
+        //            Active = false;
+        //        }
+        //        var result = _db.Database.ExecuteSqlCommand(@"exec SaveDocumentType
+        //       @DocumentTypeID, @DocumentTypeName,@CreatedBy,@IsActive",
+        //        new SqlParameter("@DocumentTypeID", DocumentTypeID),
+        //        new SqlParameter("@DocumentTypeName", DocumentTypeName),
+        //        new SqlParameter("@CreatedBy", 1),
+        //        new SqlParameter("@IsActive", Active)
+        //    );
+        //        return Json("Success");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string message = string.Format("<b>Message:</b> {0}<br /><br />", ex.Message);
+        //        return View("IndexForUser", message);
+        //    }
+        //}
+        //#endregion
+        public ActionResult refreshSubCategory()
+        {
+            ViewData["BusinessCategoryList"] = binddropdown("BusinessCategoryList", 0);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("SubCategory")
+                    : View("SubCategory");
+        }
+        public ActionResult refreshSubdesignation()
+        {
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+             
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("Subdesignation")
+                    : View("Subdesignation");
+        }
+        public ActionResult refreshSubpartdesignation()
+        {
+
+            ViewData["TeamDesignationList"] = binddropdown("TeamDesignationList", 0);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("Subpartdesignation")
+                    : View("Subpartdesignation");
+        }
+
+        public ActionResult GetallOwnersPropertyforDoc(int ProjectID )
+       {
+            
+            OfficeDbContext _db = new OfficeDbContext();
+
+            IEnumerable<ProjectOwnerForDoc> result2 = _db.ProjectOwnerForDoc.SqlQuery(@"exec GetProjectOwnersForDoc
+                @projectID",
+          new SqlParameter("@projectID", ProjectID) 
+          ).ToList<ProjectOwnerForDoc>();
+
+            return Request.IsAjaxRequest()
+                  ? (ActionResult)PartialView("allOwnersPropertyforDoc", result2)
+                  : View("allOwnersPropertyforDoc", result2);
+        }
+
     }
 }

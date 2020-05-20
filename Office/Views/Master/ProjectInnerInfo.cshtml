@@ -1,9 +1,9 @@
-﻿@model office.Models.ProjectDetailsLeftSide
+﻿@model office.Models.DataTemplateProjectDetails
 @{
     Layout = null;
 }
 
- 
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -14,22 +14,30 @@
         <div class="DivInternalTeam">
             @foreach (var item4 in Model.SaveProjectInternalTeam)
             {
-            <div>
-                <div class="col-md-2">
-                    <input type="checkbox" class="i-checks chkInternalTeam" divName="checkboxDiv_@item4.internalTeamid" checked="checked">
-                </div>
-                <div class="col-md-10">
-                    <span class=" showInternalTeam" parentcompanyid="@item4.parentcompanyid" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
+                <div>
+                    <div class="col-md-2">
+                        @if (item4.isselected == 1)
+                        {
+                            <input type="checkbox" class="i-checks chkInternalTeam" v="@item4.internalTeamid" divName="checkboxDiv_@item4.internalTeamid" checked="checked">
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="i-checks chkInternalTeam" v="@item4.internalTeamid" divName="checkboxDiv_@item4.internalTeamid" >
+                        }
 
-                        @item4.InternalPersonName
-                        @item4.DesignationidText
-                        @item4.SubDesignationText
-                        @item4.SubPartDesignationText
-                    </span>
+                    </div>
+                    <div class="col-md-10">
+                        <span class=" showInternalTeam" parentcompanyid="@item4.parentcompanyid" internalpersonid="@item4.internalpersonid" designationid1="@item4.designationid1" subdesignationid1="@item4.subdesignationid1" subpartdesignationid1="@item4.subpartdesignationid1" internalTeamid="@item4.internalTeamid" style="overflow-wrap:break-word;">
+
+                            @item4.InternalPersonName
+                            @item4.DesignationidText
+                            @item4.SubDesignationText
+                            @item4.SubPartDesignationText
+                        </span>
+                    </div>
                 </div>
-            </div>
-                }
-            </div>
+            }
+        </div>
     </div>
 </div>
 
@@ -39,27 +47,39 @@
         <h5 class="help-block m-b-none">External Team </h5>
         <hr style="margin-top: 11px; margin-bottom: 10px;" />
     </div>
-    <div >
+    <div>
         <div class="DivExternalTeam">
 
             @foreach (var item4 in Model.SaveProjectExternalTeam)
             {
-                <div class="col-md-2">
-                    <input type="checkbox" class="i-checks chkInternalTeam" divName="checkboxDiv_@item4.Externalpersonid"  />
-                </div>
-                <div class="col-md-10">
-                     
-                        <span class=" showExternalTeam" Externalpersonid="@item4.Externalpersonid" designationid2="@item4.designationid1" subdesignationid2="@item4.subdesignationid1" subpartdesignationid2="@item4.subpartdesignationid1" ExternalTeamid="@item4.ExternalTeamid" parentcompanyid="@item4.parentcompanyid" style="overflow-wrap:break-word;">
-                            @item4.InternalPersonName
-                            @item4.DesignationidText
-                            @item4.SubDesignationText
-                            @item4.SubPartDesignationText
-                        </span>
-                    </div>
-                    
-            }
-                </div>
+            <div class="col-md-2">
+                @if (item4.isselected == 1)
+                {
+                    <input type="checkbox" class="i-checks chkExternalTeam" v="@item4.ExternalTeamid" divName="checkboxDiv_@item4.ExternalTeamid" checked="checked" />
+                }
+                else
+                {
+                    <input type="checkbox" class="i-checks chkExternalTeam" v="@item4.ExternalTeamid" divName="checkboxDiv_@item4.ExternalTeamid" />
+
+                    @*<div id="checkboxDiv_@item4.ExternalTeamid" class="checkboxDiv"> </div>*@
+
+
+                }
+
             </div>
+                <div class="col-md-10">
+
+                    <span class=" showExternalTeam" Externalpersonid="@item4.Externalpersonid" designationid2="@item4.designationid1" subdesignationid2="@item4.subdesignationid1" subpartdesignationid2="@item4.subpartdesignationid1" ExternalTeamid="@item4.ExternalTeamid" parentcompanyid="@item4.parentcompanyid" style="overflow-wrap:break-word;">
+                        @item4.InternalPersonName
+                        @item4.DesignationidText
+                        @item4.SubDesignationText
+                        @item4.SubPartDesignationText
+                    </span>
+                </div>
+
+            }
+        </div>
+    </div>
 
 </div>
 <div class="row">
@@ -72,10 +92,18 @@
         <div class="DivOfficeSideTeam">
             @foreach (var item4 in Model.SaveProjectOfficeSideTeam)
             {
-            <div class="col-md-12">
-                <div class="col-md-2">
-                    <input type="checkbox" class="i-checks chkInternalTeam" />
-                </div>
+
+            <div class="col-md-2">
+                @if (item4.isselected == 1)
+                {
+                    <input type="checkbox" class="i-checks chkOfficeTeam" v="@item4.Teamid"  checked="checked" />
+                }
+                else
+                {
+                    <input type="checkbox" class="i-checks chkOfficeTeam" v="@item4.Teamid" />
+                }
+
+            </div>
                 <div class="col-md-10">
                     <span class="showOfficeTeam" personid="@item4.personid" designationid3="@item4.designationid1" subdesignationid3="@item4.subdesignationid1" subpartdesignationid3="@item4.subpartdesignationid1" Officeteamid="@item4.Teamid" style="overflow-wrap:break-word;">
                         @item4.InternalPersonName
@@ -84,7 +112,7 @@
                         @item4.SubPartDesignationText
                     </span>
                 </div>
-            </div>
+
             }
         </div>
     </div>
@@ -116,69 +144,88 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
-        <h5 class="help-block m-b-none">Owners </h5>
-        <hr style="margin-top: 11px; margin-bottom: 10px;" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="divAddress">
 
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-lg-12">
-        <hr style="margin-top: 11px; margin-bottom: 10px;" />
-        <h5 class="help-block m-b-none">Signature   </h5>
+        <h5 class="help-block m-b-none">Owners  </h5>
         <hr style="margin-top: 11px; margin-bottom: 10px;" />
     </div>
     <div>
-        <div class="DivOfficeSideTeam">
-            @foreach (var item in Model.AuthoritySignatory)
+        <div class="DivExternalTeam">
+
+            @foreach (var item4 in Model.ProjectOwnerDetailList)
             {
-                int k = 1;
-                <div>
-                    <div>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Person </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item1 in Model.AuthoritySignatoryDetail)
-                                {
-                                    if (item.signatorId == item1.SignatoryID)
-                                    {
+                <div class="row col-md-12">
+                    <div class="col-md-12">
 
-                                        <tr>
-                                            <td>@item1.PName </td>
-                                        </tr>
+                        <span style="margin-left:5px;" class=" showExternalTeam" Externalpersonid="@item4.OwnerID" style="overflow-wrap:break-word;">
+                            <input type="checkbox" class="i-checks chkOwner " divName="checkboxDiv_@item4.OwnerID" />
+                            &nbsp;&nbsp;&nbsp; @item4.OwnerName
 
-                                        k++;
-
-                                    }
-                                }
-                            </tbody>
-                        </table>
+                        </span>
+                        <hr style="margin-top: 3px; margin-bottom: 3px;" />
                     </div>
-                    <span class="col-lg-12 showOfficeTeam" personid="@item.signatorId" designationid1="@item.AreaUnitID" subdesignationid1="@item.AreaUnderDevelopment" subpartdesignationid1="@item.DocumentID" Teamid="@item.signatorId" style="overflow-wrap:break-word;">
-                        @item.AreaUnderDevelopment
-                        @item.AreaUnitID
-                        @item.OwnerID
-                        @item.SubRegistarOffice
-                        <i class="fa fa-pencil-square-o EditinternalTeam" Teamid="@item.signatorId" id="EditInternalTeam-@item.signatorId" aria-hidden="true" style="margin-left: 8px; margin-top: 9px;"></i>
-                    </span>
-
                 </div>
             }
-
         </div>
     </div>
+
 </div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <h5 class="help-block m-b-none">Signature  </h5>
+        <hr style="margin-top: 11px; margin-bottom: 10px;" />
+    </div>
+    <div>
+        <div class="DivExternalTeam">
+
+            @foreach (var item4 in Model.AuthoritySignatory)
+            {
+            <div class="row col-md-12">
+                <div class="col-md-12">
+
+                    <span style="margin-left:5px;" class=" showExternalTeam" Externalpersonid="@item4.OwnerID" style="overflow-wrap:break-word;">
+                        <input type="checkbox" class="i-checks chkOwner " divName="checkboxDiv_@item4.OwnerID" />
+                        &nbsp;&nbsp;&nbsp; @item4.selectedVal1
+
+                    </span>
+                    <hr style="margin-top: 3px; margin-bottom: 3px;" />
+                </div>
+                <div class="col-md-12">
+
+                    <span style="margin-left:5px;" class=" showExternalTeam" Externalpersonid="@item4.OwnerID" style="overflow-wrap:break-word;">
+                        <input type="checkbox" class="i-checks chkOwner " divName="checkboxDiv_@item4.OwnerID" />
+                        &nbsp;&nbsp;&nbsp; @item4.selectedVal2
+
+                    </span>
+                    <hr style="margin-top: 3px; margin-bottom: 3px;" />
+                </div>
+                <div class="col-md-12">
+
+                    <span style="margin-left:5px;" class=" showExternalTeam" Externalpersonid="@item4.OwnerID" style="overflow-wrap:break-word;">
+                        <input type="checkbox" class="i-checks chkOwner " divName="checkboxDiv_@item4.OwnerID" />
+                        &nbsp;&nbsp;&nbsp; @item4.selectedVal3
+
+                    </span>
+                    <hr style="margin-top: 3px; margin-bottom: 3px;" />
+                </div>
+                <div class="col-md-12">
+
+                    <span style="margin-left:5px;" class=" showExternalTeam" Externalpersonid="@item4.OwnerID" style="overflow-wrap:break-word;">
+                        <input type="checkbox" class="i-checks chkOwner " divName="checkboxDiv_@item4.OwnerID" />
+                        &nbsp;&nbsp;&nbsp; @item4.selectedVal4
+
+                    </span>
+                    <hr style="margin-top: 3px; margin-bottom: 3px;" />
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+</div>
+ 
 <script>
             $(document).ready(function () {
                 $('.EditOfficeTeam').on("click", function (e) {
